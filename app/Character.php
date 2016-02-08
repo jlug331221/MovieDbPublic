@@ -4,15 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Movie extends Model {
+class Character extends Model {
 
     protected $fillable = [
-        'title',
-        'country',
-        'release_date',
-        'parental_rating',
-        'runtime',
-        'synopsis'
+        'name', 'biography'
     ];
 
     public function credits()

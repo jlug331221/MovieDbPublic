@@ -2,10 +2,10 @@
 <project version="4">
   <component name="PublishConfigData">
     <serverData>
-      <paths name="Copy of project-level server 'Homestead'">
+      <paths name="homestead">
         <serverdata>
           <mappings>
-            <mapping local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="/home/vagrant/Code/MovieDb" local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>

@@ -1,2 +1,23 @@
-// @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 
+// Import google fonts: Roboto Slab & Open Sans
+@import url(http://fonts.googleapis.com/css?family=Roboto+Slab|Open+Sans:400italic,700italic,400,700);
+
+// Create variables holding the font faces
+$roboto-slab: 'Roboto Slab', serif;
+$open-sans: 'Open Sans', sans-serif;
+
+body {
+  background-color: #F2E6F9;
+}
+
+.jumbotron-themed {
+
+  font-family: $open-sans;
+  background-color: #726480;
+  color: white;
+
+  h1 {
+    font-family: $roboto-slab;
+  }
+}

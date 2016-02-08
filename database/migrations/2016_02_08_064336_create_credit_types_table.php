@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UpdateMoviesTable extends Migration
+class CreateCreditTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,8 +12,10 @@ class UpdateMoviesTable extends Migration
      */
     public function up()
     {
-        Schema::table('movies', function (Blueprint $table) {
-            $table->renameColumn('synopsis', 'summary');
+        Schema::create('credit_types', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('type');
+            $table->timestamps();
         });
     }
 
@@ -24,8 +26,6 @@ class UpdateMoviesTable extends Migration
      */
     public function down()
     {
-        Schema::table('movies', function (Blueprint $table) {
-            $table->renameColumn('summary', 'synopsis');
-        });
+        Schema::drop('credit_types');
     }
 }
