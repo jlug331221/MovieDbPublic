@@ -13,7 +13,7 @@ class MoviesController extends Controller
     public function allmovies()
     {
         $movies = Movie::all();
-        return view('allmovies', compact('movies'));
+        //return view('allmovies', compact('movies'));
         //return Movie::all();
     }
 }
