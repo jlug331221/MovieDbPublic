@@ -12,6 +12,6 @@ class Character extends Model {
 
     public function credits()
     {
-        return $this->hasMany('Credit');
+        return $this->hasMany('App\Credit');
     }
 }

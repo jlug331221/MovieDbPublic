@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Person extends Model {
 
+    /**
+     * Attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = [
         'first_name',
         'middle_name',
@@ -19,8 +24,13 @@ class Person extends Model {
         'biography'
     ];
 
+    /**
+     * A person may have zero or more credits in a movie.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function credits()
     {
-        return $this->hasMany('Credit');
+        return $this->hasMany('App\Credit');
     }
 }

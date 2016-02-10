@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Movie extends Model {
 
+    /**
+     * Attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = [
         'title',
         'country',
@@ -15,8 +20,23 @@ class Movie extends Model {
         'synopsis'
     ];
 
+    /**
+     * A movie contains zero or more credits.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function credits()
     {
-        return $this->hasMany('Credit');
+        return $this->hasMany('App\Credit');
+    }
+
+    /**
+     * A movie is associated with multiple reviews.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function reviews()
+    {
+        return $this->hasMany('App\Review');
     }
 }
