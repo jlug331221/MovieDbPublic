@@ -43,4 +43,44 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Comment');
     }
+
+
+    /**
+     * User belongs to many roles.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function roles() {
+        return $this->belongsToMany(Role::class);
+    }
+
+
+    /**
+     * Assign a role to a user.
+     *
+     * @param $role
+     *
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    public function assignRole($role) {
+        return $this->roles()->save(
+            Role::whereName($role)->firstOrFail()
+        );
+    }
+
+
+    /**
+     * Check to verify if a user has a role.
+     *
+     * @param $role
+     *
+     * @return bool
+     */
+    public function hasRole($role) {
+        if(is_string($role)) {
+            return $this->roles->contains('name', $role);
+        }
+
+        return !! $role->intersect($this->roles)->count();
+    }
 }

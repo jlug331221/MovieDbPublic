@@ -61,6 +61,12 @@
                     <li><a href="{{ url('/home') }}">Advanced Search</a></li>
                 </ul>
 
+                @if(Auth::check() && Auth::user()->hasRole('Administrator'))
+                    <ul class="nav navbar-nav">
+                        <li><a href="{{ url('/admin/adminDash') }}">Admin Dashboard</a></li>
+                    </ul>
+                @endif
+
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Authentication Links -->

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Providers;
+use App\Permission;
 
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -26,6 +27,20 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies($gate);
 
-        //
+        /*foreach($this->getPermissions() as $permission) {
+            $gate->define($permission->name, function ($user) use ($permission) {
+               return $user->hasRole($permission->roles);
+            });
+        }*/
     }
+
+
+    /**
+     * Get permissions associated with role.
+     *
+     * @return mixed
+     */
+    /*public function getPermissions() {
+        return Permission::with('roles')->get();
+    }*/
 }

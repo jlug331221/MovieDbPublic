@@ -11,11 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('allmovies', 'MoviesController@allmovies');
+//Route::get('allmovies', 'MoviesController@allmovies');
 
 /*
 |--------------------------------------------------------------------------
@@ -32,4 +28,10 @@ Route::group(['middleware' => 'web'], function () {
     Route::auth();
 
     Route::get('/home', 'HomeController@index');
+
+    Route::get('/admin/adminDash', 'AdminController@index');
+
+    Route::get('/', function() {
+        return view('welcome');
+    });
 });

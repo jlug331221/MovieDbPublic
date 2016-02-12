@@ -14,7 +14,7 @@
 </head>
 
 <body>
-    @include('menubar.menubar')
+
 <div>
     @yield('content')
 </div>
