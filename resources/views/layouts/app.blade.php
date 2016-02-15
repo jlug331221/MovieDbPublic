@@ -67,6 +67,7 @@
                     </ul>
                 @endif
 
+
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Authentication Links -->

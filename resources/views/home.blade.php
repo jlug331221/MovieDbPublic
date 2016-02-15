@@ -8,7 +8,7 @@
                 <div class="panel-heading">{{ $name }}, Welcome To Your User Page!</div>
 
                 <div class="panel-body">
-                    You are logged in!
+                    You are logged in! {{ Auth::user()->name }}
                 </div>
             </div>
         </div>
