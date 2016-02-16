@@ -9,6 +9,9 @@
 // phpunit --filter <method name> --> This will run a specific function
 // instead of the whole class or directory
 
+// php artisan migrate --database=mysql_testing --> will migrate tables
+// into TestingDb instead of production database
+
 use App\User;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
