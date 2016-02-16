@@ -17,12 +17,21 @@ class RolesTableSeeder extends Seeder
                 'name'          => 'Administrator',
                 'description'   => 'Site Super Admin',
                 'created_at'    =>  date("Y-m-d H:i:s"),
+                'updated_at'    =>  date("Y-m-d H:i:s"),
             ],
 
             [
                 'name'          => 'Review Moderator',
                 'description'   => 'Movie Review Moderator',
                 'created_at'    =>  date("Y-m-d H:i:s"),
+                'updated_at'    =>  date("Y-m-d H:i:s"),
+            ],
+
+            [
+                'name'          => 'Comment Moderator',
+                'description'   => 'Movie Comment Moderator',
+                'created_at'    =>  date("Y-m-d H:i:s"),
+                'updated_at'    =>  date("Y-m-d H:i:s"),
             ],
         ]);
     }

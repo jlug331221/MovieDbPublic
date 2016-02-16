@@ -137,33 +137,40 @@ class User extends Authenticatable
     /**
      * Verify if a user has a role.
      *
-     * @param string|array $roles Role string or array of roles.
+     * @param string|array $roles - Role string or array of roles.
+     * @param $requireAll
      *
-     * Example: $user->hasRoles('Administrator')
-     *          $user->hasRoles(['Administrator', 'Review Moderator'])
+     * Example: 1. $user->hasRole('Administrator')
+     *          2. $user->hasRole(['Comment Moderator', 'Review Moderator'])
+     *          3. $user->hasRole(['Comment Moderator', 'Review Moderator'], true)
      *
-     * This function currently verifies if the user only has one of the
-     * roles if an array is passed. Thinking about incorporating another
-     * bool parameter so that hasRole can verify if all roles are assigned
-     * to the user and not just one of them.
+     * Example 1 -> verify that a user has role of Administrator
+     * Example 2 -> verify that user has role Comment Moderator OR Review Moderator
+     * Example 3 -> verify that user has role Comment Moderator AND Review Moderator
+     *
+     * Order does not matter with verifying multiple roles.
      *
      * @return bool
      */
-    public function hasRole($roles) {
+    public function hasRole($roles, $requireAll = false) {
         if(is_string($roles)) {
             return $this->roles->contains('name', $roles);
         }
 
         if(is_array($roles)) {
             $i = 0;
+            $requireAllCounter = 0;
             while($i < count($roles)) {
                 $roleName = $roles[$i];
-                if($this->hasRole($roleName)) {
+                if(!$requireAll && $this->hasRole($roleName)) {
                     return true;
+                }
+                if($requireAll && $this->hasRole($roleName)) {
+                    $requireAllCounter++;
                 }
                 $i++;
             }
-            return false;
+            return $requireAllCounter == count($roles);
         }
     }
 }
