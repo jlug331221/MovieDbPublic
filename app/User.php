@@ -102,7 +102,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Attach multiple roles to a user
+     * Attach multiple roles to a user.
      *
      * @param mixed $roles
      */
@@ -113,7 +113,9 @@ class User extends Authenticatable
     }
 
     /**
-     * Detach multiple roles from a user
+     * Detach multiple roles from a user. If $roles is left null, meaning
+     * detachRoles() has no specified parameters, all user roles will be
+     * removed.
      *
      * @param mixed $roles
      */
@@ -123,15 +125,6 @@ class User extends Authenticatable
         foreach ($roles as $role) {
             $this->detachRole($role);
         }
-    }
-
-    /**
-     * Get all roles associated with the user.
-     *
-     * @return mixed array
-     */
-    public function getRoles() {
-        return $this->roles;
     }
 
     /**
