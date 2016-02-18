@@ -35,7 +35,7 @@ class UserTest extends TestCase {
         $user = factory(User::class, (1))->create();
         Auth::login($user);
 
-        $this->assertCount(0, $user->getRoles());
+        $this->assertCount(0, $user->roles);
     }
 
     /** @test */
@@ -55,7 +55,7 @@ class UserTest extends TestCase {
         }
 
         $collection = [];
-        $this->assertEmpty($collection, $user->getRoles());
+        $this->assertEmpty($collection, $user->roles);
     }
 
     /** @test */
@@ -63,7 +63,7 @@ class UserTest extends TestCase {
         $user = factory(User::class, (1))->create();
         $user->attachRoles(['Administrator', 'Review Moderator']);
 
-        $this->assertCount(2, $user->getRoles());
+        $this->assertCount(2, $user->roles);
     }
 
     /** @test */
@@ -75,7 +75,7 @@ class UserTest extends TestCase {
         }
 
         $collection = [];
-        $this->assertEmpty($collection, $user->getRoles());
+        $this->assertEmpty($collection, $user->roles);
     }
 
     public function tearDown()
