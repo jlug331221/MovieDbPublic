@@ -15,7 +15,7 @@
 /**
  * Change these variables to configure gulp.
  * HOSTPATH is the URL that you use to access your web server.
- * This is required for using browsersync.
+ * This is required for using browsersync.s
  *
  * VERSION specifies whether you want to prevent CSS caching by
  * creating a unique version of that file every time you recompile.

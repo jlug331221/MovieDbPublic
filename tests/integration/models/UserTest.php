@@ -17,6 +17,7 @@ use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class UserTest extends TestCase {
+
     use DatabaseTransactions;
 
     protected $user;
