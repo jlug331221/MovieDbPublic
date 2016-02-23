@@ -50,9 +50,15 @@ class Image extends Model {
          */
         static::creating(function ($model) {
             $model->id = Uuid::generate(4)->bytes;
-        });
+        }, 0);
     }
 
+    /**
+     * Gets the id of an image as a hex string.
+     *
+     * @param $value
+     * @return string
+     */
     public function getIdAttribute($value)
     {
         return bin2hex($value);
@@ -68,5 +74,14 @@ class Image extends Model {
     public static function find($id, $columns = ['*'])
     {
         return static::where('id', '=', hex2bin($id))->first($columns);
+    }
+
+    /**
+     * An image can be attached to a single user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function user() {
+        return $this->belongsTo('App\User', 'avatar');
     }
 }

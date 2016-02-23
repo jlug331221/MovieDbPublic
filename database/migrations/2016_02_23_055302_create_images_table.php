@@ -30,6 +30,17 @@ class CreateImagesTable extends Migration {
             ALTER TABLE `images`
             ADD PRIMARY KEY (`id`);
         ');
+
+        DB::statement('
+            ALTER TABLE `users`
+            ADD `avatar` BINARY(16) AFTER `password`
+        ');
+
+        Schema::table('users', function ($table) {
+            $table->foreign('avatar')
+                  ->references('id')->on('images')
+                  ->onDelete('set null');
+        });
     }
 
     /**
