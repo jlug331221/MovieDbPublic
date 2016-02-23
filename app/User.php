@@ -55,6 +55,26 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class);
     }
 
+    /**
+     * User has an avatar.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function avatar() {
+        return $this->hasOne('App\Image', 'id', 'avatar');
+    }
+
+    /**
+     * Sets the avatar for a user, or sets the avatar to null.
+     *
+     * @param null $image
+     * @return bool
+     */
+    public function setAvatar($image = null) {
+        $this->avatar = ($image == null) ? null : hex2bin($image->id);
+        return $this->save();
+    }
+
 
     /**
      * Assign a role to a user.

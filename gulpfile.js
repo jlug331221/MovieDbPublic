@@ -1,5 +1,7 @@
 var elixir = require('laravel-elixir');
 
+var settings = require('./.env.gulp.js');
+
 /*
  |--------------------------------------------------------------------------
  | Elixir Asset Management
@@ -12,7 +14,13 @@ var elixir = require('laravel-elixir');
  */
 
 elixir(function(mix) {
-    mix.sass('app.scss')
-       .version('public/css/app.css')
-       .browserSync({proxy: 'localhost:8000'});
+    mix.sass('app.scss');
+
+    if(settings.version) {
+        mix.version('public/css/app.css');
+    }
+
+    if(settings.browsersync) {
+        mix.browserSync({proxy: settings.hostpath});
+    }
 });
