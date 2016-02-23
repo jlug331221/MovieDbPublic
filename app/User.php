@@ -55,6 +55,26 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class);
     }
 
+    /**
+     * User has an avatar.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function avatar() {
+        return $this->hasOne('App\Image', 'id', 'avatar');
+    }
+
+    /**
+     * Sets the avatar for a user, or sets the avatar to null.
+     *
+     * @param null $image
+     * @return bool
+     */
+    public function setAvatar($image = null) {
+        $this->avatar = ($image == null) ? null : hex2bin($image->id);
+        return $this->save();
+    }
+
 
 
     /**
@@ -113,7 +133,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Attach multiple roles to a user
+     * Attach multiple roles to a user.
      *
      * @param mixed $roles
      */
@@ -124,7 +144,9 @@ class User extends Authenticatable
     }
 
     /**
-     * Detach multiple roles from a user
+     * Detach multiple roles from a user. If $roles is left null, meaning
+     * detachRoles() has no specified parameters, all user roles will be
+     * removed.
      *
      * @param mixed $roles
      */
@@ -134,15 +156,6 @@ class User extends Authenticatable
         foreach ($roles as $role) {
             $this->detachRole($role);
         }
-    }
-
-    /**
-     * Get all roles associated with the user.
-     *
-     * @return mixed array
-     */
-    public function getRoles() {
-        return $this->roles;
     }
 
     /**

@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Image;
+use Webpatser\Uuid\Uuid;
 
 class AppServiceProvider extends ServiceProvider
 {
