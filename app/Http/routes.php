@@ -11,7 +11,6 @@
 |
 */
 
-//Route::get('allmovies', 'MoviesController@allmovies');
 
 /*
 |--------------------------------------------------------------------------
@@ -27,7 +26,9 @@
 Route::group(['middleware' => 'web'], function () {
     Route::auth();
 
-    Route::get('/home', 'HomeController@index');
+    Route::get('/userpage/home', 'HomeController@index');
+    Route::get('/userpage/createList', 'HomeController@createList');
+    Route::post('/userpage/createList', 'HomeController@storeList');
 
     Route::get('/admin/adminDash', 'AdminController@index');
 

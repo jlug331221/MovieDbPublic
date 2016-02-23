@@ -47,7 +47,7 @@
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ url('/home') }}">Home</a></li>
+                    <li><a href="{{ url('/userpage/home') }}">Home</a></li>
                 </ul>
 
                 <form class="navbar-form navbar-left" role="search">
@@ -58,7 +58,7 @@
                 </form>
 
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ url('/home') }}">Advanced Search</a></li>
+                    <li><a href="{{ url('/userpage/home') }}">Advanced Search</a></li>
                 </ul>
 
                 @if(Auth::check() && Auth::user()->hasRole('Administrator'))

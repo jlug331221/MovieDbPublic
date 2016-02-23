@@ -56,6 +56,17 @@ class User extends Authenticatable
     }
 
 
+
+    /**
+     * A user may have multiple comments.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function masterlists()
+    {
+        return $this->hasMany('App\Masterlist');
+    }
+
     /**
      * Assign a role to a user.
      *
