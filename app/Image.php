@@ -84,4 +84,13 @@ class Image extends Model {
     public function user() {
         return $this->belongsTo('App\User', 'avatar');
     }
+
+    /**
+     * An image can be attached to many albums.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function albums() {
+        return $this->belongsToMany('App\Album');
+    }
 }
