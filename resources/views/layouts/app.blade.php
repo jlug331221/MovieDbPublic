@@ -63,7 +63,7 @@
 
                 @if(Auth::check() && Auth::user()->hasRole('Administrator'))
                     <ul class="nav navbar-nav">
-                        <li><a href="{{ url('/admin/adminDash') }}">Admin Dashboard</a></li>
+                        <li><a href="{{ url('/admin/adminHome') }}">Admin Dashboard</a></li>
                     </ul>
                 @endif
 

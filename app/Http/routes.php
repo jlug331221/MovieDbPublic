@@ -29,7 +29,7 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::get('/home', 'HomeController@index');
 
-    Route::get('/admin/adminDash', 'AdminController@index');
+    Route::get('/admin/adminHome', 'AdminController@index');
 
     Route::get('/', function() {
         return view('welcome');
