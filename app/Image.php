@@ -3,16 +3,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Webpatser\Uuid\Uuid;
 
 class Image extends Model {
-
-    /**
-     * Indicates if the IDs are auto-incrementing.
-     *
-     * @var bool
-     */
-    public $incrementing = false;
 
     /**
      * Attributes that are mass assignable.
@@ -20,19 +12,29 @@ class Image extends Model {
      * @var array
      */
     protected $fillable = [
-        'name',
         'path',
-        'extension'
+        'extension',
+        'description'
     ];
 
     /**
-     * Get the value indicating whether the IDs are incrementing.
+     * An image can be attached to a single user.
      *
-     * @return bool false
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function getIncrementing()
+    public function user()
     {
-        return false;
+        return $this->belongsTo('App\User', 'avatar');
+    }
+
+    /**
+     * An image can be attached to many albums.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function albums()
+    {
+        return $this->belongsToMany('App\Album');
     }
 
     /**
@@ -45,52 +47,32 @@ class Image extends Model {
         parent::boot();
 
         /**
-         * Generates a Uuid as the id for the model before
-         * the model is created.
+         * Generates a unique token for the image
          */
         static::creating(function ($model) {
-            $model->id = Uuid::generate(4)->bytes;
+            // 238328 = 1000 base 62
+            // 14776335 = zzzz base 62
+            $model->token = gmp_strval(mt_rand(238328, 14775335), 62);
         }, 0);
     }
 
     /**
-     * Gets the id of an image as a hex string.
+     * Returns the unique name of the image.
      *
-     * @param $value
      * @return string
      */
-    public function getIdAttribute($value)
+    public function getName()
     {
-        return bin2hex($value);
+        return $this->id . $this->token;
     }
 
     /**
-     * Find a model by its primary key using a hex string.
+     * Returns the relative path of the image.
      *
-     * @param  mixed  $id
-     * @param  array  $columns
-     * @return \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection|null
+     * @return string
      */
-    public static function find($id, $columns = ['*'])
+    public function getRelativePath()
     {
-        return static::where('id', '=', hex2bin($id))->first($columns);
-    }
-
-    /**
-     * An image can be attached to a single user.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function user() {
-        return $this->belongsTo('App\User', 'avatar');
-    }
-
-    /**
-     * An image can be attached to many albums.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function albums() {
-        return $this->belongsToMany('App\Album');
+        return $this->path . '/' . $this->getName() . '.' . $this->extension;
     }
 }
