@@ -13,23 +13,18 @@ class CreateImagesTable extends Migration {
     public function up()
     {
         Schema::create('images', function (Blueprint $table) {
-            $table->string('name')->unique();
+            $table->increments('id');
+            $table->string('token');
             $table->string('path');
             $table->string('extension', 10);
+            $table->string('description', 256)->nullable();
             $table->timestamps();
         });
 
-        // add the id column as a 16-bit binary field
-        DB::statement('ALTER TABLE `images` ADD `id` BINARY(16) FIRST;');
-
-        // make the id column the primary key
-        DB::statement('ALTER TABLE `images` ADD PRIMARY KEY (`id`);');
-
-        // add the avatar column as a 16-bit binary field in the users table
-        DB::statement('ALTER TABLE `users` ADD `avatar` BINARY(16) AFTER `password`');
-
         // make the avatar column in the users table a foreign key referencing id in images
         Schema::table('users', function ($table) {
+            $table->integer('avatar')->unsigned()->nullable();
+
             $table->foreign('avatar')
                 ->references('id')
                 ->on('images')
