@@ -7,3 +7,4 @@ Homestead.json
 public/build/*
 ~$*
 .env.gulp.js
+./*~
