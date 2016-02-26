@@ -33,13 +33,4 @@ class Role extends Model
     public function givePermissionTo(Permission $permission) {
         return $this->permissions()->save($permission);
     }
-
-    /**
-     * Get permissions associated with role.
-     *
-     * @return mixed
-     */
-    public function getPermissions() {
-        return $this->permissions;
-    }
 }
