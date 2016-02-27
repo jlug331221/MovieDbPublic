@@ -30,7 +30,9 @@ class HomeController extends Controller
     public function index()
     {
         $name = Auth::user()->name;
-        return view('/userpage/home', compact('name'));
+        $masterlists = Masterlist::where('user_id', Auth::user()->id)->get();
+        //return $masterlists[0]["title"];
+        return view('/userpage/home', compact('name','masterlists'));
     }
 
     public function createList()

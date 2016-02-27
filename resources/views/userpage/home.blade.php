@@ -20,13 +20,20 @@
 
                         <div class="tab-content">
                             <div class="tab-pane active" id="create">
-
                                 <br/>
-                                <button class="btn btn-default">
-                                    <span class="glyphicon glyphicon-plus" style="vertical-align:middle"></span>
-                                    <a href="{{ url('/userpage/createList') }}">Create New List!</a>
-                                </button>
-
+                                {!! Form::open() !!}
+                                    <div class="form-group">
+                                        {!! Form::label('title', 'Title:') !!}
+                                        {!! Form::text('title', null, ['class' => 'form-control']) !!}
+                                    </div>
+                                    <div class="form-group">
+                                        {!! Form::select('type', array('M' => 'Movie', 'P' => 'Person'), null,
+                                                         ['placeholder' => 'Pick a list type...', 'class' => 'form-control']) !!}
+                                    </div>
+                                    <div class="form-group">
+                                        {!! Form::submit('Create List', ['class' => 'btn btn-primary form-control']) !!}
+                                    </div>
+                                {!! Form::close() !!}
                             </div>
 
 
@@ -37,42 +44,23 @@
                                 <br>
 
                                 <div class="panel-group" id="accordion">
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading">
-                                            <h4 class="panel-title">
-                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Movie List 1</a>
-                                            </h4>
-                                        </div>
-                                        <div id="collapse1" class="panel-collapse collapse in">
-                                            <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                                                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
-                                        </div>
-                                    </div>
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading">
-                                            <h4 class="panel-title">
-                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">Movie List 2</a>
-                                            </h4>
-                                        </div>
-                                        <div id="collapse2" class="panel-collapse collapse">
-                                            <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                                                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
-                                        </div>
-                                    </div>
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading">
-                                            <h4 class="panel-title">
-                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">Movie List 3</a>
-                                            </h4>
-                                        </div>
-                                        <div id="collapse3" class="panel-collapse collapse">
-                                            <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                                                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
-                                        </div>
-                                    </div>
+                                    @foreach($masterlists as $masterlist)
+                                        @if($masterlist->type == "M")
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">
+                                                    <h4 class="panel-title">
+                                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">{{$masterlist["title"]}}</a>
+                                                    </h4>
+                                                </div>
+                                                <div id="collapse1" class="panel-collapse collapse in">
+                                                    <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+                                                        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                                                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    @endforeach
                                 </div>
 
                             </div>
@@ -84,44 +72,24 @@
                                 <br>
 
                                 <div class="panel-group" id="accordion">
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading">
-                                            <h4 class="panel-title">
-                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">Person List 1</a>
-                                            </h4>
-                                        </div>
-                                        <div id="collapse4" class="panel-collapse collapse in">
-                                            <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                                                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
-                                        </div>
-                                    </div>
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading">
-                                            <h4 class="panel-title">
-                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse5">Person List 2</a>
-                                            </h4>
-                                        </div>
-                                        <div id="collapse5" class="panel-collapse collapse">
-                                            <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                                                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
-                                        </div>
-                                    </div>
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading">
-                                            <h4 class="panel-title">
-                                                <a data-toggle="collapse" data-parent="#accordion" href="#collapse6">Person List 3</a>
-                                            </h4>
-                                        </div>
-                                        <div id="collapse6" class="panel-collapse collapse">
-                                            <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                                                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
-                                        </div>
-                                    </div>
+                                    @foreach($masterlists as $masterlist)
+                                        @if($masterlist->type == "P")
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">
+                                                    <h4 class="panel-title">
+                                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">{{$masterlist["title"]}}</a>
+                                                    </h4>
+                                                </div>
+                                                <div id="collapse1" class="panel-collapse collapse in">
+                                                    <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+                                                        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                                                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    @endforeach
                                 </div>
-
                             </div>
                         </div>
                     </div>
