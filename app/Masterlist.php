@@ -24,4 +24,14 @@ class Masterlist extends Model
     {
         return $this->belongsTo('App\User');
     }
+
+    public function movielist()
+    {
+        return $this->hasMany('App\MovieList');
+    }
+
+    public function personlist()
+    {
+        return $this->hasMany('App\PersonList');
+    }
 }

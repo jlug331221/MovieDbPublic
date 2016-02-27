@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Masterlist;
+use App\MovieList;
+use App\PersonList;
 use Auth;
 use App\Http\Requests;
 //use Illuminate\Http\Request;
@@ -38,11 +41,26 @@ class HomeController extends Controller
     public function storeList()
     {
         $input = Request::all();
-        if($input['type'] == 'Movie')
+        $masterlist = new Masterlist();
+        $masterlist->user_id = Auth::user()->id;
+        $masterlist->title = $input['title'];
+        $masterlist->type = $input['type'];
+        $masterlist->save();
+
+        $mlid = $masterlist->id;
+        if($input['type'] == 'M')
         {
-            return 'movie list';
+            $movielist = new MovieList();
+            $movielist->masterlist_id = $mlid;
+            $movielist->save();
+        }
+        else //type is P
+        {
+            $personlist = new PersonList();
+            $personlist->masterlist_id = $mlid;
+            $personlist->save();
         }
 
-        return $input;
+        return redirect()->action('HomeController@index');
     }
 }

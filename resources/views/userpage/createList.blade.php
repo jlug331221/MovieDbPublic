@@ -14,7 +14,7 @@
                                 {!! Form::text('title', null, ['class' => 'form-control']) !!}
                             </div>
                             <div class="form-group">
-                                {!! Form::select('type', array('Movie' => 'Movie', 'Person' => 'Person'), null,
+                                {!! Form::select('type', array('M' => 'Movie', 'P' => 'Person'), null,
                                                  ['placeholder' => 'Pick a list type...', 'class' => 'form-control']) !!}
                             </div>
                             <div class="form-group">

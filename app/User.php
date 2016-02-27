@@ -65,6 +65,15 @@ class User extends Authenticatable
     }
 
     /**
+     * A User may have multiple lists..
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function masterlist() {
+        return $this->hasMany('App\Masterlist');
+    }
+
+    /**
      * Sets the avatar for a user, or sets the avatar to null.
      *
      * @param null $image

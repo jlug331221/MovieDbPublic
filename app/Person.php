@@ -33,4 +33,9 @@ class Person extends Model {
     {
         return $this->hasMany('App\Credit');
     }
+
+    public function personlists()
+    {
+        return $this->belongsToMany('App\PersonList');
+    }
 }

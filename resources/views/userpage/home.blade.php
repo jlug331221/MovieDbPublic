@@ -21,7 +21,11 @@
                         <div class="tab-content">
                             <div class="tab-pane active" id="create">
 
-                                Add Form to create list based on title and movie/person list
+                                <br/>
+                                <button class="btn btn-default">
+                                    <span class="glyphicon glyphicon-plus" style="vertical-align:middle"></span>
+                                    <a href="{{ url('/userpage/createList') }}">Create New List!</a>
+                                </button>
 
                             </div>
 

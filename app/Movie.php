@@ -39,4 +39,9 @@ class Movie extends Model {
     {
         return $this->hasMany('App\Review');
     }
+
+    public function movielists()
+    {
+        return $this->belongsToMany('App\MovieList');
+    }
 }
