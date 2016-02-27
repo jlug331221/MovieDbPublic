@@ -17,7 +17,7 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password', 60);
-            // avatar : binary(16 bits) FK: images on id // defined in images
+            // avatar : unsigned int FK: images on id // defined in images
             $table->rememberToken();
             $table->timestamps();
         });

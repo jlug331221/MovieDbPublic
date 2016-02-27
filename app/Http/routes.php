@@ -30,7 +30,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/userpage/createList', 'HomeController@createList');
     Route::post('/userpage/createList', 'HomeController@storeList');
 
-    Route::get('/admin/adminDash', 'AdminController@index');
+    Route::get('/admin/adminHome', 'AdminController@index');
 
     Route::get('/', function() {
         return view('welcome');
@@ -38,4 +38,12 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::get('/search/movie', 'SearchController@advancedMovie');
     Route::get('/search/person', 'SearchController@advancedPerson');
+
+    //Review Routes
+    Route::get('/reviews/create/{mid}', 'ReviewController@create');
+    Route::post('/reviews/submit/{mid}', 'ReviewController@submit');
+    Route::get('/reviews/display/{rid}', 'ReviewController@display');
+    Route::post('/reviews/newcomment/{rid}', 'ReviewController@newComment');
+    Route::post('/reviews/postcomment/{rid}', 'ReviewController@postComment');
+
 });

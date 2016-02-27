@@ -61,11 +61,13 @@
                     <li><a href="{{ url('/userpage/home') }}">Advanced Search</a></li>
                 </ul>
 
-                @if(Auth::check() && Auth::user()->hasRole('Administrator'))
+                {{--@if(Auth::check() && Auth::user()->hasRole('Administrator'))--}}
+                @can('edit_all_content')
                     <ul class="nav navbar-nav">
-                        <li><a href="{{ url('/admin/adminDash') }}">Admin Dashboard</a></li>
+                        <li><a href="{{ url('/admin/adminHome') }}">Admin Dashboard</a></li>
                     </ul>
-                @endif
+                @endcan
+                {{--@endif--}}
 
 
                 <!-- Right Side Of Navbar -->

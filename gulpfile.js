@@ -14,10 +14,11 @@ var settings = require('./.env.gulp.js');
  */
 
 elixir(function(mix) {
-    mix.sass('app.scss');
+    mix.sass(['app.scss', 'adminDashBoard.scss']);
 
     if(settings.version) {
-        mix.version('public/css/app.css');
+        mix.version(['public/css/app.css',
+            'public/css/adminDashBoard.css']);
     }
 
     if(settings.browsersync) {

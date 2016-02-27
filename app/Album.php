@@ -2,7 +2,6 @@
 
 namespace App;
 
-use DB;
 use Illuminate\Database\Eloquent\Model;
 
 class Album extends Model {
@@ -20,29 +19,22 @@ class Album extends Model {
     /**
      * Adds an image to the album.
      *
-     * @param $image
-     * @return mixed
+     * @param Image $image
      */
     public function addImage($image)
     {
-        return DB::table('album_image')->insert([
-            'album_id' => $this->id,
-            'image_id' => hex2bin($image->id)
-        ]);
+        return $this->images()->attach($image);
     }
 
     /**
      * Removes an image from the album.
      *
      * @param $image
-     * @return mixed
+     * @return int
      */
     public function removeImage($image)
     {
-        return DB::table('album_image')
-            ->where('album_id', '=', $this->id)
-            ->where('image_id', '=', hex2bin($image->id))
-            ->delete();
+        return $this->images()->detach($image);
     }
 
     /**

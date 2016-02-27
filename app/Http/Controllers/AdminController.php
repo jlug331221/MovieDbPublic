@@ -28,6 +28,6 @@ class AdminController extends Controller
      */
     public function index() {
         $name = Auth::user()->name;
-        return view('/admin/adminDash', compact('name'));
+        return view('/admin/adminHome', compact('name'));
     }
 }
