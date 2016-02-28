@@ -63,16 +63,38 @@ class Image extends Model {
      */
     public function getName()
     {
-        return $this->id . $this->token;
+        return $this->id . $this->token . '.' . $this->extension;
     }
 
     /**
-     * Returns the relative path of the image.
+     * Returns the path of the image.
      *
      * @return string
      */
-    public function getRelativePath()
+    public function getPath()
     {
-        return $this->path . '/' . $this->getName() . '.' . $this->extension;
+        return $this->path . '/' . $this->getName();
+    }
+
+    /**
+     * Returns the absolute path of the image.
+     *
+     * @return string
+     */
+    public function getAbsolutePath()
+    {
+        return public_path() . $this->getPath();
+    }
+
+    /**
+     * Attempts to find the instance of the image with the given unique name.
+     *
+     * @param string $name
+     * @return mixed
+     */
+    public static function lookup($name)
+    {
+        $id = substr($name, 0, strlen($name) - 4);
+        return Image::find($id);
     }
 }
