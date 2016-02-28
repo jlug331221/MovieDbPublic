@@ -24,7 +24,8 @@ class CreateImageRequest extends Request
     public function rules()
     {
         return [
-            'image' => 'required | mimes:jpeg,jpg,bmp,png | max:100000',
+            // max: 32mb
+            'image' => 'required | mimes:jpeg,jpg,bmp,png | max:32000',
             'description' => 'max:255'
         ];
     }

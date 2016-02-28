@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Image extends Model {
 
+    const IMAGE_DIRECTORY = '/images';
+    const IMAGES_PER_SUBDIRECTORY = 1000;
+
     /**
      * Attributes that are mass assignable.
      *
@@ -96,5 +99,20 @@ class Image extends Model {
     {
         $id = substr($name, 0, strlen($name) - 4);
         return Image::find($id);
+    }
+
+    /**
+     * Derives the path for an image based on its id. The path will be
+     * IMAGE_DIRECTORY/subdirectory, where subdirectory is generated from
+     * the image's id. Each subdirectory holds a maximum of
+     * IMAGES_PER_SUBDIRECTORY number of images, where the auto-incremented
+     * id of the image is used to partition the subdirectories.
+     *
+     * @return string
+     */
+    public function derivePathFromId()
+    {
+        $subDirectory = substr(md5(intval($this->id / self::IMAGES_PER_SUBDIRECTORY)), 0, 8);
+        return self::IMAGE_DIRECTORY . '/' . $subDirectory;
     }
 }
