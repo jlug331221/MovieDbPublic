@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Masterlist;
 use App\MovieList;
 use App\PersonList;
+use App\Movie;
 use Auth;
 use App\Http\Requests;
 //use Illuminate\Http\Request;
@@ -31,13 +32,15 @@ class HomeController extends Controller
     {
         $name = Auth::user()->name;
         $masterlists = Masterlist::where('user_id', Auth::user()->id)->get();
-        //return $masterlists[0]["title"];
         return view('/userpage/home', compact('name','masterlists'));
     }
 
-    public function createList()
+    public function getMoviesInList($masterlist_id)
     {
-        return view('/userpage/createList');
+        $movielist = MovieList::where('id', $masterlist_id)->first();
+        $movielistid = $movielist['id'];
+        return $movielistid;
+
     }
 
     public function storeList()
