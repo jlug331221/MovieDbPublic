@@ -2,8 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Http\Requests\Request;
-
 class CreateImageRequest extends Request
 {
     /**
@@ -25,7 +23,7 @@ class CreateImageRequest extends Request
     {
         return [
             // max: 32mb
-            'image' => 'required | mimes:jpeg,jpg,bmp,png | max:32000',
+            'image' => 'required|mimes:jpeg,jpg,bmp,png|max:32000',
             'description' => 'max:255'
         ];
     }
