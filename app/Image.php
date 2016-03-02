@@ -50,23 +50,31 @@ class Image extends Model {
         parent::boot();
 
         /**
-         * Generates a unique token for the image
+         * Generates a unique name for the image on creations
          */
         static::creating(function ($model) {
-            // 238328 = 1000 base 62
-            // 14776335 = zzzz base 62
-            $model->token = gmp_strval(mt_rand(238328, 14775335), 62);
+
+            $name = null;
+
+            do {
+                // 916132832 = 100000 base 62
+                // 56800235583 = zzzzzz base 62
+                $name = gmp_strval(mt_rand(916132832, 56800235583), 62);
+            } while (Image::where('name', '=', '$name')->first() != null);
+
+            $model->name = $name;
+
         }, 0);
     }
 
     /**
-     * Returns the unique name of the image.
+     * Returns the unique name of the image file.
      *
      * @return string
      */
-    public function getName()
+    public function getFileName()
     {
-        return $this->id . $this->token . '.' . $this->extension;
+        return $this->name . '.' . $this->extension;
     }
 
     /**
@@ -76,7 +84,7 @@ class Image extends Model {
      */
     public function getPath()
     {
-        return $this->path . '/' . $this->getName();
+        return $this->path . '/' . $this->getFileName();
     }
 
     /**

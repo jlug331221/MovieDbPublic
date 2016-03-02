@@ -12,6 +12,11 @@ use Illuminate\Support\Facades\File;
 
 class ImageSync {
 
+    /**
+     * Valid file extensions for images.
+     *
+     * @var array
+     */
     protected $extensions = [
         'png',
         'jpeg',
@@ -19,6 +24,15 @@ class ImageSync {
         'bmp'
     ];
 
+    /**
+     * Creates an image record in the database with an associated
+     * image file in the filesystem.
+     *
+     * @param $file
+     * @param null $description
+     * @return Image|null
+     * @throws Exception
+     */
     public function create($file, $description = null)
     {
         if ( ! is_file($file) || ! in_array($file->getClientOriginalExtension(), $this->extensions))
@@ -61,10 +75,19 @@ class ImageSync {
         return $image;
     }
 
-//    public function destroy($id)
-//    {
-//        $image = Image::findOrFail($id);
-//
-//        // File::delete
-//    }
+    /**
+     * Deletes an image record from the database if it exists
+     * along with the associated image file in the filesystem.
+     *
+     * @param $id
+     */
+    public function destroy($id)
+    {
+        $image = Image::find($id);
+
+        if ($image != null) {
+            File::delete($image->getAbsolutePath());
+            Image::destroy($id);
+        }
+    }
 }

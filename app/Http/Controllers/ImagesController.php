@@ -17,6 +17,16 @@ class ImagesController extends Controller {
         return view('images.create');
     }
 
+    public function delete($name)
+    {
+        $image = Image::where('name', '=', $name)->first();
+        if ($image != null) {
+            return view('images.delete', compact('image'));
+        } else {
+            return redirect()->action('HomeController@index');
+        }
+    }
+
     public function store(CreateImageRequest $request)
     {
         $file = $request->file('image');
@@ -32,8 +42,12 @@ class ImagesController extends Controller {
         return redirect($image->getPath());
     }
 
-//    public function delete()
-//    {
-//
-//    }
+    public function discard($name)
+    {
+        $image = Image::where('name', '=', $name)->first();
+        if ($image != null)
+            ImageSync::destroy($image->id);
+
+        return redirect()->action('ImagesController@create');
+    }
 }
