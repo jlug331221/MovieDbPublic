@@ -22,15 +22,14 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 
 $factory->define(App\Image::class, function (Faker\Generator $faker) {
 
-    $path = '';
-
-    foreach(range(1, rand(1, 4)) as $value) {
-        $path .= $faker->word . '/';
-    }
+    $extensions = App\Image::getValidExtensions();
 
     return [
-        'name'      => $faker->word,
-        'path'      => $path,
-        'extension' => $faker->fileExtension
+        'extension' => $extensions[array_rand($extensions, 1)],
+        'description' => $faker->sentence
     ];
+});
+
+$factory->define(App\Album::class, function (Faker\Generator $faker) {
+    return [];
 });

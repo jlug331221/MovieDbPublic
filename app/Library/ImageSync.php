@@ -7,26 +7,15 @@ namespace App\Library;
 
 use DB;
 use App\Image as Image;
+use Exception;
 use Image as InterventionImage;
 use Illuminate\Support\Facades\File;
 
 class ImageSync {
 
     /**
-     * Valid file extensions for images.
-     *
-     * @var array
-     */
-    protected $extensions = [
-        'png',
-        'jpeg',
-        'jpg',
-        'bmp'
-    ];
-
-    /**
-     * Creates an image record in the database with an associated
-     * image file in the filesystem.
+     * Creates an image record with an associated image file
+     * in the filesystem.
      *
      * @param $file
      * @param null $description
@@ -35,23 +24,22 @@ class ImageSync {
      */
     public function create($file, $description = null)
     {
-        if ( ! is_file($file) || ! in_array($file->getClientOriginalExtension(), $this->extensions))
-            throw new Exception('Not a valid file');
+        if ( ! File::isFile($file))
+            throw new Exception('Not a file');
+
+        if ( ! Image::isValidExtension($file->getClientOriginalExtension()))
+            throw new Exception('Not a valid file type');
 
         $image = null;
 
         DB::beginTransaction();
 
         try {
-            // create the image record
+            // make a new record for the image in the database
             $image = new Image([
                 'extension'   => $file->getClientOriginalExtension(),
                 'description' => $description
             ]);
-            $image->save();
-
-            // generate the path for the record
-            $image->path = $image->derivePathFromId();
             $image->save();
 
             // checks that the directory for the image exists, if not creating it
@@ -76,8 +64,8 @@ class ImageSync {
     }
 
     /**
-     * Deletes an image record from the database if it exists
-     * along with the associated image file in the filesystem.
+     * Deletes an image record if it exists along with the
+     * associated image file in the filesystem.
      *
      * @param $id
      */

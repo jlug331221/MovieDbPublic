@@ -6,7 +6,26 @@ use Illuminate\Database\Eloquent\Model;
 
 class Image extends Model {
 
+    /**
+     * Valid file extensions for images.
+     *
+     * @var array
+     */
+    const VALID_EXTENSIONS = [
+        'png',
+        'jpeg',
+        'jpg',
+        'bmp'
+    ];
+
+    /**
+     * Root image directory for the project.
+     */
     const IMAGE_DIRECTORY = '/images';
+
+    /**
+     * Maximum number of images that a subdirectory may hold.
+     */
     const IMAGES_PER_SUBDIRECTORY = 1000;
 
     /**
@@ -15,7 +34,6 @@ class Image extends Model {
      * @var array
      */
     protected $fillable = [
-        'path',
         'extension',
         'description'
     ];
@@ -50,7 +68,7 @@ class Image extends Model {
         parent::boot();
 
         /**
-         * Generates a unique name for the image on creations
+         * Generates a unique name for the image before creation.
          */
         static::creating(function ($model) {
 
@@ -63,6 +81,25 @@ class Image extends Model {
             } while (Image::where('name', '=', '$name')->first() != null);
 
             $model->name = $name;
+
+        }, 0);
+
+        /**
+         * Generates the path for an image directly after creation.
+         *
+         * The path will be IMAGE_DIRECTORY/subdirectory, where subdirectory
+         * is generated from the image's id.
+         *
+         * Each subdirectory holds a maximum of IMAGES_PER_SUBDIRECTORY number
+         * of images, where the auto-incremented id of the image is used to
+         * partition the subdirectories.
+         */
+        static::created(function ($model) {
+
+            $subDirectory = substr(md5(intval($model->id / self::IMAGES_PER_SUBDIRECTORY)), 0, 8);
+
+            $model->path = self::IMAGE_DIRECTORY . '/' . $subDirectory;
+            $model->save();
 
         }, 0);
     }
@@ -78,7 +115,7 @@ class Image extends Model {
     }
 
     /**
-     * Returns the path of the image.
+     * Returns the path of the image from the public directory.
      *
      * @return string
      */
@@ -98,29 +135,23 @@ class Image extends Model {
     }
 
     /**
-     * Attempts to find the instance of the image with the given unique name.
+     * Returns whether the given extension is a valid image extension.
      *
-     * @param string $name
-     * @return mixed
+     * @param $extension
+     * @return bool
      */
-    public static function lookup($name)
+    public static function isValidExtension($extension)
     {
-        $id = substr($name, 0, strlen($name) - 4);
-        return Image::find($id);
+        return in_array($extension, self::VALID_EXTENSIONS);
     }
 
     /**
-     * Derives the path for an image based on its id. The path will be
-     * IMAGE_DIRECTORY/subdirectory, where subdirectory is generated from
-     * the image's id. Each subdirectory holds a maximum of
-     * IMAGES_PER_SUBDIRECTORY number of images, where the auto-incremented
-     * id of the image is used to partition the subdirectories.
+     * Returns an array containing the valid extensions for an image.
      *
-     * @return string
+     * @return mixed
      */
-    public function derivePathFromId()
+    public static function getValidExtensions()
     {
-        $subDirectory = substr(md5(intval($this->id / self::IMAGES_PER_SUBDIRECTORY)), 0, 8);
-        return self::IMAGE_DIRECTORY . '/' . $subDirectory;
+        return self::VALID_EXTENSIONS;
     }
 }
