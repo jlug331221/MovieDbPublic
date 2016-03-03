@@ -36,24 +36,25 @@
                                 {!! Form::close() !!}
                             </div>
 
-
                             <div class="tab-pane" id="movie">
-
-                                Display accordion of movie list titles
                                 <br>
-                                <br>
-
                                 <div class="panel-group" id="accordion">
                                     @foreach($masterlists as $masterlist)
                                         @if($masterlist->type == "M")
                                             @foreach($masterlist->movielist as $movlist)
                                                 <div class="panel panel-default">
                                                     <div class="panel-heading">
-                                                        <h4 class="panel-title">
-                                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">{{$masterlist["title"]}}</a>
-                                                        </h4>
+                                                        <div class="panel-title">
+                                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse">{{$masterlist["title"]}}</a>
+                                                            <button type="button" class="btn btn-default btn-sm pull-right">
+                                                                <a href="{{ url('userpage/home/deleteList/'.$masterlist->id) }}">
+                                                                    <span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span> Delete List
+                                                                </a>
+                                                            </button>
+                                                        </div>
+
                                                     </div>
-                                                    <div id="collapse1" class="panel-collapse collapse in">
+                                                    <div id="collapse" class="panel-collapse collapse in">
                                                         <div class="panel-body">
                                                             @foreach($movlist->movies as $movie)
                                                             {{$movie["title"]}}
@@ -66,26 +67,26 @@
                                         @endif
                                     @endforeach
                                 </div>
-
                             </div>
 
                             <div class="tab-pane" id="person">
-
-                                Display accordion of person list titles
                                 <br>
-                                <br>
-
                                 <div class="panel-group" id="accordion">
                                     @foreach($masterlists as $masterlist)
                                         @if($masterlist->type == "P")
                                             @foreach($masterlist->personlist as $perlist)
                                                 <div class="panel panel-default">
                                                     <div class="panel-heading">
-                                                        <h4 class="panel-title">
-                                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">{{$masterlist["title"]}}</a>
-                                                        </h4>
+                                                        <div class="panel-title">
+                                                            <a data-toggle="collapse2" data-parent="#accordion" href="#collapse2">{{$masterlist["title"]}}</a>
+                                                            <button type="button" class="btn btn-default btn-sm pull-right">
+                                                                <a href="{{ url('userpage/home/deleteList/'.$masterlist->id) }}">
+                                                                    <span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span> Delete List
+                                                                </a>
+                                                            </button>
+                                                        </div>
                                                     </div>
-                                                    <div id="collapse1" class="panel-collapse collapse in">
+                                                    <div id="collapse2" class="panel-collapse collapse in">
                                                         <div class="panel-body">
                                                             @foreach($perlist->people as $person)
                                                                 {{$person["first_name"]}}
