@@ -28,6 +28,7 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::get('/userpage/home', 'HomeController@index');
     Route::post('/userpage/home', 'HomeController@storeList');
+    Route::get('/userpage/home/deleteList/{mlid}', 'HomeController@deleteList');
 
     Route::get('/admin/adminHome', 'AdminController@index');
 
