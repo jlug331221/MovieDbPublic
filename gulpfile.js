@@ -14,14 +14,16 @@ var settings = require('./.env.gulp.js');
  */
 
 elixir(function(mix) {
-    mix.sass(['app.scss', 'adminDashBoard.scss']);
-
-    if(settings.version) {
-        mix.version(['public/css/app.css',
-            'public/css/adminDashBoard.css']);
-    }
+    mix.sass(['app.scss'/*, 'adminDashBoard.scss'*/]);
+    mix.browserify(['app.js']);
 
     if(settings.browsersync) {
         mix.browserSync({proxy: settings.hostpath});
+    }
+
+    if(settings.version) {
+        mix.version(['public/css/app.css',/*
+            'public/css/adminDashBoard.css',*/
+            'public/js/bundle.js']);
     }
 });

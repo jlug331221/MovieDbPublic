@@ -18,6 +18,7 @@ class CreateMoviesTable extends Migration
             $table->string('title');
             $table->string('country');
             $table->date('release_date');
+            $table->string('genre');
             $table->string('parental_rating')->nullable();
             $table->integer('runtime');
             $table->text('synopsis')->nullable();
