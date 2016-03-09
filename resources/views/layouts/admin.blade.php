@@ -18,6 +18,9 @@
 
     <!-- Latest compiled and minified Bootstrap-select CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
+
+    <!-- Datatables CSS -->
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.11/css/jquery.dataTables.css">
 </head>
 
 <body>
@@ -124,6 +127,10 @@
 
     <script src="//code.jquery.com/jquery-1.10.2.js"></script>
     <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+
+    <!-- Datatables JavaScript -->
+    <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.11/js/jquery.dataTables.js"></script>
+
     <script>
         $(function() {
             $("#datepicker").datepicker({
@@ -140,7 +147,11 @@
                 yearRange: "-80:"
             });
         });
+
+        $(document).ready( function () {
+            $('#table_id').DataTable();
+        } );
     </script>
-    {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
+        {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
 </body>
 </html>
