@@ -30,7 +30,13 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('/userpage/home', 'HomeController@postList');
     Route::get('/userpage/home/deleteList/{mlid}', 'HomeController@deleteList');
 
+    //Admin Routes
     Route::get('/admin/adminHome', 'AdminController@index');
+    Route::get('/admin/showAllMovies', 'AdminController@showMovies');
+    Route::get('/admin/createMovie', 'AdminController@createMovie');
+    Route::post('/admin/createMovie', 'AdminController@storeMovie');
+    Route::get('/admin/createPerson', 'AdminController@createPerson');
+    //End of Admin Routes
 
     Route::get('/', function() {
         return view('welcome');
