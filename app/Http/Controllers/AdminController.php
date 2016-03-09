@@ -6,6 +6,7 @@ use Auth;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Movie;
+use App\Person;
 use Illuminate\Support\Facades\Input;
 use Request;
 
@@ -380,6 +381,11 @@ class AdminController extends Controller
         return view('/admin/showAllMovies', compact('movies'));
     }
 
+    public function showPeople() {
+        $people = Person::latest()->get();
+        return view('/admin/showAllPeople', compact('people'));
+    }
+
     /**
      * Taken to create movie form view.
      *
@@ -425,6 +431,40 @@ class AdminController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function createPerson() {
-        return view('/admin/createPerson');
+        $countries = $this->countries;
+
+        return view('/admin/createPerson', compact(['countries']));
+    }
+
+    /**
+     * Create and store person in database.
+     *
+     * @return $this|\Illuminate\Http\RedirectResponse
+     */
+    public function storePerson() {
+        $validator = \Validator::make(Input::all(), $this->personValidationRules);
+
+        if($validator->fails()) {
+            return redirect()->back()->withErrors($validator->errors());
+        }
+
+        $person = new Person();
+        $person->first_name = Input::get('first_name');
+        $person->middle_name = Input::get('middle_name');
+        $person->last_name = Input::get('last_name');
+        $person->first_alias = Input::get('first_alias');
+        $person->middle_alias = Input::get('middle_alias');
+        $person->last_alias = Input::get('last_alias');
+        $person->country_of_origin = Input::get('country_of_origin');
+        $birthDate = date("Y-m-d", strtotime(Input::get('date_of_birth')));
+        $deathDate = date("Y-m-d", strtotime(Input::get('date_of_death')));
+        $person->date_of_birth = $birthDate;
+        if($deathDate > "1970-01-01" || $deathDate < "1970-01-01") {
+            $person->date_of_death = $deathDate;
+        }
+        $person->biography = Input::get('biography');
+        $person->save();
+
+        return redirect()->action('AdminController@showPeople');
     }
 }

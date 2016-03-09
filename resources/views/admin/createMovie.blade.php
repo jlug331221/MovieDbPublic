@@ -19,7 +19,7 @@
                 {!! Form::open() !!}
                     <div class="col-lg-12 form-group">
                         {!! Form::label('title', 'Title:', ['class' => 'col-lg-1 control-label']) !!}
-                        <div class="col-lg-5">
+                        <div class="col-lg-2">
                             <div class="inner-addon right-addon">
                                 <i class="fa fa-film"></i>
                                 {!! Form::text('title', null, ['class' => 'form-control']) !!}
@@ -40,7 +40,7 @@
 
                     <div class="col-lg-12 form-group">
                         {!! Form::label('release_date', 'Date:', ['class' => 'col-lg-1 control-label']) !!}
-                        <div class="col-lg-5">
+                        <div class="col-lg-2">
                             <div class="inner-addon right-addon">
                                 <i class="fa fa-calendar"></i>
                                 {!! Form::text('release_date', null, ['class' => 'form-control',
@@ -74,7 +74,7 @@
 
                     <div class="col-lg-12 form-group">
                         {!! Form::label('runtime', 'Runtime:', ['class' => 'col-lg-1 control-label']) !!}
-                        <div class="col-lg-5">
+                        <div class="col-lg-2">
                             <div class="inner-addon right-addon">
                                 <i class="fa fa-clock-o"></i>
                                 {!! Form::text('runtime', null, ['class' => 'form-control',
@@ -86,7 +86,10 @@
                     <div class="col-lg-12 form-group">
                         {!! Form::label('synopsis', 'Synopsis:', ['class' => 'col-lg-1 control-label']) !!}
                         <div class="col-lg-5">
-                            {!! Form::textarea('synopsis', null, ['class' => 'form-control']) !!}
+                            <div class="inner-addon right-addon">
+                                <i class="fa fa-pencil"></i>
+                                {!! Form::textarea('synopsis', null, ['class' => 'form-control']) !!}
+                            </div>
                         </div>
                     </div>
 

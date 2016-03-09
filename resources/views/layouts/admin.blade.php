@@ -103,7 +103,7 @@
                         <a href="{{ url('admin/showAllMovies') }}"><i class="fa fa-table fa-fw"></i>Show All Movies</a>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-table fa-fw"></i>Show All People</a>
+                        <a href="{{ url('admin/showAllPeople') }}"><i class="fa fa-table fa-fw"></i>Show All People</a>
                     </li>
                 </ul>
             </div>
@@ -127,6 +127,14 @@
     <script>
         $(function() {
             $("#datepicker").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "-80:"
+            });
+        });
+
+        $(function() {
+            $("#datepicker2").datepicker({
                 changeMonth: true,
                 changeYear: true,
                 yearRange: "-80:"

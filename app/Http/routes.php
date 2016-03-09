@@ -33,9 +33,11 @@ Route::group(['middleware' => 'web'], function () {
     //Admin Routes
     Route::get('/admin/adminHome', 'AdminController@index');
     Route::get('/admin/showAllMovies', 'AdminController@showMovies');
+    Route::get('/admin/showAllPeople', 'AdminController@showPeople');
     Route::get('/admin/createMovie', 'AdminController@createMovie');
     Route::post('/admin/createMovie', 'AdminController@storeMovie');
     Route::get('/admin/createPerson', 'AdminController@createPerson');
+    Route::post('/admin/createPerson', 'AdminController@storePerson');
 
     Route::get('/', function() {
         return view('welcome');
