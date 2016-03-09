@@ -20,46 +20,66 @@
                     <div class="col-lg-12 form-group">
                         {!! Form::label('title', 'Title:', ['class' => 'col-lg-1 control-label']) !!}
                         <div class="col-lg-5">
-                            {!! Form::text('title', null, ['class' => 'form-control']) !!}
+                            <div class="inner-addon right-addon">
+                                <i class="fa fa-film"></i>
+                                {!! Form::text('title', null, ['class' => 'form-control']) !!}
+                            </div>
                         </div>
                     </div>
 
                     <div class="col-lg-12 form-group">
                         {!! Form::label('country', 'Country:', ['class' => 'col-lg-1 control-label']) !!}
                         <div class="col-lg-5">
-                            {!! Form::select('country', $countries, ['class' => 'form-control']) !!}
+                            <select id="country", name="country", class="selectpicker", data-style="btn-info">
+                                @foreach($countries as $country)
+                                    <option value= "{{ $country }}">{{ $country }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
 
                     <div class="col-lg-12 form-group">
                         {!! Form::label('release_date', 'Date:', ['class' => 'col-lg-1 control-label']) !!}
                         <div class="col-lg-5">
-                            {!! Form::text('release_date', null, ['class' => 'form-control',
+                            <div class="inner-addon right-addon">
+                                <i class="fa fa-calendar"></i>
+                                {!! Form::text('release_date', null, ['class' => 'form-control',
                                 'placeholder' => 'mm/dd/yyyy','id' => 'datepicker']) !!}
+                            </div>
                         </div>
                     </div>
 
                     <div class="col-lg-12 form-group">
                         {!! Form::label('genre', 'Genre:', ['class' => 'col-lg-1 control-label']) !!}
                         <div class="col-lg-5">
-                            {!! Form::select('genre', $genres, ['class' => 'form-control']) !!}
+                            <select id="genre", name="genre", class="selectpicker", data-style="btn-info">
+                                @foreach($genres as $genre)
+                                    <option value= "{{ $genre }}">{{ $genre }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
 
                     <div class="col-lg-12 form-group">
                         {!! Form::label('parental_rating', 'Rating:', ['class' => 'col-lg-1 control-label']) !!}
                         <div class="col-lg-5">
-                            {!! Form::select('parental_rating', ['R'=> 'R', 'PG-13' => 'PG-13',
-                                'PG' => 'PG', 'G'=> 'G', 'NC-17' => 'NC-17'],
-                                ['class' => 'form-control']) !!}
+                            <select id="parental_rating", name="parental_rating", class="selectpicker",
+                                    data-style="btn-info">
+                                @foreach($ratings as $rating)
+                                    <option value= "{{ $rating }}">{{ $rating }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
 
                     <div class="col-lg-12 form-group">
                         {!! Form::label('runtime', 'Runtime:', ['class' => 'col-lg-1 control-label']) !!}
                         <div class="col-lg-5">
-                            {!! Form::text('runtime', null, ['class' => 'form-control',
+                            <div class="inner-addon right-addon">
+                                <i class="fa fa-clock-o"></i>
+                                {!! Form::text('runtime', null, ['class' => 'form-control',
                                 'placeholder' => 'Minutes']) !!}
+                            </div>
                         </div>
                     </div>
 

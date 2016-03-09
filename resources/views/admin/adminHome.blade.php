@@ -6,7 +6,6 @@
             <div class="col-lg-12">
                 <h1 class="page-header">Welcome {{ $name }}</h1>
             </div>
-            <!-- /.col-lg-12 -->
         </div>
     </div>
 @endsection

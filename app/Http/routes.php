@@ -36,7 +36,6 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/admin/createMovie', 'AdminController@createMovie');
     Route::post('/admin/createMovie', 'AdminController@storeMovie');
     Route::get('/admin/createPerson', 'AdminController@createPerson');
-    //End of Admin Routes
 
     Route::get('/', function() {
         return view('welcome');

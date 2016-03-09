@@ -11,6 +11,19 @@ use Request;
 
 class AdminController extends Controller
 {
+    private $countryNames;
+    private $countryValues;
+    private $countries;
+
+    private $genreNames;
+    private $genreValues;
+    private $genres;
+
+    private $ratingNames;
+    private $ratingValues;
+    private $ratings;
+
+
     /**
      * Create a new AdminController instance.
      *
@@ -18,60 +31,8 @@ class AdminController extends Controller
      */
     public function __construct() {
         $this->middleware('admin');
-    }
 
-    /**
-     * Movie creation validation rules.
-     *
-     * @var array
-     */
-    protected $movieValidationRules = [
-        'title' => 'required',
-        'country' => 'required',
-        'release_date' => 'required',
-        'genre' => 'required',
-        'runtime' => 'required'
-    ];
-
-    /**
-     * Person creation validation rules.
-     *
-     * @var array
-     */
-    protected $personValidationRules = [
-        'first_name' => 'required',
-        'last_name' => 'required',
-        'country_of_origin' => 'required',
-        'date_of_birth' => 'required'
-    ];
-
-    /**
-     * Go to the admin home page.
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function index() {
-        $name = Auth::user()->name;
-        return view('/admin/adminHome', compact('name'));
-    }
-
-    /**
-     * View all movies in the database
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function showMovies() {
-        $movies = Movie::latest()->get();
-        return view('/admin/showAllMovies', compact('movies'));
-    }
-
-    /**
-     * Taken to create movie form view.
-     *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function createMovie() {
-        $countryNames = [
+        $this->countryNames = [
             "United States",
             "Afghanistan",
             "Albania",
@@ -336,10 +297,11 @@ class AdminController extends Controller
             "Zimbabwe",
             "Åland Islands"
         ];
-        $countryValues = $countryNames;
-        $countries = array_combine($countryNames, $countryValues);
+        $this->countryValues = $this->countryNames;
+        $this->countries = array_combine($this->countryNames, $this->countryValues);
 
-        $genreNames = ['Action',
+        $this->genreNames = [
+            'Action',
             'Adventure',
             'Animation',
             'Biography',
@@ -360,11 +322,74 @@ class AdminController extends Controller
             'Sport',
             'Thriller',
             'War',
-            'Western'];
-        $genreValues = $genreNames;
-        $genres = array_combine($genreNames, $genreValues);
+            'Western'
+        ];
+        $this->genreValues = $this->genreNames;
+        $this->genres = array_combine($this->genreNames, $this->genreValues);
 
-        return view('/admin/createMovie', compact(['countries', 'genres']));
+        $this->ratingNames = [
+            'R'=> 'R', 'PG-13' => 'PG-13',
+            'PG' => 'PG', 'G'=> 'G', 'NC-17' => 'NC-17'
+        ];
+        $this->ratingValues = $this->ratingNames;
+        $this->ratings = array_combine($this->ratingNames, $this->ratingValues);
+    }
+
+    /**
+     * Movie creation validation rules.
+     *
+     * @var array
+     */
+    protected $movieValidationRules = [
+        'title' => 'required',
+        'country' => 'required',
+        'release_date' => 'required',
+        'genre' => 'required',
+        'runtime' => 'required'
+    ];
+
+    /**
+     * Person creation validation rules.
+     *
+     * @var array
+     */
+    protected $personValidationRules = [
+        'first_name' => 'required',
+        'last_name' => 'required',
+        'country_of_origin' => 'required',
+        'date_of_birth' => 'required'
+    ];
+
+    /**
+     * Go to the admin home page.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function index() {
+        $name = Auth::user()->name;
+        return view('/admin/adminHome', compact('name'));
+    }
+
+    /**
+     * View all movies in the database
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function showMovies() {
+        $movies = Movie::latest()->get();
+        return view('/admin/showAllMovies', compact('movies'));
+    }
+
+    /**
+     * Taken to create movie form view.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function createMovie() {
+        $countries = $this->countries;
+        $genres = $this->genres;
+        $ratings = $this->ratings;
+        return view('/admin/createMovie', compact(['countries', 'genres', 'ratings']));
     }
 
     /**
