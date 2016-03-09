@@ -408,7 +408,7 @@ class AdminController extends Controller
 
         if($validator->fails())
         {
-            return redirect()->back()->withErrors($validator->errors());
+            return redirect()->back()->withErrors($validator->errors())->withInput();
         }
 
         $movie = new Movie();
@@ -445,7 +445,7 @@ class AdminController extends Controller
         $validator = \Validator::make(Input::all(), $this->personValidationRules);
 
         if($validator->fails()) {
-            return redirect()->back()->withErrors($validator->errors());
+            return redirect()->back()->withErrors($validator->errors())->withInput();
         }
 
         $person = new Person();
