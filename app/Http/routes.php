@@ -27,9 +27,17 @@ Route::group(['middleware' => 'web'], function () {
     Route::auth();
 
     Route::get('/userpage/home', 'HomeController@index');
-    Route::post('/userpage/home', 'HomeController@storeList');
+    Route::post('/userpage/home', 'HomeController@postList');
+    Route::get('/userpage/home/deleteList/{mlid}', 'HomeController@deleteList');
 
+    //Admin Routes
     Route::get('/admin/adminHome', 'AdminController@index');
+    Route::get('/admin/showAllMovies', 'AdminController@showMovies');
+    Route::get('/admin/showAllPeople', 'AdminController@showPeople');
+    Route::get('/admin/createMovie', 'AdminController@createMovie');
+    Route::post('/admin/createMovie', 'AdminController@storeMovie');
+    Route::get('/admin/createPerson', 'AdminController@createPerson');
+    Route::post('/admin/createPerson', 'AdminController@storePerson');
 
     Route::get('/', function() {
         return view('welcome');
@@ -45,4 +53,9 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('/reviews/newcomment/{rid}', 'ReviewController@newComment');
     Route::post('/reviews/postcomment/{rid}', 'ReviewController@postComment');
 
+    //Image Routes
+    Route::get('/images/create', 'ImagesController@create');
+    Route::post('/images/store', 'ImagesController@store');
+    Route::get('/images/delete/{name}', 'ImagesController@delete');
+    Route::get('/images/discard/{name}', 'ImagesController@discard');
 });

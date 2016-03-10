@@ -43,7 +43,18 @@ class HomeController extends Controller
 
     }
 
-    public function storeList()
+    public function deleteList($mlid)
+    {
+        $ml = Masterlist::where('id', '=', $mlid)->first();
+        if ($ml != null) {
+            Masterlist::destroy($mlid);
+        } else {
+            return redirect()->action('HomeController@index');
+        }
+        return redirect()->action('HomeController@index');
+    }
+
+    public function postList()
     {
         $input = Request::all();
         $masterlist = new Masterlist();

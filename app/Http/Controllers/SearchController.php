@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Library\StaticData;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -11,7 +12,10 @@ class SearchController extends Controller
 {
     public function advancedMovie()
     {
-        return view('search.advmovie');
+        $countries = StaticData::$countries;
+        $genres = StaticData::$genres;
+        $ratings = StaticData::$ratings;
+        return view('search.advmovie', compact('countries', 'genres', 'ratings'));
     }
 
     public function advancedPerson()
