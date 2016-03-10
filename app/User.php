@@ -65,6 +65,15 @@ class User extends Authenticatable
     }
 
     /**
+     * A User may have multiple lists..
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function masterlist() {
+        return $this->hasMany('App\Masterlist');
+    }
+
+    /**
      * Sets the avatar for a user, or sets the avatar to null.
      *
      * @param null $image
@@ -75,6 +84,17 @@ class User extends Authenticatable
         return $this->save();
     }
 
+
+
+    /**
+     * A user may have multiple comments.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function masterlists()
+    {
+        return $this->hasMany('App\Masterlist');
+    }
 
     /**
      * Assign a role to a user.
@@ -184,6 +204,25 @@ class User extends Authenticatable
                 $i++;
             }
             return $requireAllCounter == count($roles);
+        }
+    }
+
+
+    /**
+     * Used by AuthServiceProvider to verify the role of a user.
+     *
+     * @param $role
+     * @return bool
+     */
+    public function hasRoleAuthServiceProvider($role) {
+        if(is_string($role)) {
+            return $this->roles->contains('name', $role);
+        }
+
+        foreach($role as $r) {
+            if($this->hasRoleAuthServiceProvider($r->name)) {
+                return true;
+            }
         }
     }
 }

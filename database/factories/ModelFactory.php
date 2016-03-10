@@ -11,8 +11,7 @@
 |
 */
 
-$factory->define(App\User::class, function (Faker\Generator $faker)
-{
+$factory->define(App\User::class, function (Faker\Generator $faker) {
     return [
         'name'           => $faker->name,
         'email'          => $faker->email,
@@ -21,9 +20,17 @@ $factory->define(App\User::class, function (Faker\Generator $faker)
     ];
 });
 
-//$factory->define(App\Review::class, function (Faker\Generator $faker)
-//{
-//    return [
-//
-//    ];
-//});
+$factory->define(App\Image::class, function (Faker\Generator $faker) {
+
+    $path = '';
+
+    foreach(range(1, rand(1, 4)) as $value) {
+        $path .= $faker->word . '/';
+    }
+
+    return [
+        'name'      => $faker->word,
+        'path'      => $path,
+        'extension' => $faker->fileExtension
+    ];
+});
