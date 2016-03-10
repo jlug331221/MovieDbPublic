@@ -19,9 +19,8 @@
     <!-- Latest compiled and minified Bootstrap-select CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
 
-    <!-- Datatables CSS -->
-    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.11/css/jquery.dataTables.css">
-</head>
+    <!-- Datatables minified CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/t/bs/dt-1.10.11/datatables.min.css"/></head>
 
 <body>
 <div id="wrapper">
@@ -122,14 +121,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
-    <!-- Latest compiled and minified Bootstrap-select JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
-
     <script src="//code.jquery.com/jquery-1.10.2.js"></script>
     <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
 
+    <!-- Latest compiled and minified Bootstrap-select JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
+
     <!-- Datatables JavaScript -->
-    <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.11/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/t/bs/dt-1.10.11/datatables.min.js"></script>
 
     <script>
         $(function() {
@@ -152,6 +151,7 @@
             $('#table_id').DataTable();
         } );
     </script>
-        {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
+
+    {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
 </body>
 </html>
