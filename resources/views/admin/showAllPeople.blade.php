@@ -8,6 +8,10 @@
 
                 <hr/>
 
+                @if (Session::has('message'))
+                    <div class="alert alert-info">{{ Session::get('message') }}</div>
+                @endif
+
                 <div class="container-fluid">
                     <table id="table_id" class="table table-striped table-bordered" cellspacing="0" width="100%">
                         <thead class="table-invert">
@@ -18,6 +22,7 @@
                                 <th><h4>Country of Origin</h4></th>
                                 <th><h4>Date of Birth</h4></th>
                                 <th><h4>Date of Death</h4></th>
+                                <th><h4>Administration</h4></th>
                             </tr>
                         </thead>
                         <tfoot class="table-invert">
@@ -28,17 +33,31 @@
                                 <td><h4>Country of Origin</h4></td>
                                 <td><h4>Date of Birth</h4></td>
                                 <td><h4>Date of Death</h4></td>
+                                <td><h4>Administration</h4></td>
                             </tr>
                         </tfoot>
                         <tbody>
                             @foreach($people as $person)
                                 <tr>
-                                    <td><h5>{{ $person->first_name }}</h5></td>
+                                    <td>
+                                        <a href="{{ url('admin/showPerson/'. $person->id) }}">
+                                            <h5>{{ $person->first_name }}</h5>
+                                        </a>
+                                    </td>
                                     <td><h5>{{ $person->last_name }}</h5></td>
                                     <td><h5>{{ $person->first_alias }}</h5></td>
                                     <td><h5>{{ $person->country_of_origin }}</h5></td>
                                     <td><h5>{{ $person->date_of_birth }}</h5></td>
                                     <td><h5>{{ $person->date_of_death }}</h5></td>
+                                    <td align="center">
+                                        <a href="{{ url('admin/showPerson/'. $person->id) }}">
+                                            <i class="fa fa-pencil-square-o"></i>
+                                        </a>
+                                        &nbsp;&nbsp;
+                                        <a href="{{ url('admin/deletePerson/'. $person->id) }}">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>

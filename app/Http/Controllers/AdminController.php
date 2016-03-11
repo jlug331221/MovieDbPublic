@@ -9,6 +9,7 @@ use App\Movie;
 use App\Person;
 use Illuminate\Support\Facades\Input;
 use Request;
+use Session;
 
 class AdminController extends Controller
 {
@@ -372,18 +373,39 @@ class AdminController extends Controller
     }
 
     /**
-     * View all movies in the database
+     * View all movies in the database.
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function showMovies() {
-        $movies = Movie::latest()->get();
+        $movies = Movie::get();
         return view('/admin/showAllMovies', compact('movies'));
     }
 
+    /**
+     * Show specific movie for editing.
+     *
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function showMovie($id) {
+        $movie = Movie::find($id);
+        return view('/admin/showMovie', compact('movie'));
+    }
+
+    /**
+     * View all people in the database.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function showPeople() {
-        $people = Person::latest()->get();
+        $people = Person::get();
         return view('/admin/showAllPeople', compact('people'));
+    }
+
+    public function showPerson($id) {
+        $person = Person::find($id);
+        return view('/admin/showPerson', compact('person'));
     }
 
     /**
@@ -422,6 +444,7 @@ class AdminController extends Controller
         $movie->synopsis = Input::get('synopsis');
         $movie->save();
 
+        Session::flash('message', 'Successfully added movie to database!');
         return redirect()->action('AdminController@showMovies');
     }
 
@@ -465,6 +488,7 @@ class AdminController extends Controller
         $person->biography = Input::get('biography');
         $person->save();
 
+        Session::flash('message', 'Successfully added person to database!');
         return redirect()->action('AdminController@showPeople');
     }
 }
