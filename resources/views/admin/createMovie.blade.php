@@ -39,7 +39,7 @@
                     </div>
 
                     <div class="col-lg-12 form-group">
-                        {!! Form::label('release_date', 'Date:', ['class' => 'col-lg-1 control-label']) !!}
+                        {!! Form::label('release_date', 'Release Date:', ['class' => 'col-lg-1 control-label']) !!}
                         <div class="col-lg-2">
                             <div class="inner-addon right-addon">
                                 <i class="fa fa-calendar"></i>
