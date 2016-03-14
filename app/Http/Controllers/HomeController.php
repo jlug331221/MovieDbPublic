@@ -10,6 +10,8 @@ use Auth;
 use App\Http\Requests;
 //use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Input;
+use Session;
 
 class HomeController extends Controller
 {
@@ -22,6 +24,11 @@ class HomeController extends Controller
     {
         $this->middleware('auth');
     }
+
+    protected $CreateListValidationRules = [
+        'title' => 'required',
+        'type' => 'required'
+    ];
 
     /**
      * Show the application dashboard.
@@ -56,6 +63,13 @@ class HomeController extends Controller
 
     public function postList()
     {
+        $validator = \Validator::make(Input::all(), $this->CreateListValidationRules);
+
+        if($validator->fails())
+        {
+            return redirect()->back()->withErrors($validator->errors())->withInput();
+        }
+
         $input = Request::all();
         $masterlist = new Masterlist();
         $masterlist->user_id = Auth::user()->id;
@@ -76,7 +90,7 @@ class HomeController extends Controller
             $personlist->masterlist_id = $mlid;
             $personlist->save();
         }
-
+        Session::flash('message', 'Successfully created list!');
         return redirect()->action('HomeController@index');
     }
 }
