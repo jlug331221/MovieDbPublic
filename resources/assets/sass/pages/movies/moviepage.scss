@@ -1,0 +1,32 @@
+.MoviePage {
+  font-family: $open-sans;
+  background-color: lightsteelblue;
+  margin-top: 0px;
+  box-shadow: 6px 0px 5px -5px #999, -6px 0px 5px -5px #999;
+}
+
+.MoviePage__desc {
+  margin-bottom: 30px;
+  margin-left: 30px;
+  font-size: medium;
+}
+
+.MoviePage__bold {
+  font-weight: bold;
+}
+
+.MoviePage__table {
+  background-color: white;
+  margin-bottom: 30px;
+  margin-left: 30px;
+}
+
+.MoviePage__header {
+  margin-bottom: 20px;
+  margin-left: 30px;
+}
+
+.MoviePage__cast {
+  background-color: white;
+  margin-left: 30px;
+}
