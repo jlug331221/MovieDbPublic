@@ -54,7 +54,7 @@ class HomeController extends Controller
         return redirect()->action('HomeController@index');
     }
 
-    public function storeList()
+    public function postList()
     {
         $input = Request::all();
         $masterlist = new Masterlist();

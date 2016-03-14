@@ -27,10 +27,19 @@ Route::group(['middleware' => 'web'], function () {
     Route::auth();
 
     Route::get('/userpage/home', 'HomeController@index');
-    Route::post('/userpage/home', 'HomeController@storeList');
+    Route::post('/userpage/home', 'HomeController@postList');
     Route::get('/userpage/home/deleteList/{mlid}', 'HomeController@deleteList');
 
+    //Admin Routes
     Route::get('/admin/adminHome', 'AdminController@index');
+    Route::get('/admin/showAllMovies', 'AdminController@showMovies');
+    Route::get('admin/showMovie/{id}', 'AdminController@showMovie');
+    Route::get('/admin/showAllPeople', 'AdminController@showPeople');
+    Route::get('/admin/showPerson/{id}', 'AdminController@showPerson');
+    Route::get('/admin/createMovie', 'AdminController@createMovie');
+    Route::post('/admin/createMovie', 'AdminController@storeMovie');
+    Route::get('/admin/createPerson', 'AdminController@createPerson');
+    Route::post('/admin/createPerson', 'AdminController@storePerson');
 
     Route::get('/', function() {
         return view('welcome');
