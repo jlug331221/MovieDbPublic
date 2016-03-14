@@ -7,8 +7,8 @@
 
 $(function () {
 
-  $('#datetimepicker_from').datepicker({});
-  $('#datetimepicker_to').datepicker({});
+  $('#AdvSearch__datepicker_from').datepicker({});
+  $('#AdvSearch__datepicker_to').datepicker({});
 });
 
 },{}]},{},[1]);

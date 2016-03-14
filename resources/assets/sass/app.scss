@@ -22,6 +22,6 @@ $lato: 'Lato', sans-serif;
 
 /** General Page Styling */
 body {
-  font-family: 'Lato';
+  font-family: $lato;
   padding-bottom: 75px;
 }
