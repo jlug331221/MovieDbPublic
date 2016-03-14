@@ -36,18 +36,10 @@
                     <li><a href="{{ url('/userpage/home') }}">Home</a></li>
                 </ul>
 
-		<div class="navbar-form navbar-left" role="search">
-		    {!! Form::open() !!}
+		{!! Form::open(['class' => 'navbar-form navbar-left', 'role' => 'search']) !!}
 		    {!! Form::text('search', null, ['class' => 'form-group form-control', 'placeholder' => 'Search']) !!}
 		    {!! Form::submit('Submit', ['class' => 'btn btn-default']) !!}
-		    {!! Form::close() !!}
-		</div>	
-                <!-- <form class="navbar-form navbar-left" role="search"> -->
-                <!--     <div class="form-group"> -->
-                <!--         <input type="text" class="form-control" placeholder="Search"> -->
-                <!--     </div> -->
-                <!--     <button type="submit" class="btn btn-default">Submit</button> -->
-                <!-- </form> -->
+		{!! Form::close() !!}
 
                 <ul class="nav navbar-nav">
                     <li class="dropdown">
