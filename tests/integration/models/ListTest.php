@@ -36,6 +36,38 @@ class ListTest extends TestCase {
         $this->assertCount(0, $user->masterlists);
     }
 
+    /** @test */
+    function an_existing_user_can_create_masterlist() {
+        $user = factory(User::class, (1))->create();
+        Auth::login($user);
+
+        $masterlist = new Masterlist();
+        $masterlist->user_id = $user->id;
+        $masterlist->title = "Masterlist";
+        $masterlist->type = "M";
+        $masterlist->save();
+
+        $this->assertCount(1, $user->masterlists);
+    }
+
+    /** @test */
+    function an_existing_user_can_delete_masterlist() {
+        $user = factory(User::class, (1))->create();
+        Auth::login($user);
+
+        $masterlist = new Masterlist();
+        $masterlist->user_id = $user->id;
+        $masterlist->title = "Masterlist";
+        $masterlist->type = "M";
+        $masterlist->save();
+
+        Masterlist::destroy($masterlist->id);
+
+        $this->assertCount(0, $user->masterlists);
+    }
+
+
+
     public function tearDown()
     {
         parent::tearDown();
