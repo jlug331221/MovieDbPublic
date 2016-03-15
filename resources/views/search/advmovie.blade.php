@@ -78,9 +78,9 @@
                     </div>
                 </div>
                 <div class="AdvSearch__description">
-                    Format: mm/dd/yyyy. Pick a span of time by entering both dates, such as 01-01-1992 to 01-01-2002 for
+                    Format: mm/dd/yyyy. Pick a span of time by entering both dates, such as 01/01/1992 to 01/01/2002 for
                     results containing movies from 1992 to 2002. A single date may be entered, such as beginning on
-                    05-01-1970 for results appearing after May 01, 1970, or ending on 08-13-1984 for results appearing
+                    05/01/1970 for results appearing after May 01, 1970, or ending on 08/13/1984 for results appearing
                     before August 13, 1984.
                 </div>
             </div>
@@ -166,7 +166,7 @@
                           name="keyword"
                           rows="2"></textarea>
                 <div class="AdvSearch__description">
-                    Enter a list of keywords separated by commas to search for movies. E.g. New York, Annie, love
+                    Enter a list of keywords separated by commas to search for movies. E.g. New York, Annie, love, ...
                 </div>
             </div>
 

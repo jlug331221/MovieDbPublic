@@ -41,14 +41,15 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/admin/createPerson', 'AdminController@createPerson');
     Route::post('/admin/createPerson', 'AdminController@storePerson');
 
-    Route::get('/', function() {
-        return view('welcome');
-    });
+    Route::get('/', function() { return view('welcome'); });
 
     // Search Routes
-    Route::get('/search/movie', 'SearchController@advancedMovie');
-    Route::post('/search/movie', 'SearchController@advancedMovieQuery');
-    Route::get('/search/person', 'SearchController@advancedPerson');
+    Route::get('/search', 'SearchController@index');
+    Route::post('/search', 'SearchController@basicSearch');
+    Route::get('/search/movie', 'SearchController@get_advancedMovie');
+    Route::post('/search/movie', 'SearchController@post_advancedMovie');
+    Route::get('/search/person', 'SearchController@get_advancedPerson');
+    Route::post('/search/person', 'SearchController@post_advancedPerson');
 
     // Review Routes
     Route::get('/reviews/create/{mid}', 'ReviewController@create');

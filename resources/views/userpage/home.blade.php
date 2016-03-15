@@ -7,6 +7,14 @@
             <div class="panel panel-default">
                 <div class="panel-heading">{{ $name }}, Welcome To Your User Page!</div>
 
+                @if($errors->has())
+                    <div class="alert alert-danger">
+                        @foreach($errors->all() as $error)
+                            {{ $error }}<br/>
+                        @endforeach
+                    </div>
+                @endif
+
                 <div class="panel-body">
                     You are logged in! {{ Auth::user()->name }}
                     <br>

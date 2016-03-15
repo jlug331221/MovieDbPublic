@@ -7,4 +7,6 @@ $(function () {
     $('#AdvSearch__datepicker_from').datepicker({});
     $('#AdvSearch__datepicker_to').datepicker({});
 
+    $('#AdvSearch__datepicker_from2').datepicker({});
+    $('#AdvSearch__datepicker_to2').datepicker({});
 });
