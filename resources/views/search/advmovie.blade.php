@@ -5,21 +5,23 @@
 @section('content')
 
     <div class="container">
+        @include('errors.display')
 
         <h1>Movie Search</h1>
         <hr/>
 
         <div class="AdvSearch col-sm-9">
 
-            {!! Form::open(['url' => '/search/???', 'class' => 'form-horizontal']) !!}
+            {!! Form::open(['url' => '/search/movie', 'class' => 'form-horizontal']) !!}
 
-                    <!-- Name -->
+            <!-- Name -->
             <div class="AdvSearch__form-input">
                 <label for="name">Name</label>
                 <input type="text"
                        id="name"
                        class="form-control"
                        placeholder="Enter a movie name..."
+                       value="{{ old('name', '') }}"
                        name="name">
                 <div class="AdvSearch__description">
                     Enter the full or partial name of a movie that you'd like to search for. E.g. Dr. Strangelove
@@ -35,6 +37,7 @@
                             <div class="AdvSearch__genre">
                                 <input type="checkbox"
                                        name="genre[]"
+                                       @if (old('genre') && in_array($genre, old('genre'))) checked @endif
                                        value="{{ $genre }}"/>
                                 {{ $genre }}
                             </div>
@@ -56,6 +59,7 @@
                                class="form-control"
                                id="release"
                                placeholder="Beginning on..."
+                               value="{{ old('date-start', '') }}"
                                name="date-start"/>
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-calendar"></span>
@@ -66,6 +70,7 @@
                         <input type="text"
                                class="form-control"
                                placeholder="Ending on..."
+                               value="{{ old('date-end', '') }}"
                                name="date-end"/>
                         <span class="input-group-addon">
                             <span class="glyphicon glyphicon-calendar"></span>
@@ -82,13 +87,15 @@
 
             <!-- Countries -->
             <div class="AdvSearch__form-input">
-                <label for="country">Countries</label>
+                <label for="countries">Countries</label>
                 <select multiple
-                        id="country"
+                        id="countries"
                         class="form-control"
-                        name="country">
+                        name="countries[]">
                     @foreach ($countries as $country)
-                        <option>{{ $country }}</option>
+                        <option @if (old('countries') && in_array($country, old('countries'))) selected @endif>
+                            {{ $country }}
+                        </option>
                     @endforeach
                 </select>
                 <div class="AdvSearch__description">
@@ -106,6 +113,7 @@
                             <div class="AdvSearch__rating">
                                 <input type="checkbox"
                                        name="rating[]"
+                                       @if (old('rating') && in_array($rating, old('rating'))) checked @endif
                                        value="{{ $rating }}"/>
                                 <img src="{{ $rating_val }}"/>
                             </div>
@@ -126,6 +134,7 @@
                         <input type="text"
                                class="form-control"
                                placeholder="Minimum..."
+                               value="{{ old('runtime-min', '') }}"
                                name="runtime-min"/>
                         <span class="input-group-addon">mins</span>
                     </div>
@@ -134,7 +143,8 @@
                         <input type="text"
                                class="form-control"
                                placeholder="Maximum..."
-                               name="runtime-min"/>
+                               value="{{ old('runtime-max', '') }}"
+                               name="runtime-max"/>
                         <span class="input-group-addon">mins</span>
                     </div>
                 </div>
@@ -152,6 +162,7 @@
                 <textarea class="form-control"
                           id="keyword"
                           placeholder="Enter keywords..."
+                          value="{{ old('keyword', '') }}"
                           name="keyword"
                           rows="2"></textarea>
                 <div class="AdvSearch__description">

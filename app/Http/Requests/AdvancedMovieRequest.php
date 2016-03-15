@@ -26,12 +26,12 @@ class AdvancedMovieRequest extends Request {
         return [
             'name'        => 'string|max:255',
             'genre'       => 'array',
-            'date-start'  => 'date_format:m/d/Y',
+            'date-start'  => 'date_format:m/d/Y|on_or_before:date-end',
             'date-end'    => 'date_format:m/d/Y',
             'countries'   => 'array',
             'rating'      => 'array',
-            'runtime-min' => 'integer',
-            'runtime-max' => 'integer',
+            'runtime-min' => 'integer|min:0',
+            'runtime-max' => 'integer|min:0|greater_or_equal:runtime-min',
             'keyword'     => 'string|max:255',
         ];
     }
