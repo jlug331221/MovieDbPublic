@@ -16,8 +16,16 @@
                 @endif
 
                 <div class="panel-body">
-                    You are logged in! {{ Auth::user()->name }}
-                    <br>
+
+                    <!-- USER AVATAR  -->
+                    <div class="row">
+                        <div class="col-lg-12 col-centered">
+                            <p class="text-center">You are logged in! {{ Auth::user()->name }} </p>
+                            <img src="{{asset($avatar)}}" class="img-circle center-block Userpage__avatar" alt="Avatar">
+                        </div>
+                    </div>
+                    <!-- USER AVATAR  -->
+
                     <br>
                     <div class="container-fluid">
                         <ul class="nav nav-tabs" id="myTabs">

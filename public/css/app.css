@@ -127,6 +127,10 @@
   background-color: white;
   margin-left: 30px; }
 
+.Userpage__avatar {
+  height: 100px;
+  width: 100px; }
+
 /** General Page Styling */
 body {
   font-family: "Lato", sans-serif;

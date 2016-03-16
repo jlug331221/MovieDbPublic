@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Masterlist;
 use App\MovieList;
 use App\PersonList;
+use App\Image;
 use App\Movie;
 use Auth;
 use App\Http\Requests;
@@ -39,7 +40,11 @@ class HomeController extends Controller
     {
         $name = Auth::user()->name;
         $masterlists = Masterlist::where('user_id', Auth::user()->id)->get();
-        return view('/userpage/home', compact('name','masterlists'));
+        $avatar_id = Auth::user()->avatar;
+        $av_image = Image::where('id', '=' ,$avatar_id)->first();
+        $avatar = $av_image['path'].'/'.$av_image['name'].'.'.$av_image['extension'];
+
+        return view('/userpage/home', compact('name','masterlists','avatar'));
     }
 
     public function getMoviesInList($masterlist_id)
