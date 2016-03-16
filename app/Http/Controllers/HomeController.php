@@ -14,6 +14,12 @@ use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Input;
 use Session;
 
+use DB;
+use App\Http\Requests\CreateImageRequest;
+use Faker\Factory;
+use Image as InterventionImage;
+use ImageSync;
+
 class HomeController extends Controller
 {
     /**
@@ -45,6 +51,31 @@ class HomeController extends Controller
         $avatar = $av_image['path'].'/'.$av_image['name'].'.'.$av_image['extension'];
 
         return view('/userpage/home', compact('name','masterlists','avatar'));
+    }
+
+    public function avatar()
+    {
+        $avatar_id = Auth::user()->avatar;
+        $av_image = Image::where('id', '=' ,$avatar_id)->first();
+        $avatar = $av_image['path'].'/'.$av_image['name'].'.'.$av_image['extension'];
+        $id = null;
+        return view('/userpage/avatar', compact('avatar', 'id'));
+    }
+
+    public function store(CreateImageRequest $request)
+    {
+        $file = $request->file('image');
+        $description = $request->get('description');
+
+        try {
+            $image = ImageSync::create($file, $description);
+            Auth::user()->setAvatar($image);
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+            // do something here like log the error.
+        }
+
+        return redirect('/userpage/avatar')->with($image['id']);
     }
 
     public function getMoviesInList($masterlist_id)

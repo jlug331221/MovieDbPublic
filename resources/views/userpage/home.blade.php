@@ -21,7 +21,9 @@
                     <div class="row">
                         <div class="col-lg-12 col-centered">
                             <p class="text-center">You are logged in! {{ Auth::user()->name }} </p>
-                            <img src="{{asset($avatar)}}" class="img-circle center-block Userpage__avatar" alt="Avatar">
+                            <a href="{{ url('/userpage/avatar') }}">
+                                <img src="{{asset($avatar)}}" class="img-circle center-block Userpage__avatar" alt="Avatar">
+                            </a>
                         </div>
                     </div>
                     <!-- USER AVATAR  -->

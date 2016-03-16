@@ -1,4 +1,8 @@
 .Userpage__avatar {
     height: 100px;
     width: 100px;
+    border-radius: 100px;
+    box-sizing: border-box;
+    background-color: #DDD;
+    border: 5px solid #cfd8dc;
 }
