@@ -304,4 +304,8 @@ class StaticData {
         'R'     => '/static/rating_r.svg',
         'NC-17' => '/static/rating_nc-17.svg',
     ];
+
+    public static $default_avatar = [
+        'Default'     => '/static/Default.png',
+    ];
 }

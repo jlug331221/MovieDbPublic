@@ -14,20 +14,22 @@
                         <!-- USER AVATAR  -->
                         @if($avatar != '/.')
                         <div class="row">
-                            <div class="col-lg-12 col-centered">
-                                <img src="{{asset($avatar)}}" class="img-circle center-block Userpage__avatar" alt="Avatar">
+                            <div class="col-md-2 col-centered Userpage__center">
+                                <img src="{{asset($avatar)}}" class="img-circle Userpage__avatar" alt="Avatar">
                             </div>
                         </div>
                         @endif
                         <!-- USER AVATAR  -->
-                        {{--@if($avatar == '/.')--}}
-                            {{--<div class="row">--}}
-                                {{--<div class="col-lg-12 col-centered">--}}
-                                    {{--<img src="{{asset($avatar)}}" class="img-circle center-block Userpage__avatar" alt="Avatar">--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
+                        @if($avatar == '/.')
+                            <div class="row">
+                                <div class="col-md-2 col-centered Userpage__center">
+                                    @foreach($default as $avatar => $avatar_def)
+                                        <img src="{{$avatar_def}}" class="img-circle Userpage__avatar" alt="Avatar">
+                                    @endforeach
+                                </div>
+                            </div>
 
-                        {{--@endif--}}
+                        @endif
 
 
                         @if (count($errors) > 0)
@@ -43,7 +45,7 @@
                         @endif
 
                         <div class="container-fluid">
-                            <h1>Upload Image</h1>
+                            <h1>Upload Image To Be Set As Your Avatar!</h1>
                             <hr/>
 
                             {!! Form::open(['url' => '/userpage/avatar/store', 'files' => true, 'class' => 'form']) !!}

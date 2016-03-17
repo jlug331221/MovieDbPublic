@@ -6,17 +6,15 @@ use App\Masterlist;
 use App\MovieList;
 use App\PersonList;
 use App\Image;
-use App\Movie;
 use Auth;
 use App\Http\Requests;
-//use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Input;
 use Session;
-
+use App\Library\StaticData;
 use DB;
 use App\Http\Requests\CreateImageRequest;
-use Faker\Factory;
+
 use Image as InterventionImage;
 use ImageSync;
 
@@ -49,8 +47,8 @@ class HomeController extends Controller
         $avatar_id = Auth::user()->avatar;
         $av_image = Image::where('id', '=' ,$avatar_id)->first();
         $avatar = $av_image['path'].'/'.$av_image['name'].'.'.$av_image['extension'];
-
-        return view('/userpage/home', compact('name','masterlists','avatar'));
+        $default = StaticData::$default_avatar;
+        return view('/userpage/home', compact('name','masterlists','avatar','default'));
     }
 
     public function avatar()
@@ -58,7 +56,8 @@ class HomeController extends Controller
         $avatar_id = Auth::user()->avatar;
         $av_image = Image::where('id', '=' ,$avatar_id)->first();
         $avatar = $av_image['path'].'/'.$av_image['name'].'.'.$av_image['extension'];
-        return view('/userpage/avatar', compact('avatar'));
+        $default = StaticData::$default_avatar;
+        return view('/userpage/avatar', compact('avatar','default'));
     }
 
     public function store(CreateImageRequest $request)

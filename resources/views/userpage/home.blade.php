@@ -38,7 +38,9 @@
                         <div class="col-md-2 col-centered Userpage__center">
                            <p class="text-center">You are logged in! {{ Auth::user()->name }} </p>
                             <a href="{{ url('/userpage/avatar') }}" class="edit">
-                                <img src="{{asset($avatar)}}" class="img-circle Userpage__avatar" alt="Avatar">
+                                @foreach($default as $avatar => $avatar_def)
+                                <img src="{{$avatar_def}}" class="img-circle Userpage__avatar" alt="Avatar">
+                                @endforeach
                             </a>
                         </div>
                     </div>
