@@ -23,7 +23,6 @@
                         </div>
                     @endif
 
-                    @if($avatar != '/.') <!--The user does have an avatar-->
                     <div class="row">
                         <div class="col-md-2 col-centered Userpage__center">
                             <p class="text-center">You are logged in! {{ Auth::user()->name }} </p>
@@ -32,19 +31,6 @@
                             </a>
                         </div>
                     </div>
-                    @endif
-                    @if($avatar == '/.') <!--The user does NOT have an avatar-->
-                    <div class="row">
-                        <div class="col-md-2 col-centered Userpage__center">
-                           <p class="text-center">You are logged in! {{ Auth::user()->name }} </p>
-                            <a href="{{ url('/userpage/avatar') }}" class="edit">
-                                @foreach($default as $avatar => $avatar_def)
-                                <img src="{{$avatar_def}}" class="img-circle Userpage__avatar" alt="Avatar">
-                                @endforeach
-                            </a>
-                        </div>
-                    </div>
-                    @endif
 
                     <br>
                     <div class="container-fluid">

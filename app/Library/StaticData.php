@@ -6,6 +6,11 @@ namespace App\Library;
 
 class StaticData {
 
+    public static function defaultAvatar()
+    {
+        return '/static/Default.png';
+    }
+
     public static $countries = [
         "United States",
         "Afghanistan",

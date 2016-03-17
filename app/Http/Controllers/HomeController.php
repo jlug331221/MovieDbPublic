@@ -47,8 +47,10 @@ class HomeController extends Controller
         $avatar_id = Auth::user()->avatar;
         $av_image = Image::where('id', '=' ,$avatar_id)->first();
         $avatar = $av_image['path'].'/'.$av_image['name'].'.'.$av_image['extension'];
-        $default = StaticData::$default_avatar;
-        return view('/userpage/home', compact('name','masterlists','avatar','default'));
+        if($avatar == '/.'){
+            $avatar = StaticData::defaultAvatar();
+        }
+        return view('/userpage/home', compact('name','masterlists','avatar'));
     }
 
     public function avatar()
@@ -56,8 +58,10 @@ class HomeController extends Controller
         $avatar_id = Auth::user()->avatar;
         $av_image = Image::where('id', '=' ,$avatar_id)->first();
         $avatar = $av_image['path'].'/'.$av_image['name'].'.'.$av_image['extension'];
-        $default = StaticData::$default_avatar;
-        return view('/userpage/avatar', compact('avatar','default'));
+        if($avatar == '/.'){
+            $avatar = StaticData::defaultAvatar();
+        }
+        return view('/userpage/avatar', compact('avatar'));
     }
 
     public function store(CreateImageRequest $request)
