@@ -58,8 +58,7 @@ class HomeController extends Controller
         $avatar_id = Auth::user()->avatar;
         $av_image = Image::where('id', '=' ,$avatar_id)->first();
         $avatar = $av_image['path'].'/'.$av_image['name'].'.'.$av_image['extension'];
-        $id = null;
-        return view('/userpage/avatar', compact('avatar', 'id'));
+        return view('/userpage/avatar', compact('avatar'));
     }
 
     public function store(CreateImageRequest $request)

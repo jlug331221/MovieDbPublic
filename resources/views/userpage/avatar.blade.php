@@ -10,15 +10,25 @@
 
                     <div class="panel-body">
 
+
                         <!-- USER AVATAR  -->
+                        @if($avatar != '/.')
                         <div class="row">
                             <div class="col-lg-12 col-centered">
                                 <img src="{{asset($avatar)}}" class="img-circle center-block Userpage__avatar" alt="Avatar">
                             </div>
                         </div>
+                        @endif
                         <!-- USER AVATAR  -->
+                        {{--@if($avatar == '/.')--}}
+                            {{--<div class="row">--}}
+                                {{--<div class="col-lg-12 col-centered">--}}
+                                    {{--<img src="{{asset($avatar)}}" class="img-circle center-block Userpage__avatar" alt="Avatar">--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
 
-                        @yield('imageupload')
+                        {{--@endif--}}
+
 
                         @if (count($errors) > 0)
                             <div class="alert alert-danger">

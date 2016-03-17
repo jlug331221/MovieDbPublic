@@ -18,6 +18,7 @@
                 <div class="panel-body">
 
                     <!-- USER AVATAR  -->
+                    @if($avatar != '/.')
                     <div class="row">
                         <div class="col-lg-12 col-centered">
                             <p class="text-center">You are logged in! {{ Auth::user()->name }} </p>
@@ -26,6 +27,17 @@
                             </a>
                         </div>
                     </div>
+                    @endif
+                    @if($avatar == '/.')
+                    <div class="row">
+                        <div class="col-lg-12 col-centered">
+                           <p class="text-center">You are logged in! {{ Auth::user()->name }} </p>
+                            <a href="{{ url('/userpage/avatar') }}" class="icon">
+                                <img src= "{{url('/public/images/icon_user-default.png')}}" class="img-circle center-block Userpage__avatar" alt="Avatar">
+                            </a>
+                        </div>
+                    </div>
+                    @endif
                     <!-- USER AVATAR  -->
 
                     <br>

@@ -7,6 +7,13 @@ use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use App\Image;
+use Auth;
+use App\Http\Requests;
+use Session;
+use DB;
+use Image as InterventionImage;
+use ImageSync;
 
 class AuthController extends Controller
 {
@@ -64,10 +71,12 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
+        $av_image = Image::where('name', '=' ,'Default')->first();
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'avatar' => $av_image['id'],
         ]);
     }
 }
