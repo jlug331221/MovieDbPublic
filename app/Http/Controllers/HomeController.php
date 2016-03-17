@@ -69,12 +69,12 @@ class HomeController extends Controller
         try {
             $image = ImageSync::create($file, $description);
             Auth::user()->setAvatar($image);
+            Session::flash('message', 'Successfully changed avatar!');
         } catch (\Exception $e) {
             dd($e->getMessage());
             // do something here like log the error.
         }
-
-        return redirect('/userpage/avatar')->with($image['id']);
+        return redirect('/userpage/home');
     }
 
     public function getMoviesInList($masterlist_id)

@@ -16,29 +16,33 @@
                 @endif
 
                 <div class="panel-body">
+                    @if (\Illuminate\Support\Facades\Session::has('message'))
+                        <div class="alert-success">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            {{\Illuminate\Support\Facades\Session::get('message')}}
+                        </div>
+                    @endif
 
-                    <!-- USER AVATAR  -->
-                    @if($avatar != '/.')
+                    @if($avatar != '/.') <!--The user does have an avatar-->
                     <div class="row">
-                        <div class="col-lg-12 col-centered">
+                        <div class="col-md-2 col-centered Userpage__center">
                             <p class="text-center">You are logged in! {{ Auth::user()->name }} </p>
-                            <a href="{{ url('/userpage/avatar') }}">
-                                <img src="{{asset($avatar)}}" class="img-circle center-block Userpage__avatar" alt="Avatar">
+                            <a href="{{ url('/userpage/avatar') }}" class="edit">
+                                <img src="{{asset($avatar)}}" class="img-circle Userpage__avatar " alt="Avatar">
                             </a>
                         </div>
                     </div>
                     @endif
-                    @if($avatar == '/.')
+                    @if($avatar == '/.') <!--The user does NOT have an avatar-->
                     <div class="row">
-                        <div class="col-lg-12 col-centered">
+                        <div class="col-md-2 col-centered Userpage__center">
                            <p class="text-center">You are logged in! {{ Auth::user()->name }} </p>
-                            <a href="{{ url('/userpage/avatar') }}" class="icon">
-                                <img src= "{{url('/public/images/icon_user-default.png')}}" class="img-circle center-block Userpage__avatar" alt="Avatar">
+                            <a href="{{ url('/userpage/avatar') }}" class="edit">
+                                <img src="{{asset($avatar)}}" class="img-circle Userpage__avatar" alt="Avatar">
                             </a>
                         </div>
                     </div>
                     @endif
-                    <!-- USER AVATAR  -->
 
                     <br>
                     <div class="container-fluid">
