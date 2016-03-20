@@ -65,7 +65,7 @@ class User extends Authenticatable
     }
 
     /**
-     * A User may have multiple lists..
+     * A User may have multiple lists.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -80,7 +80,6 @@ class User extends Authenticatable
      * @return bool
      */
     public function setAvatar($image = null) {
-//      $this->avatar = ($image == null) ? null : hex2bin($image->id);
         $this->avatar = ($image == null) ? null : $image->id;
         return $this->save();
     }

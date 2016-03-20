@@ -15,7 +15,6 @@ $(function () {
     $('#AdvSearch__datepicker_to2').datepicker({});
 
     $('.typeahead').typeahead({
-        hint: true,
         highlight: true,
         minLength: 1
     }, {

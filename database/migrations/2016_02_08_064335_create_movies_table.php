@@ -24,6 +24,7 @@ class CreateMoviesTable extends Migration
             $table->text('synopsis')->nullable();
 
             $table->timestamps();
+
         });
     }
 
