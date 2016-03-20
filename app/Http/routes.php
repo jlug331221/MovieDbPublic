@@ -50,6 +50,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('/search/movie', 'SearchController@post_advancedMovie');
     Route::get('/search/person', 'SearchController@get_advancedPerson');
     Route::post('/search/person', 'SearchController@post_advancedPerson');
+    Route::get('/search/typeahead', 'SearchController@get_typeaheadDemo');
 
     // Review Routes
     Route::get('/reviews/create/{mid}', 'ReviewController@create');

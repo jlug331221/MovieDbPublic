@@ -71,4 +71,9 @@ class SearchController extends Controller
         ];
         return $inputs;
     }
+
+    public function get_typeaheadDemo()
+    {
+        return view('search/typeaheadDemo');
+    }
 }
