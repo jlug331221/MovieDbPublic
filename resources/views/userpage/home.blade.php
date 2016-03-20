@@ -16,8 +16,22 @@
                 @endif
 
                 <div class="panel-body">
-                    You are logged in! {{ Auth::user()->name }}
-                    <br>
+                    @if (\Illuminate\Support\Facades\Session::has('message'))
+                        <div class="alert-success">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            {{\Illuminate\Support\Facades\Session::get('message')}}
+                        </div>
+                    @endif
+
+                    <div class="row">
+                        <div class="col-md-2 col-centered Userpage__center">
+                            <p class="text-center">You are logged in! {{ Auth::user()->name }} </p>
+                            <a href="{{ url('/userpage/avatar') }}" class="edit">
+                                <img src="{{asset($avatar)}}" class="img-circle Userpage__avatar " alt="Avatar">
+                            </a>
+                        </div>
+                    </div>
+
                     <br>
                     <div class="container-fluid">
                         <ul class="nav nav-tabs" id="myTabs">

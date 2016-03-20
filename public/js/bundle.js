@@ -20525,6 +20525,16 @@ var substringMatcher = function substringMatcher(strs) {
 
 var states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
 
+//Kevin Wayne
+$('.edit').hover(function () {
+    $(this).find('img').fadeTo(500, 0.5);
+}, function () {
+    $(this).find('img').fadeTo(500, 1);
+});
+
+//Kevin Wayne
+$('div.alert-success').delay(4000).slideUp();
+
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"bootstrap":2,"bootstrap-datepicker":1,"jquery":15,"moment":16,"typeahead.js":17}]},{},[18]);
 

@@ -56,3 +56,13 @@ var states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California',
     'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
     'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
 ];
+
+//Kevin Wayne
+$('.edit').hover(function() {
+    $(this).find('img').fadeTo(500, 0.5);
+}, function() {
+    $(this).find('img').fadeTo(500, 1);
+});
+
+//Kevin Wayne
+$('div.alert-success').delay(4000).slideUp();
