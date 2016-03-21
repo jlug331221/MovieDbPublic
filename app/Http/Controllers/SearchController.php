@@ -76,4 +76,18 @@ class SearchController extends Controller
     {
         return view('search/typeaheadDemo');
     }
+
+    public function simpleSearch($name)
+    {
+
+    }
 }
+
+
+
+
+
+
+
+
+
