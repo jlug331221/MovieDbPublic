@@ -66,4 +66,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('/images/store', 'ImagesController@store');
     Route::get('/images/delete/{name}', 'ImagesController@delete');
     Route::get('/images/discard/{name}', 'ImagesController@discard');
+
+    //Movie page routes
+    Route::get('/movies/movie', 'MoviePageController@moviePage');
 });
