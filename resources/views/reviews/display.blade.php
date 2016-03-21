@@ -1,12 +1,12 @@
 <!-- Chris created file on $(DATE) -->
-
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
 @extends('layouts.app')
 
 @section('content')
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
-                <h3>{{$movieTitle}} >> Review #{{$review->id}}</h3>
+                <h3><a href="">{{$movieTitle}}</a> >> Review #{{$review->id}}</h3>
             </div>
         </div>
         <div class="row">
@@ -17,8 +17,8 @@
                             <div class="col-md-8">
                                 <h4>{{$review->title}}</h4>
                             </div>
-                            <div class="col-md-2 col-md-offset-2">
-                                <form class="form-horizontal" action="{{ url('reviews/newcomment/'.$review->id ) }}" method="POST" role="form">
+                            <div class="col-md-2 col-md-offset-2" style="margin-top: 4px;">
+                                <form class="form-horizontal" action="{{ url('reviews/newcomment/'.$review->id ) }}" method="POST" role="form" style="margin-bottom:0px;">
                                     {!! csrf_field() !!}
                                     @if(Auth::check())<button class="btn btn-primary">Comment</button>@endif
                                 </form>
@@ -26,7 +26,7 @@
                         </div>
                     </div>
                     <div class="panel-body">
-                        <div class="col-md-3">
+                        <div class="reviewdisplay col-md-3">
                             <div>
                                 <div class="row">
                                     <img src="{{asset('images/database-mysql.png')}}" style="height:170px; width:170px; margin-left:4px;" >
@@ -52,7 +52,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-9">
+                        <div class="reviewdisplay col-md-9" style="padding-left: 30px; border-left: 1px solid #ddd;">
                             <div class="row">
                                 <strong>Rating: {{$review->rating}}/10</strong>
                             </div>
@@ -65,12 +65,12 @@
             </div>
         </div>
         @foreach ($comments as $comment)
-            <div class="row">
+            <div class="row" >
                 <div class="col-md-8 col-md-offset-2">
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <div class="col-md-3">
-                                <div>
+                                <div class="commentdisplay">
                                     <div class="row">
                                         <img src="{{asset('images/database-mysql.png')}}" style="height:170px; width:170px; margin-left:4px;">
                                     </div>
@@ -95,8 +95,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-9">
-                                {{$comment->body}}
+                            <div class="col-md-9" style="padding-left: 30px; border-left: 1px solid #ddd;">
+                                <div class="commentdisplay">
+                                    {{$comment->body}}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -104,4 +106,25 @@
             </div>
         @endforeach
     </div>
+    <script>
+        $( document ).ready(function() {
+        var commentHeights = $(".commentdisplay").map(function() {
+        return $(this).height();
+        }).get(),
+
+        maxHeight = Math.max.apply(null, commentHeights);
+
+        $(".commentdisplay").height(maxHeight);
+        });
+
+        $( document ).ready(function() {
+            var reviewHeights = $(".reviewdisplay").map(function () {
+                        return $(this).height();
+                    }).get(),
+
+                    maxReviewHeight = Math.max.apply(null, reviewHeights);
+
+            $(".reviewdisplay").height(maxReviewHeight);
+        });
+    </script>
 @endsection
