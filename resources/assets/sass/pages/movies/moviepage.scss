@@ -1,0 +1,32 @@
+.MoviePage__listGroupItem {
+  background-color:lightgrey;
+}
+
+.MoviePage__poster {
+}
+
+.MoviePage__btn {
+  background-color: #00b3ee;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  width: 175px;
+}
+
+.MoviePage__Buttons {
+  text-align: center;
+}
+
+.table-fixed thead {
+  width: 100%;
+}
+.table-fixed tbody {
+  height: 350px;
+  overflow-y: scroll;
+  width: 100%;
+}
+
+.table-fixed tbody td, .table-fixed thead > tr> th {
+  float: left;
+  border-bottom-width: 0;
+}
+

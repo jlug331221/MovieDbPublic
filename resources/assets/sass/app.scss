@@ -1,23 +1,29 @@
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+/** Bootstrap Import */
+@import url(https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css);
 
-// Import google fonts: Roboto Slab & Open Sans
-@import url(http://fonts.googleapis.com/css?family=Roboto+Slab|Open+Sans:400italic,700italic,400,700);
+/** Bootstrap Datepicker */
+@import url(https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/css/bootstrap-datepicker.min.css);
 
-// Create variables holding the font faces
-$roboto-slab: 'Roboto Slab', serif;
+/** Import google fonts: Roboto Slab, Open Sans, & Lato */
+@import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css);
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,400italic,700,700italic,500,500italic|Lato:400,400italic,700,700italic|Open+Sans:400,400italic,700,700italic,600,600italic);
+$roboto: 'Roboto', sans-serif;//
 $open-sans: 'Open Sans', sans-serif;
+$lato: 'Lato', sans-serif;
 
+
+/** Component Imports */
+
+
+
+/** Page Imports */
+@import "pages/search/advsearch";
+@import "pages/movies/moviepage";
+@import "pages/userpage/userpage";
+
+
+/** General Page Styling */
 body {
-  background-color: #F2E6F9;
-}
-
-.jumbotron-themed {
-
-  font-family: $open-sans;
-  background-color: #80656d;
-  color: white;
-
-  h1 {
-    font-family: $roboto-slab;
-  }
+  font-family: $lato;
+  padding-bottom: 75px;
 }

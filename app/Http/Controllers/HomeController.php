@@ -5,11 +5,18 @@ namespace App\Http\Controllers;
 use App\Masterlist;
 use App\MovieList;
 use App\PersonList;
-use App\Movie;
+use App\Image;
 use Auth;
 use App\Http\Requests;
-//use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Input;
+use Session;
+use App\Library\StaticData;
+use DB;
+use App\Http\Requests\CreateImageRequest;
+
+use Image as InterventionImage;
+use ImageSync;
 
 class HomeController extends Controller
 {
@@ -23,6 +30,11 @@ class HomeController extends Controller
         $this->middleware('auth');
     }
 
+    protected $CreateListValidationRules = [
+        'title' => 'required',
+        'type' => 'required'
+    ];
+
     /**
      * Show the application dashboard.
      *
@@ -32,7 +44,40 @@ class HomeController extends Controller
     {
         $name = Auth::user()->name;
         $masterlists = Masterlist::where('user_id', Auth::user()->id)->get();
-        return view('/userpage/home', compact('name','masterlists'));
+        $avatar_id = Auth::user()->avatar;
+        $av_image = Image::where('id', '=' ,$avatar_id)->first();
+        $avatar = $av_image['path'].'/'.$av_image['name'].'.'.$av_image['extension'];
+        if($avatar == '/.'){
+            $avatar = StaticData::defaultAvatar();
+        }
+        return view('/userpage/home', compact('name','masterlists','avatar'));
+    }
+
+    public function avatar()
+    {
+        $avatar_id = Auth::user()->avatar;
+        $av_image = Image::where('id', '=' ,$avatar_id)->first();
+        $avatar = $av_image['path'].'/'.$av_image['name'].'.'.$av_image['extension'];
+        if($avatar == '/.'){
+            $avatar = StaticData::defaultAvatar();
+        }
+        return view('/userpage/avatar', compact('avatar'));
+    }
+
+    public function store(CreateImageRequest $request)
+    {
+        $file = $request->file('image');
+        $description = $request->get('description');
+
+        try {
+            $image = ImageSync::create($file, $description);
+            Auth::user()->setAvatar($image);
+            Session::flash('message', 'Successfully changed avatar!');
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+            // do something here like log the error.
+        }
+        return redirect('/userpage/home');
     }
 
     public function getMoviesInList($masterlist_id)
@@ -43,8 +88,26 @@ class HomeController extends Controller
 
     }
 
-    public function storeList()
+    public function deleteList($mlid)
     {
+        $ml = Masterlist::where('id', '=', $mlid)->first();
+        if ($ml != null) {
+            Masterlist::destroy($mlid);
+        } else {
+            return redirect()->action('HomeController@index');
+        }
+        return redirect()->action('HomeController@index');
+    }
+
+    public function postList()
+    {
+        $validator = \Validator::make(Input::all(), $this->CreateListValidationRules);
+
+        if($validator->fails())
+        {
+            return redirect()->back()->withErrors($validator->errors())->withInput();
+        }
+
         $input = Request::all();
         $masterlist = new Masterlist();
         $masterlist->user_id = Auth::user()->id;
@@ -65,7 +128,7 @@ class HomeController extends Controller
             $personlist->masterlist_id = $mlid;
             $personlist->save();
         }
-
+        Session::flash('message', 'Successfully created list!');
         return redirect()->action('HomeController@index');
     }
 }

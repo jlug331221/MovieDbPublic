@@ -7,12 +7,33 @@ use Illuminate\Database\Eloquent\Model;
 class Image extends Model {
 
     /**
+     * Valid file extensions for images.
+     *
+     * @var array
+     */
+    const VALID_EXTENSIONS = [
+        'png',
+        'jpeg',
+        'jpg',
+        'bmp'
+    ];
+
+    /**
+     * Root image directory for the project.
+     */
+    const IMAGE_DIRECTORY = '/images';
+
+    /**
+     * Maximum number of images that a subdirectory may hold.
+     */
+    const IMAGES_PER_SUBDIRECTORY = 1000;
+
+    /**
      * Attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'path',
         'extension',
         'description'
     ];
@@ -47,32 +68,90 @@ class Image extends Model {
         parent::boot();
 
         /**
-         * Generates a unique token for the image
+         * Generates a unique name for the image before creation.
          */
         static::creating(function ($model) {
-            // 238328 = 1000 base 62
-            // 14776335 = zzzz base 62
-            $model->token = gmp_strval(mt_rand(238328, 14775335), 62);
+
+            $name = null;
+
+            do {
+                // 916132832 = 100000 base 62
+                // 56800235583 = zzzzzz base 62
+                $name = gmp_strval(mt_rand(916132832, 56800235583), 62);
+            } while (Image::where('name', '=', '$name')->first() != null);
+
+            $model->name = $name;
+
+        }, 0);
+
+        /**
+         * Generates the path for an image directly after creation.
+         *
+         * The path will be IMAGE_DIRECTORY/subdirectory, where subdirectory
+         * is generated from the image's id.
+         *
+         * Each subdirectory holds a maximum of IMAGES_PER_SUBDIRECTORY number
+         * of images, where the auto-incremented id of the image is used to
+         * partition the subdirectories.
+         */
+        static::created(function ($model) {
+
+            $subDirectory = substr(md5(intval($model->id / self::IMAGES_PER_SUBDIRECTORY)), 0, 8);
+
+            $model->path = self::IMAGE_DIRECTORY . '/' . $subDirectory;
+            $model->save();
+
         }, 0);
     }
 
     /**
-     * Returns the unique name of the image.
+     * Returns the unique name of the image file.
      *
      * @return string
      */
-    public function getName()
+    public function getFileName()
     {
-        return $this->id . $this->token;
+        return $this->name . '.' . $this->extension;
     }
 
     /**
-     * Returns the relative path of the image.
+     * Returns the path of the image from the public directory.
      *
      * @return string
      */
-    public function getRelativePath()
+    public function getPath()
     {
-        return $this->path . '/' . $this->getName() . '.' . $this->extension;
+        return $this->path . '/' . $this->getFileName();
+    }
+
+    /**
+     * Returns the absolute path of the image.
+     *
+     * @return string
+     */
+    public function getAbsolutePath()
+    {
+        return public_path() . $this->getPath();
+    }
+
+    /**
+     * Returns whether the given extension is a valid image extension.
+     *
+     * @param $extension
+     * @return bool
+     */
+    public static function isValidExtension($extension)
+    {
+        return in_array($extension, self::VALID_EXTENSIONS);
+    }
+
+    /**
+     * Returns an array containing the valid extensions for an image.
+     *
+     * @return mixed
+     */
+    public static function getValidExtensions()
+    {
+        return self::VALID_EXTENSIONS;
     }
 }

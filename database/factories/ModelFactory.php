@@ -20,17 +20,43 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
     ];
 });
 
+$factory->define(App\Movie::class, function (Faker\Generator $faker) {
+    return [
+        'title'             => $faker->word,
+        'country'           => $faker->country,
+        'release_date'      => $faker->date('Y-m-d'),
+        'genre'             => 'action',
+        'parental_rating'   => 'PG-13',
+        'runtime'           => $faker->numberBetween(40, 150),
+        'synopsis'          => $faker->paragraph
+    ];
+});
+
+$factory->define(App\Person::class, function (Faker\Generator $faker) {
+    return [
+        'first_name'        => $faker->name,
+        'middle_name'       => $faker->name,
+        'last_name'         => $faker->name,
+        'first_alias'       => $faker->name,
+        'middle_alias'      => $faker->name,
+        'last_alias'        => $faker->name,
+        'country_of_origin' => $faker->country,
+        'date_of_birth'     => $faker->date('Y-m-d'),
+        'date_of_death'     => $faker->date('Y-m-d'),
+        'biography'         => $faker->paragraph
+    ];
+});
+
 $factory->define(App\Image::class, function (Faker\Generator $faker) {
 
-    $path = '';
-
-    foreach(range(1, rand(1, 4)) as $value) {
-        $path .= $faker->word . '/';
-    }
+    $extensions = App\Image::getValidExtensions();
 
     return [
-        'name'      => $faker->word,
-        'path'      => $path,
-        'extension' => $faker->fileExtension
+        'extension' => $extensions[array_rand($extensions, 1)],
+        'description' => $faker->sentence
     ];
+});
+
+$factory->define(App\Album::class, function (Faker\Generator $faker) {
+    return [];
 });

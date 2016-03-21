@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
+{{--<!DOCTYPE html>--}}
+{{--<html lang="en">--}}
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,23 +7,9 @@
 
     <title>PDDB</title>
 
-    <!-- Fonts -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
-    <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700" rel='stylesheet' type='text/css'>
-
     <!-- Styles -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-    {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
+    <link href="{{ elixir('css/app.css') }}" rel="stylesheet">
 
-    <style>
-        body {
-            font-family: 'Lato';
-        }
-
-        .fa-btn {
-            margin-right: 6px;
-        }
-    </style>
 </head>
 <body id="app-layout">
     <nav class="navbar navbar-default">
@@ -50,15 +36,34 @@
                     <li><a href="{{ url('/userpage/home') }}">Home</a></li>
                 </ul>
 
-                <form class="navbar-form navbar-left" role="search">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search">
-                    </div>
-                    <button type="submit" class="btn btn-default">Submit</button>
-                </form>
+		{!! Form::open(['class' => 'navbar-form navbar-left', 'url' => 'search', 'role' => 'search']) !!}
+		    {!! Form::text('search', null, ['class' => 'form-group form-control', 'placeholder' => 'Search']) !!}
+		    {!! Form::submit('Submit', ['class' => 'btn btn-default']) !!}
+		{!! Form::close() !!}
 
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ url('/userpage/home') }}">Advanced Search</a></li>
+                    <li class="dropdown">
+                        <a href="#"
+                           class="dropdown-toggle"
+                           data-toggle="dropdown"
+                           role="button"
+                           aria-haspopup="true"
+                           aria-expanded="false">
+                            Advanced Search
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="{{ url('/search/movie') }}">
+                                    Movie Search
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ url('/search/person') }}">
+                                    Person Search
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
 
                 {{--@if(Auth::check() && Auth::user()->hasRole('Administrator'))--}}
@@ -94,9 +99,12 @@
 
     @yield('content')
 
-    <!-- JavaScripts -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
 </body>
 </html>
+
+<!-- JavaScripts -->
+{{--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>--}}
+{{--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>--}}
+{{--<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>--}}
+{{--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/js/bootstrap-datepicker.min.js"></script>--}}
+<script src="{{ elixir('js/bundle.js') }}"></script>

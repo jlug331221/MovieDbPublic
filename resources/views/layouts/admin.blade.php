@@ -11,10 +11,16 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700" rel='stylesheet' type='text/css'>
 
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+
     <!-- Styles -->
-    {{--<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">--}}
     <link href="{{ elixir('css/adminDashBoard.css') }}" rel="stylesheet">
-</head>
+
+    <!-- Latest compiled and minified Bootstrap-select CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
+
+    <!-- Datatables minified CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/t/bs/dt-1.10.11/datatables.min.css"/></head>
 
 <body>
 <div id="wrapper">
@@ -52,7 +58,7 @@
                     <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
                 </a>
                 <ul class="dropdown-menu dropdown-user">
-                    <li><a href="{{ url('/home') }}"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                    <li><a href="{{ url('/userpage/home') }}"><i class="fa fa-user fa-fw"></i> User Profile</a>
                     </li>
                     <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                     </li>
@@ -69,32 +75,26 @@
         <div class="navbar-default sidebar" role="navigation">
             <div class="sidebar-nav navbar-collapse">
                 <ul class="nav" id="side-menu">
-                    <li class="sidebar-search">
-                        <div class="input-group custom-search-form">
-                            <input type="text" class="form-control" placeholder="Search...">
-                                <span class="input-group-btn">
-                                <button class="btn btn-default" type="button">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </span>
-                        </div>
-                        <!-- /input-group -->
-                    </li>
                     <li>
                         <a href="{{ url('admin/adminHome') }}">
                             <i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-edit fa-fw"></i>Forms</a>
+                        <a href="#"><i class="fa fa-edit fa-fw"></i> Forms<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
-
+                            <li>
+                                <a href="{{ url('admin/createMovie') }}">Create Movie</a>
+                            </li>
+                            <li>
+                                <a href="{{ url('admin/createPerson') }}">Create Person</a>
+                            </li>
                         </ul>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-table fa-fw"></i>Show All Movies</a>
+                        <a href="{{ url('admin/showAllMovies') }}"><i class="fa fa-table fa-fw"></i>Show All Movies</a>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-table fa-fw"></i>Show All People</a>
+                        <a href="{{ url('admin/showAllPeople') }}"><i class="fa fa-table fa-fw"></i>Show All People</a>
                     </li>
                 </ul>
             </div>
@@ -102,12 +102,45 @@
         </div>
         <!-- /.navbar-static-side -->
     </nav>
+</div>
 
     @yield('content')
 
     <!-- JavaScripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+
+    <!-- Latest compiled and minified Bootstrap-select JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
+
+    <!-- Datatables JavaScript -->
+    <script type="text/javascript" src="https://cdn.datatables.net/t/bs/dt-1.10.11/datatables.min.js"></script>
+
+    <script>
+        $(function() {
+            $("#datepicker").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "-80:"
+            });
+        });
+
+        $(function() {
+            $("#datepicker2").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "-80:"
+            });
+        });
+
+        $(document).ready( function () {
+            $('#table_id').DataTable();
+        } );
+    </script>
+
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
 </body>
 </html>
