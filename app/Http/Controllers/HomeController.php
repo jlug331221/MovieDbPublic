@@ -6,6 +6,7 @@ use App\Masterlist;
 use App\MovieList;
 use App\PersonList;
 use App\Image;
+use App\User;
 use Auth;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Request;
@@ -71,6 +72,7 @@ class HomeController extends Controller
 
         try {
             $image = ImageSync::create($file, $description);
+            $this->discard();
             Auth::user()->setAvatar($image);
             Session::flash('message', 'Successfully changed avatar!');
         } catch (\Exception $e) {
@@ -78,6 +80,13 @@ class HomeController extends Controller
             // do something here like log the error.
         }
         return redirect('/userpage/home');
+    }
+
+    public function discard()
+    {
+        $image = Auth::user()->avatar;
+        if ($image != null)
+            ImageSync::destroy($image);
     }
 
     public function getMoviesInList($masterlist_id)
