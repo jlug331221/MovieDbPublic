@@ -82,19 +82,11 @@ class Movie extends Model {
         }, 0);
 
         /**
-         * Generates and saves the alpha-numeric equivalent of the title and synopsis
-         * after the movie has been created.
+         * Generates all alpha-numeric suffixes (per word) of the movie's title
+         * into the movie_suffixes table.
          */
         static::created(function ($model) {
-            $title = $model->title;
-            $model->title_alphanumeric = preg_replace("/[^A-Za-z0-9 ]/", '', $title);
-            if ($model->synopsis != null) {
-                $synopsis = $model->synopsis;
-                $model->synopsis_alphanumeric = preg_replace("/[^A-Za-z0-9 ]/", '', $synopsis);
-            }
-            $model->save();
-
-            $suffix = $model->title_alphanumeric;
+            $suffix = preg_replace("/[^A-Za-z0-9 ]/", '', $model->title);
             $delim = 0;
             while (true) {
                 $suffix = substr($suffix, $delim);

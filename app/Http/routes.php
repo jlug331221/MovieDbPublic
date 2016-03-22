@@ -52,7 +52,9 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('/search/movie', 'SearchController@post_advancedMovie');
     Route::get('/search/person', 'SearchController@get_advancedPerson');
     Route::post('/search/person', 'SearchController@post_advancedPerson');
-    Route::get('/search/typeahead', 'SearchController@get_typeaheadDemo');
+    Route::get('/search/jsonTest', 'SearchController@get_jsonTest'); // temp
+    Route::get('/search/suffix/{term}', 'SearchController@get_suffixSearch_json');
+    Route::post('/search/suffix', 'SearchController@post_suffixSearch_json');
 
     // Review Routes
     Route::get('/reviews/create/{mid}', 'ReviewController@create');

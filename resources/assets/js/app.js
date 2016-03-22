@@ -5,56 +5,73 @@ var $ = require('jquery');
 var bootstrap = require('bootstrap');
 var moment = require('moment');
 var datepicker = require('bootstrap-datepicker');
-var typeahead = require('typeahead.js');
+var typeahead = require('typeahead.js-browserify');
+var Bloodhound = require('typeahead.js-browserify').Bloodhound;
 
 $(function () {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    typeahead.loadjQueryPlugin();
+
     $('#AdvSearch__datepicker_from').datepicker({});
     $('#AdvSearch__datepicker_to').datepicker({});
 
     $('#AdvSearch__datepicker_from2').datepicker({});
     $('#AdvSearch__datepicker_to2').datepicker({});
 
+    $('#jsonTest-submit-post').on('click', function() {
+        var content = $('#jsonTest-input-post').val();
+        $.ajax({
+           type: 'POST',
+            url: '/search/suffix',
+            data: { 'term': content },
+            success: function(response) {
+                console.log(response);
+            },
+            error: function(xhr) {
+                console.log('failure: ', xhr);
+            }
+        });
+    });
+
+    $('#jsonTest-submit-get').on('click', function() {
+        var content = $('#jsonTest-input-get').val();
+        $.ajax({
+            type: 'GET',
+            url: '/search/suffix/' + content,
+            success: function(response) {
+                console.log(response);
+            },
+            error: function(xhr) {
+                console.log('failure: ', xhr);
+            }
+        });
+    });
+
+    var engine = new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('title'),
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        remote: {
+            url: '/search/suffix/%QUERY',
+            wildcard: '%QUERY'
+        }
+    });
+
+    engine.initialize();
+
     $('.typeahead').typeahead({
-        highlight: true,
-        minLength: 1
+        highlight: false,
     }, {
-        name: 'states',
-        source: substringMatcher(states)
+        name: 'typeahead',
+        displayKey: 'title',
+        source: engine.ttAdapter(),
     });
 });
 
-var substringMatcher = function(strs) {
-    return function findMatches(q, cb) {
-        var matches, substrRegex;
-
-        // an array that will be populated with substring matches
-        matches = [];
-
-        // regex used to determine if a string contains the substring `q`
-        substrRegex = new RegExp(q, 'i');
-
-        // iterate through the pool of strings and for any string that
-        // contains the substring `q`, add it to the `matches` array
-        $.each(strs, function(i, str) {
-            if (substrRegex.test(str)) {
-                matches.push(str);
-            }
-        });
-
-        cb(matches);
-    };
-};
-
-var states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California',
-    'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii',
-    'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana',
-    'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota',
-    'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire',
-    'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota',
-    'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island',
-    'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont',
-    'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'
-];
 
 //Kevin Wayne
 $('.edit').hover(function() {
