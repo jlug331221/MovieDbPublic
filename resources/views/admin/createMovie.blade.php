@@ -19,7 +19,7 @@
                 {!! Form::open() !!}
                     <div class="col-lg-12 form-group">
                         {!! Form::label('title', 'Title:', ['class' => 'col-lg-1 control-label']) !!}
-                        <div class="col-lg-2">
+                        <div class="col-lg-3">
                             <div class="inner-addon right-addon">
                                 <i class="fa fa-film"></i>
                                 {!! Form::text('title', null, ['class' => 'form-control']) !!}
