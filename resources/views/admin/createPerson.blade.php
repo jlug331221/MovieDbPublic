@@ -19,7 +19,7 @@
                 {!! Form::open() !!}
                     <div class="col-lg-12 form-group">
                         {!! Form::label('first_name', 'First Name:', ['class' => 'col-lg-1 control-label']) !!}
-                        <div class="col-lg-2">
+                        <div class="col-lg-3">
                             <div class="inner-addon right-addon">
                                 <i class="fa fa-odnoklassniki"></i>
                                 {!! Form::text('first_name', null, ['class' => 'form-control']) !!}
@@ -29,7 +29,7 @@
 
                     <div class="col-lg-12 form-group">
                         {!! Form::label('middle_name', 'Middle Name:', ['class' => 'col-lg-1 control-label']) !!}
-                        <div class="col-lg-2">
+                        <div class="col-lg-3">
                             <div class="inner-addon right-addon">
                                 <i class="fa fa-odnoklassniki"></i>
                                 {!! Form::text('middle_name', null, ['class' => 'form-control']) !!}
@@ -39,7 +39,7 @@
 
                     <div class="col-lg-12 form-group">
                         {!! Form::label('last_name', 'Last Name:', ['class' => 'col-lg-1 control-label']) !!}
-                        <div class="col-lg-2">
+                        <div class="col-lg-3">
                             <div class="inner-addon right-addon">
                                 <i class="fa fa-odnoklassniki"></i>
                                 {!! Form::text('last_name', null, ['class' => 'form-control']) !!}
@@ -49,7 +49,7 @@
 
                     <div class="col-lg-12 form-group">
                         {!! Form::label('first_alias', 'First Alias:', ['class' => 'col-lg-1 control-label']) !!}
-                        <div class="col-lg-2">
+                        <div class="col-lg-3">
                             <div class="inner-addon right-addon">
                                 <i class="fa fa-odnoklassniki"></i>
                                 {!! Form::text('first_alias', null, ['class' => 'form-control']) !!}
@@ -59,7 +59,7 @@
 
                     <div class="col-lg-12 form-group">
                         {!! Form::label('middle_alias', 'Middle Alias:', ['class' => 'col-lg-1 control-label']) !!}
-                        <div class="col-lg-2">
+                        <div class="col-lg-3">
                             <div class="inner-addon right-addon">
                                 <i class="fa fa-odnoklassniki"></i>
                                 {!! Form::text('middle_alias', null, ['class' => 'form-control']) !!}
@@ -69,7 +69,7 @@
 
                     <div class="col-lg-12 form-group">
                         {!! Form::label('last_alias', 'Last Alias:', ['class' => 'col-lg-1 control-label']) !!}
-                        <div class="col-lg-2">
+                        <div class="col-lg-3">
                             <div class="inner-addon right-addon">
                                 <i class="fa fa-odnoklassniki"></i>
                                 {!! Form::text('last_alias', null, ['class' => 'form-control']) !!}

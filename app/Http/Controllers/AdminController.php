@@ -343,11 +343,11 @@ class AdminController extends Controller
      * @var array
      */
     protected $movieValidationRules = [
-        'title' => 'required',
-        'country' => 'required',
-        'release_date' => 'required',
-        'genre' => 'required',
-        'runtime' => 'required'
+        'title' => 'required|string',
+        'country' => 'required|string',
+        'release_date' => 'required|date_format:m/d/Y',
+        'genre' => 'required|string',
+        'runtime' => 'required|integer'
     ];
 
     /**
@@ -356,10 +356,10 @@ class AdminController extends Controller
      * @var array
      */
     protected $personValidationRules = [
-        'first_name' => 'required',
-        'last_name' => 'required',
-        'country_of_origin' => 'required',
-        'date_of_birth' => 'required'
+        'first_name' => 'required|string',
+        'last_name' => 'required|string',
+        'country_of_origin' => 'required|string',
+        'date_of_birth' => 'required|date_format:m/d/Y'
     ];
 
     /**
@@ -389,8 +389,17 @@ class AdminController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function showMovie($id) {
+        $countries = $this->countries;
+        $genres = $this->genres;
+        $ratings = $this->ratings;
         $movie = Movie::find($id);
-        return view('/admin/showMovie', compact('movie'));
+        $selectedCountry = $movie->country;
+        $selectedGenre = $movie->genre;
+        $selectedRating = $movie->parental_rating;
+        $convertedDate = date("m/d/Y", strtotime($movie->release_date));
+        return view('/admin/showMovie', compact(['movie', 'selectedGenre',
+            'countries', 'ratings', 'selectedRating', 'genres',
+            'convertedDate', 'selectedCountry']));
     }
 
     /**
@@ -403,6 +412,12 @@ class AdminController extends Controller
         return view('/admin/showAllPeople', compact('people'));
     }
 
+    /**
+     * Show specific person for editing.
+     *
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function showPerson($id) {
         $person = Person::find($id);
         return view('/admin/showPerson', compact('person'));
@@ -445,6 +460,36 @@ class AdminController extends Controller
         $movie->save();
 
         Session::flash('message', 'Successfully added movie to database!');
+        return redirect()->action('AdminController@showMovies');
+    }
+
+    /**
+     * Update movie in database.
+     *
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function updateMovie($id) {
+        $validator = \Validator::make(Input::all(), $this->movieValidationRules);
+
+        if($validator->fails())
+        {
+            return redirect()->back()->withErrors($validator->errors())->withInput();
+        }
+
+        $movie = Movie::find($id);
+        $movie->title = Input::get('title');
+        $movie->country = Input::get('country');
+        $date = date("Y-m-d", strtotime(Input::get('release_date')));
+        $movie->release_date = $date;
+        $movie->genre = Input::get('genre');
+        $movie->parental_rating = Input::get('parental_rating');
+        $movie->runtime = Input::get('runtime');
+        $movie->synopsis = Input::get('synopsis');
+        $movie->save();
+        $movie->save();
+
+        Session::flash('message', 'Successfully updated movie!');
         return redirect()->action('AdminController@showMovies');
     }
 
