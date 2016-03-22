@@ -17,7 +17,7 @@
 
                 <hr/>
 
-                {{ Form::model($movie, array('url' => array('admin/update', $movie->id),
+                {{ Form::model($movie, array('url' => array('admin/updateMovie', $movie->id),
                         'method' => 'PUT')) }}
                     <div class="col-lg-12 form-group">
                         {!! Form::label('title', 'Title:', ['class' => 'col-lg-1 control-label']) !!}
@@ -108,7 +108,6 @@
                         {{ Form::submit('Update Movie', array('class' => 'btn btn-primary form-control')) }}
                     </div>
                 {{ Form::close() }}
-
             </div>
         </div>
     </div>

@@ -36,9 +36,10 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/admin/adminHome', 'AdminController@index');
     Route::get('/admin/showAllMovies', 'AdminController@showMovies');
     Route::get('admin/showMovie/{id}', 'AdminController@showMovie');
-    Route::put('admin/update/{id}', 'AdminController@updateMovie');
+    Route::put('admin/updateMovie/{id}', 'AdminController@updateMovie');
     Route::get('/admin/showAllPeople', 'AdminController@showPeople');
     Route::get('/admin/showPerson/{id}', 'AdminController@showPerson');
+    Route::put('/admin/updatePerson/{id}', 'AdminController@updatePerson');
     Route::get('/admin/createMovie', 'AdminController@createMovie');
     Route::post('/admin/createMovie', 'AdminController@storeMovie');
     Route::get('/admin/createPerson', 'AdminController@createPerson');

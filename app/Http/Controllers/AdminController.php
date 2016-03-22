@@ -419,8 +419,13 @@ class AdminController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function showPerson($id) {
+        $countries = $this->countries;
         $person = Person::find($id);
-        return view('/admin/showPerson', compact('person'));
+        $selectedCountry = $person->country_of_origin;
+        $convertedDateOfBirth = date("m/d/Y", strtotime($person->date_of_birth));
+        $convertedDateOfDeath = date("m/d/Y", strtotime($person->date_of_death));
+        return view('/admin/showPerson', compact(['person', 'countries', 'selectedCountry',
+                'convertedDateOfBirth', 'convertedDateOfDeath']));
     }
 
     /**
@@ -489,7 +494,7 @@ class AdminController extends Controller
         $movie->save();
         $movie->save();
 
-        Session::flash('message', 'Successfully updated movie!');
+        Session::flash('message', 'Successfully updated movie in database!');
         return redirect()->action('AdminController@showMovies');
     }
 
@@ -500,7 +505,6 @@ class AdminController extends Controller
      */
     public function createPerson() {
         $countries = $this->countries;
-
         return view('/admin/createPerson', compact(['countries']));
     }
 
@@ -534,6 +538,34 @@ class AdminController extends Controller
         $person->save();
 
         Session::flash('message', 'Successfully added person to database!');
+        return redirect()->action('AdminController@showPeople');
+    }
+
+    public function updatePerson($id) {
+        $validator = \Validator::make(Input::all(), $this->personValidationRules);
+
+        if($validator->fails()) {
+            return redirect()->back()->withErrors($validator->errors())->withInput();
+        }
+
+        $person = Person::find($id);
+        $person->first_name = Input::get('first_name');
+        $person->middle_name = Input::get('middle_name');
+        $person->last_name = Input::get('last_name');
+        $person->first_alias = Input::get('first_alias');
+        $person->middle_alias = Input::get('middle_alias');
+        $person->last_alias = Input::get('last_alias');
+        $person->country_of_origin = Input::get('country_of_origin');
+        $birthDate = date("Y-m-d", strtotime(Input::get('date_of_birth')));
+        $deathDate = date("Y-m-d", strtotime(Input::get('date_of_death')));
+        $person->date_of_birth = $birthDate;
+        if($deathDate > "1970-01-01" || $deathDate < "1970-01-01") {
+            $person->date_of_death = $deathDate;
+        }
+        $person->biography = Input::get('biography');
+        $person->save();
+
+        Session::flash('message', 'Successfully updated person in database!');
         return redirect()->action('AdminController@showPeople');
     }
 }
