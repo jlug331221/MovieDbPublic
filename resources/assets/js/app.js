@@ -74,11 +74,11 @@ $(function () {
 
 
 //Kevin Wayne
-$('.edit').hover(function() {
+$('.Userpage__Avatar__edit').hover(function() {
     $(this).find('img').fadeTo(500, 0.5);
 }, function() {
     $(this).find('img').fadeTo(500, 1);
 });
 
 //Kevin Wayne
-$('div.alert-success').delay(4000).slideUp();
+$('div.Userpage__messages').delay(4000).slideUp();

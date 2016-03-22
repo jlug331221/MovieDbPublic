@@ -17,7 +17,7 @@
 
                 <div class="panel-body">
                     @if (\Illuminate\Support\Facades\Session::has('message'))
-                        <div class="alert-success">
+                        <div class="alert-success Userpage__messages">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                             {{\Illuminate\Support\Facades\Session::get('message')}}
                         </div>
@@ -26,7 +26,7 @@
                     <div class="row">
                         <div class="col-md-2 col-centered Userpage__center">
                             <p class="text-center">You are logged in! {{ Auth::user()->name }} </p>
-                            <a href="{{ url('/userpage/avatar') }}" class="edit">
+                            <a href="{{ url('/userpage/avatar') }}" class="Userpage__Avatar__edit">
                                 <img src="{{asset($avatar)}}" class="img-circle Userpage__avatar " alt="Avatar">
                             </a>
                         </div>
