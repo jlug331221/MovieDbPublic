@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Auth;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use DB;
 use App\Movie;
 use App\Person;
 use Illuminate\Support\Facades\Input;
@@ -441,6 +442,26 @@ class AdminController extends Controller
     }
 
     /**
+     * Remove movie from database.
+     *
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroyMovie($id) {
+        $movieSuffixes = DB::table('movie_suffixes')->where('movie_id', $id);
+        if($movieSuffixes)
+        {
+            $movieSuffixes->delete();
+        }
+        $movie = Movie::find($id);
+        $movie->delete();
+
+        Session::flash('message', "Successfully deleted movie from database");
+        return redirect()->action('AdminController@showMovies');
+
+    }
+
+    /**
      * Create and store movie in database.
      *
      * @return \Illuminate\Http\RedirectResponse
@@ -509,6 +530,20 @@ class AdminController extends Controller
     }
 
     /**
+     * Remove person from database.
+     *
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroyPerson($id) {
+        $person = Person::find($id);
+        $person->delete();
+
+        Session::flash('message', "Successfully deleted person from database");
+        return redirect()->action('AdminController@showPeople');
+    }
+
+    /**
      * Create and store person in database.
      *
      * @return $this|\Illuminate\Http\RedirectResponse
@@ -541,6 +576,12 @@ class AdminController extends Controller
         return redirect()->action('AdminController@showPeople');
     }
 
+    /**
+     * Update person in database.
+     *
+     * @param $id
+     * @return $this|\Illuminate\Http\RedirectResponse
+     */
     public function updatePerson($id) {
         $validator = \Validator::make(Input::all(), $this->personValidationRules);
 
