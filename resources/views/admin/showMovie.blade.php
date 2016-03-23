@@ -29,7 +29,7 @@
                         'method' => 'PUT')) }}
                     <div class="col-md-12 col-lg-12 form-group">
                         {!! Form::label('title', 'Title:', ['class' => 'col-md-2 col-lg-2 control-label']) !!}
-                        <div class="col-md-4 col-lg-4">
+                        <div class="col-sm-6">
                             <div class="inner-addon right-addon">
                                 <i class="fa fa-film"></i>
                                 {!! Form::text('title', null, ['class' => 'form-control']) !!}
@@ -53,7 +53,7 @@
 
                     <div class="col-md-12 col-lg-12 form-group">
                         {!! Form::label('release_date', 'Release Date:', ['class' => 'col-md-2 col-lg-2 control-label']) !!}
-                        <div class="col-md-3 col-lg-3">
+                        <div class="col-sm-4">
                             <div class="inner-addon right-addon">
                                 <i class="fa fa-calendar"></i>
                                 {!! Form::text('release_date', $convertedDate, ['class' => 'form-control',
@@ -93,7 +93,7 @@
 
                     <div class="col-md-12 col-lg-12 form-group">
                         {!! Form::label('runtime', 'Runtime:', ['class' => 'col-md-2 col-lg-2 control-label']) !!}
-                        <div class="col-md-2 col-lg-2">
+                        <div class="col-sm-3">
                             <div class="inner-addon right-addon">
                                 <i class="fa fa-clock-o"></i>
                                 {!! Form::text('runtime', null, ['class' => 'form-control',
@@ -119,11 +119,11 @@
             </div>
 
             <div class="col-md-6 col-lg-6">
-                <div class="col-md-4 col-lg-4">
+                <div class="col-md-6 col-lg-6">
                     <img src="http://masterherald.com/wp-content/uploads/2015/01/arnold-schwarzenegger.jpg"
-                        style="height:400px; width: 250px;">
+                        style="height:auto; width: 100%;">
                 </div>
-                <div class="col-md-8 col-lg-8">
+                <div class="col-md-6 col-lg-6">
                     <h3>Add Image to Album</h3>
                     <a href="#"><i class="fa fa-plus-square-o fa-3x"></i></a>
                 </div>
