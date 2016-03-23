@@ -74,7 +74,7 @@ $(function () {
 
 
 //Kevin Wayne
-$('.Userpage__Avatar__edit').hover(function() {
+$('#Userpage__avatar__edit').hover(function() {
     $(this).find('img').fadeTo(500, 0.5);
 }, function() {
     $(this).find('img').fadeTo(500, 1);

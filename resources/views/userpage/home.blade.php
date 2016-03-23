@@ -26,8 +26,8 @@
                     <div class="row">
                         <div class="col-md-2 col-centered Userpage__center">
                             <p class="text-center">You are logged in! {{ Auth::user()->name }} </p>
-                            <a href="{{ url('/userpage/avatar') }}" class="Userpage__Avatar__edit">
-                                <img src="{{asset($avatar)}}" class="img-circle Userpage__avatar " alt="Avatar">
+                            <a href="{{ url('/userpage/avatar') }}" id="Userpage__avatar__edit">
+                                <img src="{{asset($avatar)}}" class="img-circle Userpage__avatar" alt="Avatar">
                             </a>
                         </div>
                     </div>
@@ -35,9 +35,9 @@
                     <br>
                     <div class="container-fluid">
                         <ul class="nav nav-tabs" id="myTabs">
-                            <li class="active"><a href="#create" data-toggle="tab">Create List</a></li>
-                            <li><a href="#movie" data-toggle="tab">My Movie Lists</a></li>
-                            <li><a href="#person" data-toggle="tab">My Person Lists</a></li>
+                            <li class="active"><a href="#create" data-toggle="tab"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;New List</a></li>
+                            <li><a href="#movie" data-toggle="tab"><span class="glyphicon glyphicon-film" aria-hidden="true"></span>&nbsp;Movie Lists</a></li>
+                            <li><a href="#person" data-toggle="tab"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;Person Lists</a></li>
                         </ul>
 
                         <div class="tab-content">
@@ -67,10 +67,11 @@
                                                 <div class="panel panel-default">
                                                     <div class="panel-heading">
                                                         <div class="panel-title">
-                                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse">{{$masterlist["title"]}}</a>
+                                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse">{{$masterlist["title"]}}&nbsp;</a>
+                                                            <span class="badge">{{count($movlist->movies)}}</span>
                                                             <button type="button" class="btn btn-default btn-sm pull-right">
                                                                 <a href="{{ url('userpage/home/deleteList/'.$masterlist->id) }}">
-                                                                    <span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span> Delete List
+                                                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                                                 </a>
                                                             </button>
                                                         </div>
@@ -78,10 +79,12 @@
                                                     </div>
                                                     <div id="collapse" class="panel-collapse collapse in">
                                                         <div class="panel-body">
-                                                            @foreach($movlist->movies as $movie)
-                                                            {{$movie["title"]}}
-                                                            </br>
-                                                            @endforeach
+                                                            <ul class="list-group">
+                                                                @foreach($movlist->movies as $movie)
+                                                                <li class="list-group-item">{{$movie["title"]}}</li>
+                                                                </br>
+                                                                @endforeach
+                                                            </ul>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -100,10 +103,11 @@
                                                 <div class="panel panel-default">
                                                     <div class="panel-heading">
                                                         <div class="panel-title">
-                                                            <a data-toggle="collapse2" data-parent="#accordion" href="#collapse2">{{$masterlist["title"]}}</a>
+                                                            <a data-toggle="collapse2" data-parent="#accordion" href="#collapse2">{{$masterlist["title"]}}&nbsp;</a>
+                                                            <span class="badge">{{count($perlist->people)}}</span>
                                                             <button type="button" class="btn btn-default btn-sm pull-right">
                                                                 <a href="{{ url('userpage/home/deleteList/'.$masterlist->id) }}">
-                                                                    <span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span> Delete List
+                                                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                                                 </a>
                                                             </button>
                                                         </div>
