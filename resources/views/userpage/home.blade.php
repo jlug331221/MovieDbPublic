@@ -5,7 +5,9 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
-                <div class="panel-heading">{{ $name }}, Welcome To Your User Page!</div>
+                <div class="panel-heading">
+                    {{ $name }}, Welcome To Your User Page!
+                </div>
 
                 @if($errors->has())
                     <div class="alert alert-danger">
@@ -60,70 +62,86 @@
 
                             <div class="tab-pane" id="movie">
                                 <br>
-                                <div class="panel-group" id="accordion">
-                                    @foreach($masterlists as $masterlist)
-                                        @if($masterlist->type == "M")
-                                            @foreach($masterlist->movielist as $movlist)
+                                <br>
+                                <div class="accordion panel-group" id="accordion2">
+                                @foreach($masterlists as $masterlist)
+                                    @if($masterlist->type == "M")
+                                        @foreach($masterlist->movielist as $movlist)
+                                            <div class="accordion-group">
                                                 <div class="panel panel-default">
-                                                    <div class="panel-heading">
-                                                        <div class="panel-title">
-                                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse">{{$masterlist["title"]}}&nbsp;</a>
-                                                            <span class="badge">{{count($movlist->movies)}}</span>
-                                                            <button type="button" class="btn btn-default btn-sm pull-right">
-                                                                <a href="{{ url('userpage/home/deleteList/'.$masterlist->id) }}">
-                                                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                                                                </a>
-                                                            </button>
-                                                        </div>
-
-                                                    </div>
-                                                    <div id="collapse" class="panel-collapse collapse in">
-                                                        <div class="panel-body">
-                                                            <ul class="list-group">
-                                                                @foreach($movlist->movies as $movie)
-                                                                <li class="list-group-item">{{$movie["title"]}}</li>
-                                                                </br>
-                                                                @endforeach
-                                                            </ul>
-                                                        </div>
+                                                <div class="accordion-heading panel-heading ">
+                                                    <div class="panel-title">
+                                                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse{{$masterlist["id"]}}">
+                                                        {{$masterlist["title"]}}&nbsp;
+                                                    </a>
+                                                    <span class="badge">{{count($movlist->movies)}}</span>
+                                                    <button type="button" class="btn btn-default btn-sm pull-right">
+                                                        <a href="{{ url('userpage/home/deleteList/'.$masterlist->id) }}">
+                                                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                                         </a>
+                                                    </button>
                                                     </div>
                                                 </div>
+                                                <div id="collapse{{$masterlist["id"]}}" class="accordion-body in collapse" style="height: auto; ">
+                                                    <div class="accordion-inner panel-body">
+                                                        <ul class="list-group">
+                                                            @foreach($movlist->movies as $movie)
+                                                            <li class="list-group-item">
+                                                                {{$movie["title"]}}
+                                                            </li>
+                                                            </br>
+                                                            @endforeach
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                            </div>
                                             @endforeach
                                         @endif
+                                    <br>
                                     @endforeach
                                 </div>
                             </div>
 
+
                             <div class="tab-pane" id="person">
-                                <br>
-                                <div class="panel-group" id="accordion">
+                                <div class="accordion2 panel-group" id="accordion3">
                                     @foreach($masterlists as $masterlist)
                                         @if($masterlist->type == "P")
                                             @foreach($masterlist->personlist as $perlist)
-                                                <div class="panel panel-default">
-                                                    <div class="panel-heading">
-                                                        <div class="panel-title">
-                                                            <a data-toggle="collapse2" data-parent="#accordion" href="#collapse2">{{$masterlist["title"]}}&nbsp;</a>
-                                                            <span class="badge">{{count($perlist->people)}}</span>
-                                                            <button type="button" class="btn btn-default btn-sm pull-right">
-                                                                <a href="{{ url('userpage/home/deleteList/'.$masterlist->id) }}">
-                                                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                                <div class="accordion-group">
+                                                    <div class="panel panel-default">
+                                                        <div class="accordion-heading panel-heading ">
+                                                            <div class="panel-title">
+                                                                <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion3" href="#collapse{{$masterlist["id"]}}">
+                                                                    {{$masterlist["title"]}}&nbsp;
                                                                 </a>
-                                                            </button>
+                                                                <span class="badge">{{count($perlist->people)}}</span>
+                                                                <button type="button" class="btn btn-default btn-sm pull-right">
+                                                                    <a href="{{ url('userpage/home/deleteList/'.$masterlist->id) }}">
+                                                                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                                                    </a>
+                                                                </button>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div id="collapse2" class="panel-collapse collapse in">
-                                                        <div class="panel-body">
-                                                            @foreach($perlist->people as $person)
-                                                                {{$person["first_name"]}}
-                                                                {{$person["last_name"]}}
-                                                                </br>
-                                                            @endforeach
+                                                        <div id="collapse{{$masterlist["id"]}}" class="accordion-body in collapse" style="height: auto; ">
+                                                            <div class="accordion-inner panel-body">
+                                                                <ul class="list-group">
+                                                                    @foreach($perlist->people as $person)
+                                                                    <li class="list-group-item">
+                                                                        {{$person["first_name"]}}
+                                                                        {{$person["last_name"]}}
+                                                                    </li>
+                                                                    </br>
+                                                                    @endforeach
+                                                                </ul>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             @endforeach
                                         @endif
+                                        <br>
                                     @endforeach
                                 </div>
                             </div>
