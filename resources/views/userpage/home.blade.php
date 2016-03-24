@@ -45,7 +45,7 @@
                         <div class="tab-content">
                             <div class="tab-pane active" id="create">
                                 <br/>
-                                {!! Form::open() !!}
+                                {!! Form::open(array('url' => '/userpage/home/newList')) !!}
                                     <div class="form-group">
                                         {!! Form::label('title', 'Title:') !!}
                                         {!! Form::text('title', null, ['class' => 'form-control']) !!}
@@ -78,17 +78,20 @@
                                                             <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                                          </a>
                                                     </button>
-                                                    <button type="button" class="btn btn-default btn-sm pull-right" data-id="{{$movlist->id}}" data-toggle="modal" data-target="#myModal">
-                                                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                                    <button type="button" class="btn btn-default btn-sm pull-right" data-title="{{$masterlist->title}}" data-id="{{$movlist->id}}" data-toggle="modal" data-target="#myModal">
+                                                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                                                     </button>
                                                     </div>
                                                 </div>
-                                                <div id="collapse{{$masterlist["id"]}}" class="accordion-body in collapse" style="height: auto; ">
+                                                <div id="collapse{{$masterlist["id"]}}" class="accordion-body collapse" style="height: auto; ">
                                                     <div class="accordion-inner panel-body">
-                                                        <ul class="list-group">
+                                                        <ul class="list-group" data-movielist-id="{{ $movlist->id }}">
                                                             @foreach($movlist->movies as $movie)
-                                                            <li class="list-group-item">
+                                                            <li class="list-group-item" data-movie-id="{{ $movie->id }}">
                                                                 {{$movie["title"]}}
+                                                                <a href="{{ url('userpage/home/deleteList/'.$masterlist->id) }}">
+                                                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                                                </a>
                                                             </li>
                                                             </br>
                                                             @endforeach
@@ -115,12 +118,15 @@
                                             <h4 class="modal-title" id="listModal"></h4>
                                         </div>
                                         <div class="modal-body">
-                                            {!! Form::open() !!}
+                                            {!! Form::open(array('action' => 'HomeController@postAddToList')) !!}
                                             <div class="form-group">
-                                                {!! Form::text('title', null, ['class' => 'form-control']) !!}
+                                                {{--{!! Form::text('movieid', null, ['class' => 'form-control']) !!}--}}
+                                                {!! Form::text('movieid', null, ['class' => 'typeahead form-control']) !!}
+                                                {{--<input class="typeahead form-control" type="text" data-provider="typeahead" placeholder="typeahead">--}}
+                                                {!! Form::hidden('listid', null, ['class' => 'form-control', 'id' => 'list_id']) !!}
                                             </div>
                                             <div class="form-group">
-                                                {!! Form::submit('Add To List', ['class' => 'btn btn-primary form-control']) !!}
+                                                    {!! Form::submit('Add To List', ['class' => 'btn btn-primary form-control']) !!}
                                             </div>
                                             {!! Form::close() !!}
                                         </div>
@@ -154,7 +160,7 @@
                                                                 </button>
                                                             </div>
                                                         </div>
-                                                        <div id="collapse{{$masterlist["id"]}}" class="accordion-body in collapse" style="height: auto; ">
+                                                        <div id="collapse{{$masterlist["id"]}}" class="accordion-body collapse" style="height: auto; ">
                                                             <div class="accordion-inner panel-body">
                                                                 <ul class="list-group">
                                                                     @foreach($perlist->people as $person)

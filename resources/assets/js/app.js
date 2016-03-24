@@ -83,16 +83,11 @@ $('#Userpage__avatar__edit').hover(function() {
 //Kevin Wayne
 $('div.Userpage__messages').delay(4000).slideUp();
 
-//Kevin Wayne
-//$('#myModal').on('show.bs.modal', function(){
-//    var title = $(this).data('id');
-//    var t = "hi";
-//    $('#listModal').text(title);
-//});
-
 $(document).ready(function(){
     $('#myModal').on('show.bs.modal', function (e) {
-        var id = $(e.relatedTarget).data('id');
-        $('#listModal').text(id);
+        var listTitle = $(e.relatedTarget).data('title');
+        $('#listModal').text(listTitle);
+        var listId = $(e.relatedTarget).data('id');
+        document.getElementById('list_id').value = listId;
     });
 });
