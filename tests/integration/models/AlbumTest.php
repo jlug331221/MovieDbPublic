@@ -25,6 +25,7 @@ class AlbumTest extends TestCase {
 
         $albumImages = $this->album->images()->get();
 
+        $this->album->removeAll();
         $this->assertEquals(1, count($albumImages));
     }
 
@@ -194,14 +195,45 @@ class AlbumTest extends TestCase {
     }
 
     /** @test */
-    public function the_default_image_is_null_on_album_creation()
+    public function it_has_no_default_image_on_creation()
     {
         $this->assertNull($this->album->default);
     }
 
-//    /** @test */
-//    public function it_removes_the_default_image_when_all_images_are_cleared()
-//    {
-//
-//    }
+    /** @test */
+    public function it_can_change_the_default_image_using_an_instance_of_an_image()
+    {
+        $this->assertNull($this->album->default);
+
+        $image = factory(Image::class)->create();
+        $this->album->addImage($image->id);
+
+        $this->album->changeDefault($image);
+        $this->assertEquals($this->album->default, $image->id);
+    }
+
+    /** @test */
+    public function it_can_change_the_default_image_using_an_id()
+    {
+        $this->assertNull($this->album->default);
+
+        $image = factory(Image::class)->create();
+        $this->album->addImage($image->id);
+
+        $this->album->changeDefault($image->id);
+        $this->assertEquals($this->album->default, $image->id);
+    }
+
+    /** @test */
+    public function it_removes_the_default_image_when_all_images_are_cleared()
+    {
+        $image = factory(Image::class)->create();
+        $this->album->addImage($image->id);
+
+        $this->album->changeDefault($image->id);
+        $this->assertEquals($this->album->default, $image->id);
+
+        $this->album->removeAll();
+        $this->assertNull($this->album->default);
+    }
 }

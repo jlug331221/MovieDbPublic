@@ -105,7 +105,7 @@ class SearchController extends Controller {
 
     public function post_advancedPerson(AdvancedPersonRequest $request)
     {
-        $inputs = [
+        $params = [
             'name'                => $request->input('name'),
             'date-of-birth-start' => $request->input('date-of-birth-start'),
             'date-of-birth-end'   => $request->input('date-of-birth-end'),
@@ -114,7 +114,8 @@ class SearchController extends Controller {
             'countries'           => $request->input('countries'),
             'keyword'             => $request->input('keyword'),
         ];
-        return $inputs;
+
+        return explode(' ', $params['name']);
     }
 
     public function get_jsonTest()

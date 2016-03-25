@@ -9,6 +9,7 @@ class ImageSyncTest extends TestCase {
 
     use DatabaseTransactions;
 
+    /** @test */
     public function it_can_create_a_record_and_corresponding_file()
     {
         $imageFile = $this->set_up_image_file();
@@ -29,6 +30,7 @@ class ImageSyncTest extends TestCase {
         $this->tear_down_image_file($image);
     }
 
+    /** @test */
     public function it_can_delete_a_record_and_corresponding_file()
     {
         $imageFile = $this->set_up_image_file();
@@ -44,6 +46,7 @@ class ImageSyncTest extends TestCase {
         $this->assertNotTrue(file_exists($image->getAbsolutePath()));
     }
 
+    /** @test */
     public function it_throws_an_exception_for_non_file_types_during_creation()
     {
         $string = 'test case string';
@@ -58,6 +61,7 @@ class ImageSyncTest extends TestCase {
         $this->fail();
     }
 
+    /** @test */
     public function it_throws_an_exception_for_invalid_file_extensions_during_creation()
     {
         $faker = Factory::create();
