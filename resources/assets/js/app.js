@@ -74,11 +74,20 @@ $(function () {
 
 
 //Kevin Wayne
-$('.edit').hover(function() {
+$('#Userpage__avatar__edit').hover(function() {
     $(this).find('img').fadeTo(500, 0.5);
 }, function() {
     $(this).find('img').fadeTo(500, 1);
 });
 
 //Kevin Wayne
-$('div.alert-success').delay(4000).slideUp();
+$('div.Userpage__messages').delay(4000).slideUp();
+
+$(document).ready(function(){
+    $('#myModal').on('show.bs.modal', function (e) {
+        var listTitle = $(e.relatedTarget).data('title');
+        $('#listModal').text(listTitle);
+        var listId = $(e.relatedTarget).data('id');
+        document.getElementById('list_id').value = listId;
+    });
+});

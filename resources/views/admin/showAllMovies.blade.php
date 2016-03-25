@@ -51,11 +51,11 @@
                                     <td><h5>{{ $movie->runtime }}</h5></td>
                                     <td align="center">
                                         <a href="{{ url('admin/showMovie/'. $movie->id) }}">
-                                            <i class="fa fa-pencil-square-o"></i>
+                                            <i class="fa fa-pencil-square-o fa-lg"></i>
                                         </a>
                                         &nbsp;&nbsp;
                                         <a href="{{ url('admin/deleteMovie/'. $movie->id) }}">
-                                            <i class="fa fa-trash"></i>
+                                            <i class="fa fa-trash fa-lg"></i>
                                         </a>
                                     </td>
                                 </tr>

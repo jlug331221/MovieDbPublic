@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Masterlist;
 use App\MovieList;
 use App\PersonList;
+use App\Movie;
 use App\Image;
 use App\User;
 use Auth;
@@ -138,6 +139,17 @@ class HomeController extends Controller
             $personlist->save();
         }
         Session::flash('message', 'Successfully created list!');
+        return redirect()->action('HomeController@index');
+    }
+
+    public function postAddToList()
+    {
+        $input = Request::only(['movieid', 'listid']);
+        $movieid = $input['movieid'];
+        $movielistid = $input['listid'];
+        $movielist = MovieList::where('id', '=', $movielistid)->first();
+        $movie = Movie::where('id', '=', $movieid)->first();
+        $movielist->insertMovieInto($movie);
         return redirect()->action('HomeController@index');
     }
 }
