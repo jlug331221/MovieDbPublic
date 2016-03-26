@@ -60,6 +60,8 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/reviews/display/{rid}', 'ReviewController@display');
     Route::post('/reviews/newcomment/{rid}', 'ReviewController@newComment');
     Route::post('/reviews/postcomment/{rid}', 'ReviewController@postComment');
+    Route::get('/reviews/handleVote/{vote}{rid}', 'ReviewController@handleVote');
+    Route::get('/reviews/test/', 'ReviewController@testComponent');
 
     // Image Routes
     Route::get('/images/create', 'ImagesController@create');
