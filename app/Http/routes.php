@@ -27,7 +27,8 @@ Route::group(['middleware' => 'web'], function () {
     Route::auth();
 
     Route::get('/userpage/home', 'HomeController@index');
-    Route::post('/userpage/home', 'HomeController@postList');
+    Route::post('/userpage/home/addToList', 'HomeController@postAddToList');
+    Route::post('/userpage/home/newList', 'HomeController@postList');
     Route::get('/userpage/home/deleteList/{mlid}', 'HomeController@deleteList');
     Route::get('/userpage/avatar', 'HomeController@avatar');
     Route::post('/userpage/avatar/store', 'HomeController@store');
@@ -36,8 +37,12 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/admin/adminHome', 'AdminController@index');
     Route::get('/admin/showAllMovies', 'AdminController@showMovies');
     Route::get('admin/showMovie/{id}', 'AdminController@showMovie');
+    Route::put('admin/updateMovie/{id}', 'AdminController@updateMovie');
+    Route::get('admin/deleteMovie/{id}', 'AdminController@destroyMovie');
     Route::get('/admin/showAllPeople', 'AdminController@showPeople');
     Route::get('/admin/showPerson/{id}', 'AdminController@showPerson');
+    Route::put('/admin/updatePerson/{id}', 'AdminController@updatePerson');
+    Route::get('/admin/deletePerson/{id}', 'AdminController@destroyPerson');
     Route::get('/admin/createMovie', 'AdminController@createMovie');
     Route::post('/admin/createMovie', 'AdminController@storeMovie');
     Route::get('/admin/createPerson', 'AdminController@createPerson');
@@ -52,7 +57,9 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('/search/movie', 'SearchController@post_advancedMovie');
     Route::get('/search/person', 'SearchController@get_advancedPerson');
     Route::post('/search/person', 'SearchController@post_advancedPerson');
-    Route::get('/search/typeahead', 'SearchController@get_typeaheadDemo');
+    Route::get('/search/jsonTest', 'SearchController@get_jsonTest'); // temp
+    Route::get('/search/suffix/{term}', 'SearchController@get_suffixSearch_json');
+    Route::post('/search/suffix', 'SearchController@post_suffixSearch_json');
 
     // Review Routes
     Route::get('/reviews/create/{mid}', 'ReviewController@create');

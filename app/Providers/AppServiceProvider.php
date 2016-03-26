@@ -39,7 +39,9 @@ class AppServiceProvider extends ServiceProvider
             $limit_field = $parameters[0];
             $data = $validator->getData();
             $limit_value = $data[$limit_field];
-            return strtotime($value) <= strtotime($limit_value);
+            if ($limit_value != null)
+                return strtotime($value) <= strtotime($limit_value);
+            return true;
         });
 
         /**

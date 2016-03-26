@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Auth;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use DB;
 use App\Movie;
 use App\Person;
 use Illuminate\Support\Facades\Input;
@@ -343,11 +344,11 @@ class AdminController extends Controller
      * @var array
      */
     protected $movieValidationRules = [
-        'title' => 'required',
-        'country' => 'required',
-        'release_date' => 'required',
-        'genre' => 'required',
-        'runtime' => 'required'
+        'title' => 'required|string',
+        'country' => 'required|string',
+        'release_date' => 'required|date_format:m/d/Y',
+        'genre' => 'required|string',
+        'runtime' => 'required|integer'
     ];
 
     /**
@@ -356,10 +357,10 @@ class AdminController extends Controller
      * @var array
      */
     protected $personValidationRules = [
-        'first_name' => 'required',
-        'last_name' => 'required',
-        'country_of_origin' => 'required',
-        'date_of_birth' => 'required'
+        'first_name' => 'required|string',
+        'last_name' => 'required|string',
+        'country_of_origin' => 'required|string',
+        'date_of_birth' => 'required|date_format:m/d/Y'
     ];
 
     /**
@@ -389,8 +390,17 @@ class AdminController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function showMovie($id) {
+        $countries = $this->countries;
+        $genres = $this->genres;
+        $ratings = $this->ratings;
         $movie = Movie::find($id);
-        return view('/admin/showMovie', compact('movie'));
+        $selectedCountry = $movie->country;
+        $selectedGenre = $movie->genre;
+        $selectedRating = $movie->parental_rating;
+        $convertedDate = date("m/d/Y", strtotime($movie->release_date));
+        return view('/admin/showMovie', compact(['movie', 'selectedGenre',
+            'countries', 'ratings', 'selectedRating', 'genres',
+            'convertedDate', 'selectedCountry']));
     }
 
     /**
@@ -403,9 +413,20 @@ class AdminController extends Controller
         return view('/admin/showAllPeople', compact('people'));
     }
 
+    /**
+     * Show specific person for editing.
+     *
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function showPerson($id) {
+        $countries = $this->countries;
         $person = Person::find($id);
-        return view('/admin/showPerson', compact('person'));
+        $selectedCountry = $person->country_of_origin;
+        $convertedDateOfBirth = date("m/d/Y", strtotime($person->date_of_birth));
+        $convertedDateOfDeath = date("m/d/Y", strtotime($person->date_of_death));
+        return view('/admin/showPerson', compact(['person', 'countries', 'selectedCountry',
+                'convertedDateOfBirth', 'convertedDateOfDeath']));
     }
 
     /**
@@ -418,6 +439,26 @@ class AdminController extends Controller
         $genres = $this->genres;
         $ratings = $this->ratings;
         return view('/admin/createMovie', compact(['countries', 'genres', 'ratings']));
+    }
+
+    /**
+     * Remove movie from database.
+     *
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroyMovie($id) {
+        $movieSuffixes = DB::table('movie_suffixes')->where('movie_id', $id);
+        if($movieSuffixes)
+        {
+            $movieSuffixes->delete();
+        }
+        $movie = Movie::find($id);
+        $movie->delete();
+
+        Session::flash('message', "Successfully deleted movie from database");
+        return redirect()->action('AdminController@showMovies');
+
     }
 
     /**
@@ -449,14 +490,57 @@ class AdminController extends Controller
     }
 
     /**
+     * Update movie in database.
+     *
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function updateMovie($id) {
+        $validator = \Validator::make(Input::all(), $this->movieValidationRules);
+
+        if($validator->fails())
+        {
+            return redirect()->back()->withErrors($validator->errors())->withInput();
+        }
+
+        $movie = Movie::find($id);
+        $movie->title = Input::get('title');
+        $movie->country = Input::get('country');
+        $date = date("Y-m-d", strtotime(Input::get('release_date')));
+        $movie->release_date = $date;
+        $movie->genre = Input::get('genre');
+        $movie->parental_rating = Input::get('parental_rating');
+        $movie->runtime = Input::get('runtime');
+        $movie->synopsis = Input::get('synopsis');
+        $movie->save();
+        $movie->save();
+
+        Session::flash('message', 'Successfully updated movie in database!');
+        return redirect()->action('AdminController@showMovies');
+    }
+
+    /**
      * Taken to create person form view.
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function createPerson() {
         $countries = $this->countries;
-
         return view('/admin/createPerson', compact(['countries']));
+    }
+
+    /**
+     * Remove person from database.
+     *
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroyPerson($id) {
+        $person = Person::find($id);
+        $person->delete();
+
+        Session::flash('message', "Successfully deleted person from database");
+        return redirect()->action('AdminController@showPeople');
     }
 
     /**
@@ -489,6 +573,40 @@ class AdminController extends Controller
         $person->save();
 
         Session::flash('message', 'Successfully added person to database!');
+        return redirect()->action('AdminController@showPeople');
+    }
+
+    /**
+     * Update person in database.
+     *
+     * @param $id
+     * @return $this|\Illuminate\Http\RedirectResponse
+     */
+    public function updatePerson($id) {
+        $validator = \Validator::make(Input::all(), $this->personValidationRules);
+
+        if($validator->fails()) {
+            return redirect()->back()->withErrors($validator->errors())->withInput();
+        }
+
+        $person = Person::find($id);
+        $person->first_name = Input::get('first_name');
+        $person->middle_name = Input::get('middle_name');
+        $person->last_name = Input::get('last_name');
+        $person->first_alias = Input::get('first_alias');
+        $person->middle_alias = Input::get('middle_alias');
+        $person->last_alias = Input::get('last_alias');
+        $person->country_of_origin = Input::get('country_of_origin');
+        $birthDate = date("Y-m-d", strtotime(Input::get('date_of_birth')));
+        $deathDate = date("Y-m-d", strtotime(Input::get('date_of_death')));
+        $person->date_of_birth = $birthDate;
+        if($deathDate > "1970-01-01" || $deathDate < "1970-01-01") {
+            $person->date_of_death = $deathDate;
+        }
+        $person->biography = Input::get('biography');
+        $person->save();
+
+        Session::flash('message', 'Successfully updated person in database!');
         return redirect()->action('AdminController@showPeople');
     }
 }
