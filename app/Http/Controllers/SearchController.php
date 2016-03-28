@@ -15,7 +15,7 @@ use App\Http\Controllers\Controller;
 
 class SearchController extends Controller {
 
-    public function basicSearch(Request $request)
+    public function post_basicSearch(Request $request)
     {
         $queryString = $request->get('search');
         $movies = Movie::where('title', 'LIKE', $queryString)->get();
