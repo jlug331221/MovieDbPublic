@@ -18,7 +18,7 @@ class SearchController extends Controller {
     public function basicSearch(Request $request)
     {
         $queryString = $request->get('search');
-        $movies = Movie::where('title', '=', $queryString)->get();
+        $movies = Movie::where('title', 'LIKE', $queryString)->get();
         if (count($movies) == 0)
             $movies = Movie::all();
         return view('search.search', compact('movies'));
