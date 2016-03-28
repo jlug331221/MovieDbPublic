@@ -6,49 +6,54 @@
 
     <div class="container">
 
-        <!-- Movie Page Heading -->
+        <!-- Person Page Heading -->
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">The Terminator
-                    <small>(1984)</small>
+                <h1 class="page-header">Arnold Schwarzenegger
                     @can('edit_all_content')
-                        <a href="#"><button type="button" class="btn MoviePage__btnAdmin">Edit Movie</button></a>
-                        <a href="#"><button type="button" class="btn MoviePage__btnAdmin">Delete Movie</button></a>
+                        <a href="#"><button type="button" class="btn PersonPage__btnAdmin">Edit Person</button></a>
+                        <a href="#"><button type="button" class="btn PersonPage__btnAdmin">Delete Person</button></a>
                     @endcan
                 </h1>
             </div>
         </div>
         <!-- /.row -->
 
-        <!-- Top Movie Page Row -->
-        <div class="row MoviePage__Top">
+        <!-- Top Person Page Row -->
+        <div class="row PersonPage__Top">
 
-            <div class="col-md-4 MoviePage__Image">
-                <img class="img-responsive MoviePage__poster" src="http://www.cinemasterpieces.com/term1.jpg" width="300px" height="500px" alt="">
+            <div class="col-md-4 PersonPage__Image">
+                <img class="PersonPage__poster" src="http://a3.files.biography.com/image/upload/c_fill,cs_srgb,dpr_1.0,g_face,h_300,q_80,w_300/MTE5NDg0MDU1MTIyMTE4MTU5.jpg"
+                     width="300px" height="400px" alt="">
 
                 @if(Auth::check())
-                    <button type="button" class="btn MoviePage__btnImage">Add to List</button> <br>
+                    <button type="button" class="btn PersonPage__btnImage">Add to List</button> <br>
                 @endif
+            </div>
 
-            </div>  <!-- 260 * 420 -->
-
-            <div class="col-md-8 MoviePage__Desc">
-                <h3>Synopsis</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius
-                    vitae. Sed dui lorem, adipiscing in adipiscing et, interdum nec metus. Mauris ultricies, justo eu convallis placerat, felis enim.
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius
-                    vitae. Sed dui lorem, adipiscing in adipiscing et, interdum nec metus. Mauris ultricies, justo eu convallis placerat, felis enim.
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius
-                    vitae. Sed dui lorem, adipiscing in adipiscing et, interdum nec metus. Mauris ultricies, justo eu convallis placerat, felis enim.
+            <div class="col-md-8 PersonPage__Desc">
+                <h3>Biography</h3>
+                <p>Arnold Alois Schwarzenegger (/ˈʃwɔːrtsənˌɛɡər/; German: [ˈaɐ̯nɔlt ˈalɔʏs ˈʃvaɐ̯tsn̩ˌɛɡɐ]; born July 30, 1947) is an Austrian-American actor, filmmaker, businessman, investor, author, philanthropist, activist, former professional bodybuilder and politician. He served two terms as the 38th Governor of California from 2003 until 2011.
+                    Schwarzenegger began weight training at the age of 15. He won the Mr. Universe title at age 20
+                    and went on to win the Mr. Olympia contest seven times. Schwarzenegger has remained a prominent presence
+                    in bodybuilding and has written many books and articles on the sport. He is widely considered to be among the greatest
+                    bodybuilders of all times as well as its biggest icon.[2] Schwarzenegger gained worldwide fame as a Hollywood action film icon.
+                    His breakthrough film was the sword-and-sorcery epic Conan the Barbarian in 1982, which was a box-office hit and resulted
+                    in a sequel.[3] In 1984, he appeared in James Cameron's science-fiction thriller film The Terminator, which was a massive
+                    critical and box-office success. Schwarzenegger subsequently reprised the Terminator character in the franchise's later
+                    installments in 1991, 2003, and 2015.[3][4][5] He appeared in a number of successful films, such as Commando (1985),
+                    The Running Man (1987), Predator (1987), Twins (1988), Total Recall (1990), Kindergarten Cop (1990) and True Lies (1994).
+                    He was nicknamed the "Austrian Oak" in his bodybuilding days, "Arnie" during his acting career, and "The Governator"
+                    (a portmanteau of "Governor" and "The Terminator", one of his best-known movie roles).
 
                 </p>
-                <h3>Movie Details</h3>
-                <ul class="list-group MoviePage__listGroup">
-                    <li class="list-group-item MoviePage__listGroupItem">Director:<span class="MoviePage__directorText">James Cameron</span></li>
-                    <li class="list-group-item MoviePage__listGroupItem">Country:<span class="MoviePage__countryText">United States</span></li>
-                    <li class="list-group-item MoviePage__listGroupItem">Genre:<span class="MoviePage__genreText">Action</span></li>
-                    <li class="list-group-item MoviePage__listGroupItem">Parental Rating:<span class="MoviePage__ratingText">PG-13</span></li>
-                    <li class="list-group-item MoviePage__listGroupItem">Release Date:<span class="MoviePage__releaseText">October 26, 1984</span></li>
+                <h3>Person Details</h3>
+                <ul class="list-group PersonPage__listGroup">
+                    <li class="list-group-item PersonPage__listGroupItem">Full name:<span class="PersonPage__fullNameText">Arnold Alois Schwarzenegger</span></li>
+                    <li class="list-group-item PersonPage__listGroupItem">Alias:<span class="PersonPage__aliasText">Arnold Alois Schwarzenegger</span></li>
+                    <li class="list-group-item PersonPage__listGroupItem">Country of Origin:<span class="PersonPage__countryText">Austria</span></li>
+                    <li class="list-group-item PersonPage__listGroupItem">Date of birth:<span class="PersonPage__DOBText">July 30, 1947</span></li>
+                    <li class="list-group-item PersonPage__listGroupItem">Date of death:<span class="PersonPage__DODText">Arnold Alois Schwarzenegger</span></li>
                 </ul>
             </div>
 
@@ -56,27 +61,27 @@
         <!-- /.row -->
 
         <!-- Second Row -->
-        <div class="row MoviePage__Second">
+        <div class="row PersonPage__Second">
             <div class="col-lg-12">
                 <h3 class="page-header">Pictures</h3>
             </div>
 
             <div class="col-md-6">
-                <p>This section is reserved for a horizontal view of movie pictures.</p>
+                <p>This section is reserved for a horizontal view of person pictures.</p>
             </div>
         </div>
         <!-- /.row -->
 
         <!-- Third Row -->
-        <div class="row MoviePage__Third">
+        <div class="row PersonPage__Third">
 
             <div class="col-lg-12">
-                <h3 class="page-header">The Cast
-                <small class="MoviePage__tableInfo">(Click to expand/collapse)</small>
+                <h3 class="page-header">Movies starred in
+                    <small class="PersonPage__tableInfo">(Click to expand/collapse)</small>
                 </h3>
             </div>
 
-            <div class="col-md-12 MoviePage__cast">
+            <div class="col-md-12 PersonPage__cast">
 
                 <table class="table table-responsive table-hover">
                     <thead>
@@ -144,27 +149,14 @@
         <!-- /.row -->
 
         <!-- Fourth Row -->
-        <div class="row MoviePage__Fourth">
-
-            <div class="col-lg-12">
-                <h3 class="page-header">Reviews</h3>
-            </div>
-
-            <div class="col-md-6">
-                <p>I am reserving this section for reviews.</p>
-            </div>
-        </div>
-        <!-- /.row -->
-
-        <!-- Fifth Row -->
-        <div class="row MoviePage__Fifth">
+        <div class="row PersonPage__Fourth">
 
             <div class="col-lg-12">
                 <h3 class="page-header">Discussions</h3>
             </div>
 
             <div class="col-md-6">
-                <p>This section is potentially for movie discussions.</p>
+                <p>This section is potentially for person discussions.</p>
             </div>
         </div>
         <!-- /.row -->

@@ -78,4 +78,7 @@ Route::group(['middleware' => 'web'], function () {
 
     //Movie page routes
     Route::get('/movies/movie', 'MoviePageController@moviePage');
+
+    //Person page routes
+    Route::get('/people/person', 'PersonPageController@personPage');
 });
