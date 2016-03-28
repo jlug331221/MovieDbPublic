@@ -51,6 +51,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/', function() { return view('welcome'); });
 
     // Search Routes
+    Route::get('/search', 'SearchController@get_basicSearch');
     Route::post('/search', 'SearchController@post_basicSearch');
     Route::get('/search/movie', 'SearchController@get_advancedMovie');
     Route::post('/search/movie', 'SearchController@post_advancedMovie');

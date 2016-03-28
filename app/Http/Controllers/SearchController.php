@@ -15,13 +15,18 @@ use App\Http\Controllers\Controller;
 
 class SearchController extends Controller {
 
+    public function get_basicSearch()
+    {
+	return view('search.searchPage');
+    }
+
     public function post_basicSearch(Request $request)
     {
         $queryString = $request->get('search');
         $movies = Movie::where('title', 'LIKE', $queryString)->get();
         if (count($movies) == 0)
             $movies = Movie::all();
-        return view('search.search', compact('movies'));
+        return view('search.searchPage', compact('movies'));
     }
 
     public function get_advancedMovie()
