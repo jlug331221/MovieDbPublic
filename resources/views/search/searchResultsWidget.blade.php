@@ -4,12 +4,22 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Search Results</div>
                 <div class="panel-body">
-                    <ul class="list-group">
-                        <li class="list-group-item">Title</li>
+                    <table class="list-group">
+		        <tr class="list-group-item">
+                            <td>Title</td>
+                            <td>Release Date</td>
+                            <td>Runtime</td>
+                            <td>Genre</td>
+                        </tr>
                         @foreach($movies as $movie)
-                            <li class="list-group-item">{!! $movie->title !!}</li>
+			    <tr class="list-group-item">
+                                <td>{!! $movie->title !!}</td>
+                                <td>{!! $movie->release_date !!}</td>
+				<td>{!! $movie->runtime !!}</td>
+				<td>{!! $movie->genre !!}</td>
+                            </tr>
                         @endforeach
-                    </ul>	
+                    </table>	
                 </div>
             </div>
         </div>
