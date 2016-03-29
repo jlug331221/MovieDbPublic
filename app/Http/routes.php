@@ -41,7 +41,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/admin/createPerson', 'AdminController@createPerson');
     Route::post('/admin/createPerson', 'AdminController@storePerson');
 
-    Route::get('/', function() { return view('welcome'); });
+    Route::get('/', 'WelcomeController@display');
 
     // Search Routes
     Route::get('/search', 'SearchController@index');

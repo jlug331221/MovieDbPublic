@@ -1,0 +1,40 @@
+.Layout__form {
+  margin-bottom: 0px;
+}
+.Layout__panel-body{
+  padding: 10px;
+  > form {
+    margin-bottom: 0px;
+  }
+}
+  .Layout__form-group {
+    margin-bottom: 8px;
+
+    .Layout__form-label {
+      font-size: 10pt;
+      padding-top: 0px;
+      padding-right: 5px;
+    }
+   #Layout__confirm-password{
+      padding-left: 0px;
+    }
+    .Layout__input-holder {
+      > input {
+        height: 20px;
+      }
+    }
+  }
+  .Layout__form-block {
+    display: inline-block;
+    margin-bottom: 0px;
+    padding-left: 17px;
+    .Layout__form-checkbox-holder {
+      margin-left: 35px;
+      margin-bottom: 0px;
+    }
+  }
+  .Layout__welcome {
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 125%;
+  }
