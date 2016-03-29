@@ -1,0 +1,59 @@
+.PersonPage__listGroupItem {
+  background-color:honeydew;
+}
+
+.PersonPage__btnImage {
+  background-color: #00b3ee;
+  margin-top: 10px;
+  margin-left: 60px;
+  width: 175px;
+}
+
+.PersonPage__Image {
+  align-items: center;
+}
+
+.PersonPage__btnAdmin {
+  background-color: red;
+  width: 100px;
+  margin-left: 20px;
+  padding: 5px 5px 5px 5px;
+  text-align: center;
+}
+
+.PersonPage__Top {
+  display:flex;
+}
+
+.PersonPage__Desc {
+  display:flex;
+  flex-direction: column;
+}
+
+.PersonPage__td {
+  vertical-align:middle;
+}
+
+.PersonPage__tableInfo {
+  margin-left: 20px;
+}
+
+.PersonPage__fullNameText {
+  padding-left: 80px;
+}
+
+.PersonPage__aliasText {
+  padding-left: 108px;
+}
+
+.PersonPage__countryText {
+  padding-left: 30px;
+}
+
+.PersonPage__DOBText {
+  padding-left: 59px;
+}
+
+.PersonPage__DODText {
+  padding-left: 54px;
+}

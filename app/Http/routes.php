@@ -51,8 +51,8 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/', function() { return view('welcome'); });
 
     // Search Routes
-    Route::get('/search', 'SearchController@index');
-    Route::post('/search', 'SearchController@basicSearch');
+    Route::get('/search', 'SearchController@get_basicSearch');
+    Route::post('/search', 'SearchController@post_basicSearch');
     Route::get('/search/movie', 'SearchController@get_advancedMovie');
     Route::post('/search/movie', 'SearchController@post_advancedMovie');
     Route::get('/search/person', 'SearchController@get_advancedPerson');
@@ -79,4 +79,7 @@ Route::group(['middleware' => 'web'], function () {
 
     //Movie page routes
     Route::get('/movies/movie', 'MoviePageController@moviePage');
+
+    //Person page routes
+    Route::get('/people/person', 'PersonPageController@personPage');
 });
