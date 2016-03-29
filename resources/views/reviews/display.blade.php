@@ -19,7 +19,7 @@
                 </div>
                 <div class="row">
                     <div class="Review__vote-text">
-                        <span id="voteText" value="{{$voted}}" rId = {{$review->id}} url="{{url('reviews/handleVote')}}">{{$review->score}}</span>
+                        <span id="voteText" value="{{$voted}}" rId = {{$review->id}} url="{{url('reviews')}}">{{$review->score}}</span>
                     </div>
                 </div>
                 <div class="row">
@@ -62,9 +62,13 @@
                                     <div class="Review__editDelete">
                                         @if(Auth::check())
                                             @if(Auth::user()->id === $review->user_id || Auth::user()->hasRole(['Comment Moderator', 'Review Moderator']))
-                                                <a href="">edit</a>
+                                                <button type="button" onclick="editReview()">
+                                                <span>edit</span>
+                                                </button>
                                                 -
-                                                <a href="">delete</a>
+                                                <button type="button" onclick="deleteReview()">
+                                                <span>delete</span>
+                                                </button>
                                             @endif
                                         @endif
                                     </div>
@@ -135,7 +139,7 @@
     {
         var voted = parseInt(document.getElementById("voteText").getAttribute("value"));
         var value = parseInt(document.getElementById("voteText").innerHTML);
-        var url = document.getElementById("voteText").getAttribute("url");
+        var url = document.getElementById("voteText").getAttribute("url") + "/handleVote";
         var ONE = 1;
         var ZERO = 0;
         var xhttp = new XMLHttpRequest();
@@ -197,7 +201,7 @@
         var voted = parseInt(document.getElementById("voteText").getAttribute("value"));
         var value = parseInt(document.getElementById("voteText").innerHTML);
         var xhttp = new XMLHttpRequest();
-        var url = document.getElementById("voteText").getAttribute("url");
+        var url = document.getElementById("voteText").getAttribute("url") + "/handleVote";
         var reviewId = document.getElementById("voteText").getAttribute("rId");
         var NEGONE = 1;
         var ZER0 = 0;
@@ -250,6 +254,28 @@
     function notLoggedIn()
     {
         alert("Please log in to vote on a review.");
+    }
+
+    function deleteReview()
+    {
+        var reviewId = document.getElementById("voteText").getAttribute("rId");
+        var url = document.getElementById("voteText").getAttribute("url");
+
+        if(confirm("Are you sure you want to delete this review?"))
+        {
+            //User presses yes
+            var xhttp = new XMLHttpRequest();
+            url = url + "/delete" + "/" + reviewId;
+            xhttp.open("GET", url, true);
+            xhttp.send();
+            window.setTimeout(reviewDeleted(reviewId), 2500);
+            location.reload();
+        }
+    }
+
+    function reviewDeleted(reviewId)
+    {
+        alert("Review "+ reviewId + " has been deleted.");
     }
 
     $( document ).ready(function(){

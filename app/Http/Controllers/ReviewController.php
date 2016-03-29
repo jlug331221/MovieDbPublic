@@ -208,4 +208,25 @@ class ReviewController extends Controller
 
         return view('reviews.componentTest')->with(['review' => $review]);
     }
+
+    public function deleteReview($rId)
+    {
+        $review = Review::where('id', $rId)->first();
+
+        $comments = Comment::where("review_id", $rId)->get();
+
+        foreach($comments as $comment)
+        {
+            $comment->delete();
+        }
+
+        $votes = Vote::where('review_id', $rId)->get();
+
+        foreach($votes as $vote)
+        {
+            $vote->delete();
+        }
+
+        $review->delete();
+    }
 }

@@ -69,6 +69,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('/reviews/postcomment/{rid}', 'ReviewController@postComment');
     Route::get('/reviews/handleVote/{vote}{rid}', 'ReviewController@handleVote');
     Route::get('/reviews/test/', 'ReviewController@testComponent');
+    Route::get('/reviews/delete/{rid}', 'ReviewController@deleteReview');
 
     // Image Routes
     Route::get('/images/create', 'ImagesController@create');
