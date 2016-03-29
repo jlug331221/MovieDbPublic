@@ -4,10 +4,10 @@ Homestead.yaml
 Homestead.json
 .env
 .idea/
-public/build/*
 ~$*
 .env.gulp.js
 ./*~
-public/images/*
-public/css/*
-public/js/*
+# public/build/*
+# public/images/*
+# public/css/*
+# public/js/*

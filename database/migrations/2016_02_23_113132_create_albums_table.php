@@ -14,7 +14,15 @@ class CreateAlbumsTable extends Migration
     {
         Schema::create('albums', function (Blueprint $table) {
             $table->increments('id');
+
+            $table->integer('default')->unsigned()->nullable();
+
             $table->timestamps();
+
+            $table->foreign('default')
+                ->references('id')
+                ->on('images')
+                ->onDelete('set null');
         });
 
         // create the album_image pivot table
@@ -35,6 +43,26 @@ class CreateAlbumsTable extends Migration
             $table->foreign('image_id')
                 ->references('id')
                 ->on('images')
+                ->onDelete('cascade');
+        });
+
+        // make the album column in the movies table a foreign key referencing id in albums
+        Schema::table('movies', function ($table) {
+            $table->integer('album')->unsigned();
+
+            $table->foreign('album')
+                ->references('id')
+                ->on('albums')
+                ->onDelete('cascade');
+        });
+
+        // make the album column in the people table a foreign key referencing id in albums
+        Schema::table('people', function ($table) {
+            $table->integer('album')->unsigned();
+
+            $table->foreign('album')
+                ->references('id')
+                ->on('albums')
                 ->onDelete('cascade');
         });
     }

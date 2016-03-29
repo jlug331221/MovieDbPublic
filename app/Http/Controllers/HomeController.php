@@ -6,12 +6,19 @@ use App\Masterlist;
 use App\MovieList;
 use App\PersonList;
 use App\Movie;
+use App\Image;
+use App\User;
 use Auth;
 use App\Http\Requests;
-//use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Input;
 use Session;
+use App\Library\StaticData;
+use DB;
+use App\Http\Requests\CreateImageRequest;
+
+use Image as InterventionImage;
+use ImageSync;
 
 class HomeController extends Controller
 {
@@ -39,7 +46,48 @@ class HomeController extends Controller
     {
         $name = Auth::user()->name;
         $masterlists = Masterlist::where('user_id', Auth::user()->id)->get();
-        return view('/userpage/home', compact('name','masterlists'));
+        $avatar_id = Auth::user()->avatar;
+        $av_image = Image::where('id', '=' ,$avatar_id)->first();
+        $avatar = $av_image['path'].'/'.$av_image['name'].'.'.$av_image['extension'];
+        if($avatar == '/.'){
+            $avatar = StaticData::defaultAvatar();
+        }
+        return view('/userpage/home', compact('name','masterlists','avatar'));
+    }
+
+    public function avatar()
+    {
+        $avatar_id = Auth::user()->avatar;
+        $av_image = Image::where('id', '=' ,$avatar_id)->first();
+        $avatar = $av_image['path'].'/'.$av_image['name'].'.'.$av_image['extension'];
+        if($avatar == '/.'){
+            $avatar = StaticData::defaultAvatar();
+        }
+        return view('/userpage/avatar', compact('avatar'));
+    }
+
+    public function store(CreateImageRequest $request)
+    {
+        $file = $request->file('image');
+        $description = $request->get('description');
+
+        try {
+            $image = ImageSync::create($file, $description);
+            $this->discard();
+            Auth::user()->setAvatar($image);
+            Session::flash('message', 'Successfully changed avatar!');
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+            // do something here like log the error.
+        }
+        return redirect('/userpage/home');
+    }
+
+    public function discard()
+    {
+        $image = Auth::user()->avatar;
+        if ($image != null)
+            ImageSync::destroy($image);
     }
 
     public function getMoviesInList($masterlist_id)
@@ -91,6 +139,17 @@ class HomeController extends Controller
             $personlist->save();
         }
         Session::flash('message', 'Successfully created list!');
+        return redirect()->action('HomeController@index');
+    }
+
+    public function postAddToList()
+    {
+        $input = Request::only(['movieid', 'listid']);
+        $movieid = $input['movieid'];
+        $movielistid = $input['listid'];
+        $movielist = MovieList::where('id', '=', $movielistid)->first();
+        $movie = Movie::where('id', '=', $movieid)->first();
+        $movielist->insertMovieInto($movie);
         return redirect()->action('HomeController@index');
     }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
@@ -24,7 +25,11 @@ class CreateMoviesTable extends Migration
             $table->text('synopsis')->nullable();
 
             $table->timestamps();
+
+            $table->index('title');
         });
+
+        DB::statement("CREATE FULLTEXT INDEX fulltext_index ON movies(title, synopsis)");
     }
 
     /**

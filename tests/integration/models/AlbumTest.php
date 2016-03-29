@@ -192,4 +192,16 @@ class AlbumTest extends TestCase {
 
         $this->assertEquals(0, count($albumImages));
     }
+
+    /** @test */
+    public function the_default_image_is_null_on_album_creation()
+    {
+        $this->assertNull($this->album->default);
+    }
+
+//    /** @test */
+//    public function it_removes_the_default_image_when_all_images_are_cleared()
+//    {
+//
+//    }
 }

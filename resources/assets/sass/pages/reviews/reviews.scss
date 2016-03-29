@@ -1,0 +1,130 @@
+.Review{
+
+}
+
+.Review__titleBar {
+
+  //Title
+  .Review__title{
+
+    .Review__title-container {
+
+      //Choose good looking font
+      font-size: 20pt;
+      padding-top:5px;
+      padding-left:2px;
+    }
+  }
+
+  //Holds comment button
+  .Review__commentForm {
+    margin-bottom: 0px;
+
+    > button {
+      margin-top: 4px;
+    }
+  }
+}
+
+.Review__panelBody {
+  padding-bottom:8px;
+  padding-top:8px;
+  padding-left: 10px;
+  padding-right: 10px;
+  display: flex;
+}
+
+.Review__userDisplay {
+  //Use flex here
+  padding-right:10px;
+  padding-left:0px;
+
+  .Review__userAvatar{
+    //User Avatar
+    margin:0 auto;
+
+    > img {
+      height:170px;
+      width:170px;
+      display:block;
+      margin-left:auto;
+      margin-right:auto;
+    }
+  }
+
+  .Review__userName{
+    text-align:center;
+  }
+
+  .Review__createdAt{
+    text-align:center;
+    font-size:12px;
+  }
+
+  .Review__editDelete{
+    text-align:center;
+    font-size:12px;
+  }
+
+}
+
+.Review__content {
+  padding-left: 30px;
+  border-left: 1px solid #ddd;
+
+  .Review__rating {
+
+    > img {
+      height:20px;
+      width:20px;
+    }
+  }
+
+  .Review__body{
+    padding-top:5px;
+    font-size: 12pt;
+  }
+}
+
+.Review__panel-heading{
+  padding:5px;
+  padding-left:10px;
+  padding-right:10px;
+}
+
+.Review__vote-container{
+  padding-right:5px;
+  padding-left:55px;
+  text-align:center;
+}
+.Review__vote-button{
+  padding:5px;
+  padding-top:0px;
+  padding-bottom:0px;
+
+  .glyphicon{
+    font-size:12pt;
+  }
+
+}
+
+.Review__vote-text{
+  text-align:center;
+  font-size:15px;
+}
+
+.Review__review-container
+{
+  padding-left:0px;
+}
+
+.Review__movie-link
+{
+  padding-left:0px;
+}
+
+.Review__container-all
+{
+  padding-left:30px;
+}
+

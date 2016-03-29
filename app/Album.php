@@ -17,7 +17,31 @@ class Album extends Model {
     }
 
     /**
-     * Adds an image to the album using am Image or an id.
+     * An album has one default image.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function defaultImage()
+    {
+        return $this->hasOne('App\Image', 'id', 'default');
+    }
+
+    /**
+     * Changes the default image for the album using an Image or an id.
+     *
+     * @param Image | integer $image
+     */
+    public function changeDefault($image)
+    {
+        if ($image instanceof Image)
+            $image = $image->id;
+
+        if (is_numeric($image))
+            $this->default = $image;
+    }
+
+    /**
+     * Adds an image to the album using an Image or an id.
      *
      * @param Image | integer $image
      */
@@ -54,7 +78,7 @@ class Album extends Model {
     public function addImages($images)
     {
         if (is_array($images)) {
-            array_map(function($image) {
+            array_map(function ($image) {
                 $this->addImage($image);
             }, $images);
         }
@@ -68,8 +92,8 @@ class Album extends Model {
      */
     public function removeImages($images)
     {
-        if(is_array($images)) {
-            array_map(function($image) {
+        if (is_array($images)) {
+            array_map(function ($image) {
                 $this->removeImage($image);
             }, $images);
         }
@@ -82,6 +106,7 @@ class Album extends Model {
      */
     public function removeAll()
     {
+        $this->default = null;
         return $this->images()->detach();
     }
 }

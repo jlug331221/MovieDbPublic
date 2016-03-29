@@ -48,7 +48,7 @@ class CreateMovieListsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('movie_movielist');
+        Schema::drop('movie_movie_list');
         Schema::drop('movie_lists');
     }
 }

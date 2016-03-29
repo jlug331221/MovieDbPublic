@@ -1,32 +1,63 @@
-.MoviePage {
-  font-family: $open-sans;
-  background-color: lightsteelblue;
-  margin-top: 0px;
-  box-shadow: 6px 0px 5px -5px #999, -6px 0px 5px -5px #999;
+.MoviePage__listGroupItem {
+  background-color:honeydew;
 }
 
-.MoviePage__desc {
-  margin-bottom: 30px;
-  margin-left: 30px;
-  font-size: medium;
+.MoviePage__btnImage {
+  background-color: #00b3ee;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  margin-left: 60px;
+  width: 175px;
 }
 
-.MoviePage__bold {
-  font-weight: bold;
+.MoviePage__Image {
+  align-items: center;
 }
 
-.MoviePage__table {
-  background-color: white;
-  margin-bottom: 30px;
-  margin-left: 30px;
+.MoviePage__btnAdmin {
+  background-color: red;
+  width: 100px;
+  margin-left: 20px;
+  padding: 5px 5px 5px 5px;
 }
 
-.MoviePage__header {
-  margin-bottom: 20px;
-  margin-left: 30px;
+.MoviePage__Buttons {
+  text-align: center;
 }
 
-.MoviePage__cast {
-  background-color: white;
-  margin-left: 30px;
+.MoviePage__Top {
+  display:flex;
+}
+
+.MoviePage__Desc {
+  display:flex;
+  flex-direction: column;
+}
+
+.MoviePage__td {
+  vertical-align:middle;
+}
+
+.MoviePage__tableInfo {
+  margin-left: 20px;
+}
+
+.MoviePage__directorText {
+  padding-left: 80px;
+}
+
+.MoviePage__countryText {
+  padding-left: 82px;
+}
+
+.MoviePage__genreText {
+  padding-left: 94px;
+}
+
+.MoviePage__ratingText {
+  padding-left: 39px;
+}
+
+.MoviePage__releaseText {
+  padding-left: 51px;
 }

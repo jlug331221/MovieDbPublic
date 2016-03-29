@@ -1,0 +1,78 @@
+.ReviewComponent__component-container
+{
+    padding-left:5px;
+}
+
+.ReviewComponent__score-holder
+{
+    padding-right:0px;
+    padding-left:5px;
+}
+
+.ReviewComponent__panel-def
+{
+    display:block;
+    margin-bottom:3px;
+}
+
+.ReviewComponent__review-title
+{
+    padding-left:12px;
+    font-size:16px;
+    font-weight:bold;
+}
+
+.ReviewComponent__review-rating-holder
+{
+    padding-left: 5px;
+    padding-right: 0px;
+    padding-bottom:5px;
+    > img
+    {
+        height:20px;
+        width:20px;
+    }
+}
+
+.ReviewComponent__panel-body
+{
+    display: flex;
+    padding-top:6px;
+    padding-bottom:6px;
+    padding-left:6px;
+    text-align:center;
+
+    .ReviewComponent__review-body
+    {
+        border-left: 1px solid #ddd;
+        text-align:left;
+        font-size:12pt;
+        padding-left:20px;
+
+        .ReviewComponent__review-body-holder
+        {
+            padding-left:5px;
+        }
+    }
+
+    .ReviewComponent__user-avatar
+    {
+        margin-left: auto;
+        margin-right: auto;
+        > img
+        {
+            height:125px;
+            width:125px;
+        }
+    }
+
+    .ReviewComponent__user-name
+    {
+        font-weight:bold;
+    }
+
+    .ReviewComponent__created-at
+    {
+        font-size:12px;
+    }
+}
