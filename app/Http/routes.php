@@ -48,11 +48,11 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/admin/createPerson', 'AdminController@createPerson');
     Route::post('/admin/createPerson', 'AdminController@storePerson');
 
-    Route::get('/', function() { return view('welcome'); });
+    Route::get('/', 'WelcomeController@display');
 
     // Search Routes
-    Route::get('/search', 'SearchController@index');
-    Route::post('/search', 'SearchController@basicSearch');
+    Route::get('/search', 'SearchController@get_basicSearch');
+    Route::post('/search', 'SearchController@post_basicSearch');
     Route::get('/search/movie', 'SearchController@get_advancedMovie');
     Route::post('/search/movie', 'SearchController@post_advancedMovie');
     Route::get('/search/person', 'SearchController@get_advancedPerson');
@@ -67,6 +67,9 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/reviews/display/{rid}', 'ReviewController@display');
     Route::post('/reviews/newcomment/{rid}', 'ReviewController@newComment');
     Route::post('/reviews/postcomment/{rid}', 'ReviewController@postComment');
+    Route::get('/reviews/handleVote/{vote}{rid}', 'ReviewController@handleVote');
+    Route::get('/reviews/test/', 'ReviewController@testComponent');
+    Route::get('/reviews/delete/{rid}', 'ReviewController@deleteReview');
 
     // Image Routes
     Route::get('/images/create', 'ImagesController@create');
@@ -76,4 +79,7 @@ Route::group(['middleware' => 'web'], function () {
 
     //Movie page routes
     Route::get('/movies/movie', 'MoviePageController@moviePage');
+
+    //Person page routes
+    Route::get('/people/person', 'PersonPageController@personPage');
 });

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
-//use Request; // Request:: and $request-> conflict; Illuminate\Http\Request offers $request-> syntax
 use Illuminate\Http\Request;
 use App\Movie;
 use App\Person;
@@ -16,19 +15,18 @@ use App\Http\Controllers\Controller;
 
 class SearchController extends Controller {
 
-    public function index()
+    public function get_basicSearch()
     {
-        return view('welcome');
+	return view('search.searchPage');
     }
 
-    public function basicSearch(Request $request)
+    public function post_basicSearch(Request $request)
     {
-//    	$queryString = Request::get('search'); // namespace conflicts
         $queryString = $request->get('search');
-        $movies = Movie::where('title', '=', $queryString)->get();
+        $movies = Movie::where('title', 'LIKE', $queryString)->get();
         if (count($movies) == 0)
             $movies = Movie::all();
-        return view('search.search', compact('movies'));
+        return view('search.searchPage', compact('movies'));
     }
 
     public function get_advancedMovie()

@@ -6,6 +6,7 @@ use Auth;
 use App\Movie;
 use App\Review;
 use App\Comment;
+use App\Vote;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Input;
@@ -21,6 +22,13 @@ class ReviewController extends Controller
      */
     public function create($movie_id)
     {
+        $movie = Movie::where('id', $movie_id)->first();
+
+        //If no matching movie is found, show not found page
+        if(empty($movie))
+        {
+            return view('reviews.notFound')->with('missing', 'movie');
+        }
 
         return view('reviews.create')->with('movie_id', $movie_id);
     }
@@ -52,14 +60,44 @@ class ReviewController extends Controller
     {
         $review = Review::where('id', $review_id)->first();
 
+        //If no review found, display not found page
+        if(empty($review))
+        {
+            return view('reviews.notFound')->with('missing', 'review');
+        }
+
         $movieTitle = Movie::where('id', $review->movie_id)->first()->title;
 
         $comments = Comment::where('review_id', $review_id)->orderBy('created_at', 'asc')->get();
 
+        //Voted stores the value of whether the user voted up or down
+        if(Auth::check())
+        {
+            $voted = Vote::where('user_id', Auth::user()->id)->where('review_id', $review_id)->first();
+
+            if(empty($voted))
+            {
+                $voted = 0;
+            }
+            else
+            {
+                $voted = $voted->vote;
+            }
+            $logged = 1;
+        }
+        else
+        {
+            $voted = -99;
+            $logged = 0;
+        }
+
+
         return view('reviews.display')->with([
             'review' => $review,
             'movieTitle' => $movieTitle,
-            'comments' => $comments
+            'comments' => $comments,
+            'voted' => $voted,
+            'logged' => $logged
         ]);
     }
 
@@ -86,5 +124,109 @@ class ReviewController extends Controller
         $comment->save();
 
         return redirect()->action('ReviewController@display', $review_id);
+    }
+
+    public function handleVote($vote, $rId)
+    {
+        $review = Review::where('id', $rId)->first();
+
+        if($vote == 0)
+        {
+            //If user is undoing their vote
+            $vote = Vote::where("user_id", Auth::user()->id)->where("review_id", $rId)->first();
+            $review->score -= $vote->vote;
+            $vote->delete();
+            $review->save();
+        }
+        else if($vote == -1)
+        {
+            //If user is downvoting for the first time
+            $newVote = new Vote;
+            $newVote->user_id = Auth::user()->id;
+            $newVote->review_id = $rId;
+            $newVote->vote = $vote;
+            $newVote->save();
+
+            $review->score += $vote;
+            $review->save();
+        }
+        else if($vote == -2)
+        {
+            //If user previously upvoted, but is now downvoting.
+
+            //Delete previous upvote
+            $vote = Vote::where("user_id", Auth::user()->id)->where("review_id", $rId)->first();
+            $vote->delete();
+
+            //Create new downvote, set score accordingly.
+            $newVote = new Vote;
+            $newVote->user_id = Auth::user()->id;
+            $newVote->review_id = $rId;
+            $newVote->vote = -1;
+            $newVote->save();
+            $review->score += -2;
+            $review->save();
+        }
+        else if($vote == 1)
+        {
+            //Upvoting without having previously voted
+            $newVote = new Vote;
+            $newVote->user_id = Auth::user()->id;
+            $newVote->review_id = $rId;
+            $newVote->vote = $vote;
+            $newVote->save();
+
+            $review->score += $vote;
+            $review->save();
+        }
+        else if($vote == 2)
+        {
+            //Upvoting after downvoting
+
+            //Delete previous downvote
+            $vote = Vote::where("user_id", Auth::user()->id)->where("review_id", $rId)->first();
+            $vote->delete();
+
+            $newVote = new Vote;
+            $newVote->user_id = Auth::user()->id;
+            $newVote->review_id = $rId;
+            $newVote->vote = 1;
+            $newVote->save();
+
+            $review->score += 2;
+            $review->save();
+        }
+
+
+    }
+
+    public function testComponent()
+    {
+        $rId = 1;
+
+        $review = Review::where('id', $rId)->first();
+
+        return view('reviews.componentTest')->with(['review' => $review]);
+    }
+
+    public function deleteReview($rId)
+    {
+        $review = Review::where('id', $rId)->first();
+
+        $comments = Comment::where("review_id", $rId)->get();
+
+        foreach($comments as $comment)
+        {
+            $comment->delete();
+        }
+
+        $votes = Vote::where('review_id', $rId)->get();
+
+        foreach($votes as $vote)
+        {
+            $vote->delete();
+        }
+
+        $review->delete();
     }
 }
