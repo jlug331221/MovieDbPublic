@@ -12,7 +12,8 @@
         <hr />
         <button class="btn btn-primary" id="jsonTest-submit-get">get</button>
         <hr />
-        <input class="typeahead form-control" type="text" data-provider="typeahead" placeholder="typeahead">
+        {{--<input class="typeahead form-control" type="text" data-provider="typeahead" placeholder="typeahead">--}}
+        <input class="form-control" type="text" id="search">
     </div>
 
 @endsection

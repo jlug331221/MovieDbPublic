@@ -60,6 +60,8 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/search/jsonTest', 'SearchController@get_jsonTest'); // temp
     Route::get('/search/suffix/{term}', 'SearchController@get_suffixSearch_json');
     Route::post('/search/suffix', 'SearchController@post_suffixSearch_json');
+    Route::get('/search/mock', 'SearchController@get_mockSearch_json'); // temp
+    Route::get('/search/mock/{query}', 'SearchController@get_mockSearchInput_json'); // temp
 
     // Review Routes
     Route::get('/reviews/create/{mid}', 'ReviewController@create');

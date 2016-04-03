@@ -1,4 +1,5 @@
 /** Created by John on 3/5/2016. */
+/*jshint esversion: 6 */
 
 global.jQuery = require('jquery');
 var $ = require('jquery');
@@ -7,13 +8,34 @@ var moment = require('moment');
 var datepicker = require('bootstrap-datepicker');
 var typeahead = require('typeahead.js-browserify');
 var Bloodhound = require('typeahead.js-browserify').Bloodhound;
+var suggest = require('./suggest.js');
 
 $(function () {
+
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
+
+    $('#search').suggest({
+        identifier: 'blah',
+        default: [
+            {'title': 'Gravity',
+             'thumb': 'http://i.imgur.com/fbm4rs0.png'},
+            {'title': 'Frozen',
+             'thumb': 'http://i.imgur.com/lmase6g.jpg'},
+            {'title': 'Taxi Driver', 
+             'thumb': 'http://i.imgur.com/5xxudih.png'},
+        ],
+        searchKey: 'title',
+        minLength: 1,
+        prefetchUrl: '/search/mock',
+        remoteUrl: '/search/mock/WILDCARD',
+        remoteWildcard: 'WILDCARD',
+        rateLimit: 0,
+    });
+
 
     typeahead.loadjQueryPlugin();
 

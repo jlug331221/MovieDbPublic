@@ -17,7 +17,7 @@ class SearchController extends Controller {
 
     public function get_basicSearch()
     {
-	return view('search.searchPage');
+	   return view('search.searchPage');
     }
 
     public function post_basicSearch(Request $request)
@@ -154,6 +154,49 @@ class SearchController extends Controller {
                     ->whereRaw("title_suffix LIKE '" . $term . "%'");
             })
             ->get();
+    }
+
+    public function get_mockSearch_json()
+    {
+        $data = [
+            ['title' => 'Birdman',
+             'thumb' => 'http://i.imgur.com/fbm4rs0.png'],
+            ['title' => 'Fight Club',
+             'thumb' => 'http://i.imgur.com/lmase6g.jpg'],
+            ['title' => 'Fury',
+             'thumb' => 'http://i.imgur.com/llrqdvd.png'],
+            ['title' => 'Ghostbusters',
+             'thumb' => 'http://i.imgur.com/6tfanra.png'],
+            ['title' => 'Star Wars: Episode IV – A New Hope',
+             'thumb' => 'http://i.imgur.com/l1l3kla.png'],
+            ['title' => 'Star Wars: Episode V – The Empire Strikes Back',
+             'thumb' => 'http://i.imgur.com/unmaiue.png'],
+            ['title' => 'Star Wars: Episode VI – Return of the Jedi',
+             'thumb' => 'http://i.imgur.com/5e6omtt.png'],
+            ['title' => 'Star Wars: Episode VII – The Force Awakens',
+             'thumb' => 'http://i.imgur.com/x9gxsbp.png'],
+            ['title' => 'The Lord of the Rings: The Fellowship of the Ring',
+             'thumb' => 'http://i.imgur.com/tczqo8h.png'],
+            ['title' => 'The Lord of the Rings: The Return of the King',
+             'thumb' => 'http://i.imgur.com/z9k4mpr.png'],
+            ['title' => 'The Lord of the Rings: The Two Towers',
+             'thumb' => 'http://i.imgur.com/hihhhc8.png'],
+            ['title' => 'Taxi Driver', 
+             'thumb' => 'http://i.imgur.com/5xxudih.png'],
+            ['title' => 'The Martian', 
+             'thumb' => 'http://i.imgur.com/1dli8gl.png'],
+        ]; 
+        return $data;
+    }
+
+    public function get_mockSearchInput_json($query) {
+        $data = [
+            ['title' => 'The Revenant',
+             'thumb' => 'http://i.imgur.com/fbm4rs0.png'],
+            ['title' => 'Reservoir Dogs',
+             'thumb' => 'http://i.imgur.com/lmase6g.jpg'],
+        ];
+        return $data;
     }
 }
 
