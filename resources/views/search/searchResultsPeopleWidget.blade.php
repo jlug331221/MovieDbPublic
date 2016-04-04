@@ -7,12 +7,18 @@
                     <table class="table table-hover">
 		        <tr>
                             <td>Name</td>
+			    <td>Date of Birth</td>
+			    <td>Date of Death</td>
+			    <td>Country of Origin</td>
                         </tr>
                         @foreach($people as $person)
 			    <tr>
                                 <td>
-				  <a href="/people/{!! $person->id !!}">{!! $person->name !!}</a>
+				  <a href="/people/{!! $person->id !!}">{!! $person->first_name !!} {!! $person->last_name !!}</a>
 				</td>
+				<td>{!! $person->date_of_birth !!}</td>
+				<td>{!! $person->date_of_death !!}</td>
+				<td>{!! $person->country_of_origin !!}</td>
                             </tr>
                         @endforeach
                     </table>	

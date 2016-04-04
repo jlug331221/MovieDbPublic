@@ -24,9 +24,12 @@ class SearchController extends Controller {
     {
         $queryString = $request->get('search');
         $movies = Movie::where('title', 'LIKE', $queryString)->get();
+	$people = Person::where('first_name', 'LIKE', $queryString)->get();
         if (count($movies) == 0)
             $movies = Movie::all();
-        return view('search.searchPage', compact('movies'));
+	if (count($people) == 0)
+	    $people = Person::all();
+        return view('search.searchPage', compact('movies', 'people'));
     }
 
     public function get_advancedMovie()
