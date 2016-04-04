@@ -81,7 +81,8 @@ Route::group(['middleware' => 'web'], function () {
 
     //Movie page routes
     Route::get('/movies/movie', 'MoviePageController@moviePage');
+    Route::get('/movies/{id}', 'MoviePageController@showMovie');
 
     //Person page routes
-    Route::get('/people/person', 'PersonPageController@personPage');
+    Route::get('/people/{id}', 'PersonPageController@personPage');
 });
