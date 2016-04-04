@@ -1,3 +1,11 @@
+<!-- This file requires a variable named $movies to be defined.
+     If you include this file, protect it with isset(), e.g.:
+     
+//   <?php if(isset($movies)): ?>
+{{--     @include('search.searchResultsMoviesWidget') --}}
+//   <?php endif ?>
+
+-->
 <div class="container">
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
