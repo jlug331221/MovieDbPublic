@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 
 class Person extends Model {
@@ -70,6 +71,29 @@ class Person extends Model {
             $album = new Album();
             $album->save();
             $model->album = $album->id;
+        }, 0);
+
+        /**
+         * Generates all alpha-numeric suffixes (per character) of the person's name
+         * fields into the movie_suffixes table.
+         */
+        static::created(function ($model) {
+            $names = [
+                $model->first_name,
+                $model->middle_name,
+                $model->last_name,
+                $model->first_alias,
+                $model->middle_alias,
+                $model->last_alias,
+            ];
+
+            array_map(function($name) use ($model) {
+                $len = strlen($name);
+                for ($i = 0; $i < $len; $i++)
+                    DB::table('person_suffixes')
+                        ->insert(['person_id' => $model->id,
+                                  'name_suffix' => substr($name, $i)]);
+            }, $names);
         }, 0);
     }
 }

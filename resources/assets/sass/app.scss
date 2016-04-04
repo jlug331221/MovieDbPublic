@@ -32,3 +32,51 @@ body {
   font-family: $lato;
   padding-bottom: 75px;
 }
+
+#MenubarSearch__input {
+    border-radius: 4px 0px 0px 4px;
+    border-right-style: none;
+    box-shadow: 0px 0px 0px #fff;
+    font-size: 17px;
+    font-family: $open-sans;
+}
+
+#MenubarSearch__input:focus {
+    box-shadow: 0px 0px 0px #fff;
+    border: 1px solid #6DA2FF;
+}
+
+#MenubarSearch__submit {
+    border-radius: 0px 4px 4px 0px;
+    border-left-style: none;
+    font-size: 18px;
+    color: #565656;
+    box-shadow: 0px 0px 0px #fff;
+}
+
+#MenubarSearch__content-wrapper {
+    padding: 10px;
+}
+
+#MenubarSearch__content {
+    display: flex;
+    justify-content: center;
+
+    p {
+        margin-bottom: 5px;
+    }
+}
+
+.MenubarSearch__suggestion {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    max-width: 125px;
+    margin-left: 2px;
+    margin-right: 2px;
+
+    img {
+        height: 175px;
+        margin-bottom: 4px;
+    }
+}

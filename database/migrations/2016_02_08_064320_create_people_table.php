@@ -25,10 +25,11 @@ class CreatePeopleTable extends Migration
             $table->date('date_of_birth');
             $table->date('date_of_death')->nullable();
             $table->text('biography')->nullable();
-            /* $table->integer('album_id')->unsigned(); Foreign key for image album */
 
             $table->timestamps();
         });
+
+        DB::statement("CREATE FULLTEXT INDEX fulltext_index ON people(first_name, middle_name, last_name, first_alias, middle_alias, last_alias, biography)");
     }
 
     /**

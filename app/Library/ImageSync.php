@@ -44,17 +44,27 @@ class ImageSync {
 
             // checks that the directory for the image exists, if not creating it
             $absoluteDir = public_path() . '/' . $image->path;
-            if ( ! File::exists($absoluteDir)) {
+            $absoluteDirThumbs = $absoluteDir . '/thumbs';
+            if ( ! File::exists($absoluteDir))
                 File::makeDirectory($absoluteDir);
-            }
+            if ( ! File::exists($absoluteDirThumbs))
+                File::makeDirectory($absoluteDirThumbs);
 
             // save the image to the directory
             $imageFile = InterventionImage::make($file->getRealPath());
             $imageFile->save($image->getAbsolutePath());
 
+            // save thumb to the thumb directory
+            $imageFile->fit(125, 175, function ($constraint) {
+                $constraint->upsize();
+            });
+            $imageFile->save($image->getAbsoluteThumbPath());
+
         } catch (\Exception $e) {
             DB::rollBack();
 
+            File::delete($image->getAbsolutePath());
+            File::delete($image->getAbsoluteThumbPath());
             throw new Exception('Unable to upload file.');
         }
 
@@ -75,6 +85,7 @@ class ImageSync {
 
         if ($image != null) {
             File::delete($image->getAbsolutePath());
+            File::delete($image->getAbsoluteThumbPath());
             Image::destroy($id);
         }
     }

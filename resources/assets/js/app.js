@@ -1,21 +1,35 @@
 /** Created by John on 3/5/2016. */
+/*jshint esversion: 6 */
 
 global.jQuery = require('jquery');
 var $ = require('jquery');
 var bootstrap = require('bootstrap');
 var moment = require('moment');
 var datepicker = require('bootstrap-datepicker');
-var typeahead = require('typeahead.js-browserify');
-var Bloodhound = require('typeahead.js-browserify').Bloodhound;
+var suggest = require('./suggest.js');
 
 $(function () {
+
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
 
-    typeahead.loadjQueryPlugin();
+    $('#MenubarSearch__input').suggest({
+        searchKey: 'title',
+        identifier: 'MenubarSearch',
+        minLength: 1,
+        rateLimit: 0,
+        template: function(suggestion) {
+            return `<div class="MenubarSearch__suggestion">
+                        <img src="${suggestion.imgpath}/thumbs/${suggestion.imgname}.${suggestion.imgext}">
+                        <a href="#">${suggestion.title}</a>
+                    </div>`;
+        },
+        remoteUrl: '/search/suffix/WILDCARD',
+        remoteWildcard: 'WILDCARD',
+    });
 
     $('#AdvSearch__datepicker_from').datepicker({});
     $('#AdvSearch__datepicker_to').datepicker({});
@@ -39,10 +53,10 @@ $(function () {
     });
 
     $('#jsonTest-submit-get').on('click', function() {
-        var content = $('#jsonTest-input-get').val();
+        var query = $('#jsonTest-input-get').val();
         $.ajax({
             type: 'GET',
-            url: '/search/suffix/' + content,
+            url: '/search/suffix/' + query,
             success: function(response) {
                 console.log(response);
             },
@@ -50,25 +64,6 @@ $(function () {
                 console.log('failure: ', xhr);
             }
         });
-    });
-
-    var engine = new Bloodhound({
-        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('title'),
-        queryTokenizer: Bloodhound.tokenizers.whitespace,
-        remote: {
-            url: '/search/suffix/%QUERY',
-            wildcard: '%QUERY'
-        }
-    });
-
-    engine.initialize();
-
-    $('.typeahead').typeahead({
-        highlight: false,
-    }, {
-        name: 'typeahead',
-        displayKey: 'title',
-        source: engine.ttAdapter(),
     });
 });
 

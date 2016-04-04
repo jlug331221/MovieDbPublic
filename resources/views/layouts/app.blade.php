@@ -36,10 +36,19 @@
                     <li><a href="{{ url('/userpage/home') }}">Home</a></li>
                 </ul>
 
-		{!! Form::open(['class' => 'navbar-form navbar-left', 'url' => 'search', 'role' => 'search']) !!}
-		    {!! Form::text('search', null, ['class' => 'form-group form-control', 'placeholder' => 'Search']) !!}
-		    {!! Form::submit('Submit', ['class' => 'btn btn-default']) !!}
-		{!! Form::close() !!}
+    		{!! Form::open(['class' => 'navbar-form navbar-left', 'url' => 'search', 'role' => 'search']) !!}
+                <div style="display: flex">
+                    <input type="text"
+                           class="form-control"
+                           placeholder="Search"
+                           id="MenubarSearch__input">
+                    <button class="btn btn-default" 
+                            type="submit"
+                            id="MenubarSearch__submit">
+                        <i class="glyphicon glyphicon-search"></i>
+                    </button>
+                </div>
+    		{!! Form::close() !!}
 
                 <ul class="nav navbar-nav">
                     <li class="dropdown">
@@ -102,9 +111,5 @@
 </body>
 </html>
 
-<!-- JavaScripts -->
-{{--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>--}}
-{{--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>--}}
-{{--<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>--}}
-{{--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/js/bootstrap-datepicker.min.js"></script>--}}
+<!-- js -->
 <script src="{{ elixir('js/bundle.js') }}"></script>

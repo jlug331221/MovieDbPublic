@@ -74,7 +74,7 @@
                                                     </a>
                                                     <span class="badge">{{count($movlist->movies)}}</span>
                                                     <button type="button" class="btn btn-default btn-sm pull-right">
-                                                        <a href="{{ url('userpage/home/deleteList/'.$masterlist->id) }}">
+                                                        <a href="{{ url('userpage/home/deleteList/'.$masterlist->id) }}" onclick="return confirm('Are you sure you want to delete list?')">
                                                             <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                                          </a>
                                                     </button>
@@ -154,7 +154,7 @@
                                                                 </a>
                                                                 <span class="badge">{{count($perlist->people)}}</span>
                                                                 <button type="button" class="btn btn-default btn-sm pull-right">
-                                                                    <a href="{{ url('userpage/home/deleteList/'.$masterlist->id) }}">
+                                                                    <a href="{{ url('userpage/home/deleteList/'.$masterlist->id) }}" onclick="return confirm('Are you sure you want to delete list?')">
                                                                         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                                                     </a>
                                                                 </button>
@@ -190,3 +190,4 @@
 </div>
 
 @endsection
+
