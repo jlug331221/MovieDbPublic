@@ -173,7 +173,11 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Recently added reviews!</div>
                 <div class="panel-body Layout__panel-body">
-                    recent review list
+                    <div class="col-md-12">
+                    @foreach ($reviews as $review)
+                        @include('reviews.reviewComponent')
+                    @endforeach
+                    </div>
                 </div>
             </div>
         </div>
