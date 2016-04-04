@@ -9,8 +9,8 @@
         <!-- Movie Page Heading -->
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">The Terminator
-                    <small>(1984)</small>
+                <h1 class="page-header"> {{ $movie->title }}
+                    <small> ({{ $year }}) </small>
                     @can('edit_all_content')
                         <a href="#"><button type="button" class="btn MoviePage__btnAdmin">Edit Movie</button></a>
                         <a href="#"><button type="button" class="btn MoviePage__btnAdmin">Delete Movie</button></a>
@@ -34,21 +34,17 @@
 
             <div class="col-md-8 MoviePage__Desc">
                 <h3>Synopsis</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius
-                    vitae. Sed dui lorem, adipiscing in adipiscing et, interdum nec metus. Mauris ultricies, justo eu convallis placerat, felis enim.
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius
-                    vitae. Sed dui lorem, adipiscing in adipiscing et, interdum nec metus. Mauris ultricies, justo eu convallis placerat, felis enim.
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius
-                    vitae. Sed dui lorem, adipiscing in adipiscing et, interdum nec metus. Mauris ultricies, justo eu convallis placerat, felis enim.
-
+                <p>
+                    {{$movie->synopsis}}
                 </p>
                 <h3>Movie Details</h3>
                 <ul class="list-group MoviePage__listGroup">
-                    <li class="list-group-item MoviePage__listGroupItem">Director:<span class="MoviePage__directorText">James Cameron</span></li>
-                    <li class="list-group-item MoviePage__listGroupItem">Country:<span class="MoviePage__countryText">United States</span></li>
-                    <li class="list-group-item MoviePage__listGroupItem">Genre:<span class="MoviePage__genreText">Action</span></li>
-                    <li class="list-group-item MoviePage__listGroupItem">Parental Rating:<span class="MoviePage__ratingText">PG-13</span></li>
-                    <li class="list-group-item MoviePage__listGroupItem">Release Date:<span class="MoviePage__releaseText">October 26, 1984</span></li>
+                    <li class="list-group-item MoviePage__listGroupItem">Director:<span class="MoviePage__directorText">{{$director->first_name}} {{$director->last_name}}</span></li>
+                    <li class="list-group-item MoviePage__listGroupItem">Country:<span class="MoviePage__countryText">{{$movie->country}}</span></li>
+                    <li class="list-group-item MoviePage__listGroupItem">Genre:<span class="MoviePage__genreText">{{$movie->genre}}</span></li>
+                    <li class="list-group-item MoviePage__listGroupItem">Parental Rating:<span class="MoviePage__ratingText">{{$movie->parental_rating}}</span></li>
+                    <li class="list-group-item MoviePage__listGroupItem">Release Date:<span class="MoviePage__releaseText">{{$newDate}}</span></li>
+                    <li class="list-group-item MoviePage__listGroupItem">Length:<span class="MoviePage__lengthText">{{$movie->runtime}} minutes</span></li>
                 </ul>
             </div>
 
@@ -83,60 +79,21 @@
                     <tr><th>Picture</th><th>Name</th><th></th><th>Role</th></tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td><img src="http://vignette4.wikia.nocookie.net/planetterror/images/f/f4/Michael...jpeg/revision/latest?cb=20140220162656" width="35" height="50"></td>
-                        <td>Michael Biehn</td>
-                        <td>...</td>
-                        <td>Kyle Reese</td>
-                    </tr>
-                    <tr>
-                        <td><img src="http://vignette4.wikia.nocookie.net/planetterror/images/f/f4/Michael...jpeg/revision/latest?cb=20140220162656" width="35" height="50"></td>
-                        <td>Michael Biehn</td>
-                        <td>...</td>
-                        <td>Kyle Reese</td>
-                    </tr>
                     <tr class="clickable" data-toggle="collapse" id="row1" data-target=".row1">
                         <td><img src="http://popwrapped.com/wp-content/uploads/2015/07/o-ARNOLD-SCHWARZENEGGER-ILL-BE-BACK-facebook.jpg" width="35" height="50"></td>
-                        <td>Arnold Schwarzenegger</td>
+                        <td>{{$firstPerson->first_name}} {{$firstPerson->last_name}}</td>
                         <td>...</td>
-                        <td>The Terminator</td>
+                        <td>{{$firstPersonRole->name}}</td>
                     </tr>
-                    <tr class="collapse row1">
-                        <td><img src="http://vignette4.wikia.nocookie.net/planetterror/images/f/f4/Michael...jpeg/revision/latest?cb=20140220162656" width="35" height="50"></td>
-                        <td>Michael Biehn</td>
-                        <td>...</td>
-                        <td>Kyle Reese</td>
-                    </tr>
-                    <tr class="collapse row1">
-                        <td><img src="http://vignette4.wikia.nocookie.net/planetterror/images/f/f4/Michael...jpeg/revision/latest?cb=20140220162656" width="35" height="50"></td>
-                        <td>Michael Biehn</td>
-                        <td>...</td>
-                        <td>Kyle Reese</td>
-                    </tr>
-                    <tr class="collapse row1">
-                        <td><img src="http://vignette4.wikia.nocookie.net/planetterror/images/f/f4/Michael...jpeg/revision/latest?cb=20140220162656" width="35" height="50"></td>
-                        <td>Michael Biehn</td>
-                        <td>...</td>
-                        <td>Kyle Reese</td>
-                    </tr>
-                    <tr class="collapse row1">
-                        <td><img src="http://vignette4.wikia.nocookie.net/planetterror/images/f/f4/Michael...jpeg/revision/latest?cb=20140220162656" width="35" height="50"></td>
-                        <td>Michael Biehn</td>
-                        <td>...</td>
-                        <td>Kyle Reese</td>
-                    </tr>
-                    <tr class="collapse row1">
-                        <td><img src="http://vignette4.wikia.nocookie.net/planetterror/images/f/f4/Michael...jpeg/revision/latest?cb=20140220162656" width="35" height="50"></td>
-                        <td>Michael Biehn</td>
-                        <td>...</td>
-                        <td>Kyle Reese</td>
-                    </tr>
-                    <tr class="collapse row1">
-                        <td><img src="http://vignette4.wikia.nocookie.net/planetterror/images/f/f4/Michael...jpeg/revision/latest?cb=20140220162656" width="35" height="50"></td>
-                        <td>Michael Biehn</td>
-                        <td>...</td>
-                        <td>Kyle Reese</td>
-                    </tr>
+
+                    @foreach(array_combine($castArray, $characterArray) as $cast => $character)
+                            <tr class="collapse row1">
+                                <td><img src="http://vignette4.wikia.nocookie.net/planetterror/images/f/f4/Michael...jpeg/revision/latest?cb=20140220162656" width="35" height="50"></td>
+                                <td>{{$cast->first_name}} {{$cast->last_name}}</td>
+                                <td>...</td>
+                                <td>{{$character->name}}</td>
+                            </tr>
+                    @endforeach
                     </tbody>
                 </table>
             </div>

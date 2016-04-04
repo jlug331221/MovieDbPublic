@@ -14,4 +14,7 @@ class PersonPageController extends Controller
     {
         return view('people.person');
     }
+
+
+    //Put function to determine is alias exists... if it does.. use the alias as title name
 }
