@@ -3,13 +3,13 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <label class="col-md-12 Layout__welcome">Welcome to the landing page!</label>
+        <label class="col-md-12 Layout__welcome">Welcome to PeeDeeDb!</label>
     </div>
     <div class="row">
 
         <!-- Top 10 section -->
 
-        <div class="col-md-7">
+        <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading">Top 10 movies of the month!</div>
                     <div class="panel-body Layout__panel-body">
@@ -21,7 +21,7 @@
         </div>
 
        <!-- Login Box -->
-
+        @if(!Auth::check())
         <div class="col-md-5">
             <div class="panel panel-default">
                 <div class="panel-heading">Login!</div>
@@ -80,19 +80,27 @@
                     </form>
                 </div>
         </div>
-    </div> <!--End of Login box-->
+    </div>
+            @endif  <!--End of Login box-->
 
         <!--Recently added movies-->
-        <div class="col-md-7">
+        <div class="col-md-6">
             <div class="panel panel-default">
                 <div class="panel-heading">Recently released movies!</div>
                 <div class="panel-body Layout__panel-body">
-                    recent movie list
+                    @foreach($recentmovie as $movie)
+                        <div class = "row">
+                            <div class="col-md-12">
+                                <a href="{{url('/movies/'.$movie->id)}}">{{$movie->title}}</a>
+                            </div>
+                        </div>
+                    @endforeach
                 </div>
             </div>
         </div>
 
         <!--Register box-->
+            @if(!Auth::check())
         <div class="col-md-5">
             <div class="panel panel-default">
                 <div class="panel-heading">No login? Register now!</div>
@@ -166,7 +174,8 @@
                     </form>
                 </div>
             </div>
-        </div><!--End of register box-->
+        </div>
+                @endif  <!--End of register box-->
 
         <!--Recent review box-->
         <div class="col-md-12">
