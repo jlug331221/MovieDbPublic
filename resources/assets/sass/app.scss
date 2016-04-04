@@ -17,6 +17,7 @@ $lato: 'Lato', sans-serif;
 
 
 /** Page Imports */
+@import "pages/search/searchWidget";
 @import "pages/search/advsearch";
 @import "pages/movies/moviepage";
 @import "pages/landing/landing";
@@ -79,4 +80,10 @@ body {
         height: 175px;
         margin-bottom: 4px;
     }
+}
+
+.searchWidget__center {
+     float: none;
+     margin-left: auto;
+     margin-right: auto;
 }
