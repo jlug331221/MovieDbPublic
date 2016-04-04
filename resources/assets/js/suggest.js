@@ -180,7 +180,6 @@
         });
 
         function repopSuggestions() {
-            console.log('repopping');
             frame.content.empty();
             frame.wrapper.addClass('open');
 
@@ -205,13 +204,12 @@
                 remoteReady = false;
                 setTimeout(() => { remoteReady = true; }, settings.remoteRateLimit);
 
-                console.log(`fetching: ${url}`);
                 ajax({
                     type: 'GET', url: url
                 }).then(
                     (result) => {
                         data = union(data, result);
-                        if (repop)
+                        if (repop && query)
                             repopSuggestions();
                     },
                     (xhr) => { console.error(`Suggest Remote Error: GET ${url} ${xhr.status} ${xhr.statusText}`); }
@@ -328,12 +326,12 @@
      * the given input class:
      * ...
      *   <div class="dropdown Suggest__wrapper" 
-     *        id="Suggest__wrapper--id">
+     *        id=id+"__wrapper">
      *     <input class="Suggest__input">
      *     <div class="dropdown-menu Suggest__content-wrapper" 
-     *          id="Suggest__content-wrapper--id">
+     *          id=id+"__content-wrapper">
      *       <div class="Suggest__content" 
-     *            id="Suggest__content--id">
+     *            id=id+"__content">
      *       </div>
      *     </div>
      *   </div>
@@ -355,9 +353,9 @@
         var content = $('<div>', {class: 'Suggest__content'});
 
         if (id) {
-            wrapper.attr('id', 'Suggest__wrapper--'+id);
-            contentWrapper.attr('id', 'Suggest__content-wrapper--'+id);
-            content.attr('id', 'Suggest__content--'+id);
+            wrapper.attr('id', id+'__wrapper');
+            contentWrapper.attr('id', id+'__content-wrapper');
+            content.attr('id', id+'__content');
         }
 
         $(contentWrapper).append(content);

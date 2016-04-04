@@ -6,8 +6,6 @@ var $ = require('jquery');
 var bootstrap = require('bootstrap');
 var moment = require('moment');
 var datepicker = require('bootstrap-datepicker');
-var typeahead = require('typeahead.js-browserify');
-var Bloodhound = require('typeahead.js-browserify').Bloodhound;
 var suggest = require('./suggest.js');
 
 $(function () {
@@ -18,26 +16,20 @@ $(function () {
         }
     });
 
-    $('#search').suggest({
-        identifier: 'blah',
-        default: [
-            {'title': 'Gravity',
-             'thumb': 'http://i.imgur.com/fbm4rs0.png'},
-            {'title': 'Frozen',
-             'thumb': 'http://i.imgur.com/lmase6g.jpg'},
-            {'title': 'Taxi Driver', 
-             'thumb': 'http://i.imgur.com/5xxudih.png'},
-        ],
+    $('#MenubarSearch__input').suggest({
         searchKey: 'title',
+        identifier: 'MenubarSearch',
         minLength: 1,
-        prefetchUrl: '/search/mock',
-        remoteUrl: '/search/mock/WILDCARD',
-        remoteWildcard: 'WILDCARD',
         rateLimit: 0,
+        template: function(suggestion) {
+            return `<div class="MenubarSearch__suggestion">
+                        <img src="${suggestion.imgpath}/thumbs/${suggestion.imgname}.${suggestion.imgext}">
+                        <a href="#">${suggestion.title}</a>
+                    </div>`;
+        },
+        remoteUrl: '/search/suffix/WILDCARD',
+        remoteWildcard: 'WILDCARD',
     });
-
-
-    typeahead.loadjQueryPlugin();
 
     $('#AdvSearch__datepicker_from').datepicker({});
     $('#AdvSearch__datepicker_to').datepicker({});
@@ -72,25 +64,6 @@ $(function () {
                 console.log('failure: ', xhr);
             }
         });
-    });
-
-    var engine = new Bloodhound({
-        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('title'),
-        queryTokenizer: Bloodhound.tokenizers.whitespace,
-        remote: {
-            url: '/search/suffix/%QUERY',
-            wildcard: '%QUERY'
-        }
-    });
-
-    engine.initialize();
-
-    $('.typeahead').typeahead({
-        highlight: false,
-    }, {
-        name: 'typeahead',
-        displayKey: 'title',
-        source: engine.ttAdapter(),
     });
 });
 

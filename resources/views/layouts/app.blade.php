@@ -36,10 +36,19 @@
                     <li><a href="{{ url('/userpage/home') }}">Home</a></li>
                 </ul>
 
-		{!! Form::open(['class' => 'navbar-form navbar-left', 'url' => 'search', 'role' => 'search']) !!}
-		    {!! Form::text('search', null, ['class' => 'form-group form-control', 'placeholder' => 'Search']) !!}
-		    {!! Form::submit('Submit', ['class' => 'btn btn-default']) !!}
-		{!! Form::close() !!}
+    		{!! Form::open(['class' => 'navbar-form navbar-left', 'url' => 'search', 'role' => 'search']) !!}
+                <div style="display: flex">
+                    <input type="text"
+                           class="form-control"
+                           placeholder="Search"
+                           id="MenubarSearch__input">
+                    <button class="btn btn-default" 
+                            type="submit"
+                            id="MenubarSearch__submit">
+                        <i class="glyphicon glyphicon-search"></i>
+                    </button>
+                </div>
+    		{!! Form::close() !!}
 
                 <ul class="nav navbar-nav">
                     <li class="dropdown">

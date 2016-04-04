@@ -143,21 +143,16 @@ class SearchController extends Controller {
     {
         // get search term and remove non-alpha-numeric characters
         $term = preg_replace("/[^A-Za-z0-9 ]/", '', $term);
-
-        // get id, title, and release date for movies where the
-        // search term matches a movie title suffix
-        // return DB::table('movies')
-        //     ->select('title')
-        //     ->whereIn('id', function ($query) use ($term) {
-        //         $query->select('movie_id')
-        //             ->from('movie_suffixes')
-        //             ->whereRaw("title_suffix LIKE '" . $term . "%'");
-        //     })
-        //     ->get();
-
+        
         return DB::table('movies')
-            ->select('movies.id', 'movies.title')
+            ->select('movies.title AS title', 
+                'movies.id', 
+                'images.name AS imgname', 
+                'images.path AS imgpath', 
+                'images.extension AS imgext')
             ->distinct('movies.id')
+            ->join('albums', 'albums.id', '=', 'movies.album')
+            ->join('images', 'albums.default', '=', 'images.id')
             ->join('movie_suffixes', function ($join) use ($term) { 
                 $join->on('movies.id', '=', 'movie_suffixes.movie_id')
                      ->where('movie_suffixes.title_suffix', 'LIKE', $term.'%'); 
