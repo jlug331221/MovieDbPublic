@@ -146,14 +146,23 @@ class SearchController extends Controller {
 
         // get id, title, and release date for movies where the
         // search term matches a movie title suffix
+        // return DB::table('movies')
+        //     ->select('title')
+        //     ->whereIn('id', function ($query) use ($term) {
+        //         $query->select('movie_id')
+        //             ->from('movie_suffixes')
+        //             ->whereRaw("title_suffix LIKE '" . $term . "%'");
+        //     })
+        //     ->get();
+
         return DB::table('movies')
-            ->select('title')
-            ->whereIn('id', function ($query) use ($term) {
-                $query->select('movie_id')
-                    ->from('movie_suffixes')
-                    ->whereRaw("title_suffix LIKE '" . $term . "%'");
+            ->select('movies.id', 'movies.title')
+            ->distinct('movies.id')
+            ->join('movie_suffixes', function ($join) use ($term) { 
+                $join->on('movies.id', '=', 'movie_suffixes.movie_id')
+                     ->where('movie_suffixes.title_suffix', 'LIKE', $term.'%'); 
             })
-            ->get();
+            ->get(); 
     }
 
     public function get_mockSearch_json()

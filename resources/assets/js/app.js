@@ -61,10 +61,10 @@ $(function () {
     });
 
     $('#jsonTest-submit-get').on('click', function() {
-        var content = $('#jsonTest-input-get').val();
+        var query = $('#jsonTest-input-get').val();
         $.ajax({
             type: 'GET',
-            url: '/search/suffix/' + content,
+            url: '/search/suffix/' + query,
             success: function(response) {
                 console.log(response);
             },

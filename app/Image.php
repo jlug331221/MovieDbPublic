@@ -125,6 +125,16 @@ class Image extends Model {
     }
 
     /**
+     * Returns the path of the thumbnail from the public directory
+     *
+     * @return string
+     */
+    public function getThumbPath()
+    {
+        return $this->path . '/thumbs/' . $this->getFileName();
+    }
+
+    /**
      * Returns the absolute path of the image.
      *
      * @return string
@@ -132,6 +142,16 @@ class Image extends Model {
     public function getAbsolutePath()
     {
         return public_path() . $this->getPath();
+    }
+
+    /**
+     * Returns the absolute path of the image thumbnail.
+     *
+     * @return string
+     */
+    public function getAbsoluteThumbPath()
+    {
+        return public_path() . $this->getThumbPath();
     }
 
     /**
