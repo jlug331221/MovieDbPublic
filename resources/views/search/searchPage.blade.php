@@ -6,7 +6,7 @@
     </div>
     <div>
         <?php if(isset($movies)): ?>
-            @include('search.searchResultsWidget')
+            @include('search.searchResultsMoviesWidget')
         <?php endif ?>
     </div>
 @stop
