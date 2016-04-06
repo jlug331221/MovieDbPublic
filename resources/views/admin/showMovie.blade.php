@@ -198,16 +198,17 @@
                                     <td align="center"><i class="fa fa-trash fa-lg"></i></td>
                                 </tr>
                             @endforeach
+                            @foreach($producers as $p)
+                                <tr class="info">
+                                    <td>Crew Img</td>
 
-                            <tr class="info">
-                                <td>Crew Img</td>
+                                    <td>{{ $p->first_name }} {{ $p->last_name }}</td>
 
-                                <td></td>
+                                    <td>Producer</td>
 
-                                <td>Producer</td>
-
-                                <td align="center"><i class="fa fa-trash fa-lg"></i></td>
-                            </tr>
+                                    <td align="center"><i class="fa fa-trash fa-lg"></i></td>
+                                </tr>
+                            @endforeach
 
                             @foreach($writers as $w)
                                 <tr class="info">

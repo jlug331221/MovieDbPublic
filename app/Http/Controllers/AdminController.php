@@ -117,26 +117,28 @@ class AdminController extends Controller
 
         //Get cast and crew information
         $credits = $movie->credits->all();
+        $castInfo = []; $blueCollarCrew = []; $characters = []; $writers = [];
+        $producers = []; $directors = [];
         for($i = 0; $i < count($credits); $i++) {
             $creditType = CreditType::find($credits[$i]->credit_type_id);
             $pId = $credits[$i]->person_id;
             $characterId = $credits[$i]->character_id;
 
             if($creditType->type === "Crew") {
-                $blueCollarCrew[$i] = Person::find($pId);
+                array_push($blueCollarCrew, Person::find($pId));
             }
             if($creditType->type === "Cast") {
-                $castInfo[$i] = Person::find($pId);
-                $characters[$i] = Character::find($characterId);
+                array_push($castInfo, Person::find($pId));
+                array_push($characters, Character::find($characterId));
             }
             if($creditType->type === "Writer") {
-                $writers[$i] = Person::find($pId);
+                array_push($writers, Person::find($pId));
             }
             if($creditType->type === "Producer") {
-                $producers[$i] = Person::find($pId);
+                array_push($producers, Person::find($pId));
             }
             if($creditType->type === "Director") {
-                $directors[$i] = Person::find($pId);
+                array_push($directors, Person::find($pId));
             }
         }
 
