@@ -150,15 +150,21 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="info">
-                                <td>Cast Img</td>
+                            @for($i = 0; $i < count($castInfo) && $i < count($characters); $i++)
+                                <tr class="info">
+                                    <td>Cast Img</td>
 
-                                <td>Cast name</td>
+                                    <td>
+                                        {{ $castInfo[$i]->first_name }} {{ $castInfo[$i]->last_name }}
+                                    </td>
 
-                                <td>Cast character</td>
+                                    <td>
+                                        {{ $characters[$i]->name }}
+                                    </td>
 
-                                <td align="center"><i class="fa fa-trash fa-lg"></i></td>
-                            </tr>
+                                    <td align="center"><i class="fa fa-trash fa-lg"></i></td>
+                                </tr>
+                            @endfor
                         </tbody>
                     </table>
                 </div>
@@ -181,15 +187,39 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach($directors as $d)
+                                <tr class="info">
+                                    <td>Crew Img</td>
+
+                                    <td>{{ $d->first_name }} {{ $d->last_name }}</td>
+
+                                    <td>Director</td>
+
+                                    <td align="center"><i class="fa fa-trash fa-lg"></i></td>
+                                </tr>
+                            @endforeach
+
                             <tr class="info">
                                 <td>Crew Img</td>
 
-                                <td>Crew Name</td>
+                                <td></td>
 
-                                <td>Crew Role</td>
+                                <td>Producer</td>
 
                                 <td align="center"><i class="fa fa-trash fa-lg"></i></td>
                             </tr>
+
+                            @foreach($writers as $w)
+                                <tr class="info">
+                                    <td>Crew Img</td>
+
+                                    <td>{{ $w->first_name }} {{ $w->last_name }}</td>
+
+                                    <td>Writer</td>
+
+                                    <td align="center"><i class="fa fa-trash fa-lg"></i></td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
