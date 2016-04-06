@@ -120,13 +120,23 @@
 
             <div class="col-md-6 col-lg-6">
                 <div class="col-md-6 col-lg-6">
-                    <img src="http://masterherald.com/wp-content/uploads/2015/01/arnold-schwarzenegger.jpg"
-                        style="height:auto; width: 100%;">
+                    @if($movieAlbum->first() === null)
+                        {!! Html::image('http://masterherald.com/wp-content/uploads/2015/01/arnold-schwarzenegger.jpg',
+                        'arnold_image', array('width' => '100%', 'height' => 'auto')) !!}
+                    @else
+                        {!! Html::image($movieAlbum->first()->getPath()) !!}
+                    @endif
                 </div>
-                <div class="col-md-6 col-lg-6">
-                    <h3>Add Image to Album</h3>
-                    <a href="#"><i class="fa fa-plus-square-o fa-3x"></i></a>
-                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 col-lg-12">
+                <h3>Movie Images:</h3>
+                @foreach($movieAlbum as $i)
+                    {!! Html::image($i->getThumbPath()) !!}
+                @endforeach
+                <hr/>
             </div>
         </div>
 
@@ -223,6 +233,36 @@
                             @endforeach
                         </tbody>
                     </table>
+                </div>
+
+                <div class="col-md-12"><hr/></div>
+
+                <div class="col-md-12" style="margin-bottom: 40px;">
+                    @if (Session::has('message'))
+                        <div class="alert alert-success">
+                            {{ Session::get('message') }}
+                        </div>
+                    @endif
+
+                    <h1>Upload Images <i class="fa fa-plus-square-o"></i></h1>
+                    {!! Form::open(['url' => '/images/storeMovieImage/'.$movie->id,
+                        'files' => true, 'class' => 'form']) !!}
+
+                    <div class="form-group">
+                        {!! Form::label('image', 'Image') !!}
+                        {!! Form::file('image', null, ['required', 'class' => 'form-control']) !!}
+                    </div>
+
+                    <div class="form-group">
+                        {!! Form::label('description', 'Description') !!}
+                        {!! Form::text('description', null, ['class' => 'form-control']) !!}
+                    </div>
+
+                    <div clas="form-group">
+                        {!! Form::submit('Upload', ['class' => 'btn btn-primary']) !!}
+                    </div>
+
+                    {!! Form::close() !!}
                 </div>
             </div>
         </div>

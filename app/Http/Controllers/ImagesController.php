@@ -6,6 +6,10 @@ use DB;
 use App\Http\Requests\CreateImageRequest;
 use App\Http\Requests;
 
+use Session;
+use App\Movie;
+use App\Album;
+
 use App\Image;
 use Faker\Factory;
 use Image as InterventionImage;
@@ -60,6 +64,36 @@ class ImagesController extends Controller {
         }
 
         return redirect($image->getPath());
+    }
+
+
+    /**
+     * Store image for a particular movie.
+     *
+     * @param CreateImageRequest $request
+     * @param $mid
+     * @return mixed
+     */
+    public function storeMovieImage(CreateImageRequest $request, $mid) {
+        $file = $request->file('image');
+        $description = $request->get('description');
+
+        try {
+            $image = ImageSync::create($file, $description);
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+        }
+
+        $movie = Movie::find($mid);
+        DB::table('album_image')->insert(['album_id' => $movie->album,
+            'image_id' => $image->id]);
+        if(!Album::find($movie->album)->default) {
+            DB::table('albums')->where('id', $movie->album)
+                ->update(['default' => $image->id]);
+        }
+
+        Session::flash('message', "Successfully uploaded image for ".$movie->title);
+        return redirect('admin/showMovie/'.$movie->id);
     }
 
     /**

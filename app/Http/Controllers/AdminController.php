@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use Auth;
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
 use DB;
+
 use App\Movie;
 use App\Person;
 use App\Character;
 use App\CreditType;
+use App\Album;
+use App\Image;
+
 use Illuminate\Support\Facades\Input;
 use Request;
 use Session;
@@ -142,9 +145,12 @@ class AdminController extends Controller
             }
         }
 
+        $movieAlbum = Album::find($movie->album)->images;
+
         return view('/admin/showMovie', compact(['movie', 'selectedGenre',
             'countries', 'ratings', 'selectedRating', 'genres', 'convertedDate',
-            'selectedCountry','castInfo', 'characters', 'directors', 'writers', 'producers']));
+            'selectedCountry','castInfo', 'characters', 'directors', 'writers',
+            'producers', 'movieAlbum']));
     }
 
     /**

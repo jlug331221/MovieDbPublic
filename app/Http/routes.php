@@ -76,6 +76,7 @@ Route::group(['middleware' => 'web'], function () {
     // Image Routes
     Route::get('/images/create', 'ImagesController@create');
     Route::post('/images/store', 'ImagesController@store');
+    Route::post('/images/storeMovieImage/{mid}', 'ImagesController@storeMovieImage');
     Route::get('/images/delete/{name}', 'ImagesController@delete');
     Route::get('/images/discard/{name}', 'ImagesController@discard');
 
