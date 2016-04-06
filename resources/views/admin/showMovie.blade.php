@@ -124,7 +124,8 @@
                         {!! Html::image('http://masterherald.com/wp-content/uploads/2015/01/arnold-schwarzenegger.jpg',
                         'arnold_image', array('width' => '100%', 'height' => 'auto')) !!}
                     @else
-                        {!! Html::image($movieAlbum->first()->getPath()) !!}
+                        <img src="{{ url($movieAlbum->first()->getPath()) }}" class="img-responsive"
+                             style="width: 350px; height: 550px;">
                     @endif
                 </div>
             </div>
@@ -145,11 +146,11 @@
                 <h3>Movie Images:</h3>
                 @foreach($movieAlbum as $i)
                     <div class="col-md-2">
-                        {!! Html::image($i->getPath(), $i->description,
-                            array('height' => '250px')) !!}
+                        <img src="{{ url($i->getPath()) }}" class="img-responsive"
+                             style="height: 250px;">
                         <a href="{{ url('/images/destroyMovieImage/movie/'
                             . $movie->id . '/image/' . $i->id) }}">
-                            <i class="fa fa-trash fa-2x"></i>
+                            <i class="fa fa-trash fa-2x" style="margin-top: 10px;"></i>
                         </a>
                     </div>
                 @endforeach
@@ -254,7 +255,7 @@
                     </table>
                 </div>
 
-                <div class="col-md-12"><hr/></div>
+                <div class="col-md-12 col-lg-12"><hr/></div>
 
                 <div class="col-md-12" style="margin-bottom: 40px;">
                     @if (Session::has('success'))
@@ -266,24 +267,22 @@
                         </div>
                     @endif
 
-                    <h1>Upload Images <i class="fa fa-plus-square-o"></i></h1>
-                    {!! Form::open(['url' => '/images/storeMovieImage/'.$movie->id,
+                    <h1>Upload Movie Images:</h1>
+                    {!! Form::open(['url' => '/images/storeMovieImage/' . $movie->id,
                         'files' => true, 'class' => 'form']) !!}
+                        <div class="form-group">
+                            {!! Form::label('image', 'Image') !!}
+                            {!! Form::file('image', null, ['required', 'class' => 'form-control']) !!}
+                        </div>
 
-                    <div class="form-group">
-                        {!! Form::label('image', 'Image') !!}
-                        {!! Form::file('image', null, ['required', 'class' => 'form-control']) !!}
-                    </div>
+                        <div class="form-group">
+                            {!! Form::label('description', 'Description') !!}
+                            {!! Form::text('description', null, ['class' => 'form-control']) !!}
+                        </div>
 
-                    <div class="form-group">
-                        {!! Form::label('description', 'Description') !!}
-                        {!! Form::text('description', null, ['class' => 'form-control']) !!}
-                    </div>
-
-                    <div clas="form-group">
-                        {!! Form::submit('Upload', ['class' => 'btn btn-primary']) !!}
-                    </div>
-
+                        <div clas="form-group">
+                            {!! Form::submit('Upload', ['class' => 'btn btn-primary']) !!}
+                        </div>
                     {!! Form::close() !!}
                 </div>
             </div>

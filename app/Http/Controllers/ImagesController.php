@@ -8,6 +8,7 @@ use App\Http\Requests;
 
 use Session;
 use App\Movie;
+use App\Person;
 use App\Album;
 
 use App\Image;
@@ -67,6 +68,58 @@ class ImagesController extends Controller {
 
 
     /**
+     * Store image for a particular person.
+     *
+     * @param CreateImageRequest $request
+     * @param $pid
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function storePersonImage(CreateImageRequest $request, $pid) {
+        $file = $request->file('image');
+        $description = $request->get('description');
+
+        try {
+            $image = ImageSync::create($file, $description);
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+        }
+
+        $person = Person::find($pid);
+        DB::table('album_image')->insert(['album_id' => $person->album,
+            'image_id' => $image->id]);
+        if(!Album::find($person->album)->default) {
+            DB::table('albums')->where('id', $person->album)
+                ->update(['default' => $image->id]);
+        }
+        return redirect('admin/showPerson/' . $person->id)->with('success',
+            "Successfully uploaded image for " . $person->first_name
+            . ' ' . $person->last_name);
+    }
+
+    /**
+     * Delete image for a particular person.
+     *
+     * @param $pid
+     * @param $imgId
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function destroyPersonImage($pid, $imgId) {
+        $person = Person::find($pid);
+        if ($imgId === Album::find($person->album)->images->first()->id) {
+            DB::table('albums')->where('id', $person->album)
+                ->update(['default' => null]);
+        }
+
+        DB::table('album_image')->where('image_id', $imgId)->delete();
+        DB::table('images')->where('id', $imgId)->delete();
+
+        Session::flash('message', "Successfully deleted image for " . $person->first_name
+            . ' ' . $person->last_name);
+        return redirect('admin/showPerson/' . $person->id);
+    }
+
+
+    /**
      * Store image for a particular movie.
      *
      * @param CreateImageRequest $request
@@ -90,8 +143,6 @@ class ImagesController extends Controller {
             DB::table('albums')->where('id', $movie->album)
                 ->update(['default' => $image->id]);
         }
-
-        //Session::flash('UploadMessage', "Successfully uploaded image for " . $movie->title);
         return redirect('admin/showMovie/' . $movie->id)->with('success',
             "Successfully uploaded image for " . $movie->title);
     }

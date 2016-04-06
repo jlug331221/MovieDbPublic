@@ -175,8 +175,11 @@ class AdminController extends Controller
         $selectedCountry = $person->country_of_origin;
         $convertedDateOfBirth = date("m/d/Y", strtotime($person->date_of_birth));
         $convertedDateOfDeath = date("m/d/Y", strtotime($person->date_of_death));
+
+        $personAlbum = Album::find($person->album)->images;
+
         return view('/admin/showPerson', compact(['person', 'countries', 'selectedCountry',
-                'convertedDateOfBirth', 'convertedDateOfDeath']));
+                'convertedDateOfBirth', 'convertedDateOfDeath', 'personAlbum']));
     }
 
     /**
