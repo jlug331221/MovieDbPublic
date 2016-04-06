@@ -8,8 +8,22 @@
 
                 <hr/>
 
+                @if (Session::has('success'))
+                    <div class="alert alert-success">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                            &times;
+                        </button>
+                        {{ Session::get('success') }}
+                    </div>
+                @endif
+
                 @if (Session::has('message'))
-                    <div class="alert alert-info">{{ Session::get('message') }}</div>
+                    <div class="alert alert-danger">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                            &times;
+                        </button>
+                        {{ Session::get('message') }}
+                    </div>
                 @endif
 
                 <div class="container-fluid">

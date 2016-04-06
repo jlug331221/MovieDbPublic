@@ -235,8 +235,8 @@ class AdminController extends Controller
         $movie->synopsis = Input::get('synopsis');
         $movie->save();
 
-        Session::flash('message', 'Successfully added movie to database!');
-        return redirect()->action('AdminController@showMovies');
+        return redirect()->action('AdminController@showMovies')->with('success',
+            "Successfully added movie to database!");
     }
 
     /**
@@ -286,6 +286,12 @@ class AdminController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroyPerson($id) {
+        $personSuffixes = DB::table('person_suffixes')->where('person_id', $id);
+        if($personSuffixes)
+        {
+            $personSuffixes->delete();
+        }
+
         $person = Person::find($id);
         $person->delete();
 
@@ -322,8 +328,8 @@ class AdminController extends Controller
         $person->biography = Input::get('biography');
         $person->save();
 
-        Session::flash('message', 'Successfully added person to database!');
-        return redirect()->action('AdminController@showPeople');
+        return redirect()->action('AdminController@showPeople')->with('success',
+            "Successfully added person to database!");
     }
 
     /**

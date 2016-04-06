@@ -130,15 +130,33 @@
             </div>
         </div>
 
+        <hr/>
+
         <div class="row">
             <div class="col-md-12 col-lg-12">
+                @if (Session::has('message'))
+                    <div class="alert alert-danger">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                            &times;
+                        </button>
+                        {{ Session::get('message') }}
+                    </div>
+                @endif
                 <h3>Movie Images:</h3>
                 @foreach($movieAlbum as $i)
-                    {!! Html::image($i->getThumbPath()) !!}
+                    <div class="col-md-2">
+                        {!! Html::image($i->getPath(), $i->description,
+                            array('height' => '250px')) !!}
+                        <a href="{{ url('/images/destroyMovieImage/movie/'
+                            . $movie->id . '/image/' . $i->id) }}">
+                            <i class="fa fa-trash fa-2x"></i>
+                        </a>
+                    </div>
                 @endforeach
-                <hr/>
             </div>
         </div>
+
+        <hr/>
 
         <div class="row">
             <div class="col-md-12 col-lg-12">
@@ -208,6 +226,7 @@
                                     <td align="center"><i class="fa fa-trash fa-lg"></i></td>
                                 </tr>
                             @endforeach
+
                             @foreach($producers as $p)
                                 <tr class="info">
                                     <td>Crew Img</td>
@@ -238,9 +257,12 @@
                 <div class="col-md-12"><hr/></div>
 
                 <div class="col-md-12" style="margin-bottom: 40px;">
-                    @if (Session::has('message'))
+                    @if (Session::has('success'))
                         <div class="alert alert-success">
-                            {{ Session::get('message') }}
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                                &times;
+                            </button>
+                            {{ Session::get('success') }}
                         </div>
                     @endif
 

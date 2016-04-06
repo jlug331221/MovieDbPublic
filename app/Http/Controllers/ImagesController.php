@@ -11,7 +11,6 @@ use App\Movie;
 use App\Album;
 
 use App\Image;
-use Faker\Factory;
 use Image as InterventionImage;
 use ImageSync;
 
@@ -92,8 +91,32 @@ class ImagesController extends Controller {
                 ->update(['default' => $image->id]);
         }
 
-        Session::flash('message', "Successfully uploaded image for ".$movie->title);
-        return redirect('admin/showMovie/'.$movie->id);
+        //Session::flash('UploadMessage', "Successfully uploaded image for " . $movie->title);
+        return redirect('admin/showMovie/' . $movie->id)->with('success',
+            "Successfully uploaded image for " . $movie->title);
+    }
+
+
+    /**
+     * Delete image for a particular movie.
+     *
+     * @param $mid
+     * @param $imgId
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function destroyMovieImage($mid, $imgId)
+    {
+        $movie = Movie::find($mid);
+        if ($imgId === Album::find($movie->album)->images->first()->id) {
+            DB::table('albums')->where('id', $movie->album)
+                ->update(['default' => null]);
+        }
+
+        DB::table('album_image')->where('image_id', $imgId)->delete();
+        DB::table('images')->where('id', $imgId)->delete();
+
+        Session::flash('message', "Successfully deleted image for " . $movie->title);
+        return redirect('admin/showMovie/' . $movie->id);
     }
 
     /**
