@@ -154,7 +154,7 @@ class AdminController extends Controller
                 ->join('credit_types', 'credits.credit_type_id', '=', 'credit_types.id')
                 ->leftJoin('images', 'albums.default', '=', 'images.id')
                 ->join('characters', 'character_id', '=', 'characters.id')
-                ->where('movie_id', '=', 101)
+                ->where('movie_id', '=', $movie->id)
                 ->where('type', '=', 'Cast')
                 ->get();
 
@@ -164,7 +164,7 @@ class AdminController extends Controller
                 ->join('albums', 'people.album', '=', 'albums.id')
                 ->join('credit_types', 'credits.credit_type_id', '=', 'credit_types.id')
                 ->leftJoin('images', 'albums.default', '=', 'images.id')
-                ->where('movie_id', '=', 101)
+                ->where('movie_id', '=', $movie->id)
                 ->where('type', '!=', 'Cast')
                 ->get();
 

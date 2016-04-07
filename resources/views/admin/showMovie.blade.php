@@ -162,7 +162,7 @@
         <div class="row">
             <div class="col-md-12 col-lg-12">
                 <div class="col-md-6 col-lg-6">
-                    <h2>Cast | Add Cast Member
+                    <h2>Cast |
                         <a href="#">
                             <i class="fa fa-plus-square-o fa-lg"></i>
                         </a>
@@ -172,10 +172,10 @@
                                 table-bordered table-condensed">
                         <thead>
                             <tr>
-                                <th>Image</th>
-                                <th>Name</th>
-                                <th>Character</th>
-                                <th>Admin</th>
+                                <th style="text-align: center;">Image</th>
+                                <th style="text-align: center;">Name</th>
+                                <th style="text-align: center;">Character</th>
+                                <th style="text-align: center;">Admin</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -195,15 +195,20 @@
                                         @endif
                                     </td>
 
-                                    <td>
+                                    <td align="center">
                                         {{ $c->first_name }} {{ $c->last_name }}
                                     </td>
 
-                                    <td>
+                                    <td align="center">
                                         {{ $c->character_name }}
                                     </td>
 
-                                    <td align="center"><i class="fa fa-trash fa-lg"></i></td>
+                                    <td align="center">
+                                        Remove Cast Member |
+                                        <a href="#">
+                                            <i class="fa fa-trash fa-lg" style="margin-top: 10px;"></i>
+                                        </a>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -211,7 +216,7 @@
                 </div>
 
                 <div class="col-md-6 col-lg-6">
-                    <h2>Crew | Add Crew Member
+                    <h2>Crew |
                         <a href="#">
                             <i class="fa fa-plus-square-o fa-lg"></i>
                         </a>
@@ -221,10 +226,10 @@
                                 table-bordered table-condensed">
                         <thead>
                             <tr>
-                                <th>Image</th>
-                                <th>Name</th>
-                                <th>Role</th>
-                                <th>Admin</th>
+                                <th style="text-align: center;">Image</th>
+                                <th style="text-align: center;">Name</th>
+                                <th style="text-align: center;">Role</th>
+                                <th style="text-align: center;">Admin</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -244,11 +249,16 @@
                                         @endif
                                     </td>
 
-                                    <td>{{ $c->first_name }} {{ $c->last_name }}</td>
+                                    <td align="center">{{ $c->first_name }} {{ $c->last_name }}</td>
 
-                                    <td>{{ $c->type }}</td>
+                                    <td align="center">{{ $c->type }}</td>
 
-                                    <td align="center"><i class="fa fa-trash fa-lg"></i></td>
+                                    <td align="center">
+                                        Remove Crew Member |
+                                        <a href="#">
+                                            <i class="fa fa-trash fa-lg" style="margin-top: 10px;"></i>
+                                        </a>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
