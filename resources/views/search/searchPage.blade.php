@@ -6,7 +6,12 @@
     </div>
     <div>
         <?php if(isset($movies)): ?>
-            @include('search.searchResultsWidget')
+            @include('search.searchResultsMoviesWidget')
         <?php endif ?>
+    </div>
+    <div>
+        <?php if(isset($people)): ?>
+	    @include('search.searchResultsPeopleWidget')
+	<?php endif ?>
     </div>
 @stop

@@ -17,13 +17,14 @@ $lato: 'Lato', sans-serif;
 
 
 /** Page Imports */
+@import "pages/search/searchWidget";
 @import "pages/search/advsearch";
 @import "pages/movies/moviepage";
 @import "pages/landing/landing";
 @import "pages/userpage/userpage";
 @import "pages/reviews/reviews";
 @import "pages/reviews/reviewComponent";
-@import "pages/reviews/notFound"; 
+@import "pages/reviews/notFound";
 @import "pages/people/personpage";
 
 
@@ -79,4 +80,10 @@ body {
         height: 175px;
         margin-bottom: 4px;
     }
+}
+
+.searchWidget__center {
+     float: none;
+     margin-left: auto;
+     margin-right: auto;
 }

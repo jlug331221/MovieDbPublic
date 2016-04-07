@@ -4,13 +4,19 @@ namespace App\Http\Controllers;
 
 use Auth;
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
 use DB;
+
 use App\Movie;
 use App\Person;
+use App\Character;
+use App\CreditType;
+use App\Album;
+use App\Image;
+
 use Illuminate\Support\Facades\Input;
 use Request;
 use Session;
+use App\Library\StaticData;
 
 class AdminController extends Controller
 {
@@ -35,298 +41,11 @@ class AdminController extends Controller
     public function __construct() {
         $this->middleware('admin');
 
-        $this->countryNames = [
-            "United States",
-            "Afghanistan",
-            "Albania",
-            "Algeria",
-            "American Samoa",
-            "Andorra",
-            "Angola",
-            "Anguilla",
-            "Antarctica",
-            "Antigua and Barbuda",
-            "Argentina",
-            "Armenia",
-            "Aruba",
-            "Australia",
-            "Austria",
-            "Azerbaijan",
-            "Bahamas",
-            "Bahrain",
-            "Bangladesh",
-            "Barbados",
-            "Belarus",
-            "Belgium",
-            "Belize",
-            "Benin",
-            "Bermuda",
-            "Bhutan",
-            "Bolivia",
-            "Bosnia and Herzegovina",
-            "Botswana",
-            "Bouvet Island",
-            "Brazil",
-            "British Antarctic Territory",
-            "British Indian Ocean Territory",
-            "British Virgin Islands",
-            "Brunei",
-            "Bulgaria",
-            "Burkina Faso",
-            "Burundi",
-            "Cambodia",
-            "Cameroon",
-            "Canada",
-            "Canton and Enderbury Islands",
-            "Cape Verde",
-            "Cayman Islands",
-            "Central African Republic",
-            "Chad",
-            "Chile",
-            "China",
-            "Christmas Island",
-            "Cocos [Keeling] Islands",
-            "Colombia",
-            "Comoros",
-            "Congo - Brazzaville",
-            "Congo - Kinshasa",
-            "Cook Islands",
-            "Costa Rica",
-            "Croatia",
-            "Cuba",
-            "Cyprus",
-            "Czech Republic",
-            "Côte d’Ivoire",
-            "Denmark",
-            "Djibouti",
-            "Dominica",
-            "Dominican Republic",
-            "Dronning Maud Land",
-            "East Germany",
-            "Ecuador",
-            "Egypt",
-            "El Salvador",
-            "Equatorial Guinea",
-            "Eritrea",
-            "Estonia",
-            "Ethiopia",
-            "Falkland Islands",
-            "Faroe Islands",
-            "Fiji",
-            "Finland",
-            "France",
-            "French Guiana",
-            "French Polynesia",
-            "French Southern Territories",
-            "French Southern and Antarctic Territories",
-            "Gabon",
-            "Gambia",
-            "Georgia",
-            "Germany",
-            "Ghana",
-            "Gibraltar",
-            "Greece",
-            "Greenland",
-            "Grenada",
-            "Guadeloupe",
-            "Guam",
-            "Guatemala",
-            "Guernsey",
-            "Guinea",
-            "Guinea-Bissau",
-            "Guyana",
-            "Haiti",
-            "Heard Island and McDonald Islands",
-            "Honduras",
-            "Hong Kong SAR China",
-            "Hungary",
-            "Iceland",
-            "India",
-            "Indonesia",
-            "Iran",
-            "Iraq",
-            "Ireland",
-            "Isle of Man",
-            "Israel",
-            "Italy",
-            "Jamaica",
-            "Japan",
-            "Jersey",
-            "Johnston Island",
-            "Jordan",
-            "Kazakhstan",
-            "Kenya",
-            "Kiribati",
-            "Kuwait",
-            "Kyrgyzstan",
-            "Laos",
-            "Latvia",
-            "Lebanon",
-            "Lesotho",
-            "Liberia",
-            "Libya",
-            "Liechtenstein",
-            "Lithuania",
-            "Luxembourg",
-            "Macau SAR China",
-            "Macedonia",
-            "Madagascar",
-            "Malawi",
-            "Malaysia",
-            "Maldives",
-            "Mali",
-            "Malta",
-            "Marshall Islands",
-            "Martinique",
-            "Mauritania",
-            "Mauritius",
-            "Mayotte",
-            "Metropolitan France",
-            "Mexico",
-            "Micronesia",
-            "Midway Islands",
-            "Moldova",
-            "Monaco",
-            "Mongolia",
-            "Montenegro",
-            "Montserrat",
-            "Morocco",
-            "Mozambique",
-            "Myanmar [Burma]",
-            "Namibia",
-            "Nauru",
-            "Nepal",
-            "Netherlands",
-            "Netherlands Antilles",
-            "Neutral Zone",
-            "New Caledonia",
-            "New Zealand",
-            "Nicaragua",
-            "Niger",
-            "Nigeria",
-            "Niue",
-            "Norfolk Island",
-            "North Korea",
-            "North Vietnam",
-            "Northern Mariana Islands",
-            "Norway",
-            "Oman",
-            "Pacific Islands Trust Territory",
-            "Pakistan",
-            "Palau",
-            "Palestinian Territories",
-            "Panama",
-            "Panama Canal Zone",
-            "Papua New Guinea",
-            "Paraguay",
-            "People's Democratic Republic of Yemen",
-            "Peru",
-            "Philippines",
-            "Pitcairn Islands",
-            "Poland",
-            "Portugal",
-            "Puerto Rico",
-            "Qatar",
-            "Romania",
-            "Russia",
-            "Rwanda",
-            "Réunion",
-            "Saint Barthélemy",
-            "Saint Helena",
-            "Saint Kitts and Nevis",
-            "Saint Lucia",
-            "Saint Martin",
-            "Saint Pierre and Miquelon",
-            "Saint Vincent and the Grenadines",
-            "Samoa",
-            "San Marino",
-            "Saudi Arabia",
-            "Senegal",
-            "Serbia",
-            "Serbia and Montenegro",
-            "Seychelles",
-            "Sierra Leone",
-            "Singapore",
-            "Slovakia",
-            "Slovenia",
-            "Solomon Islands",
-            "Somalia",
-            "South Africa",
-            "South Georgia and the South Sandwich Islands",
-            "South Korea",
-            "Spain",
-            "Sri Lanka",
-            "Sudan",
-            "Suriname",
-            "Svalbard and Jan Mayen",
-            "Swaziland",
-            "Sweden",
-            "Switzerland",
-            "Syria",
-            "São Tomé and Príncipe",
-            "Taiwan",
-            "Tajikistan",
-            "Tanzania",
-            "Thailand",
-            "Timor-Leste",
-            "Togo",
-            "Tokelau",
-            "Tonga",
-            "Trinidad and Tobago",
-            "Tunisia",
-            "Turkey",
-            "Turkmenistan",
-            "Turks and Caicos Islands",
-            "Tuvalu",
-            "U.S. Minor Outlying Islands",
-            "U.S. Miscellaneous Pacific Islands",
-            "U.S. Virgin Islands",
-            "Uganda",
-            "Ukraine",
-            "Union of Soviet Socialist Republics",
-            "United Arab Emirates",
-            "United Kingdom",
-            "Uruguay",
-            "Uzbekistan",
-            "Vanuatu",
-            "Vatican City",
-            "Venezuela",
-            "Vietnam",
-            "Wake Island",
-            "Wallis and Futuna",
-            "Western Sahara",
-            "Yemen",
-            "Zambia",
-            "Zimbabwe",
-            "Åland Islands"
-        ];
+        $this->countryNames = StaticData::$countries;
         $this->countryValues = $this->countryNames;
         $this->countries = array_combine($this->countryNames, $this->countryValues);
 
-        $this->genreNames = [
-            'Action',
-            'Adventure',
-            'Animation',
-            'Biography',
-            'Comedy',
-            'Crime',
-            'Documentary',
-            'Drama',
-            'Family',
-            'Fantasy',
-            'Film-Noir',
-            'History',
-            'Horror',
-            'Music',
-            'Musical',
-            'Mystery',
-            'Romance',
-            'Sci-Fi',
-            'Sport',
-            'Thriller',
-            'War',
-            'Western'
-        ];
+        $this->genreNames = StaticData::$genres;
         $this->genreValues = $this->genreNames;
         $this->genres = array_combine($this->genreNames, $this->genreValues);
 
@@ -398,9 +117,65 @@ class AdminController extends Controller
         $selectedGenre = $movie->genre;
         $selectedRating = $movie->parental_rating;
         $convertedDate = date("m/d/Y", strtotime($movie->release_date));
+
+        /*$credits = $movie->credits->all();
+        $castInfo = []; $blueCollarCrew = []; $characters = []; $writers = [];
+        $producers = []; $directors = [];
+        for($i = 0; $i < count($credits); $i++) {
+            $creditType = CreditType::find($credits[$i]->credit_type_id);
+            $pId = $credits[$i]->person_id;
+            $characterId = $credits[$i]->character_id;
+
+            if($creditType->type === "Crew") {
+                array_push($blueCollarCrew, Person::find($pId));
+            }
+            if($creditType->type === "Cast") {
+                array_push($castInfo, Person::find($pId));
+                array_push($characters, Character::find($characterId));
+            }
+            if($creditType->type === "Writer") {
+                array_push($writers, Person::find($pId));
+            }
+            if($creditType->type === "Producer") {
+                array_push($producers, Person::find($pId));
+            }
+            if($creditType->type === "Director") {
+                array_push($directors, Person::find($pId));
+            }
+        }*/
+
+        $movieAlbum = Album::find($movie->album)->images;
+
+        //Get cast and crew information
+        $cast = DB::table('movies')
+                ->join('credits', 'id', '=', 'movie_id')
+                ->join('people', 'person_id', '=', 'people.id')
+                ->join('albums', 'people.album', '=', 'albums.id')
+                ->join('credit_types', 'credits.credit_type_id', '=', 'credit_types.id')
+                ->leftJoin('images', 'albums.default', '=', 'images.id')
+                ->join('characters', 'character_id', '=', 'characters.id')
+                ->where('movie_id', '=', $movie->id)
+                ->where('type', '=', 'Cast')
+                ->get();
+
+        $crew = DB::table('movies')
+                ->join('credits', 'id', '=', 'movie_id')
+                ->join('people', 'person_id', '=', 'people.id')
+                ->join('albums', 'people.album', '=', 'albums.id')
+                ->join('credit_types', 'credits.credit_type_id', '=', 'credit_types.id')
+                ->leftJoin('images', 'albums.default', '=', 'images.id')
+                ->where('movie_id', '=', $movie->id)
+                ->where('type', '!=', 'Cast')
+                ->get();
+
+        /*return view('/admin/showMovie', compact(['movie', 'selectedGenre',
+            'countries', 'ratings', 'selectedRating', 'genres', 'convertedDate',
+            'selectedCountry','castInfo', 'characters', 'directors', 'writers',
+            'producers', 'movieAlbum', 'cast', 'crew']));*/
+
         return view('/admin/showMovie', compact(['movie', 'selectedGenre',
-            'countries', 'ratings', 'selectedRating', 'genres',
-            'convertedDate', 'selectedCountry']));
+            'countries', 'ratings', 'selectedRating', 'genres', 'convertedDate',
+            'selectedCountry', 'movieAlbum', 'cast', 'crew']));
     }
 
     /**
@@ -425,8 +200,11 @@ class AdminController extends Controller
         $selectedCountry = $person->country_of_origin;
         $convertedDateOfBirth = date("m/d/Y", strtotime($person->date_of_birth));
         $convertedDateOfDeath = date("m/d/Y", strtotime($person->date_of_death));
+
+        $personAlbum = Album::find($person->album)->images;
+
         return view('/admin/showPerson', compact(['person', 'countries', 'selectedCountry',
-                'convertedDateOfBirth', 'convertedDateOfDeath']));
+                'convertedDateOfBirth', 'convertedDateOfDeath', 'personAlbum']));
     }
 
     /**
@@ -485,8 +263,8 @@ class AdminController extends Controller
         $movie->synopsis = Input::get('synopsis');
         $movie->save();
 
-        Session::flash('message', 'Successfully added movie to database!');
-        return redirect()->action('AdminController@showMovies');
+        return redirect()->action('AdminController@showMovies')->with('success',
+            "Successfully added movie to database!");
     }
 
     /**
@@ -536,6 +314,12 @@ class AdminController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroyPerson($id) {
+        $personSuffixes = DB::table('person_suffixes')->where('person_id', $id);
+        if($personSuffixes)
+        {
+            $personSuffixes->delete();
+        }
+
         $person = Person::find($id);
         $person->delete();
 
@@ -572,8 +356,8 @@ class AdminController extends Controller
         $person->biography = Input::get('biography');
         $person->save();
 
-        Session::flash('message', 'Successfully added person to database!');
-        return redirect()->action('AdminController@showPeople');
+        return redirect()->action('AdminController@showPeople')->with('success',
+            "Successfully added person to database!");
     }
 
     /**
