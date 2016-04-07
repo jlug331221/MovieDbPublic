@@ -187,7 +187,7 @@
                     </div>
                 @endif
 
-                <h1>Upload Images</h1>
+                <h1>Upload Person Images:</h1>
                 {!! Form::open(['url' => '/images/storePersonImage/' . $person->id,
                     'files' => true, 'class' => 'form']) !!}
                     <div class="form-group">

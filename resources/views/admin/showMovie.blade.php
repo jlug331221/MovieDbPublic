@@ -179,21 +179,33 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @for($i = 0; $i < count($castInfo) && $i < count($characters); $i++)
+                            @foreach($cast as $c)
                                 <tr class="info">
-                                    <td>Cast Img</td>
-
                                     <td>
-                                        {{ $castInfo[$i]->first_name }} {{ $castInfo[$i]->last_name }}
+                                        @if($c->default === null)
+                                            <img src="http://masterherald.com/wp-content/uploads/2015/01/arnold-schwarzenegger.jpg"
+                                                 class="img-responsive center-block"
+                                                 style="height: 85px;">
+                                        @else
+                                            <img src="{{ url($c->path . '/thumbs/'
+                                                . $c->name . '.'
+                                                . $c->extension) }}"
+                                                 class="img-responsive center-block"
+                                                 style="height: 85px;">
+                                        @endif
                                     </td>
 
                                     <td>
-                                        {{ $characters[$i]->name }}
+                                        {{ $c->first_name }} {{ $c->last_name }}
+                                    </td>
+
+                                    <td>
+                                        {{ $c->character_name }}
                                     </td>
 
                                     <td align="center"><i class="fa fa-trash fa-lg"></i></td>
                                 </tr>
-                            @endfor
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -216,37 +228,25 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($directors as $d)
+                            @foreach($crew as $c)
                                 <tr class="info">
-                                    <td>Crew Img</td>
+                                    <td>
+                                        @if($c->default === null)
+                                            <img src="http://masterherald.com/wp-content/uploads/2015/01/arnold-schwarzenegger.jpg"
+                                                 class="img-responsive center-block"
+                                                 style="height: 85px;">
+                                        @else
+                                            <img src="{{ url($c->path . '/thumbs/'
+                                                . $c->name . '.'
+                                                . $c->extension) }}"
+                                                 class="img-responsive center-block"
+                                                 style="height: 85px;">
+                                        @endif
+                                    </td>
 
-                                    <td>{{ $d->first_name }} {{ $d->last_name }}</td>
+                                    <td>{{ $c->first_name }} {{ $c->last_name }}</td>
 
-                                    <td>Director</td>
-
-                                    <td align="center"><i class="fa fa-trash fa-lg"></i></td>
-                                </tr>
-                            @endforeach
-
-                            @foreach($producers as $p)
-                                <tr class="info">
-                                    <td>Crew Img</td>
-
-                                    <td>{{ $p->first_name }} {{ $p->last_name }}</td>
-
-                                    <td>Producer</td>
-
-                                    <td align="center"><i class="fa fa-trash fa-lg"></i></td>
-                                </tr>
-                            @endforeach
-
-                            @foreach($writers as $w)
-                                <tr class="info">
-                                    <td>Crew Img</td>
-
-                                    <td>{{ $w->first_name }} {{ $w->last_name }}</td>
-
-                                    <td>Writer</td>
+                                    <td>{{ $c->type }}</td>
 
                                     <td align="center"><i class="fa fa-trash fa-lg"></i></td>
                                 </tr>

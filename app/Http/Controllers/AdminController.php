@@ -118,8 +118,7 @@ class AdminController extends Controller
         $selectedRating = $movie->parental_rating;
         $convertedDate = date("m/d/Y", strtotime($movie->release_date));
 
-        //Get cast and crew information
-        $credits = $movie->credits->all();
+        /*$credits = $movie->credits->all();
         $castInfo = []; $blueCollarCrew = []; $characters = []; $writers = [];
         $producers = []; $directors = [];
         for($i = 0; $i < count($credits); $i++) {
@@ -143,14 +142,40 @@ class AdminController extends Controller
             if($creditType->type === "Director") {
                 array_push($directors, Person::find($pId));
             }
-        }
+        }*/
 
         $movieAlbum = Album::find($movie->album)->images;
 
-        return view('/admin/showMovie', compact(['movie', 'selectedGenre',
+        //Get cast and crew information
+        $cast = DB::table('movies')
+                ->join('credits', 'id', '=', 'movie_id')
+                ->join('people', 'person_id', '=', 'people.id')
+                ->join('albums', 'people.album', '=', 'albums.id')
+                ->join('credit_types', 'credits.credit_type_id', '=', 'credit_types.id')
+                ->leftJoin('images', 'albums.default', '=', 'images.id')
+                ->join('characters', 'character_id', '=', 'characters.id')
+                ->where('movie_id', '=', 101)
+                ->where('type', '=', 'Cast')
+                ->get();
+
+        $crew = DB::table('movies')
+                ->join('credits', 'id', '=', 'movie_id')
+                ->join('people', 'person_id', '=', 'people.id')
+                ->join('albums', 'people.album', '=', 'albums.id')
+                ->join('credit_types', 'credits.credit_type_id', '=', 'credit_types.id')
+                ->leftJoin('images', 'albums.default', '=', 'images.id')
+                ->where('movie_id', '=', 101)
+                ->where('type', '!=', 'Cast')
+                ->get();
+
+        /*return view('/admin/showMovie', compact(['movie', 'selectedGenre',
             'countries', 'ratings', 'selectedRating', 'genres', 'convertedDate',
             'selectedCountry','castInfo', 'characters', 'directors', 'writers',
-            'producers', 'movieAlbum']));
+            'producers', 'movieAlbum', 'cast', 'crew']));*/
+
+        return view('/admin/showMovie', compact(['movie', 'selectedGenre',
+            'countries', 'ratings', 'selectedRating', 'genres', 'convertedDate',
+            'selectedCountry', 'movieAlbum', 'cast', 'crew']));
     }
 
     /**
