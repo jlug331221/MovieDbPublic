@@ -76,23 +76,54 @@
 
                 <table class="table table-responsive table-hover">
                     <thead>
-                    <tr><th>Picture</th><th>Name</th><th></th><th>Role</th></tr>
+                    <tr>
+                        <th style="text-align: center">Picture</th>
+                        <th style="text-align: left">Name</th><th></th>
+                        <th style="text-align: left">Role</th>
+                    </tr>
                     </thead>
                     <tbody>
                     <tr class="clickable" data-toggle="collapse" id="row1" data-target=".row1">
-                        <td><img src="http://popwrapped.com/wp-content/uploads/2015/07/o-ARNOLD-SCHWARZENEGGER-ILL-BE-BACK-facebook.jpg" width="35" height="50"></td>
-                        <td>{{$firstPerson->first_name}} {{$firstPerson->last_name}}</td>
-                        <td>...</td>
-                        <td>{{$firstPersonRole->name}}</td>
+                        <td align ="center">
+                            @if($firstPersonCast->default === null)
+                                <img src="http://popwrapped.com/wp-content/uploads/2015/07/o-ARNOLD-SCHWARZENEGGER-ILL-BE-BACK-facebook.jpg"
+                                     class="img-responsive center-block"
+                                     style="height:85px;">
+                            @else
+                                <img src="{{ url($firstPersonCast->path . '/thumbs/'
+                                        . $firstPersonCast->name . '.'
+                                        . $firstPersonCast->extension)}}"
+                                     class="img-responsive center-block"
+                                     style="height: 85px;">
+                            @endif
+                        </td>
+                        <td>{{$firstPersonCast->first_name}} {{$firstPersonCast->last_name}}</td>
+                        <td align="left">...</td>
+                        <td align="left">
+                            {{$firstPersonRole->name}}
+                        </td>
                     </tr>
-
-                    @foreach(array_combine($castArray, $characterArray) as $cast => $character)
-                            <tr class="collapse row1">
-                                <td><img src="http://vignette4.wikia.nocookie.net/planetterror/images/f/f4/Michael...jpeg/revision/latest?cb=20140220162656" width="35" height="50"></td>
-                                <td>{{$cast->first_name}} {{$cast->last_name}}</td>
-                                <td>...</td>
-                                <td>{{$character->name}}</td>
-                            </tr>
+                    @foreach($newCastCollection as $cast)
+                        <tr class="collapse row1">
+                            <td align ="center">
+                                @if($cast->default === null)
+                                    <img src="http://popwrapped.com/wp-content/uploads/2015/07/o-ARNOLD-SCHWARZENEGGER-ILL-BE-BACK-facebook.jpg"
+                                         class="img-responsive center-block"
+                                         style="height:85px;">
+                                @else
+                                    <img src="{{ url($cast->path . '/thumbs/'
+                                        . $cast->name . '.'
+                                        . $cast->extension)}}"
+                                         class="img-responsive center-block"
+                                         style="height: 85px;">
+                                @endif
+                            </td>
+                            <td>{{$cast->first_name}} {{$cast->last_name}}</td>
+                            <td align="left">...</td>
+                            <td align="left">
+                                {{$cast->name}}
+                            </td>
+                        </tr>
                     @endforeach
                     </tbody>
                 </table>
@@ -100,8 +131,83 @@
         </div>
         <!-- /.row -->
 
-        <!-- Fourth Row -->
+        <!-- Fourth row -->
         <div class="row MoviePage__Fourth">
+
+            <div class="col-lg-12">
+                <h3 class="page-header">The Crew
+                    <small class="MoviePage__tableInfo">(Click to expand/collapse)</small>
+                </h3>
+            </div>
+
+            <div class="col-md-12 MoviePage__crew">
+                <table class="table table-responsive table-hover">
+                    <thead>
+                    <tr>
+                        <th style="text-align: center">Picture</th>
+                        <th style="text-align: left">Name</th><th></th>
+                        <th style="text-align: left">Title</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="clickable" data-toggle="collapse" id="row1A" data-target=".row1A">
+                        <td align ="left">
+                            @if($firstPersonCrew->default === null)
+                                <img src="http://popwrapped.com/wp-content/uploads/2015/07/o-ARNOLD-SCHWARZENEGGER-ILL-BE-BACK-facebook.jpg"
+                                     class="img-responsive center-block"
+                                     style="height:85px;">
+                            @else
+                                <img src="{{ url($firstPersonCrew->path . '/thumbs/'
+                                        . $firstPersonCrew->name . '.'
+                                        . $firstPersonCrew->extension)}}"
+                                     class="img-responsive center-block"
+                                     style="height: 85px;">
+                            @endif
+                        </td>
+                        <td>{{$firstPersonCrew->first_name}} {{$firstPersonCrew->last_name}}</td>
+                        <td align="left">...</td>
+                        <td align="left">
+                            @if($firstPersonCrew->type === 'Crew')
+                                {{$firstPersonCrew->remark}}
+                            @else
+                                {{$firstPersonCrew->type}}
+                            @endif
+                        </td>
+                    </tr>
+                    @foreach($newCrewCollection as $crew)
+                        <tr class="collapse row1A">
+                            <td align ="center">
+                                @if($crew->default === null)
+                                    <img src="http://popwrapped.com/wp-content/uploads/2015/07/o-ARNOLD-SCHWARZENEGGER-ILL-BE-BACK-facebook.jpg"
+                                         class="img-responsive center-block"
+                                         style="height:85px;">
+                                @else
+                                    <img src="{{ url($crew->path . '/thumbs/'
+                                        . $crew->name . '.'
+                                        . $crew->extension)}}"
+                                        class="img-responsive center-block"
+                                        style="height: 85px;">
+                                @endif
+                            </td>
+                            <td>{{$crew->first_name}} {{$crew->last_name}}</td>
+                            <td align="left">...</td>
+                            <td align="left">
+                                @if($crew->type === 'Crew')
+                                    {{$crew->remark}}
+                                @else
+                                    {{$crew->type}}
+                                @endif
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- /.row -->
+
+        <!-- Fifth Row -->
+        <div class="row MoviePage__Fifth">
 
             <div class="col-lg-12">
                 <h3 class="page-header">Reviews</h3>
@@ -113,8 +219,8 @@
         </div>
         <!-- /.row -->
 
-        <!-- Fifth Row -->
-        <div class="row MoviePage__Fifth">
+        <!-- Sixth Row -->
+        <div class="row MoviePage__Sixth">
 
             <div class="col-lg-12">
                 <h3 class="page-header">Discussions</h3>

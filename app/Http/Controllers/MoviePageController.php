@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -10,6 +11,8 @@ use App\Movie;
 use App\Person;
 use App\Credit;
 use App\Character;
+use App\Album;
+use App\CreditType;
 
 class MoviePageController extends Controller
 {
@@ -20,34 +23,43 @@ class MoviePageController extends Controller
 
     public function showMovie($id)
     {
-        $castArray = [];
-        $characterArray = [];
-
         $movie = Movie::find($id);
         $year = date("Y", strtotime($movie->release_date));
         $newDate = date("F d, Y", strtotime($movie->release_date));
+        $movieAlbum = Album::find($movie->album)->images;
 
-        //credit_type_id needs to be static for the query? How are we structuring this?
         $creditDirector = Movie::find($id)->credits->where('credit_type_id', 1)->first();
         $directorID = $creditDirector->person_id;
         $director = Person::find($directorID);
 
-        $peopleCollection = Movie::find($id)->credits;
+        $castCollection = DB::table('movies')
+            ->join('credits', 'id', '=', 'movie_id')
+            ->join('people', 'person_id', '=', 'people.id')
+            ->join('albums', 'people.album', '=', 'albums.id')
+            ->join('credit_types', 'credits.credit_type_id', '=', 'credit_types.id')
+            ->leftJoin('images', 'albums.default', '=', 'images.id')
+            ->join('characters', 'character_id', '=', 'characters.id')
+            ->where('movie_id', '=', $movie->id)
+            ->where('type', '=', 'Cast')
+            ->get();
 
-        //First Person of cast table information
-        $firstPerson = Person::find($peopleCollection->first()->person_id);
-        $firstPersonCredit = Credit::where('person_id', $firstPerson->id)->first();
-        $firstPersonRole = Character::find($firstPersonCredit->character_id);
+        $crewCollection = DB::table('movies')
+            ->join('credits', 'id', '=', 'movie_id')
+            ->join('people', 'person_id', '=', 'people.id')
+            ->join('albums', 'people.album', '=', 'albums.id')
+            ->join('credit_types', 'credits.credit_type_id', '=', 'credit_types.id')
+            ->leftJoin('images', 'albums.default', '=', 'images.id')
+            ->where('movie_id', '=', $movie->id)
+            ->where('type', '!=', 'Cast')
+            ->get();
 
-        //Rest of people in cast table
-        $newCollection = $peopleCollection->slice(1)->all();
-        for ($i = 1; $i <= count($newCollection); $i++)
-        {
-            $castArray[$i] = Person::find($newCollection[$i]->person_id);
-            $characterArray[$i] = Character::find($newCollection[$i]->character_id);
-        }
+        $newCastCollection = array_slice($castCollection, 1);
+        $newCrewCollection = array_slice($crewCollection, 1);
+        $firstPersonCast = $castCollection[0];
+        $firstPersonRole = Character::find($firstPersonCast->character_id);
+        $firstPersonCrew = $crewCollection[0];
 
-        return view('/movies/movie', compact(['movie', 'year', 'newDate', 'director', 'firstPerson', 'firstPersonRole', 'castArray', 'characterArray']));
+        return view('/movies/movie', compact(['movie', 'year', 'newDate', 'director', 'firstPersonCast', 'firstPersonRole', 'newCastCollection',
+                    'firstPersonCrew', 'newCrewCollection']));
     }
-
 }
