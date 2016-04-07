@@ -19,8 +19,6 @@ $(function () {
     $('#MenubarSearch__input').suggest({
         searchKey: 'title',
         identifier: 'MenubarSearch',
-        minLength: 1,
-        rateLimit: 0,
         template: function(suggestion) {
             return `<div class="MenubarSearch__suggestion">
                         <img src="${suggestion.imgpath}/thumbs/${suggestion.imgname}.${suggestion.imgext}">
@@ -29,6 +27,7 @@ $(function () {
         },
         remoteUrl: '/search/suffix/WILDCARD',
         remoteWildcard: 'WILDCARD',
+        maxSuggestions: 6,
     });
 
     $('#AdvSearch__datepicker_from').datepicker({});
@@ -37,34 +36,6 @@ $(function () {
     $('#AdvSearch__datepicker_from2').datepicker({});
     $('#AdvSearch__datepicker_to2').datepicker({});
 
-    $('#jsonTest-submit-post').on('click', function() {
-        var content = $('#jsonTest-input-post').val();
-        $.ajax({
-           type: 'POST',
-            url: '/search/suffix',
-            data: { 'term': content },
-            success: function(response) {
-                console.log(response);
-            },
-            error: function(xhr) {
-                console.log('failure: ', xhr);
-            }
-        });
-    });
-
-    $('#jsonTest-submit-get').on('click', function() {
-        var query = $('#jsonTest-input-get').val();
-        $.ajax({
-            type: 'GET',
-            url: '/search/suffix/' + query,
-            success: function(response) {
-                console.log(response);
-            },
-            error: function(xhr) {
-                console.log('failure: ', xhr);
-            }
-        });
-    });
 });
 
 

@@ -57,11 +57,8 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('/search/movie', 'SearchController@post_advancedMovie');
     Route::get('/search/person', 'SearchController@get_advancedPerson');
     Route::post('/search/person', 'SearchController@post_advancedPerson');
-    Route::get('/search/jsonTest', 'SearchController@get_jsonTest'); // temp
     Route::get('/search/suffix/{term}', 'SearchController@get_suffixSearch_json');
     Route::post('/search/suffix', 'SearchController@post_suffixSearch_json');
-    Route::get('/search/mock', 'SearchController@get_mockSearch_json'); // temp
-    Route::get('/search/mock/{query}', 'SearchController@get_mockSearchInput_json'); // temp
 
     // Review Routes
     Route::get('/reviews/create/{mid}', 'ReviewController@create');
@@ -73,11 +70,12 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/reviews/test/', 'ReviewController@testComponent');
     Route::get('/reviews/delete/{rid}', 'ReviewController@deleteReview');
 
-    // Image Routes
+    // Image Routes // all routes here are temporary, only created as examples for how to use components
     Route::get('/images/create', 'ImagesController@create');
     Route::post('/images/store', 'ImagesController@store');
     Route::get('/images/delete/{name}', 'ImagesController@delete');
     Route::get('/images/discard/{name}', 'ImagesController@discard');
+    Route::get('/album/partial/{id}', 'ImagesController@albumPartial'); 
 
     //Movie page routes
     Route::get('/movies/movie', 'MoviePageController@moviePage');
