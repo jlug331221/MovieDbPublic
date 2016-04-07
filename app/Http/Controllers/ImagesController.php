@@ -184,4 +184,11 @@ class ImagesController extends Controller {
 
         return redirect()->action('ImagesController@create');
     }
+
+    public function albumPreview($id)
+    {
+        $album = Movie::find($id)->album()->firstOrFail();
+        $maxImages = 10;
+        return view('images/albumPreview', compact('album', 'maxImages'));
+    }
 }

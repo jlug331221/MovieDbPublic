@@ -6,16 +6,21 @@ var $ = require('jquery');
 var bootstrap = require('bootstrap');
 var moment = require('moment');
 var datepicker = require('bootstrap-datepicker');
+var lightbox = require('lightbox2');
 var suggest = require('./suggest.js');
 
 $(function () {
 
+    // Set up jQuery ajax headers to allow POSTing ajax data using csrf tokens.
+    // This is a global setting and only needs to be applied once.
+    // Note that the page must have a meta tag including a generated csrf token.
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
 
+    // Set up the menu bar search suggestions.
     $('#MenubarSearch__input').suggest({
         searchKey: 'title',
         identifier: 'MenubarSearch',
@@ -30,11 +35,14 @@ $(function () {
         maxSuggestions: 6,
     });
 
+    // Set up the datepickers for the advanced search pages.
     $('#AdvSearch__datepicker_from').datepicker({});
     $('#AdvSearch__datepicker_to').datepicker({});
-
     $('#AdvSearch__datepicker_from2').datepicker({});
     $('#AdvSearch__datepicker_to2').datepicker({});
+
+    // Set up bootstrap tooltips. This is opt-in and must be enabled here explicitely.
+    $('[data-toggle="tooltip"]').tooltip();
 
 });
 

@@ -4,6 +4,9 @@
 /** Bootstrap Datepicker */
 @import url(https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/css/bootstrap-datepicker.min.css);
 
+/** Lightbox2 */
+@import url(https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.2/css/lightbox.min.css);
+
 /** Import google fonts: Roboto Slab, Open Sans, & Lato */
 @import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css);
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,400italic,700,700italic,500,500italic|Lato:400,400italic,700,700italic|Open+Sans:400,400italic,700,700italic,600,600italic);
@@ -13,12 +16,13 @@ $lato: 'Lato', sans-serif;
 
 
 /** Component Imports */
-
+@import "components/MenubarSearch";
+@import "components/AlbumPreview";
 
 
 /** Page Imports */
-@import "pages/search/searchWidget";
-@import "pages/search/advsearch";
+// @import "pages/search/searchWidget"; // this doesn't exist yet -- can't compile
+@import "pages/search/AdvSearch";
 @import "pages/movies/moviepage";
 @import "pages/landing/landing";
 @import "pages/userpage/userpage";
@@ -32,54 +36,6 @@ $lato: 'Lato', sans-serif;
 body {
   font-family: $lato;
   padding-bottom: 75px;
-}
-
-#MenubarSearch__input {
-    border-radius: 4px 0px 0px 4px;
-    border-right-style: none;
-    box-shadow: 0px 0px 0px #fff;
-    font-size: 17px;
-    font-family: $open-sans;
-}
-
-#MenubarSearch__input:focus {
-    box-shadow: 0px 0px 0px #fff;
-    border: 1px solid #6DA2FF;
-}
-
-#MenubarSearch__submit {
-    border-radius: 0px 4px 4px 0px;
-    border-left-style: none;
-    font-size: 18px;
-    color: #565656;
-    box-shadow: 0px 0px 0px #fff;
-}
-
-#MenubarSearch__content-wrapper {
-    padding: 10px;
-}
-
-#MenubarSearch__content {
-    display: flex;
-    justify-content: center;
-
-    p {
-        margin-bottom: 5px;
-    }
-}
-
-.MenubarSearch__suggestion {
-    display: flex;
-    flex-direction: column;
-    max-width: 125px;
-    font-size: 15px;
-    margin-left: 2px;
-    margin-right: 2px;
-
-    img {
-        height: 175px;
-        margin-bottom: 4px;
-    }
 }
 
 .searchWidget__center {

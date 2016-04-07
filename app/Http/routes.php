@@ -79,7 +79,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/images/destroyPersonImage/person/{pid}/image/{imgId}', 'ImagesController@destroyPersonImage');
     Route::get('/images/delete/{name}', 'ImagesController@delete');
     Route::get('/images/discard/{name}', 'ImagesController@discard');
-    Route::get('/album/partial/{id}', 'ImagesController@albumPartial'); 
+    Route::get('/album/preview/{id}', 'ImagesController@albumPreview'); 
 
     //Movie page routes
     Route::get('/movies/movie', 'MoviePageController@moviePage');

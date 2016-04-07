@@ -1,0 +1,30 @@
+
+.AlbumPreview {
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+}
+
+.AlbumPreview__links {
+  margin-left: 5px;
+  margin-bottom: 4px;
+  
+  i {
+    margin-right: 4px;
+  }
+}
+
+.AlbumPreview__content {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.AlbumPreview__thumb {
+  border: 1px solid #B1B1B1;
+  margin: 3px 3px 3px 3px;
+  
+  img {
+    height: 175px;
+    display: block;
+  }
+}
