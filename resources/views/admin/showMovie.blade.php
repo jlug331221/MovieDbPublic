@@ -119,13 +119,14 @@
             </div>
 
             <div class="col-md-6 col-lg-6">
-                <div class="col-md-6 col-lg-6">
+                <div class="col-md-8 col-lg-8">
                     @if($movieAlbum->first() === null)
                         {!! Html::image('http://masterherald.com/wp-content/uploads/2015/01/arnold-schwarzenegger.jpg',
-                        'arnold_image', array('width' => '100%', 'height' => 'auto')) !!}
+                        'arnold_image', array('width' => '100%', 'height' => 'auto')) !!} <br/>
+                        <h3>Arnold is wondering why this movie has no images</h3>
                     @else
                         <img src="{{ url($movieAlbum->first()->getPath()) }}" class="img-responsive"
-                             style="width: 350px; height: 550px;">
+                             style="width: 100%; height: auto;">
                     @endif
                 </div>
             </div>
@@ -161,6 +162,14 @@
 
         <div class="row">
             <div class="col-md-12 col-lg-12">
+                @if (Session::has('removeCastCrewMessage'))
+                    <div class="alert alert-danger">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                            &times;
+                        </button>
+                        {{ Session::get('removeCastCrewMessage') }}
+                    </div>
+                @endif
                 <div class="col-md-6 col-lg-6">
                     <h2>Cast |
                         <a href="#">
@@ -196,7 +205,9 @@
                                     </td>
 
                                     <td align="center">
-                                        {{ $c->first_name }} {{ $c->last_name }}
+                                        <a href="{{ url('/admin/showPerson/' . $c->person_id) }}">
+                                            {{ $c->first_name }} {{ $c->last_name }}
+                                        </a>
                                     </td>
 
                                     <td align="center">
@@ -204,8 +215,8 @@
                                     </td>
 
                                     <td align="center">
-                                        Remove Cast Member |
-                                        <a href="#">
+                                        <a href="{{ url('/admin/removeCastCrew/' . $c->person_id
+                                            . '/' . $c->movie_id . '/' . $c->credit_type_id) }}">
                                             <i class="fa fa-trash fa-lg" style="margin-top: 10px;"></i>
                                         </a>
                                     </td>
@@ -249,13 +260,17 @@
                                         @endif
                                     </td>
 
-                                    <td align="center">{{ $c->first_name }} {{ $c->last_name }}</td>
+                                    <td align="center">
+                                        <a href="{{ url('/admin/showPerson/' . $c->person_id) }}">
+                                            {{ $c->first_name }} {{ $c->last_name }}
+                                        </a>
+                                    </td>
 
                                     <td align="center">{{ $c->type }}</td>
 
                                     <td align="center">
-                                        Remove Crew Member |
-                                        <a href="#">
+                                        <a href="{{ url('/admin/removeCastCrew/' . $c->person_id
+                                            . '/' . $c->movie_id . '/' . $c->credit_type_id) }}">
                                             <i class="fa fa-trash fa-lg" style="margin-top: 10px;"></i>
                                         </a>
                                     </td>

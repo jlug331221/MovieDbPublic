@@ -138,13 +138,14 @@
             </div>
 
             <div class="col-md-6 col-lg-6">
-                <div class="col-md-6 col-lg-6">
+                <div class="col-md-8 col-lg-8">
                     @if($personAlbum->first() === null)
                         {!! Html::image('http://masterherald.com/wp-content/uploads/2015/01/arnold-schwarzenegger.jpg',
-                        'arnold_image', array('width' => '100%', 'height' => 'auto')) !!}
+                        'arnold_image', array('width' => '100%', 'height' => 'auto')) !!} <br/>
+                        <h3>Arnold is wondering why this person has no images</h3>
                     @else
                         <img src="{{ url($personAlbum->first()->getPath()) }}" class="img-responsive"
-                            style="width: 350px; height: 550px;">
+                            style="width: 100%; height: auto;">
                     @endif
                 </div>
             </div>

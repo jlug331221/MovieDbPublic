@@ -43,6 +43,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/admin/showPerson/{id}', 'AdminController@showPerson');
     Route::put('/admin/updatePerson/{id}', 'AdminController@updatePerson');
     Route::get('/admin/deletePerson/{id}', 'AdminController@destroyPerson');
+    Route::get('/admin/removeCastCrew/{pid}/{mid}/{cTypeId}', 'AdminController@removeCastCrew');
     Route::get('/admin/createMovie', 'AdminController@createMovie');
     Route::post('/admin/createMovie', 'AdminController@storeMovie');
     Route::get('/admin/createPerson', 'AdminController@createPerson');

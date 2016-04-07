@@ -393,4 +393,18 @@ class AdminController extends Controller
         Session::flash('message', 'Successfully updated person in database!');
         return redirect()->action('AdminController@showPeople');
     }
+
+    public function removeCastCrew($pid, $mid, $cTypeId) {
+        $movie = Movie::find($mid);
+        $person = Person::find($pid);
+        $creditType = CreditType::find($cTypeId);
+        DB::table('credits')->where('movie_id', $mid)
+            ->where('person_id', $pid)
+            ->where('credit_type_id', $cTypeId)
+            ->delete();
+
+        Session::flash('removeCastCrewMessage', "Successfully removed " . $person->first_name
+            . ' ' . $person->last_name . " as " . $creditType->type . " from " . $movie->title);
+        return redirect('admin/showMovie/' . $movie->id);
+    }
 }
