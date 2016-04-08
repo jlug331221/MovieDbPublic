@@ -189,6 +189,13 @@ class ImagesController extends Controller {
     {
         $album = Movie::find($id)->album()->firstOrFail();
         $maxImages = 10;
-        return view('images/albumPreview', compact('album', 'maxImages'));
+        return view('albums/albumPreview', compact('album', 'maxImages'));
+    }
+
+    public function album($id)
+    {
+        $movie = Movie::find($id);
+        $album = $movie->album()->firstOrFail();
+        return view('albums/album', compact('movie', 'album'));
     }
 }

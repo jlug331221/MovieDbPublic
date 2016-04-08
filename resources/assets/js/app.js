@@ -25,9 +25,18 @@ $(function () {
         searchKey: 'title',
         identifier: 'MenubarSearch',
         template: function(suggestion) {
+            var path;
+            if (suggestion.imgname !== null)
+                path = suggestion.imgpath + '/thumbs/' + suggestion.imgname + '.' + suggestion.imgext;
+            else
+                path = '/static/null_movie_125_175.png';
+
             return `<div class="MenubarSearch__suggestion">
-                        <img src="${suggestion.imgpath}/thumbs/${suggestion.imgname}.${suggestion.imgext}">
-                        <a href="#">${suggestion.title}</a>
+                        <a href="/movies/${suggestion.id}">
+                            <img src="${path}">
+                            ${suggestion.title}
+                        </a>
+                        <p>(${suggestion.date.substr(0, 4)})</p>
                     </div>`;
         },
         remoteUrl: '/search/suffix/WILDCARD',

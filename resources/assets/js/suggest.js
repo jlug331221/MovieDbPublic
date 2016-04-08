@@ -172,6 +172,9 @@
                 if (query.length >= settings.minLength) {
                     var numSuggestions = repopSuggestions();
                     if (numSuggestions < settings.maxSuggestions) {
+                        frame.content.append(`<div style='font-size:1.5em;margin:10px;display:flex;align-items:center'>
+                                                <i class="fa fa-circle-o-notch fa-spin"></i>
+                                              </div>`);
                         var url = replaceWildcard(settings.remoteUrl, settings.remoteWildcard, query);
                         remoteFetch(url, true);
                     }
@@ -194,7 +197,7 @@
                     i++;
                     if (i > settings.maxSuggestions) break;
                 }
-            } else frame.content.append('No results found');
+            } 
 
             return hits.length;
         }
@@ -209,8 +212,11 @@
                 }).then(
                     (result) => {
                         data = union(data, result);
-                        if (repop && query)
-                            repopSuggestions();
+                        if (repop && query) {
+                            var hits = repopSuggestions();
+                            if (hits === 0)
+                                frame.wrapper.removeClass('open');
+                        }
                     },
                     (xhr) => { console.error(`Suggest Remote Error: GET ${url} ${xhr.status} ${xhr.statusText}`); }
                 ).catch(

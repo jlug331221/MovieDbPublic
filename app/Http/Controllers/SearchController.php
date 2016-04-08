@@ -150,8 +150,8 @@ class SearchController extends Controller {
                 'images.path AS imgpath', 
                 'images.extension AS imgext')
             ->distinct('movies.id')
-            ->join('albums', 'albums.id', '=', 'movies.album')
-            ->join('images', 'albums.default', '=', 'images.id')
+            ->join('albums', 'movies.album', '=', 'albums.id')
+            ->leftJoin('images', 'albums.default', '=', 'images.id')
             ->join('movie_suffixes', function ($join) use ($term) { 
                 $join->on('movies.id', '=', 'movie_suffixes.movie_id')
                      ->where('movie_suffixes.title_suffix', 'LIKE', $term.'%'); 

@@ -81,6 +81,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/images/delete/{name}', 'ImagesController@delete');
     Route::get('/images/discard/{name}', 'ImagesController@discard');
     Route::get('/album/preview/{id}', 'ImagesController@albumPreview'); 
+    Route::get('/album/{id}', 'ImagesController@album');
 
     //Movie page routes
     Route::get('/movies/movie', 'MoviePageController@moviePage');

@@ -13,8 +13,6 @@
     <div class="AlbumPreview__content">
         @for($i = 0; $i < $maxImages and $i < $images->count(); $i++)
             <div class="AlbumPreview__thumb" 
-                 data-toggle="tooltip" 
-                 data-placement="bottom" 
                  title="{{ $images->get($i)->description }}">
                 <a href="{{ $images->get($i)->getPath() }}"
                    data-lightbox="{{ $album->id }}"

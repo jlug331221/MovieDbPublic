@@ -1,0 +1,39 @@
+
+.Album {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.Album__header {
+    display: flex;
+    align-items: flex-start;
+}
+
+.Album__header--default-img {
+    margin-right: 8px;
+    margin-left: 2px;
+
+    img {
+        height: 100px;
+    }
+}
+
+.Album__header--text {
+    display: flex;
+    flex-direction: column;
+}
+
+.Album__header--title {
+    font-size: 2em;
+    margin-right: 7px;
+}
+
+.Album__header--date {
+    font-size: 1.3em;
+    color: grey;
+}
+
+.Album__separator {
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
