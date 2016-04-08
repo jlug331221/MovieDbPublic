@@ -56,10 +56,9 @@ class SearchController extends Controller {
 
         $movies = DB::table('movies');
         if ($params['name']) {
-            $movies->whereIn('id', function ($query) use ($params) {
-                $query->select('movie_id')
-                    ->from('movie_suffixes')
-                    ->whereRaw("title_suffix LIKE '" . $params['name'] . "%'");
+            $movies->join('movie_suffixes', function($join) use ($params) {
+                $join->on('movies.id', '=', 'movie_suffixes.movie_id')
+                    ->where('movie_suffixes.title_suffix', 'LIKE', $params['name'].'%');
             });
         }
         if ($params['genre']) {
@@ -67,11 +66,11 @@ class SearchController extends Controller {
         }
         if ($params['date-start']) {
             $date_start = date('Y-m-d', strtotime($params['date-start']));
-            $movies->where('release_date', '>', $date_start);
+            $movies->where('release_date', '>=', $date_start);
         }
         if ($params['date-end']) {
             $date_end = date('Y-m-d', strtotime($params['date-end']));
-            $movies->where('release_date', '<', $date_end);
+            $movies->where('release_date', '<=', $date_end);
         }
         if ($params['countries']) {
             $movies->whereIn('country', $params['countries']);
@@ -80,10 +79,10 @@ class SearchController extends Controller {
             $movies->whereIn('parental_rating', $params['rating']);
         }
         if ($params['runtime-min']) {
-            $movies->where('runtime', '>', $params['runtime-min']);
+            $movies->where('runtime', '>=', $params['runtime-min']);
         }
         if ($params['runtime-max']) {
-            $movies->where('runtime', '<', $params['runtime-max']);
+            $movies->where('runtime', '<=', $params['runtime-max']);
         }
         if ($params['keyword']) {
             $keywords = preg_replace("/[^A-Za-z0-9 ]/", '', $params['keyword']);
@@ -95,7 +94,7 @@ class SearchController extends Controller {
         }
 
         $movies = $movies->get();
-        return view('search.search', compact('movies'));
+        return view('search.searchPage', compact('movies'));
     }
 
     public function get_advancedPerson()
@@ -116,7 +115,62 @@ class SearchController extends Controller {
             'keyword'             => $request->input('keyword'),
         ];
 
-        return explode(' ', $params['name']);
+        $nameTokens = explode(' ', $params['name']);
+
+        $people = DB::table('people');
+        $people->select('people.id', 
+                        'people.first_name', 
+                        'people.middle_name', 
+                        'people.last_name',
+                        'people.first_alias',
+                        'people.middle_alias',
+                        'people.last_alias',
+                        'people.country_of_origin',
+                        'people.date_of_birth',
+                        'people.date_of_death',
+                        'people.biography',
+                        'people.album');
+        $people->distinct('people.id');
+        if ($nameTokens) {
+            $people->join('person_suffixes', function($join) use ($nameTokens) {
+                $join->on('people.id', '=', 'person_suffixes.person_id');
+                array_map(function($name) use ($join) {
+                    $join->orWhere('person_suffixes.name_suffix', 'LIKE', $name.'%');
+                }, $nameTokens);
+            });
+        }
+        if ($params['date-of-birth-start']) {
+            $dob_start = date('Y-m-d', strtotime($params['date-of-birth-start']));
+            $people->where('date_of_birth', '>=', $dob_start);
+        }
+        if ($params['date-of-birth-end']) {
+            $dob_end = date('Y-m-d', strtotime($params['date-of-birth-end']));
+            $people->where('date_of_birth', '<=', $dob_end);
+        }
+        if ($params['date-of-death-start']) {
+            $dod_start = date('Y-m-d', strtotime($params['date-of-death-start']));
+            $people->where('date_of_death', '>=', $dod_start);
+        }
+        if ($params['date-of-death-end']) {
+            $dod_end = date('Y-m-d', strtotime($params['date-of-death-end']));
+            $people->where('date_of_death', '<=', $dod_end);
+        }
+        if ($params['countries']) {
+            $people->whereIn('country_of_origin', $params['countries']);
+        }
+        if ($params['keyword']) {
+            $keywords = preg_replace("/[^A-Za-z0-9 ]/", '', $params['keyword']);
+            // $people->whereRaw("MATCH(first_name, middle_name, last_name, first_alias, middle_alias, last_alias, biography) AGAINST('$keywords')");
+
+            $people->whereIn('people.id', function ($query) use ($keywords) {
+                $query->select('id')
+                    ->from('people')
+                    ->whereRaw("MATCH(first_name, middle_name, last_name, first_alias, middle_alias, last_alias, biography) AGAINST('$keywords')");
+            });
+        }
+
+        $people = $people->get();
+        return view('search.searchPage', compact('people'));
     }
 
     public function post_suffixSearch_json(Request $request)
