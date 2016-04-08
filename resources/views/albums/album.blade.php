@@ -33,21 +33,12 @@
 
         <hr class="Album__separator"/>
 
-        <div class="Album">
-            @foreach ($images as $image)
-                @if (! ($image->id === $album->default))
-                    <div class="AlbumPreview__thumb" 
-                         title="{{ $image->description }}">
-                        <a href="{{ $image->getPath() }}"
-                           data-lightbox="{{ $album->id }}"
-                           data-title="{{ $image->description }}">
-                            <img src="{{ $image->getThumbPath() }}">
-                        </a>
-                    </div>
-                @endif
-            @endforeach
-        </div>
+        <div class="Album" data-id="{{ $movie->id }}"></div>
 
+<!--         <div class="Album__loader-row">
+            <button class="Album__loader btn btn-default">Load More</button>
+        </div>
+ -->
     </div>
 
 @stop

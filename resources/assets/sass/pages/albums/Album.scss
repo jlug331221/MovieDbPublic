@@ -37,3 +37,22 @@
     margin-top: 12px;
     margin-bottom: 12px;
 }
+
+.Album__loader {
+    font-size: 1.4em;
+    font-style: oblique;
+    margin: 10px;
+    width: 135px;
+}
+
+.Album__loader:hover {
+    border-color: #6DA2FF;
+    background-color: #1E6BF3;
+    color: white;
+    align-self: center;
+}
+
+.Album__loader-row {
+    display: flex;
+    justify-content: center;
+}

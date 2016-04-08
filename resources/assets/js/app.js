@@ -8,6 +8,8 @@ var moment = require('moment');
 var datepicker = require('bootstrap-datepicker');
 var lightbox = require('lightbox2');
 var suggest = require('./suggest.js');
+var albumloader = require('./albumloader.js');
+
 
 $(function () {
 
@@ -52,6 +54,11 @@ $(function () {
 
     // Set up bootstrap tooltips. This is opt-in and must be enabled here explicitely.
     $('[data-toggle="tooltip"]').tooltip();
+
+    // Set up album image loading.
+    $('.Album').albumloader({
+        url: '/album/json/' + $('.Album').data('id'),
+    });
 
 });
 
