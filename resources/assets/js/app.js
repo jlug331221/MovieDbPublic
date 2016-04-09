@@ -24,22 +24,33 @@ $(function () {
 
     // Set up the menu bar search suggestions.
     $('#MenubarSearch__input').suggest({
-        searchKey: 'title',
+        searchKey: 'name',
         identifier: 'MenubarSearch',
         template: function(suggestion) {
             var path;
-            if (suggestion.imgname !== null)
-                path = suggestion.imgpath + '/thumbs/' + suggestion.imgname + '.' + suggestion.imgext;
-            else
-                path = '/static/null_movie_125_175.png';
 
-            return `<div class="MenubarSearch__suggestion">
-                        <a href="/movies/${suggestion.id}">
-                            <img src="${path}">
-                            ${suggestion.title}
-                        </a>
-                        <p>(${suggestion.date.substr(0, 4)})</p>
-                    </div>`;
+            if (suggestion.type === 'm') {
+                return `<div class="MenubarSearch__suggestion">
+                            <a href="/movies/${suggestion.id}">
+                                <img src="${suggestion.img}">
+                                ${suggestion.name}
+                            </a>
+                            <p>(${suggestion.year})</p>
+                        </div>`;
+            } else {
+                var html = `<div class="MenubarSearch__suggestion">
+                                <a href="/people/${suggestion.id}">
+                                    <img src="${suggestion.img}">
+                                    ${suggestion.name}
+                                </a>`;
+                if (suggestion.yob)
+                    html += `<p>Born ${suggestion.yob}</p>`;
+                if (suggestion.yod)
+                    html += `<p>Died ${suggestion.yod}</p>`;
+                html += `</div>`;
+                return html;
+            }
+
         },
         remoteUrl: '/search/suffix/WILDCARD',
         remoteWildcard: 'WILDCARD',
@@ -58,6 +69,7 @@ $(function () {
     // Set up album image loading.
     $('.Album').albumloader({
         url: '/album/json/' + $('.Album').data('id'),
+        imagesPerLoad: 24,
     });
 
 });

@@ -120,6 +120,9 @@
         /** @type {Boolean} Whether a remote request can be sent */
         var remoteReady = true;
 
+        /** @type {Boolean} Whether the frame currently has any suggestions */
+        var hasSuggestions = false;
+
         if (settings.prefetchUrl) 
             remoteFetch(settings.prefetchUrl, false);
 
@@ -134,7 +137,7 @@
          * display suggestions.
          */
         frame.input.on('focusin', function() {
-            if (query)
+            if (query && hasSuggestions)
                 frame.wrapper.addClass('open');
         });
 
@@ -191,13 +194,17 @@
             var hits = filter(data, settings.searchKey, regexp);
 
             if (hits.length > 0) {
+                hasSuggestions = true;
                 var i = 1;
                 for (let hit of hits) {
+                    console.log(settings.template.call(this, data[hit]));
                     frame.content.append(settings.template.call(this, data[hit]));
                     i++;
                     if (i > settings.maxSuggestions) break;
                 }
-            } 
+            } else {
+                hasSuggestions = false;
+            }
 
             return hits.length;
         }

@@ -160,7 +160,6 @@ class SearchController extends Controller {
         }
         if ($params['keyword']) {
             $keywords = preg_replace("/[^A-Za-z0-9 ]/", '', $params['keyword']);
-            // $people->whereRaw("MATCH(first_name, middle_name, last_name, first_alias, middle_alias, last_alias, biography) AGAINST('$keywords')");
 
             $people->whereIn('people.id', function ($query) use ($keywords) {
                 $query->select('id')
@@ -173,32 +172,22 @@ class SearchController extends Controller {
         return view('search.searchPage', compact('people'));
     }
 
-    public function post_suffixSearch_json(Request $request)
-    {
-        // get search term and remove non-alpha-numeric characters
-        $term = $request->get('term');
-        $term = preg_replace("/[^A-Za-z0-9 ]/", '', $term);
-
-        // get id, title, and release date for movies where the
-        // search term matches a movie title suffix
-        return DB::table('movies')
-            ->select('id', 'title', 'release_date')
-            ->whereIn('id', function ($query) use ($term) {
-                $query->select('movie_id')
-                    ->from('movie_suffixes')
-                    ->whereRaw("title_suffix LIKE '" . $term . "%'");
-            })
-            ->get();
-    }
-
     public function get_suffixSearch_json($term)
     {
         // get search term and remove non-alpha-numeric characters
         $term = preg_replace("/[^A-Za-z0-9 ]/", '', $term);
-        
-        return DB::table('movies')
+
+        $people = $this->searchPeopleByTerm($term);
+        $movies = $this->searchMoviesByTerm($term);
+
+        return array_merge($movies, $people);
+    }
+
+    private function searchMoviesByTerm($term)
+    {
+        $results = DB::table('movies')
             ->select('movies.title AS title', 
-                'movies.id',
+                'movies.id AS id',
                 'movies.release_date AS date',
                 'images.name AS imgname', 
                 'images.path AS imgpath', 
@@ -211,6 +200,76 @@ class SearchController extends Controller {
                      ->where('movie_suffixes.title_suffix', 'LIKE', $term.'%'); 
             })
             ->get(); 
+
+        $results = array_map(function($result) {
+            return [
+                'id'   => $result->id,
+                'name' => $result->title,
+                'year' => substr($result->date, 0, 4),
+                'img'  => ($result->imgname) ? 
+                                $result->imgpath . '/thumbs/' . $result->imgname . '.' . $result->imgext :
+                                '/static/null_movie_125_175.png',
+                'type' => 'm'
+            ];
+        }, $results);
+
+        return $results;
+    }
+
+    private function searchPeopleByTerm($term)
+    {
+        $results = DB::table('people')
+            ->select('people.id AS id',
+                'people.first_name AS fn',
+                'people.middle_name AS mn',
+                'people.last_name AS ln',
+                'people.first_alias AS fa',
+                'people.middle_alias AS ma',
+                'people.last_alias AS la',
+                'people.date_of_birth AS dob',
+                'people.date_of_death AS dod',
+                'images.name AS imgname', 
+                'images.path AS imgpath', 
+                'images.extension AS imgext')
+            ->distinct('people.id')
+            ->join('albums', 'people.album', '=', 'albums.id')
+            ->leftJoin('images', 'albums.default', '=', 'images.id')
+            ->join('person_suffixes', function($join) use ($term) {
+                $join->on('people.id', '=', 'person_suffixes.person_id')
+                     ->where('person_suffixes.name_suffix', 'LIKE', $term.'%');
+            })
+            ->get();
+
+        $results = array_map(function($result) {
+            return [
+                'id'   => $result->id,
+                'name' => $this->bestName([$result->fn, $result->mn, $result->ln, $result->fa, $result->ma, $result->la]),
+                'yob'  => substr($result->dob, 0, 4),
+                'yod'  => substr($result->dod, 0, 4),
+                'img'  => ($result->imgname) ? 
+                                $result->imgpath . '/thumbs/' . $result->imgname . '.' . $result->imgext :
+                                '/static/null_person_125_175.png',
+                'type' => 'p',
+            ];
+        }, $results);
+
+        return $results;
+    }
+
+    private function bestName($names) {
+        $best = '';
+
+        if ($names[3]) {
+            $best .= $names[3];
+            $best .= ($names[4]) ? ' '.$names[4] : '';
+            $best .= ($names[5]) ? ' '.$names[5] : '';
+        }
+        else {
+            $best .= ($names[0]) ? ' '.$names[0] : '';
+            $best .= ($names[2]) ? ' '.$names[2] : '';
+        }
+
+        return $best;
     }
 }
 
