@@ -86,16 +86,58 @@ class Movie extends Model {
          * into the movie_suffixes table.
          */
         static::created(function ($model) {
-            $suffix = preg_replace("/[^A-Za-z0-9 ]/", '', $model->title);
-            $delim = 0;
-            while (true) {
-                $suffix = substr($suffix, $delim);
-                DB::table('movie_suffixes')->insert(['movie_id' => $model->id, 'title_suffix' => $suffix]);
-                $delim = strpos($suffix, ' ');
-                if ( ! $delim) break;
-                $delim++;
-            }
+            $model->populateSuffixes($model);
         }, 0);
+
+        /**
+         * Updates all alpha-numeric suffixes (per word) of a the movie's
+         * title in the movie_suffixes table.
+         */
+        static::updated(function ($model) {
+            $model->discardSuffixes($model);
+            $model->populateSuffixes($model);
+        }, 0);
+
+        /**
+         * Removes any suffixes associated with the movie before deletion.
+         */
+        static::deleting(function ($model) {
+            $model->discardSuffixes($model);
+        }, 0);
+    }
+
+    /**
+     * Populates all alpha-numeric suffixes of the models title
+     * and stores them in the movie_suffixes table, linking each
+     * to the movie's id.
+     *
+     * @param Movie $model
+     */
+    private function populateSuffixes($model)
+    {
+        $suffix = preg_replace("/[^A-Za-z0-9 ]/", '', $model->title);
+        $delim = 0;
+        while (true) {
+            $suffix = substr($suffix, $delim);
+            DB::table('movie_suffixes')->insert(['movie_id' => $model->id, 'title_suffix' => $suffix]);
+            $delim = strpos($suffix, ' ');
+            if ( ! $delim) break;
+            $delim++;
+        }
+    }
+
+    /**
+     * Removes any suffixes in the movie_suffixes table associated
+     * with the movie's id.
+     *
+     * @param Movie $model
+     */
+    private function discardSuffixes($model)
+    {
+        $id = $model->id;
+        DB::table('movie_suffixes')
+            ->where('movie_id', '=', $id)
+            ->delete();
     }
 }
 

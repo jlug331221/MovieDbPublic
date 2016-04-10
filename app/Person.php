@@ -121,7 +121,7 @@ class Person extends Model {
         }, 0);
 
         /**
-         * Generates all alpha-numeric suffixes (per character) of the person's name
+         * Generates all suffixes (per character) of the person's name
          * fields into the person_suffixes table.
          */
         static::created(function ($model) {
@@ -129,7 +129,7 @@ class Person extends Model {
         }, 0);
 
         /**
-         * Updates all alpha-numeric suffixes (per character) of a the person's
+         * Updates all suffixes (per character) of a the person's
          * name in the person_suffixes table.
          */
         static::updated(function ($model) {
@@ -138,7 +138,8 @@ class Person extends Model {
         }, 0);
 
         /**
-         * Removes any suffixes associated with the person before deletion.
+         * Removes any suffixes associated with the person before
+         * deletion.
          */
         static::deleting(function ($model) {
             $model->discardSuffixes($model);
@@ -146,9 +147,10 @@ class Person extends Model {
     }
 
     /**
-     * Populates all alpha-numeric suffixes for the Person's names and
-     * stores them the person_suffies table, linking each to the person's id.
-     * @param $model App\Person Person being updated.
+     * Populates all suffixes of the Person's names and stores them
+     * the person_suffixes table, linking each to the person's id.
+     *
+     * @param Person $model
      */
     private function populateSuffixes($model)
     {
@@ -173,7 +175,8 @@ class Person extends Model {
     /**
      * Removes any suffixes in the person_suffixes table associated
      * with the model's id.
-     * @param $model App\Person
+     *
+     * @param Person $model
      */
     private function discardSuffixes($model)
     {

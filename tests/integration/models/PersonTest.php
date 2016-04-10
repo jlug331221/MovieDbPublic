@@ -132,7 +132,7 @@ class PersonTest extends TestCase {
     }
 
     /** @test */
-    public function it_stores_all_alpha_numeric_suffixes_of_a_persons_names_when_a_person_is_created()
+    public function it_stores_all_suffixes_of_a_persons_names_when_a_person_is_created()
     {
         $person = new Person();
         $person->first_name = 'Al';
@@ -180,7 +180,7 @@ class PersonTest extends TestCase {
     }
 
     /** @test */
-    public function it_updates_all_alpha_numeric_suffixes_of_a_persons_names_when_a_person_is_updated()
+    public function it_updates_all_suffixes_of_a_persons_names_when_a_person_is_updated()
     {
         $person = new Person();
         $person->first_name = 'Bo';
