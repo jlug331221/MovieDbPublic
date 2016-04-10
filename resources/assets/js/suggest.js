@@ -197,7 +197,6 @@
                 hasSuggestions = true;
                 var i = 1;
                 for (let hit of hits) {
-                    console.log(settings.template.call(this, data[hit]));
                     frame.content.append(settings.template.call(this, data[hit]));
                     i++;
                     if (i > settings.maxSuggestions) break;

@@ -46,50 +46,6 @@ class Person extends Model {
     }
 
     /**
-     * Approximates the best name for the person. If the
-     * person has an alias, the alias is used. Else the first and
-     * last names are attempted. If no suitable name exists, then
-     * the string '?' is returned.
-     *
-     * @return String
-     */
-    public function getBestName()
-    {
-        $best = '';
-
-        if ($this->first_alias) {
-            $best .= $this->first_alias;
-            $best .= ($this->middle_alias) ? ' '.$this->middle_alias : '';
-            $best .= ($this->last_alias) ? ' '.$this->last_alias : '';
-        }
-        else {
-            $best .= ($this->first_name) ? ' '.$this->first_name : '';
-            $best .= ($this->last_name) ? ' '.$this->last_name : '';
-        }
-
-        if (strlen($best) < 1)
-            $best = '?';
-
-        return $best;
-    }
-
-    /**
-     * Returns the birth year of the person, followed by the
-     * death year, if it exists, separated by a dash.
-     * Example: '1954 - 2004'
-     *
-     * @return String 
-     */
-    public function getBirthAndDeathYears()
-    {
-        $years = substr($this->date_of_birth, 0, 4);
-        if ($this->date_of_death)
-            $years .= ' - ' . substr($this->date_of_death, 0, 4);
-
-        return $years;
-    }
-
-    /**
      * A person is associated with many PersonLists.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
@@ -97,6 +53,54 @@ class Person extends Model {
     public function personlists()
     {
         return $this->belongsToMany('App\PersonList');
+    }
+
+    /**
+     * Approximates the best name for the person. If the
+     * person has a first alias, the alias is used. Else the
+     * first and last names are attempted. If no suitable name
+     * exists, then the string '?' is returned.
+     *
+     * @return String
+     */
+    public function getBestName()
+    {
+        $best = [];
+
+        if ($this->first_alias) {
+            if ($this->first_alias) array_push($best, $this->first_alias);
+            if ($this->middle_alias) array_push($best, $this->middle_alias);
+            if ($this->last_alias) array_push($best, $this->last_alias);
+        }
+        else {
+            if ($this->first_name) array_push($best, $this->first_name);
+            if ($this->last_name) array_push($best, $this->last_name);
+        }
+
+        if (empty($best))
+            return '?';
+
+        return implode(' ', $best);
+    }
+
+    /**
+     * Returns the birth year of the person, followed by the
+     * death year, if it exists, separated by a dash.
+     * Example: '1954 - 2004'
+     * If a birth year does not exist, '?' is returned.
+     *
+     * @return String
+     */
+    public function getBirthAndDeathYears()
+    {
+        if ($this->date_of_birth)
+            $years = substr($this->date_of_birth, 0, 4);
+        else
+            return '?';
+        if ($this->date_of_death)
+            $years .= ' - ' . substr($this->date_of_death, 0, 4);
+
+        return $years;
     }
 
     /**
