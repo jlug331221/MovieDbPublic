@@ -84,8 +84,6 @@ class User extends Authenticatable
         return $this->save();
     }
 
-
-
     /**
      * A user may have multiple comments.
      *
