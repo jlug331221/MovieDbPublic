@@ -178,4 +178,79 @@ class PersonTest extends TestCase {
         $r = DB::table('person_suffixes')->where('name_suffix', '=', 'e')->first();
         $this->assertEquals($id, $r->person_id);
     }
+
+    /** @test */
+    public function it_updates_all_alpha_numeric_suffixes_of_a_persons_names_when_a_person_is_updated()
+    {
+        $person = new Person();
+        $person->first_name = 'Bo';
+        $person->last_name = 'Jun';
+        $person->country_of_origin = 'United States';
+        $person->date_of_birth = '1909-07-25';
+        $person->save();
+
+        $id = $person->id;
+
+        $r = DB::table('person_suffixes')->where('name_suffix', '=', 'Bo')->first();
+        $this->assertEquals($id, $r->person_id);
+        $r = DB::table('person_suffixes')->where('name_suffix', '=', 'o')->first();
+        $this->assertEquals($id, $r->person_id);
+        $r = DB::table('person_suffixes')->where('name_suffix', '=', 'Jun')->first();
+        $this->assertEquals($id, $r->person_id);
+        $r = DB::table('person_suffixes')->where('name_suffix', '=', 'un')->first();
+        $this->assertEquals($id, $r->person_id);
+        $r = DB::table('person_suffixes')->where('name_suffix', '=', 'n')->first();
+        $this->assertEquals($id, $r->person_id);
+
+        $person->first_name = 'Re';
+        $person->last_name = 'Pa';
+        $person->save();
+
+        $this->assertNull(DB::table('person_suffixes')->where('name_suffix', '=', 'Bo')->first());
+        $this->assertNull(DB::table('person_suffixes')->where('name_suffix', '=', 'o')->first());
+        $this->assertNull(DB::table('person_suffixes')->where('name_suffix', '=', 'Jun')->first());
+        $this->assertNull(DB::table('person_suffixes')->where('name_suffix', '=', 'un')->first());
+        $this->assertNull(DB::table('person_suffixes')->where('name_suffix', '=', 'n')->first());
+
+        $r = DB::table('person_suffixes')->where('name_suffix', '=', 'Re')->first();
+        $this->assertEquals($id, $r->person_id);
+        $r = DB::table('person_suffixes')->where('name_suffix', '=', 'e')->first();
+        $this->assertEquals($id, $r->person_id);
+        $r = DB::table('person_suffixes')->where('name_suffix', '=', 'Pa')->first();
+        $this->assertEquals($id, $r->person_id);
+        $r = DB::table('person_suffixes')->where('name_suffix', '=', 'a')->first();
+        $this->assertEquals($id, $r->person_id);
+    }
+
+    /** @test */
+    public function it_removes_all_suffixes_of_a_persons_name_when_the_person_is_delete()
+    {
+        $person = new Person();
+        $person->first_name = 'Bo';
+        $person->last_name = 'Jun';
+        $person->country_of_origin = 'United States';
+        $person->date_of_birth = '1909-07-25';
+        $person->save();
+
+        $id = $person->id;
+
+        $r = DB::table('person_suffixes')->where('name_suffix', '=', 'Bo')->first();
+        $this->assertEquals($id, $r->person_id);
+        $r = DB::table('person_suffixes')->where('name_suffix', '=', 'o')->first();
+        $this->assertEquals($id, $r->person_id);
+        $r = DB::table('person_suffixes')->where('name_suffix', '=', 'Jun')->first();
+        $this->assertEquals($id, $r->person_id);
+        $r = DB::table('person_suffixes')->where('name_suffix', '=', 'un')->first();
+        $this->assertEquals($id, $r->person_id);
+        $r = DB::table('person_suffixes')->where('name_suffix', '=', 'n')->first();
+        $this->assertEquals($id, $r->person_id);
+
+        $person->delete();
+
+        $this->assertNull(DB::table('person_suffixes')->where('name_suffix', '=', 'Bo')->first());
+        $this->assertNull(DB::table('person_suffixes')->where('name_suffix', '=', 'o')->first());
+        $this->assertNull(DB::table('person_suffixes')->where('name_suffix', '=', 'Jun')->first());
+        $this->assertNull(DB::table('person_suffixes')->where('name_suffix', '=', 'un')->first());
+        $this->assertNull(DB::table('person_suffixes')->where('name_suffix', '=', 'n')->first());
+    }
 }

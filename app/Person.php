@@ -71,8 +71,7 @@ class Person extends Model {
             if ($this->first_alias) array_push($best, $this->first_alias);
             if ($this->middle_alias) array_push($best, $this->middle_alias);
             if ($this->last_alias) array_push($best, $this->last_alias);
-        }
-        else {
+        } else {
             if ($this->first_name) array_push($best, $this->first_name);
             if ($this->last_name) array_push($best, $this->last_name);
         }
@@ -123,25 +122,64 @@ class Person extends Model {
 
         /**
          * Generates all alpha-numeric suffixes (per character) of the person's name
-         * fields into the movie_suffixes table.
+         * fields into the person_suffixes table.
          */
         static::created(function ($model) {
-            $names = [
-                $model->first_name,
-                $model->middle_name,
-                $model->last_name,
-                $model->first_alias,
-                $model->middle_alias,
-                $model->last_alias,
-            ];
-
-            array_map(function($name) use ($model) {
-                $len = strlen($name);
-                for ($i = 0; $i < $len; $i++)
-                    DB::table('person_suffixes')
-                        ->insert(['person_id' => $model->id,
-                                  'name_suffix' => substr($name, $i)]);
-            }, $names);
+            $model->populateSuffixes($model);
         }, 0);
+
+        /**
+         * Updates all alpha-numeric suffixes (per character) of a the person's
+         * name in the person_suffixes table.
+         */
+        static::updated(function ($model) {
+            $model->discardSuffixes($model);
+            $model->populateSuffixes($model);
+        }, 0);
+
+        /**
+         * Removes any suffixes associated with the person before deletion.
+         */
+        static::deleting(function ($model) {
+            $model->discardSuffixes($model);
+        }, 0);
+    }
+
+    /**
+     * Populates all alpha-numeric suffixes for the Person's names and
+     * stores them the person_suffies table, linking each to the person's id.
+     * @param $model App\Person Person being updated.
+     */
+    private function populateSuffixes($model)
+    {
+        $names = [
+            $model->first_name,
+            $model->middle_name,
+            $model->last_name,
+            $model->first_alias,
+            $model->middle_alias,
+            $model->last_alias,
+        ];
+
+        array_map(function ($name) use ($model) {
+            $len = strlen($name);
+            for ($i = 0; $i < $len; $i++)
+                DB::table('person_suffixes')
+                    ->insert(['person_id'   => $model->id,
+                              'name_suffix' => substr($name, $i)]);
+        }, $names);
+    }
+
+    /**
+     * Removes any suffixes in the person_suffixes table associated
+     * with the model's id.
+     * @param $model App\Person
+     */
+    private function discardSuffixes($model)
+    {
+        $id = $model->id;
+        DB::table('person_suffixes')
+            ->where('person_id', '=', $id)
+            ->delete();
     }
 }
