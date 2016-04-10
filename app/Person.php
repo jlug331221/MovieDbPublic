@@ -46,6 +46,50 @@ class Person extends Model {
     }
 
     /**
+     * Approximates the best name for the person. If the
+     * person has an alias, the alias is used. Else the first and
+     * last names are attempted. If no suitable name exists, then
+     * the string '?' is returned.
+     *
+     * @return String
+     */
+    public function getBestName()
+    {
+        $best = '';
+
+        if ($this->first_alias) {
+            $best .= $this->first_alias;
+            $best .= ($this->middle_alias) ? ' '.$this->middle_alias : '';
+            $best .= ($this->last_alias) ? ' '.$this->last_alias : '';
+        }
+        else {
+            $best .= ($this->first_name) ? ' '.$this->first_name : '';
+            $best .= ($this->last_name) ? ' '.$this->last_name : '';
+        }
+
+        if (strlen($best) < 1)
+            $best = '?';
+
+        return $best;
+    }
+
+    /**
+     * Returns the birth year of the person, followed by the
+     * death year, if it exists, separated by a dash.
+     * Example: '1954 - 2004'
+     *
+     * @return String 
+     */
+    public function getBirthAndDeathYears()
+    {
+        $years = substr($this->date_of_birth, 0, 4);
+        if ($this->date_of_death)
+            $years .= ' - ' . substr($this->date_of_death, 0, 4);
+
+        return $years;
+    }
+
+    /**
      * A person is associated with many PersonLists.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany

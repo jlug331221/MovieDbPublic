@@ -269,6 +269,9 @@ class SearchController extends Controller {
             $best .= ($names[2]) ? ' '.$names[2] : '';
         }
 
+        if (strlen($best) < 1)
+            $best = '?';
+
         return $best;
     }
 }

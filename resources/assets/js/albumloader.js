@@ -23,7 +23,9 @@
         }).then(
             (result) => {
                 data = result;
-                load();
+                if (!data.images.length) {
+                    target.append('<div class="Album__empty">Album is empty.</div>');
+                } else load();
             },
             (xhr) => { console.error(`Could not load album: GET ${url} ${xhr.status} ${xhr.statusText}`); }
         ).catch(

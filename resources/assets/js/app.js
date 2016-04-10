@@ -67,10 +67,12 @@ $(function () {
     $('[data-toggle="tooltip"]').tooltip();
 
     // Set up album image loading.
-    $('.Album').albumloader({
-        url: '/album/json/' + $('.Album').data('id'),
-        imagesPerLoad: 24,
-    });
+    if($('.Album').length) {
+        $('.Album').albumloader({
+            url: '/album/json/' + $('.Album').data('id'),
+            imagesPerLoad: 24,
+        });
+    }
 
 });
 

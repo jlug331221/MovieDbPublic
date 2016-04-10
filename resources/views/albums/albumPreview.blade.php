@@ -6,10 +6,12 @@
 <?php $images = $album->images()->get(); ?>
 
 <div class="AlbumPreview">
+    <!--
     <div class="AlbumPreview__links">
         <i class="fa fa-camera-retro"></i>
         <a href="{{ url('/album', $album->id) }}">View Album ({{ $images->count() }})</a>
-    </div>
+    </div> 
+    -->
     <div class="AlbumPreview__content">
         @for($i = 0; $i < $maxImages and $i < $images->count(); $i++)
             <div class="AlbumPreview__thumb" 

@@ -187,21 +187,26 @@ class ImagesController extends Controller {
 
     public function albumPreview($id)
     {
-        $album = Movie::find($id)->album()->firstOrFail();
+        $album = Album::find($id);
         $maxImages = 10;
         return view('albums/albumPreview', compact('album', 'maxImages'));
     }
 
-    public function get_album($id)
+    public function get_personAlbum($id)
+    {
+        $person = Person::find($id);
+        return view('albums/personAlbum', compact('person'));
+    }
+
+    public function get_movieAlbum($id)
     {
         $movie = Movie::find($id);
-        $album = $movie->album()->firstOrFail();
-        return view('albums/album', compact('movie', 'album'));
+        return view('albums/movieAlbum', compact('movie'));
     }
 
     public function get_album_json($id)
     {
-        $album = Movie::find($id)->album()->firstOrFail();
+        $album = Album::find($id);
         $images = $album->images()->get();
 
         $images = $images->map(function ($image) {
