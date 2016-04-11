@@ -257,22 +257,22 @@ class SearchController extends Controller {
     }
 
     private function bestName($names) {
-        $best = '';
+        $best = [];
 
         if ($names[3]) {
-            $best .= $names[3];
-            $best .= ($names[4]) ? ' '.$names[4] : '';
-            $best .= ($names[5]) ? ' '.$names[5] : '';
+            array_push($best, $names[3]);
+            if ($names[4]) array_push($best, $names[4]);
+            if ($names[5]) array_push($best, $names[5]);
         }
         else {
-            $best .= ($names[0]) ? ' '.$names[0] : '';
-            $best .= ($names[2]) ? ' '.$names[2] : '';
+            if ($names[0]) array_push($best, $names[0]);
+            if ($names[2]) array_push($best, $names[2]);
         }
 
-        if (strlen($best) < 1)
-            $best = '?';
+        if(empty($best))
+            return '?';
 
-        return $best;
+        return implode(' ', $best);
     }
 }
 

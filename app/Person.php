@@ -68,7 +68,7 @@ class Person extends Model {
         $best = [];
 
         if ($this->first_alias) {
-            if ($this->first_alias) array_push($best, $this->first_alias);
+            array_push($best, $this->first_alias);
             if ($this->middle_alias) array_push($best, $this->middle_alias);
             if ($this->last_alias) array_push($best, $this->last_alias);
         } else {

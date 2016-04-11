@@ -66,6 +66,20 @@ class ImagesController extends Controller {
         return redirect($image->getPath());
     }
 
+    /**
+     * Discard an image from the database/filesystem.
+     *
+     * @param $name
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function discard($name)
+    {
+        $image = Image::where('name', '=', $name)->first();
+        if ($image != null)
+            ImageSync::destroy($image->id);
+
+        return redirect()->action('ImagesController@create');
+    }
 
     /**
      * Store image for a particular person.
@@ -74,7 +88,8 @@ class ImagesController extends Controller {
      * @param $pid
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function storePersonImage(CreateImageRequest $request, $pid) {
+    public function storePersonImage(CreateImageRequest $request, $pid)
+    {
         $file = $request->file('image');
         $description = $request->get('description');
 
@@ -86,8 +101,8 @@ class ImagesController extends Controller {
 
         $person = Person::find($pid);
         DB::table('album_image')->insert(['album_id' => $person->album,
-            'image_id' => $image->id]);
-        if(!Album::find($person->album)->default) {
+                                          'image_id' => $image->id]);
+        if ( ! Album::find($person->album)->default) {
             DB::table('albums')->where('id', $person->album)
                 ->update(['default' => $image->id]);
         }
@@ -103,7 +118,8 @@ class ImagesController extends Controller {
      * @param $imgId
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function destroyPersonImage($pid, $imgId) {
+    public function destroyPersonImage($pid, $imgId)
+    {
         $person = Person::find($pid);
         if ($imgId === Album::find($person->album)->images->first()->id) {
             DB::table('albums')->where('id', $person->album)
@@ -126,7 +142,8 @@ class ImagesController extends Controller {
      * @param $mid
      * @return mixed
      */
-    public function storeMovieImage(CreateImageRequest $request, $mid) {
+    public function storeMovieImage(CreateImageRequest $request, $mid)
+    {
         $file = $request->file('image');
         $description = $request->get('description');
 
@@ -138,8 +155,8 @@ class ImagesController extends Controller {
 
         $movie = Movie::find($mid);
         DB::table('album_image')->insert(['album_id' => $movie->album,
-            'image_id' => $image->id]);
-        if(!Album::find($movie->album)->default) {
+                                          'image_id' => $image->id]);
+        if ( ! Album::find($movie->album)->default) {
             DB::table('albums')->where('id', $movie->album)
                 ->update(['default' => $image->id]);
         }
@@ -168,21 +185,6 @@ class ImagesController extends Controller {
 
         Session::flash('message', "Successfully deleted image for " . $movie->title);
         return redirect('admin/showMovie/' . $movie->id);
-    }
-
-    /**
-     * Discard an image from the database/filesystem.
-     *
-     * @param $name
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function discard($name)
-    {
-        $image = Image::where('name', '=', $name)->first();
-        if ($image != null)
-            ImageSync::destroy($image->id);
-
-        return redirect()->action('ImagesController@create');
     }
 
     public function albumPreview($id)
@@ -220,7 +222,7 @@ class ImagesController extends Controller {
 
         $json = [
             'default' => $album->default,
-            'images' => $images
+            'images'  => $images
         ];
 
         return $json;
