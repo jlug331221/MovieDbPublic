@@ -243,7 +243,7 @@ class SearchController extends Controller {
         $results = array_map(function($result) {
             return [
                 'id'   => $result->id,
-                'name' => $this->bestName([$result->fn, $result->mn, $result->ln, $result->fa, $result->ma, $result->la]),
+                'name' => StaticData::findBestName([$result->fn, $result->mn, $result->ln, $result->fa, $result->ma, $result->la]),
                 'yob'  => substr($result->dob, 0, 4),
                 'yod'  => substr($result->dod, 0, 4),
                 'img'  => ($result->imgname) ? 
@@ -254,25 +254,6 @@ class SearchController extends Controller {
         }, $results);
 
         return $results;
-    }
-
-    private function bestName($names) {
-        $best = [];
-
-        if ($names[3]) {
-            array_push($best, $names[3]);
-            if ($names[4]) array_push($best, $names[4]);
-            if ($names[5]) array_push($best, $names[5]);
-        }
-        else {
-            if ($names[0]) array_push($best, $names[0]);
-            if ($names[2]) array_push($best, $names[2]);
-        }
-
-        if(empty($best))
-            return '?';
-
-        return implode(' ', $best);
     }
 }
 

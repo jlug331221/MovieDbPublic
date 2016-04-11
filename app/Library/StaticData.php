@@ -313,4 +313,41 @@ class StaticData {
     public static $default_avatar = [
         'Default'     => '/static/Default.png',
     ];
+
+
+    /**
+     * Approximates the best name in the given array. Data
+     * in the array should match the following format:
+     *
+     * [0] => first_name
+     * [1] => middle_name
+     * [2] => last_name
+     * [3] => first_alias
+     * [4] => middle_alias
+     * [5] => last_alias
+     *
+     * If the person has a first alias, the alias is used.
+     * Else the first and last names are attempted. If no
+     * suitable name exists, then the string '?' is returned.
+     *
+     * @return String
+     */
+    public static function findBestName($names) {
+        $best = [];
+
+        if ($names[3]) {
+            array_push($best, $names[3]);
+            if ($names[4]) array_push($best, $names[4]);
+            if ($names[5]) array_push($best, $names[5]);
+        }
+        else {
+            if ($names[0]) array_push($best, $names[0]);
+            if ($names[2]) array_push($best, $names[2]);
+        }
+
+        if(empty($best))
+            return '?';
+
+        return implode(' ', $best);
+    }
 }

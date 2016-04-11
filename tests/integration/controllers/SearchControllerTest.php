@@ -552,7 +552,7 @@ class SearchControllerTest extends TestCase {
 
 
     /** @test */
-    public function it_takes_the_intersection_of_the_search_fields_to_give_more_specific_results()
+    public function it_takes_the_intersection_of_the_adv_movie_search_fields_for_specific_results()
     {
         $this->seedMoviesTable();
 
@@ -565,6 +565,19 @@ class SearchControllerTest extends TestCase {
             ->see('Star Wars Episode IV: A New Hope')
             ->dontSee('Star Wars Episode V: The Empire Strikes Back')
             ->see('Star Wars Episode VI: Return of the Jedi');
+    }
+
+    /** @test */
+    public function it_returns_all_results_when_adv_person_search_has_no_fields_checked()
+    {
+        $this->seedPeopleTable();
+
+        $this->visit('/search/person')
+            ->press('Submit');
+
+        // All movies should be shown on the page.
+        $this->see('People Search Results');
+
     }
 
     private function seedMoviesTable()
@@ -598,5 +611,24 @@ class SearchControllerTest extends TestCase {
         App\Movie::create(['title' => 'The Martian', 'country' => 'Iran', 'release_date' => '2014-01-01', 'genre' => 'Horror', 'parental_rating' => 'R', 'runtime' => 130, 'synopsis' => "During a manned mission to Mars, Astronaut Mark Watney is presumed dead after a fierce storm and left behind by his crew. But Watney has survived and finds himself stranded and alone on the hostile planet. With only meager supplies, he must draw upon his ingenuity, wit and spirit to subsist and find a way to signal to Earth that he is alive."]);
 
         App\Movie::create(['title' => 'The Sword in the Stone', 'country' => 'Egypt', 'release_date' => '2011-01-01', 'genre' => 'Animation', 'parental_rating' => 'G', 'runtime' => 98, 'synopsis' => "The wizard Merlin teaches a young boy who is destined to be King Arthur."]);
+    }
+
+    private function seedPeopleTable()
+    {
+        App\Person::create(['first_name' => 'Arnold', 'middle_name' => 'Alois', 'last_name' => 'Schwarzenneger', 'first_alias' => null, 'middle_alias' => null, 'last_alias' => null, 'country_of_origin' => 'Austria', 'date_of_birth' => '1947-07-03', 'date_of_death' => null, 'biography' => 'Arnold Alois Schwarzenegger (born July 30, 1947) is an Austrian-American actor, filmmaker, businessman, investor, author, philanthropist, activist, former professional bodybuilder and politician. He served two terms as the 38th Governor of California from 2003 until 2011.']);
+
+        App\Person::create(['first_name' => 'Dwayne', 'middle_name' => 'Douglas', 'last_name' => 'Johnson', 'first_alias' => null, 'middle_alias' => null, 'last_alias' => null, 'country_of_origin' => 'United States', 'date_of_birth' => '1972-05-02', 'date_of_death' => null, 'biography' => 'Dwayne Douglas Johnson, also known as The Rock, was born on May 2, 1972 in Hayward, California, to Ata Johnson (née Maivia) and Canadian-born professional wrestler Rocky Johnson. His father is black (of Black Nova Scotian descent), and his mother is of Samoan background (her own father was Peter Fanene Maivia, also a professional wrestler). While growing up, Dwayne traveled around a lot with his parents and watched his father perform in the ring. During his high school years, Dwayne began playing football and he soon received a full scholarship from the University of Miami where he had tremendous success as a football player. In 1995, Dwayne suffered a back injury which cost him a place in the NFL. He then signed a 3 year deal with the Canadian League but left after a year to pursue a career in wrestling. He made his wrestling debut in the USWA under the name Flex Kavanah where he won the tag team championship with Brett Sawyer. In 1996, Dwayne joined the WWE and became Rocky Maivia where he joined a group known as "The Nation of Domination" and turned heel. Rocky eventually took over leadership of the "Nation" and began taking the persona of The Rock. After the "Nation" split, The Rock joined another elite group of wrestlers known as the "Corporation" and began a memorable feud with Steve Austin. Soon the Rock was kicked out of the "Corporation". He turned face and became known as "The Peoples Champion". In 2000, the Rock took time off from WWE to film his appearance in The Mummy Returns (2001). He returned in 2001 during the WCW/ECW invasion where he joined a team of WWE wrestlers at The Scorpion King (2002), a prequel to The Mummy Returns (2001).']);
+
+        App\Person::create(['first_name' => 'Alfredo', 'middle_name' => 'James', 'last_name' => 'Pacino', 'first_alias' => 'Al', 'middle_alias' => null, 'last_alias' => 'Pacino', 'country_of_origin' => 'United States', 'date_of_birth' => '1940-04-25', 'date_of_death' => null, 'biography' => 'Alfredo James "Al" Pacino (born April 25, 1940) is an American actor of stage and screen, filmmaker, and screenwriter. Pacino has had a career spanning more than fifty years, during which time he has received numerous accolades and honors both competitive and honorary, among them an Academy Award, two Tony Awards, two Primetime Emmy Awards, a British Academy Film Award, four Golden Globe Awards, the Lifetime Achievement Award from the American Film Institute, the Golden Globe Cecil B. DeMille Award, and the National Medal of Arts. He is also one of few performers to have won a competitive Oscar, an Emmy and a Tony Award for acting, dubbed the "Triple Crown of Acting".']);
+
+        App\Person::create(['first_name' => 'Marion', 'middle_name' => 'Mitchell', 'last_name' => 'Morrison', 'first_alias' => 'John', 'middle_alias' => null, 'last_alias' => 'Wayne', 'country_of_origin' => 'United States', 'date_of_birth' => '1907-05-26', 'date_of_death' => '1979-06-14', 'biography' => 'Marion Mitchell Morrison (born Marion Robert Morrison; May 26, 1907 – June 11, 1979), better known by his stage name John Wayne and by his nickname "Duke", was an American film actor, director, and producer. An Academy Award-winner for True Grit (1969), Wayne was among the top box office draws for three decades. An enduring American icon, for several generations of Americans he epitomized rugged masculinity and is famous for his demeanor, including his distinctive calm voice, walk, and height.']);
+
+        App\Person::create(['first_name' => 'Louis', 'middle_name' => null, 'last_name' => 'Székely', 'first_alias' => 'Louis', 'middle_alias' => null, 'last_alias' => 'C.K.', 'country_of_origin' => 'United States', 'date_of_birth' => '1967-08-12', 'date_of_death' => null, 'biography' => 'Louis Székely (born September 12, 1967), known professionally as Louis C.K., is an American comedian, actor, writer, producer, director, and editor. He is the creator, star, writer, director, executive producer, and primary editor of the acclaimed FX comedy-drama series Louie. C.K. is known for his use of observational, self-deprecating, dark and vulgar humor in his stand-up career.']);
+
+        App\Person::create(['first_name' => 'Mark', 'middle_name' => 'Richard', 'last_name' => 'Hamill', 'first_alias' => null, 'middle_alias' => null, 'last_alias' => null, 'country_of_origin' => 'United States', 'date_of_birth' => '1951-09-25', 'date_of_death' => null, 'biography' => 'Mark Richard Hamill (born September 25, 1951) is an American actor, voice actor, writer, producer, and director. He is best known for his portrayal of Luke Skywalker in the original Star Wars trilogy – Star Wars (1977), The Empire Strikes Back (1980), and Return of the Jedi (1983) – a role he reprised in Star Wars: The Force Awakens (2015). Hamill also starred and co-starred in the films Corvette Summer (1978), The Big Red One (1980), and Kingsman: The Secret Service (2015). Hamill\'s extensive voice acting work includes a long-standing role as the Joker, commencing with Batman: The Animated Series in 1992.']);
+
+        App\Person::create(['first_name' => 'John', 'middle_name' => 'Adam', 'last_name' => 'Belushi', 'first_alias' => null, 'middle_alias' => null, 'last_alias' => null, 'country_of_origin' => 'United States', 'date_of_birth' => '1949-01-24', 'date_of_death' => '1982-05-03', 'biography' => 'John Adam Belushi (January 24, 1949 – March 5, 1982) was an American comedian, actor, and musician. He is best known for his "intense energy and raucous attitude" which he displayed as one of the original cast members of the NBC sketch comedy show Saturday Night Live, in his role in the 1978 film Animal House and in his recordings and performances as one of The Blues Brothers.']);
+
+        App\Person::create(['first_name' => 'John', 'middle_name' => 'Franklin', 'last_name' => 'Candy', 'first_alias' => null, 'middle_alias' => null, 'last_alias' => null, 'country_of_origin' => 'Canada', 'date_of_birth' => '1950-10-31', 'date_of_death' => '1994-03-04', 'biography' => 'John Franklin Candy (October 31, 1950 – March 4, 1994) was a Canadian actor and comedian, mainly in American films such as Planes, Trains and Automobiles (1987) and Uncle Buck (1989).']);
     }
 }
