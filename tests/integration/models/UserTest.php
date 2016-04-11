@@ -39,47 +39,64 @@ class UserTest extends TestCase {
         $this->assertCount(0, $user->roles);
     }
 
-//    Tests were failing. Commented them out temporarily to get green.
-//
-//    /** @test */
-//    function attach_a_role_to_a_user_with_input_parameter_as_string() {
-//        $user = factory(User::class, (1))->create();
-//        $user->attachRole('Administrator');
-//
-//        $this->assertEquals(true, $user->hasRole('Administrator'));
-//    }
-//
-//    /** @test */
-//    function detach_a_user_role_with_input_parameter_as_string() {
-//        $user = factory(User::class, (1))->create();
-//        $user->attachRole('Review Moderator');
-//        if($user->hasRole('Review Moderator')) {
-//            $user->detachRole('Review Moderator');
-//        }
-//
-//        $collection = [];
-//        $this->assertEmpty($collection, $user->roles);
-//    }
-//
-//    /** @test */
-//    function attach_multiple_roles_to_a_user() {
-//        $user = factory(User::class, (1))->create();
-//        $user->attachRoles(['Administrator', 'Review Moderator']);
-//
-//        $this->assertCount(2, $user->roles);
-//    }
-//
-//    /** @test */
-//    function detach_multiple_roles_from_a_user() {
-//        $user = factory(User::class, (1))->create();
-//        $user->attachRoles(['Administrator', 'Review Moderator']);
-//        if($user->hasRole(['Administrator', 'Review Moderator'])) {
-//            $user->detachRoles(['Administrator', 'Review Moderator']);
-//        }
-//
-//        $collection = [];
-//        $this->assertEmpty($collection, $user->roles);
-//    }
+    /** @test */
+    function attach_a_role_to_a_user_with_input_parameter_as_string() {
+        $user = factory(User::class, (1))->create();
+        DB::table('roles')->insert(
+            ['name' => 'Administrator', 'description' => 'Super Site Admin']
+        );
+        $user->attachRole('Administrator');
+
+        $this->assertEquals(true, $user->hasRole('Administrator'));
+    }
+
+    /** @test */
+    function detach_a_user_role_with_input_parameter_as_string() {
+        $user = factory(User::class, (1))->create();
+        DB::table('roles')->insert(
+            ['name' => 'Review Moderator', 'description' => 'Movie Review Moderator']
+        );
+        $user->attachRole('Review Moderator');
+        if($user->hasRole('Review Moderator')) {
+            $user->detachRole('Review Moderator');
+        }
+
+        $collection = [];
+        $this->assertEmpty($collection, $user->roles);
+    }
+
+    /** @test */
+    function attach_multiple_roles_to_a_user() {
+        $user = factory(User::class, (1))->create();
+        DB::table('roles')->insert(
+            ['name' => 'Administrator', 'description' => 'Super Site Admin']
+        );
+        DB::table('roles')->insert(
+            ['name' => 'Review Moderator', 'description' => 'Movie Review Moderator']
+        );
+        $user->attachRoles(['Administrator', 'Review Moderator']);
+
+        $this->assertCount(2, $user->roles);
+    }
+
+    /** @test */
+    function detach_multiple_roles_from_a_user() {
+        $user = factory(User::class, (1))->create();
+        DB::table('roles')->insert(
+            ['name' => 'Administrator', 'description' => 'Super Site Admin']
+        );
+        DB::table('roles')->insert(
+            ['name' => 'Review Moderator', 'description' => 'Movie Review Moderator']
+        );
+        $user->attachRoles(['Administrator', 'Review Moderator']);
+        if($user->hasRole(['Administrator', 'Review Moderator'])) {
+            $user->detachRoles(['Administrator', 'Review Moderator']);
+        }
+
+        $collection = [];
+        $this->assertEmpty($collection, $user->roles);
+    }
+
 
     /** @test */
     public function it_can_change_its_avatar_using_an_image()
