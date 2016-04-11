@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Role;
+use Exception;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -76,11 +77,17 @@ class User extends Authenticatable
     /**
      * Sets the avatar for a user, or sets the avatar to null.
      *
-     * @param null $image
+     * @param (Image|null) $image
      * @return bool
+     * @throws Exception
      */
     public function setAvatar($image = null) {
-        $this->avatar = ($image == null) ? null : $image->id;
+        if (is_null($image))
+            $this->avatar = null;
+        else if ($image instanceof Image)
+            $this->avatar = $image->id;
+        else
+            throw new Exception('Could not set avatar. Invalid parameter');
         return $this->save();
     }
 

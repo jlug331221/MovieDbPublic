@@ -129,4 +129,19 @@ class UserTest extends TestCase {
 
         $this->assertNull($user->avatar);
     }
+
+    /** @test */
+    public function it_throws_an_exception_for_invalid_parameters_when_changing_the_avatar()
+    {
+        $user = factory(User::class)->create();
+
+        try {
+            $user->setAvatar(42);
+        } catch (\Exception $e) {
+            $this->assertEquals('Could not set avatar. Invalid parameter', $e->getMessage());
+            return;
+        }
+
+        $this->fail();
+    }
 }
