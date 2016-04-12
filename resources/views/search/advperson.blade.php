@@ -103,9 +103,7 @@
                         class="form-control"
                         name="countries[]">
                     @foreach ($countries as $country)
-                        <option @if (old('countries') && in_array($country, old('countries'))) selected @endif>
-                            {{ $country }}
-                        </option>
+                        <option @if (old('countries') && in_array($country, old('countries'))) selected @endif>{{ $country }}</option>
                     @endforeach
                 </select>
                 <div class="AdvSearch__description">

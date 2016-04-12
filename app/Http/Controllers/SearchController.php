@@ -17,18 +17,18 @@ class SearchController extends Controller {
 
     public function get_basicSearch()
     {
-	   return view('search.searchPage');
+        return view('search.searchPage');
     }
 
     public function post_basicSearch(Request $request)
     {
         $queryString = $request->get('search');
         $movies = Movie::where('title', 'LIKE', $queryString)->get();
-    	$people = Person::where('first_name', 'LIKE', $queryString)->get();
+        $people = Person::where('first_name', 'LIKE', $queryString)->get();
         if (count($movies) == 0)
             $movies = Movie::all();
-    	if (count($people) == 0)
-    	    $people = Person::all();
+        if (count($people) == 0)
+            $people = Person::all();
         return view('search.searchPage', compact('movies', 'people'));
     }
 
@@ -56,9 +56,9 @@ class SearchController extends Controller {
 
         $movies = DB::table('movies');
         if ($params['name']) {
-            $movies->join('movie_suffixes', function($join) use ($params) {
+            $movies->join('movie_suffixes', function ($join) use ($params) {
                 $join->on('movies.id', '=', 'movie_suffixes.movie_id')
-                    ->where('movie_suffixes.title_suffix', 'LIKE', $params['name'].'%');
+                    ->where('movie_suffixes.title_suffix', 'LIKE', $params['name'] . '%');
             });
         }
         if ($params['genre']) {
@@ -118,25 +118,27 @@ class SearchController extends Controller {
         $nameTokens = explode(' ', $params['name']);
 
         $people = DB::table('people');
-        $people->select('people.id', 
-                        'people.first_name', 
-                        'people.middle_name', 
-                        'people.last_name',
-                        'people.first_alias',
-                        'people.middle_alias',
-                        'people.last_alias',
-                        'people.country_of_origin',
-                        'people.date_of_birth',
-                        'people.date_of_death',
-                        'people.biography',
-                        'people.album');
+        $people->select('people.id',
+            'people.first_name',
+            'people.middle_name',
+            'people.last_name',
+            'people.first_alias',
+            'people.middle_alias',
+            'people.last_alias',
+            'people.country_of_origin',
+            'people.date_of_birth',
+            'people.date_of_death',
+            'people.biography',
+            'people.album');
         $people->distinct('people.id');
         if ($nameTokens) {
-            $people->join('person_suffixes', function($join) use ($nameTokens) {
-                $join->on('people.id', '=', 'person_suffixes.person_id');
-                array_map(function($name) use ($join) {
-                    $join->orWhere('person_suffixes.name_suffix', 'LIKE', $name.'%');
-                }, $nameTokens);
+            $people->join('person_suffixes', function ($join) use ($nameTokens) {
+                $join->on('people.id', '=', 'person_suffixes.person_id')
+                    ->where(function ($query) use ($nameTokens) {
+                        array_map(function($name) use ($query) {
+                            $query->orWhere('person_suffixes.name_suffix', 'LIKE', $name.'%');
+                        }, $nameTokens);
+                    });
             });
         }
         if ($params['date-of-birth-start']) {
@@ -186,29 +188,29 @@ class SearchController extends Controller {
     private function searchMoviesByTerm($term)
     {
         $results = DB::table('movies')
-            ->select('movies.title AS title', 
+            ->select('movies.title AS title',
                 'movies.id AS id',
                 'movies.release_date AS date',
-                'images.name AS imgname', 
-                'images.path AS imgpath', 
+                'images.name AS imgname',
+                'images.path AS imgpath',
                 'images.extension AS imgext')
             ->distinct('movies.id')
             ->join('albums', 'movies.album', '=', 'albums.id')
             ->leftJoin('images', 'albums.default', '=', 'images.id')
-            ->join('movie_suffixes', function ($join) use ($term) { 
+            ->join('movie_suffixes', function ($join) use ($term) {
                 $join->on('movies.id', '=', 'movie_suffixes.movie_id')
-                     ->where('movie_suffixes.title_suffix', 'LIKE', $term.'%'); 
+                    ->where('movie_suffixes.title_suffix', 'LIKE', $term . '%');
             })
-            ->get(); 
+            ->get();
 
-        $results = array_map(function($result) {
+        $results = array_map(function ($result) {
             return [
                 'id'   => $result->id,
                 'name' => $result->title,
                 'year' => substr($result->date, 0, 4),
-                'img'  => ($result->imgname) ? 
-                                $result->imgpath . '/thumbs/' . $result->imgname . '.' . $result->imgext :
-                                '/static/null_movie_125_175.png',
+                'img'  => ($result->imgname) ?
+                    $result->imgpath . '/thumbs/' . $result->imgname . '.' . $result->imgext :
+                    '/static/null_movie_125_175.png',
                 'type' => 'm'
             ];
         }, $results);
@@ -228,32 +230,56 @@ class SearchController extends Controller {
                 'people.last_alias AS la',
                 'people.date_of_birth AS dob',
                 'people.date_of_death AS dod',
-                'images.name AS imgname', 
-                'images.path AS imgpath', 
+                'images.name AS imgname',
+                'images.path AS imgpath',
                 'images.extension AS imgext')
             ->distinct('people.id')
             ->join('albums', 'people.album', '=', 'albums.id')
             ->leftJoin('images', 'albums.default', '=', 'images.id')
-            ->join('person_suffixes', function($join) use ($term) {
+            ->join('person_suffixes', function ($join) use ($term) {
                 $join->on('people.id', '=', 'person_suffixes.person_id')
-                     ->where('person_suffixes.name_suffix', 'LIKE', $term.'%');
+                    ->where('person_suffixes.name_suffix', 'LIKE', $term . '%');
             })
             ->get();
 
-        $results = array_map(function($result) {
+        $results = array_map(function ($result) {
             return [
                 'id'   => $result->id,
                 'name' => StaticData::findBestName([$result->fn, $result->mn, $result->ln, $result->fa, $result->ma, $result->la]),
                 'yob'  => substr($result->dob, 0, 4),
                 'yod'  => substr($result->dod, 0, 4),
-                'img'  => ($result->imgname) ? 
-                                $result->imgpath . '/thumbs/' . $result->imgname . '.' . $result->imgext :
-                                '/static/null_person_125_175.png',
+                'img'  => ($result->imgname) ?
+                    $result->imgpath . '/thumbs/' . $result->imgname . '.' . $result->imgext :
+                    '/static/null_person_125_175.png',
                 'type' => 'p',
             ];
         }, $results);
 
         return $results;
+    }
+
+    public function get_personCheck_json()
+    {
+        DB::enableQueryLog();
+        $terms = ['John', 'Dwayne', 'Al', 'Pacino'];
+
+        $search = DB::table('people')->select('people.id', 'people.first_name')->distinct('people.id');
+        $search->join('person_suffixes', function ($join) use ($terms) {
+            $join->on('people.id', '=', 'person_suffixes.person_id')
+                ->where(function ($query) use ($terms) {
+                    array_map(function($name) use ($query) {
+                        $query->orWhere('person_suffixes.name_suffix', 'LIKE', $name.'%');
+                    }, $terms);
+                });
+//                ->where('person_suffixes.name_suffix', 'LIKE', $terms[0].'%');
+//                ->orWhere(function($join) use ($terms) {
+//                    $join->where('person_suffixes.name_suffix', '=', 'Dwayne');
+//                });
+        });
+        $search = $search->get();
+        dump(DB::getQueryLog());
+
+        return $search;
     }
 }
 

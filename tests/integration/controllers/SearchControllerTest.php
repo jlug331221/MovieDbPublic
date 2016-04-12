@@ -575,9 +575,350 @@ class SearchControllerTest extends TestCase {
         $this->visit('/search/person')
             ->press('Submit');
 
-        // All movies should be shown on the page.
-        $this->see('People Search Results');
+        // All people should be shown on the page.
+        $this->see('People Search Results')
+            ->see('Arnold Schwarzenneger')
+            ->see('Dwayne Johnson')
+            ->see('Al Pacino')
+            ->see('John Wayne')
+            ->see('Louis C.K.')
+            ->see('John Belushi')
+            ->see('John Candy')
+            ->see('Tommy Lee Jones')
+            ->see('Michael J. Fox')
+            ->see('Tom Cruise');
+    }
 
+    /** @test */
+    public function it_can_do_an_adv_person_search_using_a_name()
+    {
+        $this->seedPeopleTable();
+
+        $this->visit('/search/person')
+            ->type('John', 'name')
+            ->press('Submit');
+
+        $this->see('People Search Results')
+            ->see('Dwayne Johnson')
+            ->see('John Belushi')
+            ->see('John Candy')
+            ->see('John Wayne')
+            ->dontSee('Al Pacino')
+            ->dontSee('Tommy Lee Jones');
+    }
+
+    /** @test */
+    public function it_can_search_for_people_using_more_than_one_name_at_once()
+    {
+        $this->seedPeopleTable();
+
+        $this->visit('/search/person')
+            ->type('John Al', 'name')
+            ->press('Submit');
+
+        $this->see('People Search Results')
+            ->see('Dwayne Johnson')
+            ->see('John Belushi')
+            ->see('John Candy')
+            ->see('John Wayne')
+            ->see('Al Pacino')
+            ->dontSee('Tommy Lee Jones');
+    }
+
+    /** @test */
+    public function it_can_search_for_people_using_any_substring_of_a_name()
+    {
+        $this->seedPeopleTable();
+
+        $this->visit('/search/person')
+            ->type('warz ndy', 'name')
+            ->press('Submit');
+
+        $this->see('People Search Results')
+            ->see('Arnold Schwarzenneger')
+            ->see('John Candy')
+            ->dontSee('Tommy Lee Jones');
+    }
+
+    /** @test */
+    public function it_can_search_for_a_person_using_a_first_name()
+    {
+        $this->seedPeopleTable();
+
+        $this->visit('/search/person')
+            ->type('Arnold', 'name')
+            ->press('Submit');
+
+        $this->see('People Search Results')
+            ->see('Arnold Schwarzenneger')
+            ->dontSee('Tommy Lee Jones');
+    }
+
+    /** @test */
+    public function it_can_search_for_a_person_using_a_middle_name()
+    {
+        $this->seedPeopleTable();
+
+        $this->visit('/search/person')
+            ->type('Alois', 'name')
+            ->press('Submit');
+
+        $this->see('People Search Results')
+            ->see('Arnold Schwarzenneger')
+            ->dontSee('Tommy Lee Jones');
+    }
+
+    /** @test */
+    public function it_can_search_for_a_person_using_a_last_name()
+    {
+        $this->seedPeopleTable();
+
+        $this->visit('/search/person')
+            ->type('Schwarzenneger', 'name')
+            ->press('Submit');
+
+        $this->see('People Search Results')
+            ->see('Arnold Schwarzenneger')
+            ->dontSee('Tommy Lee Jones');
+    }
+
+    /** @test */
+    public function it_can_search_for_a_person_using_a_first_alias()
+    {
+        $this->seedPeopleTable();
+
+        $this->visit('/search/person')
+            ->type('Tom', 'name')
+            ->press('Submit');
+
+        $this->see('People Search Results')
+            ->see('Tom Cruise')
+            ->dontSee('Louis C.K');
+    }
+
+    /** @test */
+    public function it_can_search_for_a_person_using_a_middle_alias()
+    {
+        $this->seedPeopleTable();
+
+        $this->visit('/search/person')
+            ->type('J.', 'name')
+            ->press('Submit');
+
+        $this->see('People Search Results')
+            ->see('Michael J. Fox')
+            ->dontSee('Louis C.K');
+    }
+
+    /** @test */
+    public function it_can_search_for_a_person_using_a_last_alias()
+    {
+        $this->seedPeopleTable();
+
+        $this->visit('/search/person')
+            ->type('Wayne', 'name')
+            ->press('Submit');
+
+        $this->see('People Search Results')
+            ->see('John Wayne')
+            ->dontSee('Louis C.K');
+    }
+
+    /** @test */
+    public function it_can_do_an_adv_person_search_by_birth_date_using_a_minimum_date_inclusive()
+    {
+        $this->seedPeopleTable();
+
+        $this->visit('/search/person')
+            ->type('08/12/1967', 'date-of-birth-start')
+            ->press('Submit');
+
+        $this->see('People Search Results')
+            ->see('Dwayne Johnson')
+            ->see('Louis C.K.')
+            ->dontSee('John Wayne');
+    }
+
+    /** @test */
+    public function it_can_do_an_adv_person_search_by_birth_date_using_a_maximum_date_inclusive()
+    {
+        $this->seedPeopleTable();
+
+        $this->visit('/search/person')
+            ->type('07/03/1947', 'date-of-birth-end')
+            ->press('Submit');
+
+        $this->see('People Search Results')
+            ->see('Arnold Schwarzenneger')
+            ->see('Al Pacino')
+            ->see('John Wayne')
+            ->see('Tommy Lee Jones')
+            ->dontSee('Louis C.K.');
+    }
+
+    /** @test */
+    public function it_can_do_an_adv_person_search_by_dob_using_a_range()
+    {
+        $this->seedPeopleTable();
+
+        $this->visit('/search/person')
+            ->type('01/01/1940', 'date-of-birth-start')
+            ->type('12/31/1949', 'date-of-birth-end')
+            ->press('Submit');
+
+        $this->see('People Search Results')
+            ->see('Arnold Schwarzenneger')
+            ->see('Al Pacino')
+            ->see('John Belushi')
+            ->see('Tommy Lee Jones')
+            ->dontSee('John Wayne')
+            ->dontSee('Louis C.K.');
+    }
+
+    /** @test */
+    public function it_redirects_with_a_validation_error_if_the_dob_min_or_max_is_not_a_valid_date_format()
+    {
+        $this->visit('/search/person')
+            ->type('1940\01-22', 'date-of-birth-start')
+            ->type('1922.01-22', 'date-of-birth-end')
+            ->press('Submit');
+
+        $this->seePageIs('/search/person')
+            ->see('The date-of-birth-start does not match the format m/d/Y.')
+            ->see('The date-of-birth-end does not match the format m/d/Y.');
+    }
+
+    /** @test */
+    public function it_redirects_with_a_validation_error_if_the_dob_max_is_less_than_the_min()
+    {
+        $this->visit('/search/person')
+            ->type('01-01-1999', 'date-of-birth-start')
+            ->type('01-01-1992', 'date-of-birth-end')
+            ->press('Submit');
+
+        $this->seePageIs('/search/person')
+            ->see('The date-of-birth-start field must be on or before the date-of-birth-end field.');
+    }
+
+    /** @test */
+    public function it_can_do_an_adv_person_search_by_death_date_using_a_minimum_date_inclusive()
+    {
+        $this->seedPeopleTable();
+
+        $this->visit('/search/person')
+            ->type('03/04/1994', 'date-of-death-start')
+            ->press('Submit');
+
+        $this->see('People Search Results')
+            ->see('John Candy')
+            ->dontSee('John Belushi')
+            ->dontSee('John Wayne');
+    }
+
+    /** @test */
+    public function it_can_do_an_adv_person_search_by_death_date_using_a_maximum_date_inclusive()
+    {
+        $this->seedPeopleTable();
+
+        $this->visit('/search/person')
+            ->type('06/14/1979', 'date-of-death-end')
+            ->press('Submit');
+
+        $this->see('People Search Results')
+            ->dontSee('John Candy')
+            ->dontSee('John Belushi')
+            ->see('John Wayne');
+    }
+
+    /** @test */
+    public function it_can_do_an_adv_person_search_by_death_date_using_a_range()
+    {
+        $this->seedPeopleTable();
+
+        $this->visit('/search/person')
+            ->type('01/01/1980', 'date-of-death-start')
+            ->type('01/01/1985', 'date-of-death-end')
+            ->press('Submit');
+
+        $this->see('People Search Results')
+            ->dontSee('John Candy')
+            ->see('John Belushi')
+            ->dontSee('John Wayne');
+    }
+
+    /** @test */
+    public function it_redirects_with_a_validation_error_if_the_dod_min_or_max_is_not_a_valid_date_format()
+    {
+        $this->visit('/search/person')
+            ->type('1940\01-22', 'date-of-death-start')
+            ->type('1922.01-22', 'date-of-death-end')
+            ->press('Submit');
+
+        $this->seePageIs('/search/person')
+            ->see('The date-of-death-start does not match the format m/d/Y.')
+            ->see('The date-of-death-end does not match the format m/d/Y.');
+    }
+
+    /** @test */
+    public function it_redirects_with_a_validation_error_if_the_dod_max_is_less_than_the_min()
+    {
+        $this->visit('/search/person')
+            ->type('01-01-1999', 'date-of-death-start')
+            ->type('01-01-1992', 'date-of-death-end')
+            ->press('Submit');
+
+        $this->seePageIs('/search/person')
+            ->see('The date-of-death-start field must be on or before the date-of-death-end field.');
+    }
+
+    /** @test */
+    public function it_can_do_an_adv_person_search_by_country()
+    {
+        $this->seedPeopleTable();
+
+        $this->visit('/search/person')
+            ->select('Canada', 'countries')
+            ->press('Submit');
+
+        $this->see('People Search Results')
+            ->see('John Candy')
+            ->see('Michael J. Fox')
+            ->dontSee('Arnold Schwarzenneger')
+            ->dontSee('John Wayne');
+    }
+
+    /** @test */
+    public function it_can_search_for_people_using_more_than_one_country()
+    {
+        $this->seedPeopleTable();
+
+        $this->visit('/search/person');
+
+        // using Symfony tools for multiple selections because Laravel...
+        $form = $this->getForm('Submit');
+        $form['countries']->select(['Canada', 'Austria']);
+        $this->makeRequestUsingForm($form);
+
+        $this->see('People Search Results')
+            ->see('John Candy')
+            ->see('Michael J. Fox')
+            ->see('Arnold Schwarzenneger')
+            ->dontSee('John Wayne');
+    }
+
+    /** @test */
+    public function it_takes_the_intersection_of_the_adv_person_search_fields_for_specific_results()
+    {
+        $this->seedPeopleTable();
+
+        $this->visit('/search/person')
+            ->type('John', 'name')
+            ->select('Canada', 'countries')
+            ->press('Submit');
+
+        $this->see('People Search Results')
+            ->see('John Candy')
+            ->dontSee('John Wayne');
     }
 
     private function seedMoviesTable()
@@ -630,5 +971,11 @@ class SearchControllerTest extends TestCase {
         App\Person::create(['first_name' => 'John', 'middle_name' => 'Adam', 'last_name' => 'Belushi', 'first_alias' => null, 'middle_alias' => null, 'last_alias' => null, 'country_of_origin' => 'United States', 'date_of_birth' => '1949-01-24', 'date_of_death' => '1982-05-03', 'biography' => 'John Adam Belushi (January 24, 1949 – March 5, 1982) was an American comedian, actor, and musician. He is best known for his "intense energy and raucous attitude" which he displayed as one of the original cast members of the NBC sketch comedy show Saturday Night Live, in his role in the 1978 film Animal House and in his recordings and performances as one of The Blues Brothers.']);
 
         App\Person::create(['first_name' => 'John', 'middle_name' => 'Franklin', 'last_name' => 'Candy', 'first_alias' => null, 'middle_alias' => null, 'last_alias' => null, 'country_of_origin' => 'Canada', 'date_of_birth' => '1950-10-31', 'date_of_death' => '1994-03-04', 'biography' => 'John Franklin Candy (October 31, 1950 – March 4, 1994) was a Canadian actor and comedian, mainly in American films such as Planes, Trains and Automobiles (1987) and Uncle Buck (1989).']);
+
+        App\Person::create(['first_name' => 'Tommy', 'middle_name' => 'Lee', 'last_name' => 'Jones', 'first_alias' => 'Tommy', 'middle_alias' => 'Lee', 'last_alias' => 'Jones', 'country_of_origin' => 'United States', 'date_of_birth' => '1946-09-15', 'date_of_death' => null, 'biography' => 'Tommy Lee Jones (born September 15, 1946) is an American actor and filmmaker. He has received four Academy Award nominations, winning one as Best Supporting Actor for his performance as U.S. Marshal Samuel Gerard in the 1993 thriller film The Fugitive.']);
+
+        App\Person::create(['first_name' => 'Michael', 'middle_name' => 'Andrew', 'last_name' => 'Fox', 'first_alias' => 'Michael', 'middle_alias' => 'J.', 'last_alias' => 'Fox', 'country_of_origin' => 'Canada', 'date_of_birth' => '1961-06-09', 'date_of_death' => null, 'biography' => 'Michael Andrew Fox, OC (born June 9, 1961), known as Michael J. Fox, is a Canadian-American actor, author, producer, and advocate. With a film and television career spanning from the 1970s, Fox\'s roles have included Marty McFly from the Back to the Future trilogy (1985–1990); Alex P. Keaton from NBC\'s Family Ties (1982–1989), for which he won three Emmy Awards and a Golden Globe Award; and Mike Flaherty in ABC\'s Spin City (1996–2001), for which he won an Emmy, three Golden Globes, and two Screen Actors Guild Awards.']);
+
+        App\Person::create(['first_name' => 'Thomas', 'middle_name' => 'Cruise', 'last_name' => 'Mapother', 'first_alias' => 'Tom', 'middle_alias' => null, 'last_alias' => 'Cruise', 'country_of_origin' => 'United States', 'date_of_birth' => '1962-07-03', 'date_of_death' => null, 'biography' => 'Tom Cruise (born Thomas Cruise Mapother IV; July 3, 1962) is an American actor and filmmaker. Cruise has been nominated for three Academy Awards and has won three Golden Globe Awards. He started his career at age 19 in the 1981 film Endless Love. After portraying supporting roles in Taps (1981) and The Outsiders (1983), his first leading role was in the romantic comedy Risky Business, released in August 1983.']);
     }
 }

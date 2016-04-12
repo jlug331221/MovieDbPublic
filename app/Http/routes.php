@@ -59,7 +59,6 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/search/person', 'SearchController@get_advancedPerson');
     Route::post('/search/person', 'SearchController@post_advancedPerson');
     Route::get('/search/suffix/{term}', 'SearchController@get_suffixSearch_json');
-    Route::get('/search/suffixp/{term}', 'SearchController@get_suffixSearch_person_json'); //temp
 
     // Review Routes
     Route::get('/reviews/create/{mid}', 'ReviewController@create');
