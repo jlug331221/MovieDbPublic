@@ -57,9 +57,8 @@
                 <h3 class="page-header">Pictures</h3>
             </div>
 
-            <div class="col-md-6">
-                <p>This section is reserved for a horizontal view of movie pictures.</p>
-            </div>
+            @include('images.albumPreview')
+
         </div>
         <!-- /.row -->
 
