@@ -97,7 +97,7 @@ class UserTest extends TestCase {
         $this->assertEmpty($collection, $user->roles);
     }
 
-
+    // REQ-ID: 107
     /** @test */
     public function it_can_change_its_avatar_using_an_image()
     {
@@ -112,6 +112,7 @@ class UserTest extends TestCase {
         $this->assertEquals($user->avatar, $image->id);
     }
 
+    // REQ-ID: 107
     /** @test */
     public function it_can_set_its_avatar_to_null()
     {
@@ -130,6 +131,7 @@ class UserTest extends TestCase {
         $this->assertNull($user->avatar);
     }
 
+    // REQ-ID: 107
     /** @test */
     public function it_throws_an_exception_for_invalid_parameters_when_changing_the_avatar()
     {
