@@ -12,7 +12,7 @@
                 <h1 class="page-header"> {{ $movie->title }}
                     <small> ({{ $year }}) </small>
                     @can('edit_all_content')
-                        <a href="#"><button type="button" class="btn MoviePage__btnAdmin">Edit Movie</button></a>
+                        <a href="{{ url('/admin/showMovie/' . $movie->id) }}"><button type="button" class="btn MoviePage__btnAdmin">Edit Movie</button></a>
                         <a href="#"><button type="button" class="btn MoviePage__btnAdmin">Delete Movie</button></a>
                     @endcan
                 </h1>
@@ -100,7 +100,7 @@
                         <td>{{$firstPersonCast->first_name}} {{$firstPersonCast->last_name}}</td>
                         <td align="left">...</td>
                         <td align="left">
-                            {{$firstPersonRole->name}}
+                            {{$firstPersonRole->character_name}}
                         </td>
                     </tr>
                     @foreach($newCastCollection as $cast)
@@ -121,7 +121,7 @@
                             <td>{{$cast->first_name}} {{$cast->last_name}}</td>
                             <td align="left">...</td>
                             <td align="left">
-                                {{$cast->name}}
+                                {{$cast->character_name}}
                             </td>
                         </tr>
                     @endforeach
