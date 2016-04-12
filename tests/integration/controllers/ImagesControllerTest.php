@@ -6,6 +6,7 @@ class ImagesControllerTest extends TestCase {
 
     use DatabaseTransactions;
 
+    // REQ-ID: 97
     /** @test */
     public function it_can_get_album_info_as_json_in_a_specific_format()
     {
@@ -27,6 +28,7 @@ class ImagesControllerTest extends TestCase {
         $this->assertEquals($expected, $actual);
     }
 
+    // REQ-ID: 97
     /** @test */
     public function it_returns_404_when_requesting_json_for_a_nonexistent_album()
     {
@@ -37,6 +39,7 @@ class ImagesControllerTest extends TestCase {
         $this->assertEquals(\Response::json(['code' => 404, 'msg' => 'Album not found.']), $actual);
     }
 
+    // REQ-ID: 97
     /** @test */
     public function it_returns_null_fields_for_an_album_without_any_images()
     {

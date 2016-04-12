@@ -9,6 +9,7 @@ class ImageSyncTest extends TestCase {
 
     use DatabaseTransactions;
 
+    // REQ-ID: 55
     /** @test */
     public function it_can_create_a_record_and_corresponding_file()
     {
@@ -30,6 +31,7 @@ class ImageSyncTest extends TestCase {
         $this->tear_down_image_file($image);
     }
 
+    // REQ-ID: 60
     /** @test */
     public function it_can_delete_a_record_and_corresponding_file()
     {
@@ -46,6 +48,7 @@ class ImageSyncTest extends TestCase {
         $this->assertNotTrue(file_exists($image->getAbsolutePath()));
     }
 
+    // REQ-ID: 59
     /** @test */
     public function it_throws_an_exception_for_non_file_types_during_creation()
     {
@@ -61,6 +64,7 @@ class ImageSyncTest extends TestCase {
         $this->fail();
     }
 
+    // REQ-ID: 57, 59
     /** @test */
     public function it_throws_an_exception_for_invalid_file_extensions_during_creation()
     {

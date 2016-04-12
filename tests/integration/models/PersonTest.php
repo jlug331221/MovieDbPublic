@@ -16,6 +16,7 @@ class PersonTest extends TestCase {
         parent::setUp();
     }
 
+    // REQ-ID: 100
     /** @test */
     public function it_has_a_best_name_which_is_the_persons_alias_if_one_exists()
     {
@@ -44,7 +45,7 @@ class PersonTest extends TestCase {
         $this->assertEquals('Marion Morrison', $person->getBestName());
     }
 
-
+    // REQ-ID: 100
     /** @test */
     public function it_has_a_best_name_which_is_the_persons_actual_name_if_no_alias_exists()
     {
@@ -63,6 +64,7 @@ class PersonTest extends TestCase {
         $this->assertEquals('Morrison', $person->getBestName());
     }
 
+    // REQ-ID: 100
     /** @test */
     public function it_has_a_best_name_which_is_question_mark_if_no_best_name_exists()
     {
@@ -83,6 +85,7 @@ class PersonTest extends TestCase {
         $this->assertEquals('?', $person->getBestName());
     }
 
+    // REQ-ID: 93
     /** @test */
     public function it_can_get_the_birth_year_of_a_person()
     {
@@ -92,6 +95,7 @@ class PersonTest extends TestCase {
         $this->assertEquals('1972', $person->getBirthAndDeathYears());
     }
 
+    // REQ-ID: 93
     /** @test */
     public function it_can_get_the_birth_and_death_year_of_a_person()
     {
@@ -102,6 +106,7 @@ class PersonTest extends TestCase {
         $this->assertEquals('1941 - 1996', $person->getBirthAndDeathYears());
     }
 
+    // REQ-ID: 93
     /** @test */
     public function it_returns_a_question_mark_if_the_person_has_no_birth_year()
     {
@@ -114,6 +119,7 @@ class PersonTest extends TestCase {
         $this->assertEquals('?', $person->getBirthAndDeathYears());
     }
 
+    // REQ-ID: 102
     /** @test */
     public function it_creates_an_associated_album_whenever_a_person_is_created()
     {
@@ -131,6 +137,7 @@ class PersonTest extends TestCase {
         $this->assertEquals($person->album, $album->id);
     }
 
+    // REQ-ID: 106
     /** @test */
     public function it_stores_all_suffixes_of_a_persons_names_when_a_person_is_created()
     {
@@ -179,6 +186,7 @@ class PersonTest extends TestCase {
         $this->assertEquals($id, $r->person_id);
     }
 
+    // REQ-ID: 106
     /** @test */
     public function it_updates_all_suffixes_of_a_persons_names_when_a_person_is_updated()
     {
@@ -222,6 +230,7 @@ class PersonTest extends TestCase {
         $this->assertEquals($id, $r->person_id);
     }
 
+    // REQ-ID: 106
     /** @test */
     public function it_removes_all_suffixes_of_a_persons_name_when_the_person_is_delete()
     {

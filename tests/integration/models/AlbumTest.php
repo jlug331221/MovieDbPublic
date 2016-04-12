@@ -17,6 +17,7 @@ class AlbumTest extends TestCase {
         $this->album = factory(Album::class)->create();
     }
 
+    // REQ-ID: 62
     /** @test */
     public function it_can_add_an_image_to_an_album_using_an_image()
     {
@@ -29,6 +30,7 @@ class AlbumTest extends TestCase {
         $this->assertEquals(1, count($albumImages));
     }
 
+    // REQ-ID: 62
     /** @test */
     public function it_can_add_an_image_to_an_album_using_an_image_id()
     {
@@ -40,6 +42,7 @@ class AlbumTest extends TestCase {
         $this->assertEquals(1, count($albumImages));
     }
 
+    // REQ-ID: 62
     /** @test */
     public function it_ignores_incorrect_types_when_adding_an_image_to_an_album()
     {
@@ -53,6 +56,7 @@ class AlbumTest extends TestCase {
         $this->assertEquals(0, count($albumImages));
     }
 
+    // REQ-ID: 62
     /** @test */
     public function it_can_add_to_an_album_using_an_array_of_images()
     {
@@ -67,6 +71,7 @@ class AlbumTest extends TestCase {
         $this->assertEquals(3, count($albumImages));
     }
 
+    // REQ-ID: 62
     /** @test */
     public function it_can_add_to_an_album_using_an_array_of_image_ids()
     {
@@ -81,6 +86,7 @@ class AlbumTest extends TestCase {
         $this->assertEquals(3, count($albumImages));
     }
 
+    // REQ-ID: 62
     /** @test */
     public function it_can_remove_an_image_from_an_album_using_an_image()
     {
@@ -98,6 +104,7 @@ class AlbumTest extends TestCase {
         $this->assertEquals(0, count($albumImages));
     }
 
+    // REQ-ID: 62
     /** @test */
     public function it_can_remove_an_image_from_an_album_using_an_image_id()
     {
@@ -115,6 +122,7 @@ class AlbumTest extends TestCase {
         $this->assertEquals(0, count($albumImages));
     }
 
+    // REQ-ID: 62
     /** @test */
     public function it_ignores_incorrect_types_when_removing_an_image_to_an_album()
     {
@@ -130,6 +138,7 @@ class AlbumTest extends TestCase {
         $this->assertEquals(1, count($albumImages));
     }
 
+    // REQ-ID: 62
     /** @test */
     public function it_can_remove_from_an_album_using_an_array_of_images()
     {
@@ -152,6 +161,7 @@ class AlbumTest extends TestCase {
         $this->assertEquals(1, count($albumImages));
     }
 
+    // REQ-ID: 62
     /** @test */
     public function it_can_remove_from_an_album_using_an_array_of_image_ids()
     {
@@ -174,6 +184,7 @@ class AlbumTest extends TestCase {
         $this->assertEquals(1, count($albumImages));
     }
 
+    // REQ-ID: 62
     /** @test */
     public function it_can_remove_all_of_the_images_from_the_album()
     {
@@ -194,12 +205,14 @@ class AlbumTest extends TestCase {
         $this->assertEquals(0, count($albumImages));
     }
 
+    // REQ-ID: 99
     /** @test */
     public function it_has_no_default_image_on_creation()
     {
         $this->assertNull($this->album->default);
     }
 
+    // REQ-ID: 99
     /** @test */
     public function it_can_change_the_default_image_using_an_instance_of_an_image()
     {
@@ -213,6 +226,7 @@ class AlbumTest extends TestCase {
         $this->assertEquals($album->default, $image->id);
     }
 
+    // REQ-ID: 99
     /** @test */
     public function it_can_change_the_default_image_using_an_id()
     {
@@ -226,6 +240,7 @@ class AlbumTest extends TestCase {
         $this->assertEquals($album->default, $image->id);
     }
 
+    // REQ-ID: 99
     /** @test */
     public function it_removes_the_default_image_when_all_images_are_cleared()
     {

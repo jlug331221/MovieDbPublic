@@ -38,6 +38,7 @@ class SearchControllerTest extends TestCase {
         );
     }
 
+    // REQ-ID: 96
     /** @test */
     public function it_does_a_general_suffix_search_based_on_term_that_returns_formatted_json_for_movies_and_people()
     {
@@ -76,6 +77,7 @@ class SearchControllerTest extends TestCase {
         );
     }
 
+    // REQ-ID: 96
     /** @test */
     public function it_formats_names_using_the_alias_if_it_exists_for_person_results()
     {
@@ -110,6 +112,7 @@ class SearchControllerTest extends TestCase {
         );
     }
 
+    // REQ-ID: 96
     /** @test */
     public function it_formats_names_using_the_first_and_last_names_if_the_alias_does_not_exist_for_person_results()
     {
@@ -144,6 +147,7 @@ class SearchControllerTest extends TestCase {
         );
     }
 
+    // REQ-ID: 96
     /** @test */
     public function it_returns_a_question_mark_as_the_name_if_no_suitable_name_exists()
     {
@@ -181,6 +185,7 @@ class SearchControllerTest extends TestCase {
         );
     }
 
+    // REQ-ID: 2
     /** @test */
     public function it_has_countries_genres_and_parental_ratings_parameters_when_navigating_to_the_advanced_movie_search_page()
     {
@@ -192,6 +197,7 @@ class SearchControllerTest extends TestCase {
         $this->assertViewHas('ratings', App\Library\StaticData::$ratings);
     }
 
+    // REQ-ID: 3
     /** @test */
     public function it_has_a_countries_parameter_when_navigating_to_the_advanced_person_search_page()
     {
@@ -201,6 +207,7 @@ class SearchControllerTest extends TestCase {
         $this->assertViewHas('countries', App\Library\StaticData::$countries);
     }
 
+    // REQ-ID: 74
     /** @test */
     public function it_returns_all_results_when_adv_movie_search_has_no_fields_checked()
     {
@@ -228,6 +235,7 @@ class SearchControllerTest extends TestCase {
             ->see('The Sword in the Stone');
     }
 
+    // REQ-ID: 75
     /** @test */
     public function it_can_do_an_adv_movie_search_based_on_title()
     {
@@ -245,6 +253,7 @@ class SearchControllerTest extends TestCase {
             ->dontSee('Twins');
     }
 
+    // REQ-ID: 75
     /** @test */
     public function it_can_search_titles_using_partial_titles_that_begin_at_a_prefix_of_a_word_in_a_title()
     {
@@ -271,6 +280,7 @@ class SearchControllerTest extends TestCase {
             ->see('Star Wars Episode VI: Return of the Jedi');
     }
 
+    // REQ-ID: 76
     /** @test */
     public function it_can_do_an_advanced_movie_search_by_genre()
     {
@@ -291,6 +301,7 @@ class SearchControllerTest extends TestCase {
             ->dontSee('Twins');
     }
 
+    // REQ-ID: 76
     /** @test */
     public function it_can_include_more_than_one_genre_in_the_search()
     {
@@ -312,6 +323,7 @@ class SearchControllerTest extends TestCase {
             ->dontSee('Twins');
     }
 
+    // REQ-ID: 77
     /** @test */
     public function it_can_do_an_adv_movie_search_by_release_date_using_a_beginning_date_inclusive()
     {
@@ -329,6 +341,7 @@ class SearchControllerTest extends TestCase {
             ->dontSee('Rocky');
     }
 
+    // REQ-ID: 77
     /** @test */
     public function it_can_do_an_adv_movie_search_by_release_date_using_an_ending_date_inclusive()
     {
@@ -345,6 +358,7 @@ class SearchControllerTest extends TestCase {
             ->dontSee('Rocky');
     }
 
+    // REQ-ID: 77
     /** @test */
     public function it_can_do_an_adv_movie_search_by_release_date_using_a_range_inclusive()
     {
@@ -363,6 +377,7 @@ class SearchControllerTest extends TestCase {
             ->dontSee('Rocky');
     }
 
+    // REQ-ID: 82
     /** @test */
     public function it_redirects_with_a_validation_error_if_the_date_is_formatted_incorrectly()
     {
@@ -376,6 +391,7 @@ class SearchControllerTest extends TestCase {
             ->see('The date-start does not match the format m/d/Y.');
     }
 
+    // REQ-ID: 82
     /** @test */
     public function it_redirects_with_an_error_if_the_start_date_is_after_the_end_date()
     {
@@ -390,6 +406,7 @@ class SearchControllerTest extends TestCase {
             ->see('The date-start field must be on or before the date-end field.');
     }
 
+    // REQ-ID: 78
     /** @test */
     public function it_can_do_an_adv_movie_search_by_country()
     {
@@ -407,6 +424,7 @@ class SearchControllerTest extends TestCase {
             ->dontSee('The Terminator');
     }
 
+    // REQ-ID: 78
     /** @test */
     public function it_can_search_for_movies_using_more_than_one_country()
     {
@@ -427,8 +445,9 @@ class SearchControllerTest extends TestCase {
             ->dontSee('The Terminator');
     }
 
+    // REQ-ID: 81
     /** @test */
-    public function it_can_do_an_adv_movie_search_by_genre()
+    public function it_can_do_an_adv_movie_search_by_parental_rating()
     {
         $this->seedMoviesTable();
 
@@ -448,8 +467,9 @@ class SearchControllerTest extends TestCase {
             ->dontSee('The Terminator');
     }
 
+    // REQ-ID: 81
     /** @test */
-    public function it_can_search_using_more_than_one_genre()
+    public function it_can_search_using_more_than_one_parental_rating()
     {
         $this->seedMoviesTable();
 
@@ -470,6 +490,7 @@ class SearchControllerTest extends TestCase {
             ->dontSee('The Terminator');
     }
 
+    // REQ-ID: 79
     /** @test */
     public function it_can_do_an_adv_movie_search_by_runtime_using_a_minimum_value_inclusive()
     {
@@ -487,6 +508,7 @@ class SearchControllerTest extends TestCase {
             ->dontSee('The Terminator');
     }
 
+    // REQ-ID: 79
     /** @test */
     public function it_can_do_an_adv_movie_search_by_runtime_using_a_maximum_value_inclusive()
     {
@@ -503,6 +525,7 @@ class SearchControllerTest extends TestCase {
             ->dontSee('The Martian');
     }
 
+    // REQ-ID: 79
     /** @test */
     public function it_can_do_an_adv_movie_search_by_runtime_using_a_range_inclusive()
     {
@@ -521,6 +544,7 @@ class SearchControllerTest extends TestCase {
             ->dontSee('Drive');
     }
 
+    // REQ-ID: 82
     /** @test */
     public function it_redirects_with_a_validation_error_if_the_runtime_is_not_an_integer()
     {
@@ -536,6 +560,7 @@ class SearchControllerTest extends TestCase {
             ->see('The runtime-max must be an integer.');
     }
 
+    // REQ-ID: 82
     /** @test */
     public function it_redirects_with_a_validation_error_if_the_min_runtime_is_greater_than_the_max()
     {
@@ -550,7 +575,7 @@ class SearchControllerTest extends TestCase {
             ->see('The runtime-max field cannot be less than the runtime-min field.');
     }
 
-
+    // REQ-ID: 83
     /** @test */
     public function it_takes_the_intersection_of_the_adv_movie_search_fields_for_specific_results()
     {
@@ -567,6 +592,7 @@ class SearchControllerTest extends TestCase {
             ->see('Star Wars Episode VI: Return of the Jedi');
     }
 
+    // REQ-ID: 84
     /** @test */
     public function it_returns_all_results_when_adv_person_search_has_no_fields_checked()
     {
@@ -589,6 +615,7 @@ class SearchControllerTest extends TestCase {
             ->see('Tom Cruise');
     }
 
+    // REQ-ID: 85
     /** @test */
     public function it_can_do_an_adv_person_search_using_a_name()
     {
@@ -607,6 +634,7 @@ class SearchControllerTest extends TestCase {
             ->dontSee('Tommy Lee Jones');
     }
 
+    // REQ-ID: 85
     /** @test */
     public function it_can_search_for_people_using_more_than_one_name_at_once()
     {
@@ -625,6 +653,7 @@ class SearchControllerTest extends TestCase {
             ->dontSee('Tommy Lee Jones');
     }
 
+    // REQ-ID: 85
     /** @test */
     public function it_can_search_for_people_using_any_substring_of_a_name()
     {
@@ -640,6 +669,7 @@ class SearchControllerTest extends TestCase {
             ->dontSee('Tommy Lee Jones');
     }
 
+    // REQ-ID: 85
     /** @test */
     public function it_can_search_for_a_person_using_a_first_name()
     {
@@ -654,6 +684,7 @@ class SearchControllerTest extends TestCase {
             ->dontSee('Tommy Lee Jones');
     }
 
+    // REQ-ID: 85
     /** @test */
     public function it_can_search_for_a_person_using_a_middle_name()
     {
@@ -668,6 +699,7 @@ class SearchControllerTest extends TestCase {
             ->dontSee('Tommy Lee Jones');
     }
 
+    // REQ-ID: 85
     /** @test */
     public function it_can_search_for_a_person_using_a_last_name()
     {
@@ -682,6 +714,7 @@ class SearchControllerTest extends TestCase {
             ->dontSee('Tommy Lee Jones');
     }
 
+    // REQ-ID: 85
     /** @test */
     public function it_can_search_for_a_person_using_a_first_alias()
     {
@@ -696,6 +729,7 @@ class SearchControllerTest extends TestCase {
             ->dontSee('Louis C.K');
     }
 
+    // REQ-ID: 85
     /** @test */
     public function it_can_search_for_a_person_using_a_middle_alias()
     {
@@ -710,6 +744,7 @@ class SearchControllerTest extends TestCase {
             ->dontSee('Louis C.K');
     }
 
+    // REQ-ID: 85
     /** @test */
     public function it_can_search_for_a_person_using_a_last_alias()
     {
@@ -724,6 +759,7 @@ class SearchControllerTest extends TestCase {
             ->dontSee('Louis C.K');
     }
 
+    // REQ-ID: 86
     /** @test */
     public function it_can_do_an_adv_person_search_by_birth_date_using_a_minimum_date_inclusive()
     {
@@ -739,6 +775,7 @@ class SearchControllerTest extends TestCase {
             ->dontSee('John Wayne');
     }
 
+    // REQ-ID: 86
     /** @test */
     public function it_can_do_an_adv_person_search_by_birth_date_using_a_maximum_date_inclusive()
     {
@@ -756,6 +793,7 @@ class SearchControllerTest extends TestCase {
             ->dontSee('Louis C.K.');
     }
 
+    // REQ-ID: 86
     /** @test */
     public function it_can_do_an_adv_person_search_by_dob_using_a_range()
     {
@@ -775,6 +813,7 @@ class SearchControllerTest extends TestCase {
             ->dontSee('Louis C.K.');
     }
 
+    // REQ-ID: 90
     /** @test */
     public function it_redirects_with_a_validation_error_if_the_dob_min_or_max_is_not_a_valid_date_format()
     {
@@ -788,6 +827,7 @@ class SearchControllerTest extends TestCase {
             ->see('The date-of-birth-end does not match the format m/d/Y.');
     }
 
+    // REQ-ID: 90
     /** @test */
     public function it_redirects_with_a_validation_error_if_the_dob_max_is_less_than_the_min()
     {
@@ -800,6 +840,7 @@ class SearchControllerTest extends TestCase {
             ->see('The date-of-birth-start field must be on or before the date-of-birth-end field.');
     }
 
+    // REQ-ID: 87
     /** @test */
     public function it_can_do_an_adv_person_search_by_death_date_using_a_minimum_date_inclusive()
     {
@@ -815,6 +856,7 @@ class SearchControllerTest extends TestCase {
             ->dontSee('John Wayne');
     }
 
+    // REQ-ID: 87
     /** @test */
     public function it_can_do_an_adv_person_search_by_death_date_using_a_maximum_date_inclusive()
     {
@@ -830,6 +872,7 @@ class SearchControllerTest extends TestCase {
             ->see('John Wayne');
     }
 
+    // REQ-ID: 87
     /** @test */
     public function it_can_do_an_adv_person_search_by_death_date_using_a_range()
     {
@@ -846,6 +889,7 @@ class SearchControllerTest extends TestCase {
             ->dontSee('John Wayne');
     }
 
+    // REQ-ID: 90
     /** @test */
     public function it_redirects_with_a_validation_error_if_the_dod_min_or_max_is_not_a_valid_date_format()
     {
@@ -859,6 +903,7 @@ class SearchControllerTest extends TestCase {
             ->see('The date-of-death-end does not match the format m/d/Y.');
     }
 
+    // REQ-ID: 90
     /** @test */
     public function it_redirects_with_a_validation_error_if_the_dod_max_is_less_than_the_min()
     {
@@ -871,6 +916,7 @@ class SearchControllerTest extends TestCase {
             ->see('The date-of-death-start field must be on or before the date-of-death-end field.');
     }
 
+    // REQ-ID: 88
     /** @test */
     public function it_can_do_an_adv_person_search_by_country()
     {
@@ -887,6 +933,7 @@ class SearchControllerTest extends TestCase {
             ->dontSee('John Wayne');
     }
 
+    // REQ-ID: 88
     /** @test */
     public function it_can_search_for_people_using_more_than_one_country()
     {
@@ -906,6 +953,7 @@ class SearchControllerTest extends TestCase {
             ->dontSee('John Wayne');
     }
 
+    // REQ-ID: 91
     /** @test */
     public function it_takes_the_intersection_of_the_adv_person_search_fields_for_specific_results()
     {
