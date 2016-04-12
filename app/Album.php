@@ -38,6 +38,8 @@ class Album extends Model {
 
         if (is_numeric($image))
             $this->default = $image;
+
+        $this->save();
     }
 
     /**

@@ -4,9 +4,9 @@
 
 /*jshint esversion: 6 */
 
-(function ( $ ) {
+(function ($) {
 
-    $.fn.albumloader = function ( options ) {
+    $.fn.albumloader = function (options) {
 
         var settings = $.extend({
             url: '',
@@ -27,9 +27,14 @@
                     target.append('<div class="Album__empty">Album is empty.</div>');
                 } else load();
             },
-            (xhr) => { console.error(`Could not load album: GET ${url} ${xhr.status} ${xhr.statusText}`); }
+            (xhr) => {
+                console.error(`Could not load album: GET ${url} ${xhr.status} ${xhr.statusText}`);
+                target.append('<div class="Album__empty">Could not load album.</div>');
+            }
         ).catch(
-            (error) => { console.error(error); }
+            (error) => {
+                console.error(error.message);
+            }
         );
 
         function load() {
@@ -37,8 +42,8 @@
 
             var segment = {
                 start: displayed,
-                end: (displayed + settings.imagesPerLoad >= data.images.length) ? 
-                        data.images.length : displayed + settings.imagesPerLoad,
+                end: (displayed + settings.imagesPerLoad >= data.images.length) ?
+                    data.images.length : displayed + settings.imagesPerLoad,
             };
             if (segment.end === data.images.length)
                 exhausted = true;
@@ -49,13 +54,15 @@
 
             displayed = segment.end;
 
-            if(!exhausted)
+            if (!exhausted)
                 addLoader();
         }
 
         function addLoader() {
             target.parent().append(renderLoader());
-            $('.Album__loader').on('click', () => { load(); });
+            $('.Album__loader').on('click', () => {
+                load();
+            });
         }
 
         function removeLoader() {
@@ -65,13 +72,13 @@
         return this;
     };
 
-    var ajax = function(options) {
+    var ajax = function (options) {
         return new Promise(function (resolve, reject) {
             $.ajax(options).done(resolve).fail(reject);
         });
     };
 
-    var renderImage = function(image) {
+    var renderImage = function (image) {
         return `<div class="AlbumPreview__thumb"
                      title="${image.description}">
                     <a href="${image.path}"
@@ -82,10 +89,10 @@
                 </div>`;
     };
 
-    var renderLoader = function() {
+    var renderLoader = function () {
         return `<div class="Album__loader-row">
                     <button class="Album__loader btn btn-default">Load More</button>
                 </div>`;
     };
 
-}( jQuery ));
+}(jQuery));

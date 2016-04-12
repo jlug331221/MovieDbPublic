@@ -32,6 +32,11 @@ class SearchController extends Controller {
         return view('search.searchPage', compact('movies', 'people'));
     }
 
+    /**
+     * Advanced movie search page.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function get_advancedMovie()
     {
         $countries = StaticData::$countries;
@@ -40,6 +45,12 @@ class SearchController extends Controller {
         return view('search.advmovie', compact('countries', 'genres', 'ratings'));
     }
 
+    /**
+     * Handles POST requests for advanced movie searches.
+     *
+     * @param AdvancedMovieRequest $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function post_advancedMovie(AdvancedMovieRequest $request)
     {
         $params = [
@@ -97,12 +108,23 @@ class SearchController extends Controller {
         return view('search.searchPage', compact('movies'));
     }
 
+    /**
+     * Advanced person search page.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function get_advancedPerson()
     {
         $countries = StaticData::$countries;
         return view('search.advperson', compact('countries'));
     }
 
+    /**
+     * Handles POST requests for advanced person searches.
+     *
+     * @param AdvancedPersonRequest $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function post_advancedPerson(AdvancedPersonRequest $request)
     {
         $params = [
@@ -174,6 +196,36 @@ class SearchController extends Controller {
         return view('search.searchPage', compact('people'));
     }
 
+    /**
+     * Searches for movies and people based on the given term.
+     * All non alpha-numeric characters are filtered out of
+     * the search term.
+     *
+     * Http requests receive json responses that are of the form:
+     *
+     * [
+     *     {
+     *         'id' : number // id of person
+     *         'name' : string // name of person
+     *         'yob' : string // year of birth
+     *         'yod' : string // year of death
+     *         'img' : string // path to the default image thumbnail for this record
+     *         'type' : 'p' // denotes that this is a person record
+     *     },
+     *     ...
+     *     {
+     *         'id' : number // id of movie
+     *         'name' : string // title of film
+     *         'year' : string // year of release
+     *         'img' : string // path to the default thumbnail for this record
+     *         'type' : 'm' // denotes that this is a movie record
+     *     },
+     *     ...
+     * ]
+     *
+     * @param string $term Search term
+     * @return array|json
+     */
     public function get_suffixSearch_json($term)
     {
         // get search term and remove non-alpha-numeric characters
@@ -185,6 +237,12 @@ class SearchController extends Controller {
         return array_merge($movies, $people);
     }
 
+    /**
+     * Searches for movies based on title suffixes using the given term.
+     *
+     * @param string $term Search term
+     * @return array
+     */
     private function searchMoviesByTerm($term)
     {
         $results = DB::table('movies')
@@ -218,6 +276,12 @@ class SearchController extends Controller {
         return $results;
     }
 
+    /**
+     * Searches for people based on name suffixes using the given term.
+     *
+     * @param string $term Search term
+     * @return array
+     */
     private function searchPeopleByTerm($term)
     {
         $results = DB::table('people')
@@ -256,30 +320,6 @@ class SearchController extends Controller {
         }, $results);
 
         return $results;
-    }
-
-    public function get_personCheck_json()
-    {
-        DB::enableQueryLog();
-        $terms = ['John', 'Dwayne', 'Al', 'Pacino'];
-
-        $search = DB::table('people')->select('people.id', 'people.first_name')->distinct('people.id');
-        $search->join('person_suffixes', function ($join) use ($terms) {
-            $join->on('people.id', '=', 'person_suffixes.person_id')
-                ->where(function ($query) use ($terms) {
-                    array_map(function($name) use ($query) {
-                        $query->orWhere('person_suffixes.name_suffix', 'LIKE', $name.'%');
-                    }, $terms);
-                });
-//                ->where('person_suffixes.name_suffix', 'LIKE', $terms[0].'%');
-//                ->orWhere(function($join) use ($terms) {
-//                    $join->where('person_suffixes.name_suffix', '=', 'Dwayne');
-//                });
-        });
-        $search = $search->get();
-        dump(DB::getQueryLog());
-
-        return $search;
     }
 }
 

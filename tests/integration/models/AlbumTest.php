@@ -209,7 +209,8 @@ class AlbumTest extends TestCase {
         $this->album->addImage($image->id);
 
         $this->album->changeDefault($image);
-        $this->assertEquals($this->album->default, $image->id);
+        $album = Album::first();
+        $this->assertEquals($album->default, $image->id);
     }
 
     /** @test */
@@ -221,7 +222,8 @@ class AlbumTest extends TestCase {
         $this->album->addImage($image->id);
 
         $this->album->changeDefault($image->id);
-        $this->assertEquals($this->album->default, $image->id);
+        $album = Album::first();
+        $this->assertEquals($album->default, $image->id);
     }
 
     /** @test */

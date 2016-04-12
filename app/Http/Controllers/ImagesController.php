@@ -187,6 +187,7 @@ class ImagesController extends Controller {
         return redirect('admin/showMovie/' . $movie->id);
     }
 
+    // temporary
     public function albumPreview($id)
     {
         $album = Album::find($id);
@@ -194,21 +195,57 @@ class ImagesController extends Controller {
         return view('albums/albumPreview', compact('album', 'maxImages'));
     }
 
+    /**
+     * Album page for a person.
+     *
+     * @param integer $id Album id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function get_personAlbum($id)
     {
         $person = Person::find($id);
         return view('albums/personAlbum', compact('person'));
     }
 
+    /**
+     * Album page for a movie.
+     *
+     * @param integer $id Album id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function get_movieAlbum($id)
     {
         $movie = Movie::find($id);
         return view('albums/movieAlbum', compact('movie'));
     }
 
+    /**
+     * Returns a json response with the following information about
+     * an album:
+     *
+     * {
+     *     'default' : number // default image for the album
+     *     'images' : [
+     *         {
+     *             'id' : number // id of the image
+     *             'path' : string // path to the image
+     *             'thumb' : string // path to the thumbnail of the image
+     *             'description' : string // description of the image
+     *         },
+     *         ...
+     *     ]
+     * }
+     *
+     * @param integer $id Album id
+     * @return array
+     */
     public function get_album_json($id)
     {
         $album = Album::find($id);
+
+        if ( ! $album)
+            return \Response::json(['code' => 404, 'msg' => 'Album not found.']);
+
         $images = $album->images()->get();
 
         $images = $images->map(function ($image) {

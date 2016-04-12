@@ -52,7 +52,7 @@ $(function () {
             }
 
         },
-        remoteUrl: '/search/suffix/WILDCARD',
+        remoteUrl: '/search/json/WILDCARD',
         remoteWildcard: 'WILDCARD',
         maxSuggestions: 6,
     });
