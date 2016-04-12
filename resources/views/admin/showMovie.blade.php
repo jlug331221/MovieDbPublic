@@ -144,6 +144,7 @@
                         {{ Session::get('message') }}
                     </div>
                 @endif
+
                 <h3>Movie Images:</h3>
                 @foreach($movieAlbum as $i)
                     <div class="col-md-2">
@@ -163,16 +164,26 @@
         <div class="row">
             <div class="col-md-12 col-lg-12">
                 @if (Session::has('removeCastCrewMessage'))
-                    <div class="alert alert-danger">
+                    <div class="alert alert-info">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
                             &times;
                         </button>
                         {{ Session::get('removeCastCrewMessage') }}
                     </div>
                 @endif
+
+                    @if (Session::has('success'))
+                        <div class="alert alert-info">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                                &times;
+                            </button>
+                            {{ Session::get('success') }}
+                        </div>
+                    @endif
+
                 <div class="col-md-6 col-lg-6">
                     <h2>Cast |
-                        <a href="#">
+                        <a href="{{ url('/admin/showAllPeopleForCastSelection/' . $movie->id) }}">
                             <i class="fa fa-plus-square-o fa-lg"></i>
                         </a>
                     </h2>

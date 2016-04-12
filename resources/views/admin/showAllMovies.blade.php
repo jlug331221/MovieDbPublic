@@ -30,24 +30,24 @@
                     <table id="table_id" class="table table-striped table-bordered" cellspacing="0" width="100%">
                         <thead class="table-invert">
                             <tr>
-                                <th><h4>Title</h4></th>
-                                <th><h4>Country</h4></th>
-                                <th><h4>Release Date</h4></th>
-                                <th><h4>Genre</h4></th>
-                                <th><h4>Rating</h4></th>
-                                <th><h4>Runtime</h4></th>
-                                <th><h4>Administration</h4></th>
+                                <th style="text-align: center;"><h4>Title</h4></th>
+                                <th style="text-align: center;"><h4>Country</h4></th>
+                                <th style="text-align: center;"><h4>Release Date</h4></th>
+                                <th style="text-align: center;"><h4>Genre</h4></th>
+                                <th style="text-align: center;"><h4>Rating</h4></th>
+                                <th style="text-align: center;"><h4>Runtime</h4></th>
+                                <th style="text-align: center;"><h4>Administration</h4></th>
                             </tr>
                         </thead>
                         <tfoot class="table-invert">
                             <tr>
-                                <td><h4>Title</h4></td>
-                                <td><h4>Country</h4></td>
-                                <td><h4>Release Date</h4></td>
-                                <td><h4>Genre</h4></td>
-                                <td><h4>Rating</h4></td>
-                                <td><h4>Runtime</h4></td>
-                                <td><h4>Administration</h4></td>
+                                <td style="text-align: center;"><h4>Title</h4></td>
+                                <td style="text-align: center;"><h4>Country</h4></td>
+                                <td style="text-align: center;"><h4>Release Date</h4></td>
+                                <td style="text-align: center;"><h4>Genre</h4></td>
+                                <td style="text-align: center;"><h4>Rating</h4></td>
+                                <td style="text-align: center;"><h4>Runtime</h4></td>
+                                <td style="text-align: center;"><h4>Administration</h4></td>
                             </tr>
                         </tfoot>
                         <tbody>

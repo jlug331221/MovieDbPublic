@@ -30,24 +30,24 @@
                     <table id="table_id" class="table table-striped table-bordered" cellspacing="0" width="100%">
                         <thead class="table-invert">
                             <tr>
-                                <th><h4>First Name</h4></th>
-                                <th><h4>Last Name</h4></th>
-                                <th><h4>First Alias</h4></th>
-                                <th><h4>Country of Origin</h4></th>
-                                <th><h4>Date of Birth</h4></th>
-                                <th><h4>Date of Death</h4></th>
-                                <th><h4>Administration</h4></th>
+                                <th style="text-align: center;"><h4>First Name</h4></th>
+                                <th style="text-align: center;"><h4>Last Name</h4></th>
+                                <th style="text-align: center;"><h4>First Alias</h4></th>
+                                <th style="text-align: center;"><h4>Country of Origin</h4></th>
+                                <th style="text-align: center;"><h4>Date of Birth</h4></th>
+                                <th style="text-align: center;"><h4>Date of Death</h4></th>
+                                <th style="text-align: center;"><h4>Administration</h4></th>
                             </tr>
                         </thead>
                         <tfoot class="table-invert">
                             <tr>
-                                <td><h4>First Name</h4></td>
-                                <td><h4>Last Name</h4></td>
-                                <td><h4>First Alias</h4></td>
-                                <td><h4>Country of Origin</h4></td>
-                                <td><h4>Date of Birth</h4></td>
-                                <td><h4>Date of Death</h4></td>
-                                <td><h4>Administration</h4></td>
+                                <td style="text-align: center;"><h4>First Name</h4></td>
+                                <td style="text-align: center;"><h4>Last Name</h4></td>
+                                <td style="text-align: center;"><h4>First Alias</h4></td>
+                                <td style="text-align: center;"><h4>Country of Origin</h4></td>
+                                <td style="text-align: center;"><h4>Date of Birth</h4></td>
+                                <td style="text-align: center;"><h4>Date of Death</h4></td>
+                                <td style="text-align: center;"><h4>Administration</h4></td>
                             </tr>
                         </tfoot>
                         <tbody>

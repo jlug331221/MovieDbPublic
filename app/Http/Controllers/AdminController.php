@@ -13,6 +13,7 @@ use App\CreditType;
 use App\Album;
 use App\Image;
 
+use Exception;
 use Illuminate\Support\Facades\Input;
 use Request;
 use Session;
@@ -82,6 +83,10 @@ class AdminController extends Controller
         'date_of_birth' => 'required|date_format:m/d/Y'
     ];
 
+    protected $characterValidationRules = [
+        'character_name' => 'required|string'
+    ];
+
     /**
      * Go to the admin home page.
      *
@@ -118,32 +123,6 @@ class AdminController extends Controller
         $selectedRating = $movie->parental_rating;
         $convertedDate = date("m/d/Y", strtotime($movie->release_date));
 
-        /*$credits = $movie->credits->all();
-        $castInfo = []; $blueCollarCrew = []; $characters = []; $writers = [];
-        $producers = []; $directors = [];
-        for($i = 0; $i < count($credits); $i++) {
-            $creditType = CreditType::find($credits[$i]->credit_type_id);
-            $pId = $credits[$i]->person_id;
-            $characterId = $credits[$i]->character_id;
-
-            if($creditType->type === "Crew") {
-                array_push($blueCollarCrew, Person::find($pId));
-            }
-            if($creditType->type === "Cast") {
-                array_push($castInfo, Person::find($pId));
-                array_push($characters, Character::find($characterId));
-            }
-            if($creditType->type === "Writer") {
-                array_push($writers, Person::find($pId));
-            }
-            if($creditType->type === "Producer") {
-                array_push($producers, Person::find($pId));
-            }
-            if($creditType->type === "Director") {
-                array_push($directors, Person::find($pId));
-            }
-        }*/
-
         $movieAlbum = Album::find($movie->album)->images;
 
         //Get cast and crew information
@@ -167,11 +146,6 @@ class AdminController extends Controller
                 ->where('movie_id', '=', $movie->id)
                 ->where('type', '!=', 'Cast')
                 ->get();
-
-        /*return view('/admin/showMovie', compact(['movie', 'selectedGenre',
-            'countries', 'ratings', 'selectedRating', 'genres', 'convertedDate',
-            'selectedCountry','castInfo', 'characters', 'directors', 'writers',
-            'producers', 'movieAlbum', 'cast', 'crew']));*/
 
         return view('/admin/showMovie', compact(['movie', 'selectedGenre',
             'countries', 'ratings', 'selectedRating', 'genres', 'convertedDate',
@@ -394,6 +368,15 @@ class AdminController extends Controller
         return redirect()->action('AdminController@showPeople');
     }
 
+
+    /**
+     * Remove cast/crew from a movie.
+     *
+     * @param $pid
+     * @param $mid
+     * @param $cTypeId
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function removeCastCrew($pid, $mid, $cTypeId) {
         $movie = Movie::find($mid);
         $person = Person::find($pid);
@@ -406,5 +389,98 @@ class AdminController extends Controller
         Session::flash('removeCastCrewMessage', "Successfully removed " . $person->first_name
             . ' ' . $person->last_name . " as " . $creditType->type . " from " . $movie->title);
         return redirect('admin/showMovie/' . $movie->id);
+    }
+
+
+    /**
+     * Taken to the create character form.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function showCreateCharacterForm() {
+        return view('admin/createCharacter');
+    }
+
+
+    /**
+     * Create and store a character in database.
+     *
+     * @return $this|\Illuminate\Http\RedirectResponse
+     */
+    public function storeCharacter() {
+        $validator = \Validator::make(Input::all(), $this->characterValidationRules);
+
+        if($validator->fails()) {
+            return redirect()->back()->withErrors($validator->errors())->withInput();
+        }
+
+        $character = new Character();
+        $character->character_name = Input::get('character_name');
+        $character->biography = Input::get('biography');
+        $character->save();
+
+        return redirect()->action('AdminController@showCreateCharacterForm')->with('success',
+            "Successfully added character to database!");
+    }
+
+
+    /**
+     * Show all people in database as a table to select a new cast member
+     * for a movie.
+     *
+     * @param $mid
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function showAllPeopleForCastSelection($mid) {
+        $movie = Movie::find($mid);
+        $people = Person::get();
+        return view('/admin/showAllPeopleForCastSelection', compact('movie', 'people'));
+    }
+
+
+    /**
+     * Show all characters in database as a table to select the character
+     * for the cast member in a movie.
+     *
+     * @param $pid
+     * @param $mid
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function showAllCharactersForCastSelection($pid, $mid) {
+        $person = Person::find($pid);
+        $movie = Movie::find($mid);
+        $characters = Character::get();
+        return view('/admin/showAllCharactersForCastSelection',
+            compact('person', 'movie', 'characters'));
+    }
+
+
+    /**
+     * Add cast member to database for a movie.
+     *
+     * @param $pid
+     * @param $mid
+     * @param $cid
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function addCastMember($pid, $mid, $cid) {
+        $movie = Movie::find($mid);
+        $person = Person::find($pid);
+        $credit_type_id = CreditType::where('type', '=', 'Cast')
+                        ->get()->first()->id;
+
+        try {
+            DB::table('credits')->insert(
+                ['movie_id' => $mid, 'person_id' => $pid,
+                    'credit_type_id' => $credit_type_id,
+                    'character_id' => $cid]
+            );
+        } catch(Exception $e) {
+            var_dump($e);
+        }
+
+        return redirect()->action('AdminController@showMovie', [$mid])->with('success',
+            "Successfully added " . $person->first_name . " " . $person->last_name .
+                " as a cast member to " . $movie->title);
     }
 }
