@@ -129,7 +129,7 @@
                                 @if($cast->type === 'Crew')
                                     {{$cast->remark}}
                                 @else
-                                    {{$cast->type}}
+                                    {{$cast->character_name}}
                                 @endif
                             </td>
                         </tr>
