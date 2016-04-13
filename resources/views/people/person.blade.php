@@ -100,7 +100,6 @@
                         </td>
                         <td>{{$firstMovieStarredIn->first_name}} {{$firstMovieStarredIn->last_name}}</td>
                         <td align="left">...</td>
-                        <td align="left">...</td>
                         <td align="left">
                             @if($firstMovieStarredIn->type === 'Crew')
                                 {{$firstMovieStarredIn->remark}}
@@ -109,7 +108,7 @@
                             @endif
                         </td>
                     </tr>
-                    @foreach($movieCollection as $cast)
+                    @foreach($newMovieCollection as $cast)
                         <tr class="collapse row1">
                             <td align ="center">
                                 @if($cast->default === null)

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Movie;
+use App\Character;
 use App\Person;
 use App\Album;
 use App\Library\StaticData;
@@ -35,12 +36,14 @@ class PersonPageController extends Controller
             ->join('credit_types', 'credits.credit_type_id', '=', 'credit_types.id')
             ->leftJoin('images', 'albums.default', '=', 'images.id')
             ->join('characters', 'character_id', '=', 'characters.id')
+            ->join('people', 'person_id', '=', 'people.id')
             ->where('person_id', '=', $person->id)
             ->get();
 
         $firstMovieStarredIn = $movieCollection[0];
         $firstMovieRole = Character::find($firstMovieStarredIn->character_id);
+        $newMovieCollection = array_slice($movieCollection, 1);
 
-        return view('/people/person', compact(['person', 'personAlbum', 'dateOfBirth', 'dateOfDeath', 'album', 'maxImages', 'movieCollection', 'firstMovieStarredIn', 'firstMovieRole']));
+        return view('/people/person', compact(['person', 'personAlbum', 'dateOfBirth', 'dateOfDeath', 'album', 'maxImages', 'newMovieCollection', 'firstMovieStarredIn', 'firstMovieRole']));
     }
 }
