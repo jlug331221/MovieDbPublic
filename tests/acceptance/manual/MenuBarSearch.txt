@@ -1,0 +1,11 @@
+# Created by John on April 12, 2016
+
+Preconditions for running these scripts:
+    1. 
+
+-------------
+Test: When I type in the menu bar search frame, it provides a dropdown that gives me search results.
+Date: Last ran test on April 12, 2016
+Preconditions:
+    To successfully run the test, the database needs to be seeded with at least:
+        A movie or person.
