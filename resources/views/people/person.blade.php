@@ -11,8 +11,8 @@
             <div class="col-lg-12">
                 <h1 class="page-header"> {{$person->getBestName()}}
                     @can('edit_all_content')
-                        <a href="#"><button type="button" class="btn PersonPage__btnAdmin">Edit Person</button></a>
-                        <a href="#"><button type="button" class="btn PersonPage__btnAdmin">Delete Person</button></a>
+                        <a href="{{ url('/admin/showPerson/' . $person->id) }}"><button type="button" class="btn PersonPage__btnAdmin">Edit Person</button></a>
+                        <a href="{{ url('/admin/deletePerson/' . $person->id) }}"><button type="button" class="btn PersonPage__btnAdmin">Delete Person</button></a>
                     @endcan
                 </h1>
             </div>
@@ -23,9 +23,14 @@
         <div class="row PersonPage__Top">
 
             <div class="col-md-4 PersonPage__Image">
-                <img class="PersonPage__poster" src="http://a3.files.biography.com/image/upload/c_fill,cs_srgb,dpr_1.0,g_face,h_300,q_80,w_300/MTE5NDg0MDU1MTIyMTE4MTU5.jpg"
-                     width="300px" height="400px" alt="">
-
+                @if($personAlbum->first() === null)
+                    {!! Html::image('http://masterherald.com/wp-content/uploads/2015/01/arnold-schwarzenegger.jpg',
+                    'arnold_image', array('width' => '100%', 'height' => 'auto')) !!} <br/>
+                    <h3>Arnold is wondering why this movie has no images</h3>
+                @else
+                    <img src="{{ url($personAlbum->first()->getPath()) }}" class="img-responsive"
+                         style="width: 100%; height: auto;">
+                @endif
                 @if(Auth::check())
                     <button type="button" class="btn PersonPage__btnImage">Add to List</button> <br>
                 @endif
@@ -55,9 +60,7 @@
                 <h3 class="page-header">Pictures</h3>
             </div>
 
-            <div class="col-md-6">
-                <p>This section is reserved for a horizontal view of person pictures.</p>
-            </div>
+            @include('images.albumPreview')
         </div>
         <!-- /.row -->
 
@@ -74,63 +77,64 @@
 
                 <table class="table table-responsive table-hover">
                     <thead>
-                    <tr><th>Picture</th><th>Name</th><th></th><th>Role</th></tr>
+                    <tr>
+                        <th style="text-align: center">Picture</th>
+                        <th style="text-align: left">Movie</th><th></th>
+                        <th style="text-align: left">Role</th>
+                    </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td><img src="http://vignette4.wikia.nocookie.net/planetterror/images/f/f4/Michael...jpeg/revision/latest?cb=20140220162656" width="35" height="50"></td>
-                        <td>Michael Biehn</td>
-                        <td>...</td>
-                        <td>Kyle Reese</td>
-                    </tr>
-                    <tr>
-                        <td><img src="http://vignette4.wikia.nocookie.net/planetterror/images/f/f4/Michael...jpeg/revision/latest?cb=20140220162656" width="35" height="50"></td>
-                        <td>Michael Biehn</td>
-                        <td>...</td>
-                        <td>Kyle Reese</td>
-                    </tr>
                     <tr class="clickable" data-toggle="collapse" id="row1" data-target=".row1">
-                        <td><img src="http://popwrapped.com/wp-content/uploads/2015/07/o-ARNOLD-SCHWARZENEGGER-ILL-BE-BACK-facebook.jpg" width="35" height="50"></td>
-                        <td>Arnold Schwarzenegger</td>
-                        <td>...</td>
-                        <td>The Terminator</td>
+                        <td align ="center">
+                            @if($firstMovieStarredIn->default === null)
+                                <img src="http://popwrapped.com/wp-content/uploads/2015/07/o-ARNOLD-SCHWARZENEGGER-ILL-BE-BACK-facebook.jpg"
+                                     class="img-responsive center-block"
+                                     style="height:85px;">
+                            @else
+                                <img src="{{ url($firstMovieStarredIn->path . '/thumbs/'
+                                        . $firstMovieStarredIn->name . '.'
+                                        . $firstMovieStarredIn->extension)}}"
+                                     class="img-responsive center-block"
+                                     style="height: 85px;">
+                            @endif
+                        </td>
+                        <td>{{$firstMovieStarredIn->first_name}} {{$firstMovieStarredIn->last_name}}</td>
+                        <td align="left">...</td>
+                        <td align="left">...</td>
+                        <td align="left">
+                            @if($firstMovieStarredIn->type === 'Crew')
+                                {{$firstMovieStarredIn->remark}}
+                            @else
+                                {{$firstMovieStarredIn->type}}
+                            @endif
+                        </td>
                     </tr>
-                    <tr class="collapse row1">
-                        <td><img src="http://vignette4.wikia.nocookie.net/planetterror/images/f/f4/Michael...jpeg/revision/latest?cb=20140220162656" width="35" height="50"></td>
-                        <td>Michael Biehn</td>
-                        <td>...</td>
-                        <td>Kyle Reese</td>
-                    </tr>
-                    <tr class="collapse row1">
-                        <td><img src="http://vignette4.wikia.nocookie.net/planetterror/images/f/f4/Michael...jpeg/revision/latest?cb=20140220162656" width="35" height="50"></td>
-                        <td>Michael Biehn</td>
-                        <td>...</td>
-                        <td>Kyle Reese</td>
-                    </tr>
-                    <tr class="collapse row1">
-                        <td><img src="http://vignette4.wikia.nocookie.net/planetterror/images/f/f4/Michael...jpeg/revision/latest?cb=20140220162656" width="35" height="50"></td>
-                        <td>Michael Biehn</td>
-                        <td>...</td>
-                        <td>Kyle Reese</td>
-                    </tr>
-                    <tr class="collapse row1">
-                        <td><img src="http://vignette4.wikia.nocookie.net/planetterror/images/f/f4/Michael...jpeg/revision/latest?cb=20140220162656" width="35" height="50"></td>
-                        <td>Michael Biehn</td>
-                        <td>...</td>
-                        <td>Kyle Reese</td>
-                    </tr>
-                    <tr class="collapse row1">
-                        <td><img src="http://vignette4.wikia.nocookie.net/planetterror/images/f/f4/Michael...jpeg/revision/latest?cb=20140220162656" width="35" height="50"></td>
-                        <td>Michael Biehn</td>
-                        <td>...</td>
-                        <td>Kyle Reese</td>
-                    </tr>
-                    <tr class="collapse row1">
-                        <td><img src="http://vignette4.wikia.nocookie.net/planetterror/images/f/f4/Michael...jpeg/revision/latest?cb=20140220162656" width="35" height="50"></td>
-                        <td>Michael Biehn</td>
-                        <td>...</td>
-                        <td>Kyle Reese</td>
-                    </tr>
+                    @foreach($movieCollection as $cast)
+                        <tr class="collapse row1">
+                            <td align ="center">
+                                @if($cast->default === null)
+                                    <img src="http://popwrapped.com/wp-content/uploads/2015/07/o-ARNOLD-SCHWARZENEGGER-ILL-BE-BACK-facebook.jpg"
+                                         class="img-responsive center-block"
+                                         style="height:85px;">
+                                @else
+                                    <img src="{{ url($cast->path . '/thumbs/'
+                                        . $cast->name . '.'
+                                        . $cast->extension)}}"
+                                         class="img-responsive center-block"
+                                         style="height: 85px;">
+                                @endif
+                            </td>
+                            <td>{{$cast->first_name}} {{$cast->last_name}}</td>
+                            <td align="left">...</td>
+                            <td align="left">
+                                @if($cast->type === 'Crew')
+                                    {{$cast->remark}}
+                                @else
+                                    {{$cast->type}}
+                                @endif
+                            </td>
+                        </tr>
+                    @endforeach
                     </tbody>
                 </table>
             </div>

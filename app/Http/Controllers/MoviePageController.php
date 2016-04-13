@@ -63,6 +63,6 @@ class MoviePageController extends Controller
         $firstPersonCrew = $crewCollection[0];
 
         return view('/movies/movie', compact(['movie', 'year', 'newDate', 'director', 'firstPersonCast', 'firstPersonRole', 'newCastCollection',
-                    'firstPersonCrew', 'newCrewCollection', 'album', 'maxImages']));
+                    'firstPersonCrew', 'newCrewCollection', 'album', 'maxImages', 'movieAlbum']));
     }
 }
