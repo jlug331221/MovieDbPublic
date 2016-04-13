@@ -13,7 +13,7 @@
                     <small> ({{ $year }}) </small>
                     @can('edit_all_content')
                         <a href="{{ url('/admin/showMovie/' . $movie->id) }}"><button type="button" class="btn MoviePage__btnAdmin">Edit Movie</button></a>
-                        <a href="#"><button type="button" class="btn MoviePage__btnAdmin">Delete Movie</button></a>
+                        <a href="{{ url('/admin/deleteMovie/' . $movie->id) }}"><button type="button" class="btn MoviePage__btnAdmin">Delete Movie</button></a>
                     @endcan
                 </h1>
             </div>
@@ -24,7 +24,14 @@
         <div class="row MoviePage__Top">
 
             <div class="col-md-4 MoviePage__Image">
-                <img class="img-responsive MoviePage__poster" src="http://www.cinemasterpieces.com/term1.jpg" width="300px" height="500px" alt="">
+                @if($movieAlbum->first() === null)
+                    {!! Html::image('http://masterherald.com/wp-content/uploads/2015/01/arnold-schwarzenegger.jpg',
+                    'arnold_image', array('width' => '100%', 'height' => 'auto')) !!} <br/>
+                    <h3>Arnold is wondering why this movie has no images</h3>
+                @else
+                    <img src="{{ url($movieAlbum->first()->getPath()) }}" class="img-responsive"
+                         style="width: 100%; height: auto;">
+                @endif
 
                 @if(Auth::check())
                     <button type="button" class="btn MoviePage__btnImage">Add to List</button> <br>
@@ -57,9 +64,8 @@
                 <h3 class="page-header">Pictures</h3>
             </div>
 
-            <div class="col-md-6">
-                <p>This section is reserved for a horizontal view of movie pictures.</p>
-            </div>
+            @include('images.albumPreview')
+
         </div>
         <!-- /.row -->
 

@@ -48,6 +48,13 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('/admin/createMovie', 'AdminController@storeMovie');
     Route::get('/admin/createPerson', 'AdminController@createPerson');
     Route::post('/admin/createPerson', 'AdminController@storePerson');
+    Route::get('/admin/createCharacter', 'AdminController@showCreateCharacterForm');
+    Route::post('/admin/createCharacter', 'AdminController@storeCharacter');
+    Route::get('/admin/showAllPeopleForCastSelection/{mid}', 'AdminController@showAllPeopleForCastSelection');
+    Route::get('/admin/showAllCharactersForCastSelection/{pid}&{mid}',
+                'AdminController@showAllCharactersForCastSelection');
+    Route::get('/admin/addCastMember/{pid}&{mid}&{cid}', 'AdminController@addCastMember');
+
 
     Route::get('/', 'WelcomeController@display');
 
@@ -89,5 +96,5 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/movies/{id}', 'MoviePageController@showMovie');
 
     //Person page routes
-    Route::get('/people/{id}', 'PersonPageController@personPage');
+    Route::get('/people/{id}', 'PersonPageController@showPerson');
 });

@@ -28,6 +28,9 @@ class MoviePageController extends Controller
         $newDate = date("F d, Y", strtotime($movie->release_date));
         $movieAlbum = Album::find($movie->album)->images;
 
+        $album = Movie::find($id)->album()->firstOrFail();
+        $maxImages = 20;
+
         $creditDirector = Movie::find($id)->credits->where('credit_type_id', 1)->first();
         $directorID = $creditDirector->person_id;
         $director = Person::find($directorID);
@@ -60,6 +63,6 @@ class MoviePageController extends Controller
         $firstPersonCrew = $crewCollection[0];
 
         return view('/movies/movie', compact(['movie', 'year', 'newDate', 'director', 'firstPersonCast', 'firstPersonRole', 'newCastCollection',
-                    'firstPersonCrew', 'newCrewCollection']));
+                    'firstPersonCrew', 'newCrewCollection', 'album', 'maxImages', 'movieAlbum']));
     }
 }

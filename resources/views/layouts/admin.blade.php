@@ -88,6 +88,9 @@
                             <li>
                                 <a href="{{ url('admin/createPerson') }}">Create Person</a>
                             </li>
+                            <li>
+                                <a href="{{ url('admin/createCharacter') }}">Create Character</a>
+                            </li>
                         </ul>
                     </li>
                     <li>
