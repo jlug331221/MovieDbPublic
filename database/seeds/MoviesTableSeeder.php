@@ -22,7 +22,7 @@ class MoviesTableSeeder extends Seeder
         $this->addToAlbum('rocky.jpg', $movie->album()->first(), true, 'Rocky Poster');
 
         $movie = App\Movie::create(['title' => 'The Hunt for Red October', 'country' => 'Russia', 'release_date' => '1992-01-01', 'genre' => 'Western', 'parental_rating' => 'NC-17', 'runtime' => 113, 'synopsis' => "In November 1984, the Soviet Union's best submarine captain in their newest sub violates orders and heads for the USA. Is he trying to defect or to start a war?"]);
-        $this->addToAlbum('rocky.jpg', $movie->album()->first(), true, 'The Hunt for Red October Poster');
+        $this->addToAlbum('the_hunt_for_red_october.jpg', $movie->album()->first(), true, 'The Hunt for Red October Poster');
 
         $movie = App\Movie::create(['title' => 'Antman', 'country' => 'Brazil', 'release_date' => '1988-01-01', 'genre' => 'Action', 'parental_rating' => 'PG-13', 'runtime' => 102, 'synopsis' => "Armed with a super-suit with the astonishing ability to shrink in scale but increase in strength, cat burglar Scott Lang must embrace his inner hero and help his mentor, Dr. Hank Pym, plan and pull off a heist that will save the world."]);
         $this->addToAlbum('antman.jpg', $movie->album()->first(), true, 'Antman Poster');
@@ -121,6 +121,8 @@ class MoviesTableSeeder extends Seeder
         $this->addToAlbum('the_sword_in_the_stone.jpg', $movie->album()->first(), true, 'The Sword in the Stone Poster');
 
         $movie = App\Movie::create(['title' => 'The Lion King', 'country' => 'Kenya', 'release_date' => '1994-01-01', 'genre' => 'Animation', 'parental_rating' => 'G', 'runtime' => 104, 'synopsis' => "Lion cub and future king Simba searches for his identity. His eagerness to please others and penchant for testing his boundaries sometimes gets him into trouble."]);
+
+        $movie = App\Movie::create(['title' => 'The Last King of Scotland', 'country' => 'United Kingdom', 'release_date' => '2006-09-13', 'genre' => 'Drama', 'parental_rating' => 'R', 'runtime' => 123, 'synopsis' => "Based on the events of the brutal Ugandan dictator Idi Amin's regime as seen by his personal physician during the 1970s."]);
     }
 
     private function addToAlbum($filename, $album, $default, $description)

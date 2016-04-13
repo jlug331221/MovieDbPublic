@@ -1,0 +1,137 @@
+# Created by John on April 13, 2016
+
+These tests are predicated on using the seeded data set included with 
+the project. The specific seed files required for these tests are:
+    MoviesTableSeeder.php
+    PeopleTableSeeder.php
+
+####################
+Req-ID: 73
+Date: Last ran test on April 13, 2016
+Status: Successful
+Test: 
+    Album information is retrieved through ajax at '/album/json/albumId'. 
+    The albumId can be for a person or movie, and is set during the
+    initial page request.
+Actions:
+    1. Browse to '/album/movie/7', the album page associated with 
+        'Terminator 2: Judgement Day'.
+    2. Browse to '/album/person/1', the album page associated with
+        'Arnold Schwarzenneger'.
+Expected:
+    1. A XMLHttpRequest is sent to '/album/json/7' and a response is 
+        received that contains JSON for the album associated with
+        'Terminator 2: Judgement Day'.
+    2. A XMLHttpRequest is sent to '/album/json/18' and a response is
+        received that contains JSON for the album associated with
+        'Arnold Schwarzenneger'.
+Actual:
+    1. A XMLHttpRequest is sent to '/album/json/7' and a response is 
+        received that contains JSON for the album associated with
+        'Terminator 2: Judgement Day'.
+    2. A XMLHttpRequest is sent to '/album/json/18' and a response is
+        received that contains JSON for the album associated with
+        'Arnold Schwarzenneger'.
+
+####################
+Req-ID: 73
+Date: Last ran test on April 13, 2016
+Status: Successful
+Test: 
+    Loading an album only initially loads up to 24 thumbnails, with
+    the option to load more if more are available.
+Actions:
+    1. Browse to '/album/movie/11', the album associated with
+        'The Lord of the Rings: The Fellowship of the Ring'.
+Expected:
+    1. 24 thumbnails are displayed on the page as well as a button 
+        that says 'Load More'.
+Actual:
+    1. 24 thumbnails are displayed on the page as well as a button 
+        that says 'Load More'.
+
+####################
+Req-ID: 73
+Date: Last ran test on April 13, 2016
+Status: Successful
+Test: 
+    If there are more images in the album available to be displayed,
+    the 'Load More' button loads up to 24 more images per click
+    until the entire album is displayed.
+Actions:
+    1. Browse to '/album/movie/11', the album associated with
+        'The Lord of the Rings: The Fellowship of the Ring'.
+    2. Click 'Load More'.
+    3. Click 'Load More'.
+Expected:
+    1. 24 thumbnails are displayed on the page as well as a button 
+        that says 'Load More'.
+    2. 24 more thumbnails are loaded into the page, and the button
+        to 'Load More' is still visible.
+    2. 4 more thumbnails are loaded into the page, and the button
+        to 'Load More' is removed.
+Actual:
+    1. 24 thumbnails are displayed on the page as well as a button 
+        that says 'Load More'.
+    2. 24 more thumbnails are loaded into the page, and the button
+        to 'Load More' is still visible.
+    2. 4 more thumbnails are loaded into the page, and the button
+        to 'Load More' is removed.
+
+####################
+Req-ID: 73
+Date: Last ran test on April 13, 2016
+Status: Successful
+Test: 
+    If there are no images in the album, text is displayed explaining
+    this.
+Actions:
+    1. Browse to '/album/person/11', the album page associated with
+        'Tom Cruise'.
+Expected:
+    1. The area for album images says 'Album is empty.'.
+Actual:
+    1. The area for album images says 'Album is empty.'.
+
+####################
+Req-ID: 70
+Date: Last ran test on April 13, 2016
+Status: Successful
+Test: 
+    Clicking on an album thumbnail brings up the full version of 
+    the image.
+Actions:
+    1. Browse to '/album/person/1', the album page associated with
+        'Arnold Schwarzenneger'.
+    2. Click the first image thumbnail in the album.
+Expected:
+    1. The album for 'Arnold Schwarzenneger' is loaded.
+    2. A lightbox appears that features the full version of the image
+        in the thumbnail, and a catption that reads 'Arnold
+        Schwarzenneger'.
+
+
+
+
+       
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

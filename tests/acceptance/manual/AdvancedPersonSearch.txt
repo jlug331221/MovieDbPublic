@@ -1,0 +1,128 @@
+# Created by John on April 12, 2016
+
+These tests are predicated on the seeded data set included with the project.
+The specific seed files required for these tests are:
+    PeopleTableSeeder.php
+
+####################
+Req-ID: 89
+Date: Last ran test on April 13, 2016
+Status: Successful
+Test: 
+    An advanced person search can be done by typing keywords. A keyword 
+    can find results based on significant words in the first name of 
+    a person.
+Actions:
+    1. Type 'arnold' in the advanced person search keyword field and submit.
+Expected:
+    1. 'Arnold Schwarzenneger' is returned as a result.
+Actual:
+    1. 'Arnold Schwarzenneger' is returned as a result.
+
+####################
+Req-ID: 89
+Date: Last ran test on April 13, 2016
+Status: Successful
+Test: 
+    An advanced person search can be done by typing keywords. A keyword 
+    can find results based on significant words in the middle name of 
+    a person.
+Actions:
+    1. Type 'alois' in the advanced person search keyword field and submit.
+Expected:
+    1. 'Arnold Schwarzenneger' is returned as a result.
+Actual:
+    1. 'Arnold Schwarzenneger' is returned as a result.
+
+####################
+Req-ID: 89
+Date: Last ran test on April 13, 2016
+Status: Successful
+Test: 
+    An advanced person search can be done by typing keywords. A keyword 
+    can find results based on significant words in the last name of 
+    a person.
+Actions:
+    1. Type 'schwarzenneger' in the advanced person search keyword field and submit.
+Expected:
+    1. 'Arnold Schwarzenneger' is returned as a result.
+Actual:
+    1. 'Arnold Schwarzenneger' is returned as a result.
+
+####################
+Req-ID: 89
+Date: Last ran test on April 13, 2016
+Status: Successful
+Test: 
+    An advanced person search can be done by typing keywords. A keyword 
+    can find results based on significant words in the first alias of 
+    a person.
+Actions:
+    1. Type 'john' in the advanced person search keyword field and submit.
+Expected:
+    1. 'John Wayne' is returned as a result.
+Actual:
+    1. 'John Wayne' is returned as a result.
+
+####################
+Req-ID: 89
+Date: Last ran test on April 13, 2016
+Status: Successful
+Test: 
+    An advanced person search can be done by typing keywords. A keyword 
+    can find results based on significant words in the middle alias of 
+    a person.
+Actions:
+    1. Type 'lee' in the advanced person search keyword field and submit.
+Expected:
+    1. 'Tommy Lee Jones' is returned as a result.
+Actual:
+    1. 'Tommy Lee Jones' is returned as a result.
+
+####################
+Req-ID: 89
+Date: Last ran test on April 13, 2016
+Status: Successful
+Test: 
+    An advanced person search can be done by typing keywords. A keyword 
+    can find results based on significant words in the last alias of 
+    a person.
+Actions:
+    1. Type 'wayne' in the advanced person search keyword field and submit.
+Expected:
+    1. 'John Wayne' is returned as a result.
+Actual:
+    1. 'John Wayne' is returned as a result.
+
+####################
+Req-ID: 89
+Date: Last ran test on April 13, 2016
+Status: Successful
+Test: 
+    An advanced person search can be done by typing keywords. A keyword 
+    can find results based on significant words in the biography of 
+    a person.
+Actions:
+    1. Type 'bodybuilder' in the advanced person search keyword field and submit.
+Expected:
+    1. 'Arnold Schwarzenneger' is returned as a result.
+Actual:
+    1. 'Arnold Schwarzenneger' is returned as a result.
+
+####################
+Req-ID: 89
+Date: Last ran test on April 13, 2016
+Status: Successful
+Test: 
+    Multiple words can be used in an advanced person keyword search. 
+    Results are returned for any person matching at least one of the words.
+Actions:
+    1. Type 'bodybuilder, raucous' in the advanced person search keyword field and submit.
+Expected:
+    1. 'Arnold Schwarzenneger' and 'John Belushi' are returned as a results.
+Actual:
+    1. 'Arnold Schwarzenneger' and 'John Belushi' are returned as a results.
+
+
+
+

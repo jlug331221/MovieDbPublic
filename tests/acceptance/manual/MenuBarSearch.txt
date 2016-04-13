@@ -1,11 +1,273 @@
 # Created by John on April 12, 2016
 
-Preconditions for running these scripts:
-    1. 
+These tests are predicated on the seeded data set included with the project.
+The specific seed files required for these tests are:
+    MoviesTableSeeder.php
 
--------------
-Test: When I type in the menu bar search frame, it provides a dropdown that gives me search results.
-Date: Last ran test on April 12, 2016
-Preconditions:
-    To successfully run the test, the database needs to be seeded with at least:
-        A movie or person.
+####################
+Req-ID: 92
+Date: Last ran test on April 13, 2016
+Status: Successful
+Test: 
+    If the menubar search element is focused, but there is no input, no drop-down 
+    is displayed.
+Actions:
+    1. Click the #MenuBarSearch__input element to give it focus.
+Expected:
+    No drop-down is displayed.
+Actual:
+    No drop-down is displayed.
+
+####################
+Req-ID: 92
+Date: Last ran test on April 13, 2016
+Status: Successful
+Test: 
+    If the menubar search element is focused, and input is given that returns a 
+    result, the drop-down should display suggestions.
+Actions:
+    1. Click the #MenuBarSearch__input element to give it focus, and type 'the'.
+Expected:
+    1. A drop-down is displayed that offers suggestions.
+Actual:
+    1. A drop-down is displayed that offers suggestions.
+
+####################
+Req-ID: 92
+Date: Last ran test on April 13, 2016
+Status: Successful
+Test: 
+    If the menubar search element is focused and is displaying suggestions, 
+    unfocusing the element, and focusing anything besides the suggestions, 
+    should remove the drop-down.
+Actions:
+    1. Click the #MenuBarSearch__input element to give it focus, and type 'the'. 
+    2. Click inside the .content div.
+Expected:
+    1. The drop-down is displayed and offers suggestions.
+    2. The drop-down disappears.
+Actual:
+    1. The drop-down is displayed and offers suggestions
+    2. The drop-down disappears.
+
+####################
+Req-ID: 92
+Date: Last ran test on April 13, 2016
+Status: Successful
+Test: 
+    When the menubar search is displaying suggestions, if the drop-down displaying 
+    suggestions is clicked, while the mouse is inside the drop-down, the suggestions
+    should remain on the screen.
+Actions:
+    1. Focus the #MenuBarSearch__input element by clicking, and type 'the'. 
+    2. Click inside the #MenuBarSearch__content-wrapper element.
+    3. Move the mouse outside of the #MenuBarSearch__content-wrapper element bounds.
+Expected:
+    1. The drop-down is displayed and offers suggestions.
+    2. The drop-down does not change.
+    3. The drop-down disappears.
+Actual:
+    1. The drop-down is displayed and offers suggestions.
+    2. The drop-down does not change.
+    3. The drop-down disappears.
+
+####################
+Req-ID: 92
+Date: Last ran test on April 13, 2016
+Status: Successful
+Test:
+    When the menubar search is displaying suggestions, if all search input text is
+    deleted, then the drop-down disappears.
+Actions:
+    1. Focus the #MenuBarSearch__input element by clicking, and type 'the'.
+    2. With the #MenuBarSearch__input element still focused, delete 'the'.
+Expected:
+    1. The drop-down is displayed and offers suggestions.
+    2. The drop-down disappears.
+Actual:
+    1. The drop-down is displayed and offers suggestions.
+    2. The drop-down disappears.
+
+####################
+Req-ID: 92
+Date: Last ran test on April 13, 2016
+Status: Successful
+Test:
+    If the menubar search has no suggestions, then the drop-down disappears.
+Actions:
+    1. Focus the #MenuBarSearch__input element by clicking, and type 'the'.
+    2. With the #MenuBarSearch__input element still focused, type ' z'.
+Expected:
+    1. The drop-down is displayed and offers suggestions.
+    2. The drop-down disappears.
+Actual:
+    1. The drop-down is displayed and offers suggestions.
+    2. The drop-down disappears.
+
+####################
+Req-ID: 92
+Date: Last ran test on April 13, 2016
+Status: Successful
+Test:
+    The menubar search sends ajax requests to the server at '/search/json/searchterm'.
+Actions:
+    1. Search for 'the'.
+Expected:
+    1. A XMLHttpRequest is sent to '/search/json/the' and a response is received
+        that contains non-empty JSON.
+Actual:
+    1. A XMLHttpRequest is sent to '/search/json/the' and a response is received
+        that contains non-empty JSON.
+
+####################
+Req-ID: 108
+Date: Last ran test on April 13, 2016
+Status: Successful
+Test:
+    The menubar search displays results for people and movies simultaneously.
+Actions:
+    1. Search for 'lo'.
+Expected:
+    1. Suggestions for the 'Lord of the Rings' movies, and 'Louis C.K' are offered.
+Actual:
+    1. Suggestions for the 'Lord of the Rings' movies, and 'Louis C.K' are offered.
+
+####################
+Req-ID: 93
+Date: Last ran test on April 13, 2016
+Status: Successful
+Test:
+    A search suggestion displays a thumbnail of the default image in the album
+    associated with the search result.
+Actions:
+    1. Search for 'lord'.
+Expected:
+    1. The three 'Lord of the Rings' movies are offered, and their posters are
+        visible as thumbnails.
+Actual:
+    1. The three 'Lord of the Rings' movies are offered, and their posters are
+        visible as thumbnails.
+
+####################
+Req-ID: 93
+Date: Last ran test on April 13, 2016
+Status: Successful
+Test:
+    Suggestions that have no default image in their album display a placeholder
+    thumbnail.
+Actions:
+    1. Search for 'tom'.
+    2. Search for 'lion'.
+Expected:
+    1. 'Tom Cruise' is offered as a search result, and the placeholder person
+        image is displayed as a thumbnail.
+    2. 'The Lion King' is offered as a search result, and the placeholder 
+        movie image is displayed as a thumbnail.
+Actual: 
+    1. 'Tom Cruise' is offered as a search result, and the placeholder person
+        image is displayed as a thumbnail.
+    2. 'The Lion King' is offered as a search result, and the placeholder 
+        movie image is displayed as a thumbnail.
+
+####################
+Req-ID: 93
+Date: Last ran test on April 13, 2016
+Status: Successful
+Test:
+    Suggestions for people with a date of birth, but no date of death, have just
+    their birth year displayed.
+Actions:
+    1. Search for 'Mark Hamill'.
+Expected:
+    1. 'Mark Hamill' is offered as a search result with 'Born 1951' displayed
+        below the name.
+Actual
+    1. 'Mark Hamill' is offered as a search result with 'Born 1951' displayed
+        below the name.
+
+####################
+Req-ID: 93
+Date: Last ran test on April 13, 2016
+Status: Successful
+Test:
+    Suggestions for people with a date of birth and date of death have both dates
+    displayed.
+Actions:
+    1. Search for 'John Wayne'.
+Expected:
+    1. 'John Wayne' is offered as a search result with 'Born 1907' and 'Died 1979'
+        displayed below the name.
+Actual:
+    1. 'John Wayne' is offered as a search result with 'Born 1907' and 'Died 1979'
+        displayed below the name.
+
+####################
+Req-ID: 93
+Date: Last ran test on April 13, 2016
+Status: Successful
+Test:
+    Suggestions for movies have their release date displayed.
+Actions:
+    1. Search for 'Star Wars'
+Expected:
+    1. Star Wars episodes IV-VI are results are offered with '(1993)', '(1998)', 
+        and '(2004)' displayed, respectively.
+Actual:
+    1. Star Wars episodes IV-VI are results are offered with '(1993)', '(1998)', 
+        and '(2004)' displayed, respectively.
+
+####################
+Req-ID: 94
+Date: Last ran test on April 13, 2016
+Status: Successful
+Test:
+    Each word in the search string is considered separately, and the order
+    of the words does not matter. A result must match all of the words.
+Actions:
+    1. Search for 'wars star jedi'.
+Expected:
+    1. 'Star Wars Episode VI: Return of the Jedi' is displayed, but not
+        'Star Wars Episode IV: A New Hope' or 'Star Wars Episode V: The
+        Empire Strikes Back'.
+Actual:
+    1. 'Star Wars Episode VI: Return of the Jedi' is displayed, but not
+        'Star Wars Episode IV: A New Hope' or 'Star Wars Episode V: The
+        Empire Strikes Back'.
+
+####################
+Req-ID: 94
+Date: Last ran test on April 13, 2016
+Status: Successful
+Test:
+    Words inside of double quotes area single word. A result must match 
+    the entire string inside of the double quotes.
+Actions:
+    1. Search for '"The King"'.
+Expected:
+    1. 'The Lord of the Rings: The Return of the King' is displayed, but 
+        not 'The Last King of Scotland' or 'The Lion King'.
+Expected:
+    1. 'The Lord of the Rings: The Return of the King' is displayed, but 
+        not 'The Last King of Scotland' or 'The Lion King'.
+
+####################
+Req-ID: 95
+Date: Last ran test on April 13, 2016
+Status: Successful
+Test:
+    Searching matches any partial substring to a result.
+Actions:
+    1. Search for 'warz'
+Expected:
+    1. 'Arnold Schwarzenegger' is displayed as a result.
+Actual:
+    1. 'Arnold Schwarzenegger' is displayed as a result.
+
+
+
+
+
+
+
+
+

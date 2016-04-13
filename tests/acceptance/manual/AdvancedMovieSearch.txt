@@ -1,0 +1,44 @@
+# Created by John on April 13, 2016
+
+These tests are predicated on the seeded data set included with the project.
+The specific seed files required for these tests are:
+    MoviesTableSeeder.php
+
+####################
+Req-ID: 80
+Date: Last ran test on April 13, 2016
+Status: Successful
+Test: 
+    An advanced movie search can be done by typing keywords. A keyword 
+    search will find results based on significant words in the title
+    and synopsis of a movie.
+Actions:
+    1. Type 'king' in the advanced movie search keyword field and submit.
+Expected:
+    1. Results appear for 'The Lord of the Rings: The Return of the King',
+        'The Lion King', 'The Last King of Scotland', and 'The Sword in
+        the Stone'.
+Actual:
+    1. Results appear for 'The Lord of the Rings: The Return of the King',
+        'The Lion King', 'The Last King of Scotland', and 'The Sword in
+        the Stone'.
+
+####################
+Req-ID: 80
+Date: Last ran test on April 13, 2016
+Status: Successful
+Test: 
+    An advanced movie keyword search can search using more than one keyword.
+    Any movie that fits at least one of the keywords is returned as a result.
+Actions:
+    1. Type 'king, astronaut' in the advanced movie search keyword field
+        and submit.
+Expected:
+    1. Results appear for 'The Lord of the Rings: The Return of the King',
+        'The Lion King', 'The Last King of Scotland', 'The Sword in Stone', 
+        and 'The Martian'.
+Actual:
+    1. Results appear for 'The Lord of the Rings: The Return of the King',
+        'The Lion King', 'The Last King of Scotland', 'The Sword in Stone', 
+        and 'The Martian'.
+    
