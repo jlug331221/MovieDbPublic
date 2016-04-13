@@ -68,7 +68,7 @@
         <div class="row PersonPage__Third">
 
             <div class="col-lg-12">
-                <h3 class="page-header">Movies starred in
+                <h3 class="page-header">Filmography
                     <small class="PersonPage__tableInfo">(Click to expand/collapse)</small>
                 </h3>
             </div>
@@ -104,7 +104,7 @@
                             @if($firstMovieStarredIn->type === 'Crew')
                                 {{$firstMovieStarredIn->remark}}
                             @else
-                                {{$firstMovieStarredIn->type}}
+                                {{$firstMovieStarredIn->character_name}}
                             @endif
                         </td>
                     </tr>
