@@ -98,7 +98,7 @@
                                      style="height: 85px;">
                             @endif
                         </td>
-                        <td>{{$firstMovieStarredIn->first_name}} {{$firstMovieStarredIn->last_name}}</td>
+                        <td>{{$firstMovieStarredIn->title}}</td>
                         <td align="left">...</td>
                         <td align="left">
                             @if($firstMovieStarredIn->type === 'Crew')
@@ -123,7 +123,7 @@
                                          style="height: 85px;">
                                 @endif
                             </td>
-                            <td>{{$cast->first_name}} {{$cast->last_name}}</td>
+                            <td>{{$cast->title}}</td>
                             <td align="left">...</td>
                             <td align="left">
                                 @if($cast->type === 'Crew')
