@@ -200,17 +200,11 @@ class AdminController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroyMovie($id) {
-        $movieSuffixes = DB::table('movie_suffixes')->where('movie_id', $id);
-        if($movieSuffixes)
-        {
-            $movieSuffixes->delete();
-        }
         $movie = Movie::find($id);
         $movie->delete();
 
         Session::flash('message', "Successfully deleted movie from database");
         return redirect()->action('AdminController@showMovies');
-
     }
 
     /**
@@ -288,12 +282,6 @@ class AdminController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroyPerson($id) {
-        $personSuffixes = DB::table('person_suffixes')->where('person_id', $id);
-        if($personSuffixes)
-        {
-            $personSuffixes->delete();
-        }
-
         $person = Person::find($id);
         $person->delete();
 
