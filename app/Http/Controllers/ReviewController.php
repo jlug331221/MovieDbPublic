@@ -23,6 +23,7 @@ class ReviewController extends Controller
     public function create($movie_id)
     {
         $movie = Movie::where('id', $movie_id)->first();
+        $movie = Movie::get();
 
         //If no matching movie is found, show not found page
         if(empty($movie))
@@ -202,31 +203,32 @@ class ReviewController extends Controller
 
     public function testComponent()
     {
-        $rId = 1;
+        $review = Review::get();
 
-        $review = Review::where('id', $rId)->first();
-
-        return view('reviews.componentTest')->with(['review' => $review]);
+        return view('reviews.componentTest')->with(['reviews' => $review]);
     }
 
     public function deleteReview($rId)
     {
         $review = Review::where('id', $rId)->first();
 
-        $comments = Comment::where("review_id", $rId)->get();
-
-        foreach($comments as $comment)
+        if(Auth::user()->id === $review->user_id || Auth::user()->hasRole(['Comment Moderator', 'Review Moderator']))
         {
-            $comment->delete();
+            $comments = Comment::where("review_id", $rId)->get();
+
+            foreach($comments as $comment)
+            {
+                $comment->delete();
+            }
+
+            $votes = Vote::where('review_id', $rId)->get();
+
+            foreach($votes as $vote)
+            {
+                $vote->delete();
+            }
+
+            $review->delete();
         }
-
-        $votes = Vote::where('review_id', $rId)->get();
-
-        foreach($votes as $vote)
-        {
-            $vote->delete();
-        }
-
-        $review->delete();
     }
 }
