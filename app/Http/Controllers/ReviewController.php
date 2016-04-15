@@ -7,13 +7,19 @@ use App\Movie;
 use App\Review;
 use App\Comment;
 use App\Vote;
+use App\Masterlist;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use App\Library\StaticData;
 use Illuminate\Support\Facades\Input;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
+use App\Image;
+use DB;
+use Image as InterventionImage;
+use ImageSync;
 class ReviewController extends Controller
 {
     /*
@@ -22,6 +28,11 @@ class ReviewController extends Controller
      */
     public function create($movie_id)
     {
+        if(!Auth::check())
+        {
+            return redirect()->action('WelcomeController@display');
+        }
+
         $movie = Movie::where('id', $movie_id)->first();
         $movie = Movie::get();
 
@@ -92,6 +103,33 @@ class ReviewController extends Controller
             $logged = 0;
         }
 
+        /*$avatar_id = Auth::user()->avatar;
+        $av_image = Image::where('id', '=' ,$avatar_id)->first();
+        $avatar = $av_image['path'].'/'.$av_image['name'].'.'.$av_image['extension'];
+        if($avatar == '/.'){
+            $avatar = StaticData::defaultAvatar();
+        }*/
+
+        //Get review owners avatar
+        $reviewerAvatarId = $review->user()->firstOrFail()->avatar;
+        $reviewerAvImage = Image::where('id', '=', $reviewerAvatarId)->first();
+        $reviewerAvatar = $reviewerAvImage['path'].'/'.$reviewerAvImage['name'].'.'.$reviewerAvImage['extension'];
+        if($reviewerAvatar == '/.'){
+            $reviewerAvatar = StaticData::defaultAvatar();
+        }
+        $review->avatar = $reviewerAvatar;
+
+        //Get comment avatars
+        foreach($comments as $comment)
+        {
+            $commentAvatarId = $comment->user()->firstOrFail()->avatar;
+            $commentAvImage = Image::where('id', '=', $commentAvatarId)->first();
+            $commentAvatar = $commentAvImage['path'].'/'.$commentAvImage['name'].'.'.$commentAvImage['extension'];
+            if($commentAvatar == '/.'){
+                $commentAvatar = StaticData::defaultAvatar();
+            }
+            $comment->avatar = $commentAvatar;
+        }
 
         return view('reviews.display')->with([
             'review' => $review,
@@ -229,6 +267,16 @@ class ReviewController extends Controller
             }
 
             $review->delete();
+        }
+    }
+
+    public function deleteComment($cId)
+    {
+        $comment = Comment::where('id', $cId)->first();
+
+        if($comment->user_id == Auth::user()->id)
+        {
+            $comment->delete();
         }
     }
 }

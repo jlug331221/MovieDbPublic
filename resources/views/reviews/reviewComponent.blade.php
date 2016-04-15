@@ -22,7 +22,7 @@
                 <div class="col-md-2 ReviewComponent__user-information">
                     <!-- avatar-->
                     <div class="row ReviewComponent__user-avatar">
-                        <img src="{{asset('static/large-mysql.png')}}">
+                        <img src="{{asset($review->avatar)}}">
                     </div>
                     <!--Username-->
                     <div class="row">
@@ -53,7 +53,7 @@
                 </div>
             </div>
         </div>
-    <div class="row">
+    <div class="row ReviewComponent__full-review">
         <div class="col-md-4">
             <a href="{{url('reviews/display')."/".$review->id}}">See Full Review</a>
         </div>
