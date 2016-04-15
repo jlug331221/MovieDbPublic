@@ -1,6 +1,7 @@
 .ReviewComponent__component-container
 {
     padding-left:5px;
+    margin-bottom:10px;
 }
 
 .ReviewComponent__score-holder
@@ -75,4 +76,9 @@
     {
         font-size:12px;
     }
+}
+
+.ReviewComponent__full-review
+{
+    padding-left:3px;
 }

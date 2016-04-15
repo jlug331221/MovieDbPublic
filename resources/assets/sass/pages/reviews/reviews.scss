@@ -54,6 +54,7 @@
 
   .Review__userName{
     text-align:center;
+    margin-top:10px;
   }
 
   .Review__createdAt{
@@ -75,8 +76,9 @@
   .Review__rating {
 
     > img {
-      height:20px;
-      width:20px;
+      height:24px;
+      width:24px;
+      margin-bottom:8px;
     }
   }
 
@@ -127,4 +129,10 @@
 {
   padding-left:30px;
 }
+
+.Review__comment-container
+{
+  padding-left: 0px;
+}
+
 
