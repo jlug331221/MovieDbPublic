@@ -80,7 +80,7 @@ class Image extends Model {
                 foreach(range(0, 6) as $n) {
                     $name .= $chars[rand(0, 61)];
                 }
-            } while (Image::where('name', '=', '$name')->first() != null);
+            } while (Image::where('name', '=', $name)->first() != null);
 
             $model->name = $name;
 
