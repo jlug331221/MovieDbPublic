@@ -8,13 +8,13 @@
 
                 <hr/>
 
-                @if($errors->has())
-                    <div class="alert alert-danger">
-                        @foreach($errors->all() as $error)
-                            {{ $error }}<br/>
-                        @endforeach
-                    </div>
-                @endif
+                {{--@if($errors->has())--}}
+                    {{--<div class="alert alert-danger">--}}
+                        {{--@foreach($errors->all() as $error)--}}
+                            {{--{{ $error }}<br/>--}}
+                        {{--@endforeach--}}
+                    {{--</div>--}}
+                {{--@endif--}}
 
                 {!! Form::open() !!}
                     <div class="col-lg-12 form-group">
