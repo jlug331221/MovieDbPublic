@@ -5,16 +5,16 @@
         <div class="row">
             <div class="col-lg-12">
 
-                @if($errors->has())
-                    <div class="alert alert-danger">
-                        @foreach($errors->all() as $error)
-                            {{ $error }}<br/>
-                        @endforeach
-                    </div>
-                @endif
+                {{--@if($errors->has())--}}
+                    {{--<div class="alert alert-danger">--}}
+                        {{--@foreach($errors->all() as $error)--}}
+                            {{--{{ $error }}<br/>--}}
+                        {{--@endforeach--}}
+                    {{--</div>--}}
+                {{--@endif--}}
 
                 <h1>Editing Person:
-                    {{ $person->first_name }}
+                    {{ $person->first_name }} {{ $person->last_name }}
                 </h1>
 
                 <hr/>

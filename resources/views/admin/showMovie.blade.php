@@ -5,13 +5,13 @@
         <div class="row">
             <div class="col-lg-12">
 
-                @if($errors->has())
-                    <div class="alert alert-danger">
-                        @foreach($errors->all() as $error)
-                            {{ $error }}<br/>
-                        @endforeach
-                    </div>
-                @endif
+                {{--@if($errors->has())--}}
+                    {{--<div class="alert alert-danger">--}}
+                        {{--@foreach($errors->all() as $error)--}}
+                            {{--{{ $error }}<br/>--}}
+                        {{--@endforeach--}}
+                    {{--</div>--}}
+                {{--@endif--}}
 
                 <h1>Editing Movie: {{ $movie->title }}
                     <a href="{{ url('admin/deleteMovie/'. $movie->id) }}">
