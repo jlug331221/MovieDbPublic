@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Library\StaticData;
 use Illuminate\Database\Eloquent\Model;
 
 class Image extends Model {
@@ -72,13 +73,14 @@ class Image extends Model {
          */
         static::creating(function ($model) {
 
-            $name = null;
+            $name = '';
 
             do {
-                // 916132832 = 100000 base 62
-                // 56800235583 = zzzzzz base 62
-                $name = gmp_strval(mt_rand(916132832, 56800235583), 62);
-            } while (Image::where('name', '=', '$name')->first() != null);
+                $chars = array_merge(range('0', '9'), range('A', 'Z'), range('a', 'z'));
+                foreach(range(0, 6) as $n) {
+                    $name .= $chars[rand(0, 61)];
+                }
+            } while (Image::where('name', '=', $name)->first() != null);
 
             $model->name = $name;
 

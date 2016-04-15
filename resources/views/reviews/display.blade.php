@@ -50,7 +50,7 @@
                     <div class="panel-body Review__panelBody">
                         <div class="Review__userDisplay col-md-3">
                                 <div class="row Review__userAvatar">
-                                    <img src="{{asset('static/large-mysql.png')}}" >
+                                    <img src="{{asset($review->avatar)}}" >
                                 </div>
                                 <div class="row Review__userName">
                                     <strong>{{$review->user()->firstOrFail()->name}}</strong>
@@ -92,13 +92,13 @@
             </div>
         </div>
         @foreach ($comments as $comment)
-            <div class="row" >
-                <div class="col-md-8 col-md-offset-2">
+            <div class="row" id="{{$comment->id}}" url="{{url('reviews')}}">
+                <div class="col-md-8 col-md-offset-2 Review__comment-container">
                     <div class="panel panel-default">
                         <div class="panel-body Review__panelBody">
                             <div class="col-md-3 Review__userDisplay">
                                     <div class="Review__userAvatar row">
-                                        <img src="{{asset('images/large-mysql.png')}}">
+                                        <img src="{{asset($comment->avatar)}}">
                                     </div>
                                     <div class="Review__userName row">
                                         <strong>{{$comment->user()->firstorfail()->name}}</strong>
@@ -109,12 +109,16 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="Review__createdAt">
+                                        <div class="Review__editDelete">
                                             @if(Auth::check())
                                                 @if(Auth::user()->id === $comment->user_id || Auth::user()->hasRole(['Comment Moderator', 'Review Moderator']))
-                                                    <a href="">edit</a>
-                                                -
-                                                    <a href="">delete</a>
+                                                    <button type="button">
+                                                        <span>edit</span>
+                                                    </button>
+                                                    -
+                                                    <button type="button" onclick="deleteComment({{$comment->id}})">
+                                                        <span>delete</span>
+                                                    </button>
                                                 @endif
                                             @endif
                                         </div>
@@ -134,6 +138,18 @@
 @endsection
 
 <script>
+    function deleteComment(id)
+    {
+        if(confirm("Are you sure you want to delete this comment?")) {
+            var xhttp = new XMLHttpRequest();
+            var url = document.getElementById(id).getAttribute("url");
+            var fullUrl = url + "/deleteComment/" + id;
+            xhttp.open("GET", fullUrl, true);
+            xhttp.send();
+
+            document.getElementById(id).style.display = "none";
+        }
+    }
 
     function upVote()
     {
