@@ -97,4 +97,9 @@ Route::group(['middleware' => 'web'], function () {
 
     //Person page routes
     Route::get('/people/{id}', 'PersonPageController@showPerson');
+
+    //Discussion routes
+    Route::get('/discussions/create/{mid}', 'DiscussionController@create');
+    Route::post('/discussions/submit/{mid}', 'DiscussionController@submit');
+    Route::get('/discussions/display/{rid}', 'DiscussionController@display');
 });
