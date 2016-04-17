@@ -7,7 +7,7 @@
     <div class="container Review__container-all">
         <div class="row">
             <div class="col-md-8 col-md-offset-2 Review__movie-link">
-                <h3><a class="Review__display-movie-title"href="">{{$movieTitle}}</a> >> Review #{{$review->id}}</h3>
+                <h3><a class="Review__display-movie-title" href="">{{$movieTitle}}</a> >> Review #{{$review->id}}</h3>
             </div>
         </div>
         <div class="row">
@@ -49,30 +49,30 @@
                     </div>
                     <div class="panel-body Review__panelBody">
                         <div class="Review__userDisplay col-md-3">
-                                <div class="row Review__userAvatar">
-                                    <img src="{{asset($review->avatar)}}" >
-                                </div>
-                                <div class="row Review__userName">
-                                    <strong>{{$review->user()->firstOrFail()->name}}</strong>
-                                </div>
-                                <div class="row Review__createdAt">
-                                    Posted: {{$review->created_at}}
-                                </div>
-                                <div class="row">
-                                    <div class="Review__editDelete">
-                                        @if(Auth::check())
-                                            @if(Auth::user()->id === $review->user_id || Auth::user()->hasRole(['Comment Moderator', 'Review Moderator']))
-                                                <button type="button" onclick="editReview()">
+                            <div class="row Review__userAvatar">
+                                <img src="{{asset($review->avatar)}}" >
+                            </div>
+                            <div class="row Review__userName">
+                                <strong>{{$review->user()->firstOrFail()->name}}</strong>
+                            </div>
+                            <div class="row Review__createdAt">
+                                Posted: {{$review->created_at}}
+                            </div>
+                            <div class="row">
+                                <div class="Review__editDelete">
+                                    @if(Auth::check())
+                                        @if(Auth::user()->id === $review->user_id || Auth::user()->hasRole(['Comment Moderator', 'Review Moderator']))
+                                            <button type="button" onclick="editReview()">
                                                 <span>edit</span>
-                                                </button>
-                                                -
-                                                <button type="button" onclick="deleteReview()">
+                                            </button>
+                                            -
+                                            <button type="button" onclick="deleteReview()">
                                                 <span>delete</span>
-                                                </button>
-                                            @endif
+                                            </button>
                                         @endif
-                                    </div>
+                                    @endif
                                 </div>
+                            </div>
                         </div>
                         <div class="Review__content col-md-9">
                             <div class="row Review__rating">
@@ -80,8 +80,8 @@
                                     <img src="{{asset('static/star.png')}}">
                                 @endfor
                                 @for($y = 0; $y < 10 - $review->rating; $y++)
-                                        <img src="{{asset('static/white-star.png')}}">
-                                    @endfor
+                                    <img src="{{asset('static/white-star.png')}}">
+                                @endfor
                             </div>
                             <div class="Review__body row">
                                 {{$review->body}}
@@ -92,37 +92,37 @@
             </div>
         </div>
         @foreach ($comments as $comment)
+            <div class="row" id="{{$comment->id}}" url="{{url('reviews')}}">
                 <div class="col-md-8 col-md-offset-2 Review__comment-container">
                     <div class="panel panel-default">
                         <div class="panel-body Review__panelBody">
                             <div class="col-md-3 Review__userDisplay">
-                                    <div class="Review__userAvatar row">
-                                        <img src="{{asset($comment->avatar)}}">
-                                    </div>
-                                    <div class="Review__userName row">
-                                        <strong>{{$comment->user()->firstorfail()->name}}</strong>
-                                    </div>            <div class="row" id="{{$comment->id}}" url="{{url('reviews')}}">
-
+                                <div class="Review__userAvatar row">
+                                    <img src="{{asset($comment->avatar)}}">
+                                </div>
+                                <div class="Review__userName row">
+                                    <strong>{{$comment->user()->firstorfail()->name}}</strong>
+                                </div>
                                 <div class="Review__createdAt row">
-                                        <div>
-                                            Posted: {{$comment->created_at}}
-                                        </div>
+                                    <div>
+                                        Posted: {{$comment->created_at}}
                                     </div>
-                                    <div class="row">
-                                        <div class="Review__editDelete">
-                                            @if(Auth::check())
-                                                @if(Auth::user()->id === $comment->user_id || Auth::user()->hasRole(['Comment Moderator', 'Review Moderator']))
-                                                    <button type="button">
-                                                        <span>edit</span>
-                                                    </button>
-                                                    -
-                                                    <button type="button" onclick="deleteComment({{$comment->id}})">
-                                                        <span>delete</span>
-                                                    </button>
-                                                @endif
+                                </div>
+                                <div class="row">
+                                    <div class="Review__editDelete">
+                                        @if(Auth::check())
+                                            @if(Auth::user()->id === $comment->user_id || Auth::user()->hasRole(['Comment Moderator', 'Review Moderator']))
+                                                <button type="button">
+                                                    <span>edit</span>
+                                                </button>
+                                                -
+                                                <button type="button" onclick="deleteComment({{$comment->id}})">
+                                                    <span>delete</span>
+                                                </button>
                                             @endif
-                                        </div>
+                                        @endif
                                     </div>
+                                </div>
                             </div>
                             <div class="Review__content col-md-9">
                                 <div class="Review__body">
@@ -303,7 +303,7 @@
         }
         else if(voted == -1)
         {
-           document.getElementById("downvote").style.color = "Blue";
+            document.getElementById("downvote").style.color = "Blue";
         }
     });
 </script>
