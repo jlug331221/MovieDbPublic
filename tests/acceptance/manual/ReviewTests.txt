@@ -218,7 +218,7 @@ Actual:
     2. After navigating to the display review page, the edit and delete review buttons do not appear.
 
 #####################
-Req-ID: 
+Req-ID:
 Date: 4/16/2016
 Status:
 Test:
