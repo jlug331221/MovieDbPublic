@@ -75,8 +75,8 @@
                     <h3 class="page-header">Pictures
                     </h3>
                 </div>
-                @include('images.albumPreview')
-                <a href="{{ url('/album/preview/' . $person->album) }}"><button type="button" class="btn PersonPage__btnRedirect">View All Pictures</button></a>
+                @include('images.albumPreview', ['album' => $album, 'maxImages' => 8])
+                <a href="{{ '/album/person/' . $person->id }}"><button type="button" class="btn PersonPage__btnRedirect">View All Pictures</button></a>
             </div>
             <!-- /.row -->
 
