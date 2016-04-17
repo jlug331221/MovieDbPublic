@@ -1,0 +1,34 @@
+# Created by Mike Parks on April 17, 2016
+
+These tests are predicated on the seeded data set included with the project.
+The specific seed files required for these tests are:
+    MoviesTableSeeder.php
+    PeopleTableSeeder.php
+
+####################
+Req-ID: 35
+Date: Last ran test on April 17, 2016
+Status: Successful
+Test: 
+    Results page that displays a comprehensive list of movie results.
+
+Actions:
+    1. Click the magnifying glass in the search box while the input field is empty.
+Expected:
+    1. Redirect to the search page with a list of all movie results.
+Actual:
+    1. Redirect to the search page with a list of all movie results.
+
+####################
+Req-ID: 36
+Date: Last ran test on April 17, 2016
+Status: Successful
+Test: 
+    Results page that displays a comprehensive list of people results.
+
+Actions:
+    1. Click the magnifying glass in the search box while the input field is empty.
+Expected:
+    1. Redirect to the search page with a list of all people results.
+Actual:
+    1. Redirect to the search page with a list of all people results.
