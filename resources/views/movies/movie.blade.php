@@ -59,7 +59,7 @@
                     <h3>Movie Details</h3>
                     <ul class="list-group MoviePage__listGroup">
                         <li class="list-group-item MoviePage__listGroupItem">Director:<span class="MoviePage__directorText">
-                            @if ($director !== 1)
+                            @if ($director)
                                 {{$director->first_name}} {{$director->last_name}}
                             @endif
                         </span></li>
@@ -101,7 +101,7 @@
                 </div>
 
                 @include('images.albumPreview')
-
+                <a href="{{ url('/album/preview/' . $movie->album) }}"><button type="button" class="btn PersonPage__btnRedirect">View All Pictures</button></a>
             </div>
             <!-- /.row -->
 

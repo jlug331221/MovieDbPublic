@@ -25,21 +25,19 @@ class MoviePageController extends Controller
     public function showMovie($id)
     {
         $movie = Movie::find($id);
+        $director = Movie::find($id)->credits->where('credit_type_id', 1)->first();
 
         if ($movie) {
             $year = date("Y", strtotime($movie->release_date));
             $newDate = date("F d, Y", strtotime($movie->release_date));
             $movieAlbum = Album::find($movie->album)->images;
             $album = Movie::find($id)->album()->firstOrFail();
-            $maxImages = 20;
+            $maxImages = 5;
 
             $creditDirector = Movie::find($id)->credits->where('credit_type_id', 1)->first();
             if ($creditDirector){
                 $directorID = $creditDirector->person_id;
                 $director = Person::find($directorID);
-            }
-            else {
-                $director = 1;
             }
 
             $castCollection = DB::table('movies')

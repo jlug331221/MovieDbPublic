@@ -24,25 +24,41 @@ class PersonPageController extends Controller
     public function showPerson($id)
     {
         $person = Person::find($id);
-        $personAlbum = Album::find($person->album)->images;
-        $dateOfBirth = date("F d, Y", strtotime($person->date_of_birth));
-        $dateOfDeath = date("F d, Y", strtotime($person->date_of_death));
-        $album = $person->album()->firstOrFail();
-        $maxImages = 20;
 
-        $movieCollection = DB::table('movies')
-            ->join('credits', 'id', '=', 'movie_id')
-            ->join('albums', 'album', '=', 'albums.id')
-            ->join('credit_types', 'credits.credit_type_id', '=', 'credit_types.id')
-            ->leftJoin('images', 'albums.default', '=', 'images.id')
-            ->join('characters', 'character_id', '=', 'characters.id')
-            ->join('people', 'person_id', '=', 'people.id')
-            ->where('person_id', '=', $person->id)
-            ->get();
+        if($person) {
+            $personAlbum = Album::find($person->album)->images;
+            $dateOfBirth = date("F d, Y", strtotime($person->date_of_birth));
+            $dateOfDeath = date("F d, Y", strtotime($person->date_of_death));
+            $album = $person->album()->firstOrFail();
+            $maxImages = 5;
 
-        $firstMovieStarredIn = $movieCollection[0];
-        $firstMovieRole = Character::find($firstMovieStarredIn->character_id);
-        $newMovieCollection = array_slice($movieCollection, 1);
+            $movieCollection = DB::table('movies')
+                ->join('credits', 'id', '=', 'movie_id')
+                ->join('albums', 'album', '=', 'albums.id')
+                ->join('credit_types', 'credits.credit_type_id', '=', 'credit_types.id')
+                ->leftJoin('images', 'albums.default', '=', 'images.id')
+                ->join('characters', 'character_id', '=', 'characters.id')
+                ->join('people', 'person_id', '=', 'people.id')
+                ->where('person_id', '=', $person->id)
+                ->get();
+
+
+            if (count($movieCollection) === 1) {
+                $firstMovieStarredIn = $movieCollection[0];
+                $firstMovieRole = Character::find($firstMovieStarredIn->character_id);
+                $newMovieCollection = null;
+            }
+            elseif (count($movieCollection) > 1) {
+                $firstMovieStarredIn = $movieCollection[0];
+                $firstMovieRole = Character::find($firstMovieStarredIn->character_id);
+                $newMovieCollection = array_slice($movieCollection, 1);
+            }
+            else {
+                $firstMovieStarredIn = null;
+                $firstMovieRole = null;
+                $newMovieCollection = null;
+            }
+        }
 
         return view('/people/person', compact(['person', 'personAlbum', 'dateOfBirth', 'dateOfDeath', 'album', 'maxImages', 'newMovieCollection', 'firstMovieStarredIn', 'firstMovieRole']));
     }
