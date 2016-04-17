@@ -218,14 +218,413 @@ Actual:
     2. After navigating to the display review page, the edit and delete review buttons do not appear.
 
 #####################
-Req-ID:
-Date: 4/16/2016
-Status:
-Test:
+Req-ID: 121
+Date: 4/17/2016
+Status: Passed
+Test: This tests that there is a comment button displayed on the review display page when the user is logged in, and
+        that clicking the button loads the comment creation page.
 
 Actions:
-    1.
+    1. Ensure review exists in database with id=1.
+    2. Navigate to display page through ./reviews/display/1.
+    3. Check for the comment button on the review display page.
+    4. Click the comment button. Ensure the create comment page loads.
 Expected:
-    1.
+    1. Review with id=1 should be in database.
+    2. Display review page for review id=1 is displayed.
+    3. There will be a comment button on the review display page.
+    4. After clicking the comment button, the comment creation page will display.
 Actual:
-    1.
+    1. Review with id=1 is in database.
+    2. The display review page for review is=1 is displayed.
+    3. The comment button is displayed on the review display page.
+    4. After clicking the comment button, the comment creation page is displayed.
+
+#####################
+Req-ID: 122
+Date: 4/17/2016
+Status: Passed
+Test: Tests that the comment button will only display when the user is logged in.
+
+Actions:
+    1. Make sure the user is not logged in.
+    2. Ensure review exists in database with id=1.
+    3. Navigate to display page through ./reviews/display/1.
+    4. Check to see if comment button appears
+Expected:
+    1. Username will not appear in top menu.
+    2. Review with id=1 should be in database.
+    3. Display review page for review id=1 is displayed.
+    4. Comment button should not appear on review display page
+Actual:
+    1. Username does not appear in top menu
+    2. Review with id=1 is in database.
+    3. The display review page for review is=1 is displayed.
+    4. Comment button does not appear on review display page.
+
+#####################
+Req-ID: 123
+Date: 4/17/2016
+Status: Passed
+Test: Tests that the review upvote and downvote buttons are displayed on the review display page.
+
+Actions:
+    1. Ensure review exists in database with id=1.
+    2. Navigate to display page through ./reviews/display/1.
+    3. Check that the upvote and downvote buttons are present on the review display page.
+Expected:
+    1. Review with id=1 should be in database.
+    2. Display review page for review id=1 is displayed.
+    3. The upvote and downvote buttons should appear on the review display page.
+Actual:
+    1. Review with id=1 is in database.
+    2. The display review page for review is=1 is displayed.
+    3. The upvote and downvote buttons appear on the review display page.
+
+#####################
+Req-ID: 124
+Date: 4/17/2016
+Status: Passed
+Test: Tests that the review score is shown on the review display page.
+
+Actions:
+    1. Ensure review exists in database with id=1.
+    2. Navigate to display page through ./reviews/display/1.
+    3. Check that review score is shwon on the page.
+Expected:
+    1. Review with id=1 should be in database.
+    2. Display review page for review id=1 is displayed.
+    3. The review score appears on the page.
+Actual:
+    1. Review with id=1 is in database.
+    2. The display review page for review is=1 is displayed.
+    3. The review score appears on the page.
+
+#####################
+Req-ID: 125
+Date: 4/17/2016
+Status: Passed
+Test: Tests that an popup comes up when the user is not logged in and attempts to upvote or downvote a post.
+
+Actions:
+    1. Make sure the user is not logged in.
+    2. Ensure review exists in database with id=1.
+    3. Navigate to display page through ./reviews/display/1.
+    4. Click the upvote or downvote button and check for a popup on the screen.
+Expected:
+    1. Username will not appear in top menu.
+    2. Review with id=1 should be in database.
+    3. Display review page for review id=1 is displayed.
+    4. After clicking the upvote or downvote button, a popup will be displayed on the screen.
+Actual:
+    1. Username does not appear in top menu
+    2. Review with id=1 is in database.
+    3. The display review page for review is=1 is displayed.
+    4. A popup is displayed after clicking the upvote or downvote button.
+
+#####################
+Req-ID: 126
+Date: 4/17/2016
+Status: Passed
+Test: Tests that the review's score is changed on the display page when the user is logged in and presses either the
+        upvote or downvote button.
+
+Actions:
+    1. Make sure the user is logged in.
+    2. Ensure review exists in database with id=1.
+    3. Navigate to display page through ./reviews/display/1.
+    4. Click the upvote or downvote button and check that the review score changes accordingly.
+Expected:
+    1. Username will appear in top menu.
+    2. Review with id=1 should be in database.
+    3. Display review page for review id=1 is displayed.
+    4. After clicking the upvote or downvote button, the review score will change according to which button was clicked.
+Actual:
+    1. Username appears in top menu
+    2. Review with id=1 is in database.
+    3. The display review page for review is=1 is displayed.
+    4. After clicking the upvote button, the score goes up. Clicking the downvote button makes the score go down.
+
+#####################
+Req-ID: 127
+Date: 4/17/2016
+Status: Passed
+Test: Test that when a logged in user uses the upvote or downvote buttons on a review, the vote is recorded in the
+        database.
+
+Actions:
+    1. Make sure the user is logged in.
+    2. Ensure review exists in database with id=1.
+    3. Navigate to display page through ./reviews/display/1.
+    4. Click the upvote or downvote button.
+    5. Check that the the vote for the correct user and review is recorded in the database.
+Expected:
+    1. Username will not appear in top menu.
+    2. Review with id=1 should be in database.
+    3. Display review page for review id=1 is displayed.
+    4. Upvote button is clicked, review score reflects vote.
+    5. The vote appears in the database, user_id is same as user, review_id is same as review, vote value is correct.
+Actual:
+    1. Username does not appear in top menu
+    2. Review with id=1 is in database.
+    3. The display review page for review is=1 is displayed.
+    4. Upvote button is clicked, the review score goes up by 1.
+    5. The vote appears in the database, user_id is same as user, review_id is same as review, vote value is correct.
+
+#####################
+Req-ID: 128
+Date: 4/17/2016
+Status: Passed
+Test: Tests that when a vote button is clicked that has already been clicked, the database deletes the user's previous
+        vote.
+
+Actions:
+    1. Make sure the user is logged in.
+    2. Ensure review exists in database with id=1.
+    3. Navigate to display page through ./reviews/display/1.
+    4. Click the upvote button.
+    5. Check that the the vote for the correct user and review is recorded in the database.
+    6. Click the upvote button again.
+    7. Check that the vote which was previously in the database has been deleted.
+Expected:
+    1. Username will not appear in top menu.
+    2. Review with id=1 should be in database.
+    3. Display review page for review id=1 is displayed.
+    4. Upvote button is clicked, review score reflects vote.
+    5. The vote appears in the database, user_id is same as user, review_id is same as review, vote value is correct.
+    6. Clicking the upvote button again will cause the reviews score to go back down.
+    7. The vote that was previously in the database is now deleted.
+Actual:
+    1. Username does not appear in top menu
+    2. Review with id=1 is in database.
+    3. The display review page for review is=1 is displayed.
+    4. Upvote button is clicked, the review score goes up by 1.
+    5. The vote appears in the database, user_id is same as user, review_id is same as review, vote value is correct.
+    6. Clicking the upvote button again makes the review's score go back down.
+    7. The vote is no longer present in the database.
+
+#####################
+Req-ID: 129
+Date: 4/17/2016
+Status: Passed
+Test: Tests that comments associated with the review will display below the review on the review display page.
+
+Actions:
+    1. Ensure review exists in database with id=1.
+    2. Navigate to display page through ./reviews/display/1.
+    3. Ensure a comment with review_id = 1 is in the database.
+    4. Check to see that the comment appears under the review on the review display page.
+Expected:
+    1. Review with id=1 should be in database.
+    2. Display review page for review id=1 is displayed.
+    3. A comment with review_id = 1 is in the database.
+    4. The comment appears under the review on the review display page.
+Actual:
+    1. Review with id=1 is in database.
+    2. The display review page for review is=1 is displayed.
+    3. A comment with review_id = 1 is in the database.
+    4. The comment appears under the review on the review display page.
+
+#####################
+Req-ID: 130
+Date: 4/17/2016
+Status: Passed
+Test: Tests that comments display their comment body when they appear on the review page.
+
+Actions:
+    1. Ensure review exists in database with id=1.
+    2. Navigate to display page through ./reviews/display/1.
+    3. Ensure a comment with review_id = 1 is in the database. Make sure the comment has a body.
+    4. Check to see that the comment appears under the review on the review display page, and that it displays its body.
+Expected:
+    1. Review with id=1 should be in database.
+    2. Display review page for review id=1 is displayed.
+    3. A comment with review_id = 1 is in the database. It has body = n.
+    4. The comment appears under the review on the review display page. It displays body = n.
+Actual:
+    1. Review with id=1 is in database.
+    2. The display review page for review is=1 is displayed.
+    3. A comment with review_id = 1 is in the database. It has body 'Hello'.
+    4. The comment appears under the review on the review display page. It displays the body "Hello".
+
+#####################
+Req-ID: 131
+Date: 4/17/2016
+Status: Passed
+Test: Test that comments show a user information section when they are displayed.
+
+Actions:
+    1. Ensure review exists in database with id=1.
+    2. Navigate to display page through ./reviews/display/1.
+    3. Ensure a comment with review_id = 1 is in the database.
+    4. Check to see that the comment appears under the review on the review display page, and that it displays a user
+        information section.
+Expected:
+    1. Review with id=1 should be in database.
+    2. Display review page for review id=1 is displayed.
+    3. A comment with review_id = 1 is in the database.
+    4. The comment appears under the review on the review display page. It displays body a user information section.
+Actual:
+    1. Review with id=1 is in database.
+    2. The display review page for review is=1 is displayed.
+    3. A comment with review_id = 1 is in the database. It has body 'Hello'.
+    4. The comment appears under the review on the review display page. It displays a user information section.
+
+#####################
+Req-ID: 132
+Date: 4/17/2016
+Status: Passed
+Test: Tests that edit and delete buttons show up on comments for the user who created them.
+
+Actions:
+    1. Ensure review exists in database with id=1.
+    2. Navigate to display page through ./reviews/display/1.
+    3. Ensure a comment with review_id = 1 is in the database.
+    4. Ensure you are logged in as the user who created the comment.
+    5. Check for the edit and delete buttons appearing on the comment.
+Expected:
+    1. Review with id=1 should be in database.
+    2. Display review page for review id=1 is displayed.
+    3. A comment with review_id = 1 is in the database.
+    4. User is logged in, username will appear in top menu.
+    5. Edit and delete buttons appear on comment.
+Actual:
+    1. Review with id=1 is in database.
+    2. The display review page for review is=1 is displayed.
+    3. A comment with review_id = 1 is in the database. It has body 'Hello'.
+    4. User is logged in and username appears in top menu.
+    5. The edit and delete buttons appear on the comment.
+
+#####################
+Req-ID: 133
+Date: 4/17/2016
+Status: Passed
+Test: Tests that edit and delete buttons do not show up on comments that the logged in user did not create.
+
+Actions:
+    1. Ensure review exists in database with id=1.
+    2. Navigate to display page through ./reviews/display/1.
+    3. Ensure a comment with review_id = 1 is in the database.
+    4. Ensure you are logged in as a user who did not create the comment.
+    5. Check that the edit and delete buttons do not appear on the comment.
+Expected:
+    1. Review with id=1 should be in database.
+    2. Display review page for review id=1 is displayed.
+    3. A comment with review_id = 1 is in the database.
+    4. User is logged in, username will appear in top menu.
+    5. Edit and delete buttons will not appear on comment.
+Actual:
+    1. Review with id=1 is in database.
+    2. The display review page for review is=1 is displayed.
+    3. A comment with review_id = 1 is in the database. It has body 'Hello'.
+    4. User is logged in and username appears in top menu.
+    5. The edit and delete buttons do not appear on the comment.
+
+#####################
+Req-ID: 134
+Date: 4/17/2016
+Status: Passed
+Test: Tests that when the delete button for a review is clicked, the review is deleted from the database and
+        the page refreshes.
+
+Actions:
+    1. Ensure review exists in database with id=1.
+    2. Navigate to display page through ./reviews/display/1.
+    3. Ensure you are logged in as user who created review.
+    4. Click delete button on the review.
+    5. Check that review is removed from database.
+    6. Check that page refreshes.
+Expected:
+    1. Review with id=1 should be in database.
+    2. Display review page for review id=1 is displayed.
+    3. Username will appear in top menu.
+    4. Delete button will trigger delete popup.
+    5. The review will no longer be in the database.
+    6. The page refreshes.
+Actual:
+    1. Review with id=1 is in database.
+    2. The display review page for review is=1 is displayed.
+    3. The username appears in the top menu.
+    4. The delete button triggers a popup.
+    5. The review is no longer in the database.
+    6. The page refreshes.
+
+#####################
+Req-ID: 138
+Date: 4/17/2016
+Status: Passed
+Test: Tests that when a review is deleted, so are the related comments and votes.
+
+Actions:
+    1. Ensure review exists in database with id=1.
+    2. Navigate to display page through ./reviews/display/1.
+    3. Ensure you are logged in as user who created review.
+    4. Ensure there is a vote and a comment pretaining to the review in the database.
+    5. Delete the review. Check that it is no longer in the database.
+    6. Check that the associated vote and comment are no longer in the database.
+Expected:
+    1. Review with id=1 should be in database.
+    2. Display review page for review id=1 is displayed.
+    3. Username will appear in top menu.
+    4. There is a vote and a comment associated with the review in the database.
+    5. After being deleted, the review no longer appears in the database.
+    6. The associated vote and comment are no longer in the database.
+Actual:
+    1. Review with id=1 is in database.
+    2. The display review page for review is=1 is displayed.
+    3. The username appears in the top menu.
+    4. There is a vote and comment associated with the review in the database.
+    5. After being deleted, the review no longer appears in the database.
+    6. The associated vote and comment are no longer in the database.
+
+#####################
+Req-ID: 135
+Date: 4/16/2016
+Status:
+Test: Tests that when a user tries to create a review for a movie that does not exist, the movie not found page is
+        displayed.
+
+Actions:
+    1. Ensure there is no movie with id = 1 in database.
+    2. Navigate to ./reviews/create/1.
+Expected:
+    1. There is no movie in the database with id = 1.
+    2. The movie not found page loads.
+Actual:
+    1. There is no movie in the database with id = 1.
+    2. The movie not found page loads.
+
+#####################
+Req-ID: 136
+Date: 4/16/2016
+Status:
+Test: Tests that when a user tries to display a review that does not exist, the review not found page is displayed.
+
+Actions:
+    1. Ensure there is no review with id = 1 in database.
+    2. Navigate to ./reviews/display/1.
+Expected:
+    1. There is no review in the database with id = 1.
+    2. The review not found page loads.
+Actual:
+    1. There is no review in the database with id = 1.
+    2. The review not found page loads.
+
+#####################
+Req-ID: 137
+Date: 4/17/2016
+Status: Passed
+Test: Tests that a user can only create one review per movie.
+
+Actions:
+    1. Ensure review exists in database with id=1.
+    2. Log in as user who created review.
+    3. Navigate to ./reviews/create/1.
+Expected:
+    1. Review with id=1 should be in database.
+    2. Username should appear in top menu.
+    3. User should be rerouted to display review page.
+Actual:
+    1. Review with id=1 is in database.
+    2. Username appears in top menu.
+    3. User is routed to display review page.

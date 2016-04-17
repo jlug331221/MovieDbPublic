@@ -7,7 +7,7 @@
     <div class="container Review__container-all">
         <div class="row">
             <div class="col-md-8 col-md-offset-2 Review__movie-link">
-                <h3><a href="">{{$movieTitle}}</a> >> Review #{{$review->id}}</h3>
+                <h3><a class="Review__display-movie-title"href="">{{$movieTitle}}</a> >> Review #{{$review->id}}</h3>
             </div>
         </div>
         <div class="row">

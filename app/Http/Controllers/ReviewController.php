@@ -33,6 +33,12 @@ class ReviewController extends Controller
             return redirect()->action('WelcomeController@display');
         }
 
+        $review = Review::where('user_id', Auth::user()->id)->where('movie_id', $movie_id)->first();
+        if(!empty($review))
+        {
+            return redirect()->action('ReviewController@display', $review->id);
+        }
+
         $movie = Movie::where('id', $movie_id)->first();
         $movie = Movie::get();
 
