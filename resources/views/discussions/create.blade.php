@@ -6,11 +6,11 @@
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Create A Discussion!?
+                        Create A Discussion
                     </div>
                     <div class="panel-body">
                         <form class="form-horizontal" action="{{ url('discussions/submit/'.$movie_id ) }}" method="POST" role="form">
-
+                            {!! csrf_field() !!}
                             <div class="form-group">
                                 <label class="col-md-1 control-label">
                                     Title:
@@ -21,7 +21,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="col-md-1 control-label">
-                                    Discussion Body:
+                                    Body:
                                 </label>
                                 <div class="col-md-11">
                                     <textarea class="form-control" rows="12" value="" name="body"></textarea>

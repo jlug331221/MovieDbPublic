@@ -16,13 +16,13 @@ class Discussion extends Model {
     ];
 
     /**
-     * A discussion can have many comments.
+     * A discussion can have many replies.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function comments()
+    public function replies()
     {
-        return $this->hasMany('App\Comment');
+        return $this->hasMany('App\Reply');
     }
 
     /**

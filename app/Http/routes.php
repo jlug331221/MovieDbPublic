@@ -78,21 +78,15 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/reviews/deleteComment/{cid}', 'ReviewController@deleteComment');
 
     // Image Routes
-    Route::get('/images/create', 'ImagesController@create'); //temp
-    Route::post('/images/store', 'ImagesController@store'); //temp
-    Route::get('/images/delete/{name}', 'ImagesController@delete'); // temp
-    Route::get('/images/discard/{name}', 'ImagesController@discard'); // temp
     Route::post('/images/storeMovieImage/{mid}', 'ImagesController@storeMovieImage');
     Route::post('/images/storePersonImage/{pid}', 'ImagesController@storePersonImage');
     Route::get('/images/destroyMovieImage/movie/{mid}/image/{imgId}', 'ImagesController@destroyMovieImage');
     Route::get('/images/destroyPersonImage/person/{pid}/image/{imgId}', 'ImagesController@destroyPersonImage');
-    Route::get('/album/preview/{id}', 'ImagesController@albumPreview');
     Route::get('/album/movie/{id}', 'ImagesController@get_movieAlbum');
     Route::get('/album/person/{id}', 'ImagesController@get_personAlbum');
     Route::get('/album/json/{id}', 'ImagesController@get_album_json');
 
     //Movie page routes
-    Route::get('/movies/movie', 'MoviePageController@moviePage');
     Route::get('/movies/{id}', 'MoviePageController@showMovie');
 
     //Person page routes
@@ -102,4 +96,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/discussions/create/{mid}', 'DiscussionController@create');
     Route::post('/discussions/submit/{mid}', 'DiscussionController@submit');
     Route::get('/discussions/display/{rid}', 'DiscussionController@display');
+    Route::post('/discussions/newreply/{rid}', 'DiscussionController@newReply');
+    Route::post('/discussions/postreply/{rid}', 'DiscussionController@postReply');
+
 });
