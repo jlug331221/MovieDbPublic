@@ -18,7 +18,7 @@
                                     Title:
                                 </label>
                                 <div class="col-md-11 ">
-                                    <input class="form-control" type="text" value="" name="title">
+                                    <input class="form-control" id="Title" type="text" value="" name="title">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -26,7 +26,7 @@
                                     Rating:
                                 </label>
                                 <div class="col-md-11">
-                                    <select class="form-control" name="rating">
+                                    <select class="form-control" id="Rating" name="rating">
                                         <option>1</option>
                                         <option>2</option>
                                         <option>3</option>
@@ -45,12 +45,12 @@
                                     Review:
                                 </label>
                                 <div class="col-md-11">
-                                    <textarea class="form-control" rows="12" value="" name="body"></textarea>
+                                    <textarea class="form-control" id="Review" rows="12" value="" name="body"></textarea>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-md-1 col-md-offset-1">
-                                    <button class="btn btn-success">Submit</button>
+                                    <button class="btn btn-success" id="Submit">Submit</button>
                                 </div>
                             </div>
                         </form>

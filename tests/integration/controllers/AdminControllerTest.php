@@ -1,5 +1,6 @@
 <?php
 
+use App\Character;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -19,7 +20,8 @@ class AdminControllerTest extends TestCase
     // Req-ID: 17
     /** @test */
     public function it_has_a_form_to_fill_out_movie_information_to_be_inserted_into_the_database() {
-        $this->visit('admin/createMovie')
+        $errors = null;
+        $this->visit('admin/createMovie', compact($errors))
             ->type('The Terminator', 'title')
             ->select('United States', 'country')
             ->type('06/02/1984', 'release_date')
@@ -28,7 +30,7 @@ class AdminControllerTest extends TestCase
             ->type('110', 'runtime')
             ->type('The best movie in the terminator franchise', 'synopsis')
             ->press('Create Movie')
-            ->seePageIs('/admin/showAllMovies')
+            ->seePageIs('/admin/showAllMovies', compact($errors))
             ->assertSessionHas('success', 'Successfully added movie to database!');
 
         // Verify that the movie is in the database with all the correct
@@ -42,7 +44,8 @@ class AdminControllerTest extends TestCase
     // Req-ID: 18
     /** @test */
     public function it_has_a_form_to_fill_out_person_information_to_be_inserted_into_the_database() {
-        $this->visit('admin/createPerson')
+        $errors = null;
+        $this->visit('admin/createPerson', compact($errors))
             ->type('Tommy', 'first_name')
             ->type('Justin', 'middle_name')
             ->type('Yeti', 'last_name')
@@ -54,7 +57,7 @@ class AdminControllerTest extends TestCase
             ->type('05/06/2000', 'date_of_death')
             ->type('This person has a biography.', 'biography')
             ->press('Create Person')
-            ->seePageIs('/admin/showAllPeople')
+            ->seePageIs('/admin/showAllPeople', compact($errors))
             ->assertSessionHas('success', 'Successfully added person to database!');
 
         // Verify that the person is in the database with all the correct
@@ -69,11 +72,12 @@ class AdminControllerTest extends TestCase
     // Req-ID: 18.5
     /** @test */
     public function it_has_a_form_to_fill_out_character_information_to_be_inserted_into_the_database() {
-        $this->visit('admin/createCharacter')
+        $errors = null;
+        $this->visit('admin/createCharacter', compact($errors))
             ->type('Justin', 'character_name')
             ->type('Blah blah blah', 'biography')
             ->press('Create Character')
-            ->seePageIs('/admin/createCharacter')
+            ->seePageIs('/admin/createCharacter', compact($errors))
             ->assertSessionhas('success', 'Successfully added character to database!');
 
         // Verify that the character is in the database with all the correct
@@ -85,6 +89,8 @@ class AdminControllerTest extends TestCase
     // Req-ID: 19
     /** @test */
     public function it_can_edit_a_movie_after_information_has_been_pulled_from_the_database() {
+        $errors = null;
+
         // Needed to create an album first because of foreign key constraint
         // between a movie and an album
         DB::table('albums')->insert([
@@ -124,6 +130,9 @@ class AdminControllerTest extends TestCase
             ]
         ]);
 
+        $actor = Person::first();
+        $director = Person::all()->last();
+
         // Put a film into the database for testing purposes. Obviously
         // it is The Terminator.
         DB::table('movies')->insert([
@@ -139,10 +148,13 @@ class AdminControllerTest extends TestCase
 
         $movie = Movie::first();
 
+        // Create a character
         DB::table('characters')->insert([
             'character_name'    => 'Awesome Opossum',
             'biography'         => 'Best character ever'
         ]);
+
+        $character = Character::first();
 
         DB::table('credit_types')->insert([
             [
@@ -156,21 +168,21 @@ class AdminControllerTest extends TestCase
             ]
         ]);
 
-//        DB::table('credits')->insert([
-//            [
-//                'movie_id'          => $movie->id,
-//                'person_id'         => 1,
-//                'credit_type_id'    => 2,
-//                'character_id'      => 1
-//            ],
-//
-//            [
-//                'movie_id'          => $movie->id,
-//                'person_id'         => 2,
-//                'credit_type_id'    => 1,
-//                'character_id'      => null
-//            ]
-//        ]);
+        DB::table('credits')->insert([
+            [
+                'movie_id'          => $movie->id,
+                'person_id'         => $actor->id,
+                'credit_type_id'    => 2,
+                'character_id'      => $character->id
+            ],
+
+            [
+                'movie_id'          => $movie->id,
+                'person_id'         => $director->id,
+                'credit_type_id'    => 1,
+                'character_id'      => null
+            ]
+        ]);
 
         $cast = DB::table('movies')
             ->join('credits', 'id', '=', 'movie_id')
@@ -193,7 +205,7 @@ class AdminControllerTest extends TestCase
             ->where('type', '!=', 'Cast')
             ->get();
 
-        $this->visit('admin/showMovie/' . $movie->id, compact($cast, $crew))
+        $this->visit('admin/showMovie/' . $movie->id, compact($cast, $crew, $errors))
             ->see('Editing Movie: The Terminator')
             ->see('The Terminator')
             ->see('Afghanistan')
@@ -201,18 +213,20 @@ class AdminControllerTest extends TestCase
             ->see('Sci-Fi')
             ->see('G')
             ->see('100')
-            ->see('The best terminator film ever!');
-//            ->see('Justin')
-//            ->see('Odin')
-//            ->see('Awesome Opossum')
-//            ->see('Mars')
-//            ->see('Mercury')
-//            ->see('Director');
+            ->see('The best terminator film ever!')
+            ->see('Justin')
+            ->see('Odin')
+            ->see('Awesome Opossum')
+            ->see('Mars')
+            ->see('Mercury')
+            ->see('Director');
     }
 
     // Req-ID: 20
     /** @test */
     public function it_can_edit_a_person_after_information_has_been_pulled_from_the_database() {
+        $errors = null;
+
         // Needed to create an album first because of foreign key constraint
         // between a person and an album
         DB::table('albums')->insert([
@@ -235,7 +249,7 @@ class AdminControllerTest extends TestCase
         ]);
 
         $person = Person::first();
-        $this->visit('admin/showPerson/' . $person->id)
+        $this->visit('admin/showPerson/' . $person->id, compact($errors))
             ->see('Justin')
             ->see('Ragnar')
             ->see('Odin')

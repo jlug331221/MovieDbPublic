@@ -92,7 +92,6 @@
             </div>
         </div>
         @foreach ($comments as $comment)
-            <div class="row" id="{{$comment->id}}" url="{{url('reviews')}}">
                 <div class="col-md-8 col-md-offset-2 Review__comment-container">
                     <div class="panel panel-default">
                         <div class="panel-body Review__panelBody">
@@ -102,8 +101,9 @@
                                     </div>
                                     <div class="Review__userName row">
                                         <strong>{{$comment->user()->firstorfail()->name}}</strong>
-                                    </div>
-                                    <div class="Review__createdAt row">
+                                    </div>            <div class="row" id="{{$comment->id}}" url="{{url('reviews')}}">
+
+                                <div class="Review__createdAt row">
                                         <div>
                                             Posted: {{$comment->created_at}}
                                         </div>

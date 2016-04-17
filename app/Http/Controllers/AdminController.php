@@ -11,7 +11,8 @@ use App\Person;
 use App\Character;
 use App\CreditType;
 use App\Album;
-use App\Image;
+
+use Illuminate\View\Middleware\ErrorBinder;
 
 use Exception;
 use Illuminate\Support\Facades\Input;

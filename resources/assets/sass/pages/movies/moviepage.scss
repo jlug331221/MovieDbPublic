@@ -19,7 +19,6 @@
   width: 100px;
   margin-left: 20px;
   padding: 5px 5px 5px 5px;
-  color: white;
 }
 
 .MoviePage__Buttons {
@@ -66,3 +65,25 @@
 .MoviePage__lengthText {
   padding-left: 88px;
 }
+
+.MoviePage__errorMessage {
+  color: red;
+  font-size: x-large;
+}
+
+.MoviePage__btnRedirect {
+  background-color: #00b3ee;
+  width: 130px;
+  margin-left: 30px;
+  margin-top: 10px;
+  padding: 5px 5px 5px 5px;
+  text-align: center;
+}
+
+ a:hover {
+  color:white;
+ }
+
+ a {
+   color:white;
+ }
