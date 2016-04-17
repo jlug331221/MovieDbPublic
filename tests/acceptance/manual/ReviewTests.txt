@@ -1,0 +1,231 @@
+#Created by Chris Helms 4/16/2016
+
+These tests are preformed on the application using a seeded movie table,
+as well as a regular user having no extra permissions, a user with comment moderating
+permissions, and a user with review moderating permissions.
+
+#####################
+Req-ID: 109
+Date: 4/16/2016
+Status: Passed
+Test: Navigating to the review creation url as a logged in user should load the review creation page.
+
+Actions:
+    1. Log in as a user.
+    2. Navigate to ./reviews/create/1.
+Expected:
+    1. Username should appear in top menu bar.
+    2. Review creation page should load.
+Actual:
+    1. Username appears in top menu bar.
+    2. Review creation page loads.
+
+#####################
+Req-ID: 110
+Date: 4/16/2016
+Status: Passed
+Test: The user must be logged in to create a review. If the user is not logged in, they will be redirected to the
+        landing page.
+
+Actions:
+    1. Make sure user is logged out.
+    2. Navigate to the create review page, using ./reviews/create/1.
+Expected:
+    1. Username should not appear in top menu bar.
+    2. The landing page should load.
+Actual:
+    1. The username does not appear in the top menu bar.
+    2. Upon navigating to ./reviews/create/1, the landing page is loaded.
+
+#####################
+Req-ID: 111
+Date: 4/16/2016
+Status: Passed
+Test: This tests whether the user has the ability to enter the title, rating, and body information for a review.
+
+Actions:
+    1. Log in to a user account.
+    2. Navigate to create review page for movie with id=1: ./reviews/create/1
+    3. Enter in "Test" for review title, select 9 for review rating, enter "This is a review body".
+Expected:
+    1. Username should appear in top menu.
+    2. Create review page should load.
+    3. Title, rating, and body should be editable and retain their values.
+Actual:
+    1. username appears in top menu.
+    2. Review creation page loads.
+    3. Title, rating, and body are all editable/selectable, and retain values given to them.
+
+#####################
+Req-ID: 112
+Date: 4/16/2016
+Status: Passed
+Test: Tests that a review can be created in the database by clicking submit on the review creation page with all
+        review information filled out.
+
+Actions:
+    1. Assure user is logged in. User has id=1.
+    2. Navigate to create review page for movie with id=1: ./reviews/create/1
+    3. Enter in "Test" for the title, select "9" in the rating dropdown, and enter "This is a review." for the body.
+    4. Click the "Submit button".
+    5. Check database for newly created review.
+Expected:
+    1. Username will be displayed in the top menu.
+    2. Create review page should appear.
+    3. Review options should be filled out entirely.
+    4. Review display page should appear.
+    5. Review in database should have id=1, title = "Test", rating = "9", user_id = 1, movie_id = 1
+       body = "This is a review.".
+Actual:
+    1. Username is displayed in top menu.
+    2. Create review page is displayed.
+    3. Review options are filled out.
+    4. Review display page appears after clicking "Submit" button.
+    5. Database contains review with id=1,title = "Test", rating = "9", user_id=1, movie_id=1,
+       and body = "This is a review."
+
+#####################
+Req-ID: 113
+Date: 4/16/2016
+Status: Passed
+Test: Tests that the review display page will show when it is accessed using a valid review id.
+
+Actions:
+    1. Ensure review exists in database with id=1.
+    2. Navigate to display page through ./reviews/display/1.
+Expected:
+    1. Review with id=1 should be in database.
+    2. Display review page for review id=1 is displayed.
+Actual:
+    1. Review with id=1 is in database.
+    2. The display review page for review is=1 is displayed.
+
+#####################
+Req-ID: 114
+Date: 4/16/2016
+Status: Passed
+Test: Tests that when a review is displayed, the display page shows the associated movie's title.
+
+Actions:
+    1. Ensure review exists in database with id=1, check review's movie_id.
+    2. Navigate to display page through ./reviews/display/1.
+    3. Check to see if the correct movie title is being displayed.
+Expected:
+    1. Review with id=1 should be in database. Review has movie_id n.
+    2. Display review page for review id=1 is displayed.
+    3. Title of movie with id = n is displayed on page.
+Actual:
+    1. Review with id=1 is in database. movie_id = 1.
+    2. The display review page for review is=1 is displayed.
+    3. "Fuga" is displayed, which matches the title for movie with id=1.
+
+#####################
+Req-ID: 115
+Date: 4/16/2016
+Status: Passed
+Test: Tests that review title and review body are displayed on review display page.
+
+Actions:
+    1. Ensure review exists in database with id=1. Check review's title, and body contents.
+    2. Navigate to display page through ./reviews/display/1.
+    3. Ensure review title is displayed and review body is displayed.
+Expected:
+    1. Review with id=1 should be in database. The review title should be n, and body should be k.
+    2. Display review page for review id=1 is displayed.
+    3. Review title should display and be n, review body should be k.
+Actual:
+    1. Review with id=1 is in database. The review title is "Title", the review body is "Body".
+    2. The display review page for review is=1 is displayed.
+    3. The review title is displayed as "Title" and the review body is displayed as "Body".
+
+#####################
+Req-ID: 116
+Date: 4/16/2016
+Status: Passed
+Test: Tests that review display page shows correct review rating using star images.
+
+Actions:
+    1. Ensure review exists in database with id=1. Check review rating.
+    2. Navigate to display page through ./reviews/display/1.
+    3. Ensure that rating is displayed using pictures of stars.
+Expected:
+    1. Review with id=1 should be in database. Rating = x.
+    2. Display review page for review id=1 is displayed.
+    3. X yellow stars should display on review display page.
+Actual:
+    1. Review with id=1 is in database. The rating is 1.
+    2. The display review page for review is=1 is displayed.
+    3. 1 yellow star appears on the review display page.
+
+#####################
+Req-ID: 118
+Date: 4/16/2016
+Status: Passed
+Test: Tests whether the review display screen shows the username, avatar, and post date of the user who created it.
+
+Actions:
+    1. Ensure review exists in database with id=1. Check the review's created_at field. Check the associated user_id.
+    2. Ensure user with matching user id exists in database. Check the user's username, and avatar.
+    3. Navigate to display page through ./reviews/display/1.
+    4. Ensure the username, and avatar displayed beside the review match the posting user.
+    5. Ensure the time posted date below the username matches the time the review was posted.
+Expected:
+    1. Review with id=1 should be in database, created at field should equal n.
+    2. User should be in database, username should be a, avatar should be k.
+    3. Display review page for review id=1 is displayed.
+    4. The username should display and be a, the avatar should match k.
+    5. The time should be displayed at match n.
+Actual:
+    1. Review with id=1 is in database, user_id = 1.Review's created_at="2016-04-16 21:17:40".
+    2. user with id=1 is in database. Has username "Chris", and a null avatar value.
+    3. The display review page for review is=1 is displayed.
+    4. Username is displayed as "Chris", default avatar is displayed.
+    5. 2016-04-16 21:17:40 is displayed below the username.
+
+#####################
+Req-ID: 119
+Date: 4/16/2016
+Status: Passed
+Test: The delete and edit review buttons are displayed when the user who created the review is logged in and displaying
+        the review.
+Actions:
+    1. Ensure user is logged in and a review created by user exists.
+    2. Navigate to display review page for the review, check that the delete and edit buttons display
+        in the user section.
+Expected:
+    1. Username should appear at top menu, a review created by that user should be in the database.
+    2. The edit and delete buttons should display when the review is displayed.
+Actual:
+    1. The username appears in the top menu. A review created by this user is in the database.
+    2. The review display page has edit and delete buttons below user information.
+
+#####################
+Req-ID: 120
+Date: 4/16/2016
+Status: Passed
+Test: The delete and edit review buttons should not display for any users other than the review creator or comment and
+        review moderators.
+Actions:
+    1. Log in as a user. Ensure that there is a review in the database with user_id different from the user
+        you are logged in as.
+    2. Navigate to the review display page for that review, check to see if the edit and delete review buttons are
+        displayed.
+Expected:
+    1. Username should appear at top menu bar. Review should be in database, user_id should not match yours.
+    2. Edit and delete buttons should not appear on display review page.
+Actual:
+    1. Username is in top menu, review user_id = 1, my user_id=2.
+    2. After navigating to the display review page, the edit and delete review buttons do not appear.
+
+#####################
+Req-ID: 
+Date: 4/16/2016
+Status:
+Test:
+
+Actions:
+    1.
+Expected:
+    1.
+Actual:
+    1.
