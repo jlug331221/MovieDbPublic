@@ -1,66 +1,44 @@
 @extends('layouts.app')
 
 @section('content')
-<div class = "banner">
-    </div>
-            <div class = "container">
-                <h1>Discussion Board</h1>
-                <div class = "leftTop">
-                </div>
-
-                <div class = "rightTop">
-                    <button type="button">Create New Discussion</button>
-                    <hr />
-                </div>
-            </div>
-
-            <div class = "container">
-
-                <div class = "leftBoard">
-
-                    <p>
-                        <a>{{$discussions->title}}</a>
-                    </p>
-                    <p>
-                        by
-                    </p>
-
-                    <p>
-                        <a></a>
-                    </p>
-
-                </div>
-
-                    <div class = "rightBoard">
-                    <img src="Users/claytonjohnson/WebstormProjects/DB_Page/images/user_clay.png" alt =  "userpic" height = 120 width = 100/>
-                </div>
-
-            </div>
-
-            <div class = "horizontalLine">
-                <hr />
-            </div>
-
-            <div class = "container">
-
-                <div class = "leftBoard">
-
-                    <p>
-                        <a href="url">Topic Title</a>
-                    </p>
-                    <p>
-                        by
-                    </p>
-
-                    <p>
-                        <a href="url">User</a>
-                    </p>
-
-                </div>
-
-            </div>
+<div>
+    <div class = "container">
+        <h1>
+            <a>{{$discussion->title}}</a>
+        </h1>
+        <div class = "rightTop">
+            by <a>{{Auth::user()->name}}</a>
+            <hr/>
         </div>
     </div>
+
+    <div class = "container">
+        <div class = "leftBoard">
+            <p>
+                <a>{{$discussion->body}}</a>
+            </p>
+        </div>
+        <hr/>
+    </div>
+    <div class="form-group">
+        <form class="col-md-offset-1" action="{{ url('discussions/newreply/'.$discussion->id ) }}" method="POST" role="form">
+            {!! csrf_field() !!}
+            @if(Auth::check())<button class="btn btn-primary">Post a Reply</button>@endif
+        </form>
+    </div>
+    <hr/>
+    <div class="container">
+        <h1>Replies</h1>
+    </div>
+    @foreach ($replies as $reply)
+        <div class =  "container">
+            <a>{{$reply->discussion_id}}</a>
+            <a>{{$reply->user_id}}</a>
+            <a>{{$reply->body}}</a>
+            <hr/>
+        </div>
+    @endforeach
+
 </div>
 
 @endsection

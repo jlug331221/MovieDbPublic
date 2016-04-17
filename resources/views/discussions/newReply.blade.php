@@ -6,10 +6,10 @@
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        Enter New Comment
+                        Enter Reply
                     </div>
                     <div class="panel-body">
-                        <form class="form-horizontal" action="{{ url('discussions/postcomment/'.$discussion_id ) }}" method="POST" role="form">
+                        <form class="form-horizontal" action="{{ url('discussions/postreply/'.$discussion_id ) }}" method="POST" role="form">
                             {!! csrf_field() !!}
                             <div class="form-group">
                                 <div class="col-md-12">

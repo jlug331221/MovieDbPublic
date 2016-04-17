@@ -5,10 +5,7 @@ namespace App\Http\Controllers;
 use Auth;
 use App\Movie;
 use App\Discussion;
-use App\Comment;
-use App\Vote;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
+use App\Reply;
 use Illuminate\Support\Facades\Input;
 
 use App\Http\Requests;
@@ -35,11 +32,12 @@ class DiscussionController extends Controller
      */
     public function submit($movie_id)
     {
-        $discussions = new Discusssion;
-        $discussions->title = Input::get('title');
-        $discussions->body = Input::get('body');
+        $discussions = new Discussion;
+
         $discussions->movie_id = $movie_id;
         $discussions->user_id = Auth::user()->id;
+        $discussions->title = Input::get('title');
+        $discussions->body = Input::get('body');
 
         $discussions->save();
 
@@ -54,58 +52,45 @@ class DiscussionController extends Controller
      */
     public function display($discussion_id)
     {
-        $discussion = Review::where('id', $discussion_id)->first();
+        $discussions = Discussion::where('id', $discussion_id)->first();
 
-        $movieTitle = Movie::where('id', $discussion->movie_id)->first()->title;
+        $movieTitle = Movie::where('id', $discussions->movie_id)->first()->title;
 
-        return view('reviews.display')->with([
-            'review' => $discussion,
+        $replies = Reply::where('discussion_id', $discussion_id)->orderBy('created_at', 'asc')->get();
+
+        return view('discussions.display')->with([
+            'discussion' => $discussions,
             'movieTitle' => $movieTitle,
+            'replies' => $replies
         ]);
     }
 
-
-    public function testComponent()
+    /*
+     * Used to display new reply page.
+     * Launches view to original post with empty reply box form.
+    */
+    public function newReply($discussion_id)
     {
-        $dId = 1;
-
-        $discussion = Discussion::where('id', $dId)->first();
-
-        return view('discussions.discussionTest')->with(['discussion' => $discussion]);
+        return view('discussions.newReply')->with('discussion_id', $discussion_id);
     }
-
-
 
     /*
-     * Used to display new comment page.
-     * Launches view to original post with empty comment box form.
-
-    public function newComment()
+     * Posts a reply created in the newReply view.The reply
+     * is added to the database. Redirects to display the discussion post
+     * associated with discussion_id.
+     */
+    public function postReply($discussion_id)
     {
-        return view('discussions.newComment');
-    }
-    */
-    /*
-     * Submits discussion post to database.
-     * Redirects to display page.
-    public function submit($movie_id)
-    {
+        $reply = new Reply;
+        $reply->discussion_id = $discussion_id;
+        $reply->user_id = Auth::user()->id;
+        $reply->body = Input::get('body');
+        $reply->save();
 
-    }
-
-    public function postComment()
-    {
-
-    }
-    
-    public function deleteDiscussion()
-    {
-
+        return redirect()->action('DiscussionController@display', $discussion_id);
     }
 
 
-
-    */
 
 
 
