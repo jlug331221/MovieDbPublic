@@ -92,7 +92,6 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/album/json/{id}', 'ImagesController@get_album_json');
 
     //Movie page routes
-    Route::get('/movies/movie', 'MoviePageController@moviePage');
     Route::get('/movies/{id}', 'MoviePageController@showMovie');
 
     //Person page routes
