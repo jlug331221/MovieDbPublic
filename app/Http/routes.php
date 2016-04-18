@@ -49,6 +49,10 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('/admin/createPerson', 'AdminController@storePerson');
     Route::get('/admin/createCharacter', 'AdminController@showCreateCharacterForm');
     Route::post('/admin/createCharacter', 'AdminController@storeCharacter');
+    Route::get('/admin/showAllCharacters', 'AdminController@showCharacters');
+    Route::get('/admin/showCharacter/{id}', 'AdminController@showCharacter');
+    Route::put('/admin/updateCharacter/{id}', 'AdminController@updateCharacter');
+    Route::get('/admin/deleteCharacter/{id}', 'AdminController@destroyCharacter');
     Route::get('/admin/showAllPeopleForCastSelection/{mid}', 'AdminController@showAllPeopleForCastSelection');
     Route::get('/admin/showAllCharactersForCastSelection/{pid}&{mid}',
                 'AdminController@showAllCharactersForCastSelection');

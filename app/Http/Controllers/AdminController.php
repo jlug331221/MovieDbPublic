@@ -392,6 +392,65 @@ class AdminController extends Controller
 
 
     /**
+     * Show all characters in the database.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function showCharacters() {
+        $characters = Character::get();
+        return view('admin/showAllCharacters', compact('characters'));
+    }
+
+
+    /**
+     * Show specific character for editing.
+     *
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function showCharacter($id) {
+        $character = Character::find($id);
+        return view('admin/showCharacter', compact('character'));
+    }
+
+    /**
+     * Update character in database.
+     *
+     * @param $id
+     * @return $this|\Illuminate\Http\RedirectResponse
+     */
+    public function updateCharacter($id) {
+        $validator = \Validator::make(Input::all(), $this->characterValidationRules);
+
+        if($validator->fails()) {
+            return redirect()->back()->withErrors($validator->errors())->withInput();
+        }
+
+        $character = Character::find($id);
+        $character->character_name = Input::get('character_name');
+        $character->biography = Input::get('biography');
+        $character->save();
+
+        return redirect()->action('AdminController@showCharacters')->with('success',
+            "Successfully updated character in database!");
+    }
+
+
+    /**
+     * Remove character from database.
+     *
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroyCharacter($id) {
+        $character = Character::find($id);
+        $character->delete();
+
+        return redirect()->action('AdminController@showCharacters')->with('success',
+            "Successfully deleted character from database!");
+    }
+
+    /**
      * Create and store a character in database.
      *
      * @return $this|\Illuminate\Http\RedirectResponse
