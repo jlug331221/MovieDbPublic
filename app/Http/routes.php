@@ -53,10 +53,11 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/admin/showCharacter/{id}', 'AdminController@showCharacter');
     Route::put('/admin/updateCharacter/{id}', 'AdminController@updateCharacter');
     Route::get('/admin/deleteCharacter/{id}', 'AdminController@destroyCharacter');
-    Route::get('/admin/showAllPeopleForCastSelection/{mid}', 'AdminController@showAllPeopleForCastSelection');
+    Route::get('/admin/showAllPeopleForCastCrewSelection/{mid}', 'AdminController@showAllPeopleForCastCrewSelection');
     Route::get('/admin/showAllCharactersForCastSelection/{pid}&{mid}',
                 'AdminController@showAllCharactersForCastSelection');
     Route::get('/admin/addCastMember/{pid}&{mid}&{cid}', 'AdminController@addCastMember');
+    Route::get('/admin/showCrewMemberForm/{pid}&{mid}', 'AdminController@showCrewMemberForm');
 
 
     Route::get('/', 'WelcomeController@display');

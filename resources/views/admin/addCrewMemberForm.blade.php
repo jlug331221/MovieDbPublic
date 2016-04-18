@@ -8,8 +8,6 @@
 
                 <hr/>
 
-                <!-- I am not done with the page yet. Do not judge me! -->
-
                 {!! Form::open() !!}
                     <div class="col-lg-12 form-group">
                         {!! Form::label('crew_member', 'Cast Member:', ['class' => 'col-lg-1 control-label']) !!}
@@ -20,6 +18,17 @@
                                     $person->first_name . ' ' . $person->last_name,
                                         ['class' => 'form-control']) !!}
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12 form-group">
+                        {!! Form::label('credit_type_id', 'Crew Member Role:', ['class' => 'col-lg-1 control-label']) !!}
+                        <div class="col-lg-5">
+                            <select id="credit_type_id", name="credit_type_id", class="selectpicker", data-style="btn-info">
+                                @foreach($credit_types as $credit_type)
+                                    <option value= "{{ $credit_type->type }}">{{ $credit_type->type }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                 {!! Form::close() !!}

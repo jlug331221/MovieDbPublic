@@ -4,7 +4,7 @@
     <div id="page-wrapper">
         <div class="row">
             <div class="col-md-12">
-                <h1>Add a new cast member for: <strong>{{ $movie->title }}</strong></h1>
+                <h1>Add a new cast or crew member for: <strong>{{ $movie->title }}</strong></h1>
 
                 <hr/>
 
@@ -15,7 +15,8 @@
                             <th style="text-align: center;"><h4>First Name</h4></th>
                             <th style="text-align: center;"><h4>Last Name</h4></th>
                             <th style="text-align: center;"><h4>First Alias</h4></th>
-                            <th style="text-align: center;"><h4>Make Selection</h4></th>
+                            <th style="text-align: center;"><h4>Make Cast Member Selection</h4></th>
+                            <th style="text-align: center;"><h4>Make Crew Member Selection</h4></th>
                         </tr>
                         </thead>
                         <tfoot class="table-invert">
@@ -23,7 +24,8 @@
                             <td style="text-align: center;"><h4>First Name</h4></td>
                             <td style="text-align: center;"><h4>Last Name</h4></td>
                             <td style="text-align: center;"><h4>First Alias</h4></td>
-                            <td style="text-align: center;"><h4>Make Selection</h4></td>
+                            <td style="text-align: center;"><h4>Make Cast Member Selection</h4></td>
+                            <td style="text-align: center;"><h4>Make Crew Member Selection</h4></td>
                         </tr>
                         </tfoot>
                         <tbody>
@@ -38,6 +40,12 @@
                                     <td><h5>{{ $person->first_alias }}</h5></td>
                                     <td align="center">
                                         <a href="{{ url('/admin/showAllCharactersForCastSelection/'.
+                                                $person->id). '&' . $movie->id }}">
+                                            <i class="fa fa-check-square-o fa-lg"></i>
+                                        </a>
+                                    </td>
+                                    <td align="center">
+                                        <a href="{{ url('/admin/showCrewMemberForm/'.
                                                 $person->id). '&' . $movie->id }}">
                                             <i class="fa fa-check-square-o fa-lg"></i>
                                         </a>

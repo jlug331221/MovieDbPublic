@@ -239,7 +239,7 @@
 
                 <div class="col-md-6 col-lg-6">
                     <h2>Crew |
-                        <a href="#">
+                        <a href="{{ url('/admin/showAllPeopleForCrewSelection') }}">
                             <i class="fa fa-plus-square-o fa-lg"></i>
                         </a>
                     </h2>

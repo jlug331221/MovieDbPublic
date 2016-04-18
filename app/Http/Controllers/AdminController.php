@@ -479,10 +479,10 @@ class AdminController extends Controller
      * @param $mid
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function showAllPeopleForCastSelection($mid) {
+    public function showAllPeopleForCastCrewSelection($mid) {
         $movie = Movie::find($mid);
         $people = Person::get();
-        return view('/admin/showAllPeopleForCastSelection', compact('movie', 'people'));
+        return view('/admin/showAllPeopleForCastCrewSelection', compact('movie', 'people'));
     }
 
 
@@ -530,5 +530,13 @@ class AdminController extends Controller
         return redirect()->action('AdminController@showMovie', [$mid])->with('success',
             "Successfully added " . $person->first_name . " " . $person->last_name .
                 " as a cast member to " . $movie->title);
+    }
+
+    public function showCrewMemberForm($pid, $mid) {
+        $movie = Movie::find($mid);
+        $person = Person::find($pid);
+        $credit_types = CreditType::get();
+
+        return view('/admin/addCrewMemberForm', compact('movie', 'person', 'credit_types'));
     }
 }
