@@ -13,6 +13,13 @@ use App\Credit;
 use App\Character;
 use App\Album;
 use App\CreditType;
+use App\Review;
+
+//Used for review avatars
+use App\Image;
+use Image as InterventionImage;
+use ImageSync;
+use App\Library\StaticData;
 
 class MoviePageController extends Controller
 {
@@ -100,9 +107,26 @@ class MoviePageController extends Controller
                 $firstPersonCrew = null;
                 $newCrewCollection = null;
             }
+
+            //Get 3 reviews for movie
+            $reviews = Review::where('movie_id', $id)->orderBy('score', 'dsc')->get()->slice(0, 3);
+
+            //Get avatars for reviews
+            foreach($reviews as $review)
+            {
+                $reviewAvatarId = $review->user()->firstOrFail()->avatar;
+                $reviewAvImage = Image::where('id', '=', $reviewAvatarId)->first();
+                $reviewAvatar = $reviewAvImage['path'].'/'.$reviewAvImage['name'].'.'.$reviewAvImage['extension'];
+                if($reviewAvatar == '/.'){
+                    $reviewAvatar = StaticData::defaultAvatar();
+                }
+                $review->avatar = $reviewAvatar;
+            }
+
+
         }
 
         return view('/movies/movie', compact(['movie', 'year', 'newDate', 'director', 'firstPersonCast', 'firstPersonRole', 'newCastCollection',
-                    'firstPersonCrew', 'newCrewCollection', 'album', 'maxImages', 'movieAlbum']));
+                    'firstPersonCrew', 'newCrewCollection', 'album', 'maxImages', 'movieAlbum', 'reviews']));
     }
 }

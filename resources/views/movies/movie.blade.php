@@ -269,8 +269,10 @@
                     <h3 class="page-header">Reviews</h3>
                 </div>
 
-                <div class="col-md-6">
-                    <p>I am reserving this section for reviews.</p>
+                <div class="col-md-12">
+                    @foreach($reviews as $review)
+                        @include('reviews.reviewComponent')
+                    @endforeach
                 </div>
             </div>
             <!-- /.row -->
@@ -282,8 +284,8 @@
                     <h3 class="page-header">Discussions</h3>
                 </div>
 
-                <div class="col-md-6">
-                    <p>This section is potentially for movie discussions.</p>
+                <div class="col-md-12">
+                    <p>I am reserving this section for reviews.</p>
                 </div>
             </div>
             <!-- /.row -->
