@@ -189,6 +189,17 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> <!--End of review box-->
+
+            <!--User discussions box-->
+           <!-- <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">User discussions</div>
+                    <div class="panel-body Layout__panel-body">
+                        User discussions section
+                        </div>
+                    </div>
+                </div>-->
+
 </div>
 @endsection
