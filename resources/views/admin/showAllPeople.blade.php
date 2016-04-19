@@ -54,7 +54,7 @@
                             @foreach($people as $person)
                                 <tr>
                                     <td>
-                                        <a id="actor_name_link" href="{{ url('admin/showPerson/'. $person->id) }}">
+                                        <a id="person_name_link" href="{{ url('admin/showPerson/'. $person->id) }}">
                                             <h5>{{ $person->first_name }}</h5>
                                         </a>
                                     </td>
@@ -68,7 +68,7 @@
                                             <i class="fa fa-pencil-square-o fa-lg"></i>
                                         </a>
                                         &nbsp;&nbsp;
-                                        <a href="{{ url('admin/deletePerson/'. $person->id) }}">
+                                        <a id="delete_person" href="{{ url('admin/deletePerson/'. $person->id) }}">
                                             <i class="fa fa-trash fa-lg"></i>
                                         </a>
                                     </td>

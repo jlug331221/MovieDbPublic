@@ -235,13 +235,6 @@ class AdminController extends Controller
             ->where('movie_id', $movie->id)
             ->delete();
 
-//        $review_collection = $movie->reviews;
-//        if($review_collection) {
-//            foreach($review_collection as $rC) {
-//                $rC->delete();
-//            }
-//        }
-
         $movie->delete();
 
         Session::flash('success', "Successfully deleted movie and all associated reviews, discussions
@@ -318,16 +311,37 @@ class AdminController extends Controller
     }
 
     /**
-     * Remove person from database.
+     * Remove person from database, along with associated album/images.
      *
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroyPerson($id) {
         $person = Person::find($id);
+
+        $personImages = Album::find($person->album)->images;
+        if($personImages) {
+            foreach($personImages as $pI) {
+                $pI->delete();
+            }
+        }
+
+        DB::table('album_image')
+            ->where('album_id', $person->album)
+            ->delete();
+
+        // Again, need to ask John about the following lines of code.
+        DB::table('person_suffixes')
+            ->where('person_id', $person->id)
+            ->delete();
+
+        DB::table('albums')
+            ->where('id', $person->album)
+            ->delete();
+
         $person->delete();
 
-        Session::flash('message', "Successfully deleted person from database");
+        Session::flash('success', "Successfully deleted person from database");
         return redirect()->action('AdminController@showPeople');
     }
 

@@ -3,6 +3,7 @@
 use App\Album;
 use App\Character;
 use App\Discussion;
+use App\Image;
 use App\User;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -261,7 +262,7 @@ class AdminControllerTest extends TestCase
 
         $person = Person::first();
         $this->visit('admin/showAllPeople')
-            ->click('actor_name_link')
+            ->click('person_name_link')
             ->seePageIs('admin/showPerson/' . $person->id, compact($errors))
             ->see('Justin')
             ->see('Ragnar')
@@ -283,9 +284,29 @@ class AdminControllerTest extends TestCase
     // Req-ID: 21
     /** @test */
     public function
-    it_can_properly_delete_a_movie_from_the_database_along_with_reviews_and_discussions_and_images() {
+    it_can_properly_delete_a_movie_from_the_database_along_with_associated_reviews_and_discussions_and_album_and_images() {
         DB::table('albums')->insert([
             'id'    => 1
+        ]);
+
+        $movie_album = Album::first();
+
+        // Create an image
+        $movie_poster = new Image();
+        $movie_poster->name = 'Test name';
+        $movie_poster->path = '/images/testPath';
+        $movie_poster->extension = 'jpg';
+        $movie_poster->description = 'The Terminator poster';
+        $movie_poster->save();
+
+        $newImageId = Image::first()->id;
+
+        DB::table('albums')->where('id', $movie_album->id)
+            ->update(['default' => $newImageId]);
+
+        DB::table('album_image')->insert([
+            'album_id'      => $movie_album->id,
+            'image_id'      => $newImageId
         ]);
 
         // Put a film into the database for testing purposes. Obviously
@@ -303,7 +324,7 @@ class AdminControllerTest extends TestCase
 
         $movie = Movie::first();
 
-        // Put person into database as review and discussion creator.
+        // Put person into database. Person will serve as reviews and discussion creator.
         DB::table('users')->insert([
             'name'              => 'Basic Web User',
             'email'             => 'WebUser@email.com',
@@ -330,6 +351,7 @@ class AdminControllerTest extends TestCase
         $reviewTwo->body = 'Here is the body of the second review';
         $reviewTwo->save();
 
+        // Create a discussion for the newly created movie
         $discussion = new Discussion();
         $discussion->user_id = User::first()->id;
         $discussion->movie_id = $movie->id;
@@ -347,6 +369,9 @@ class AdminControllerTest extends TestCase
         // Assert that there is one discussion for the movie
         $this->assertCount(1, $movieDiscussion);
 
+        // Assert that there is an image for the movie (image == movie poster)
+        $this->assertCount(1, Album::find($movie->album)->images);
+
         $this->visit('admin/showAllMovies')
             ->click('delete_movie')
             ->seePageIs('admin/showAllMovies')
@@ -359,5 +384,65 @@ class AdminControllerTest extends TestCase
         $this->assertCount(0, Review::all());
         $this->assertCount(0, Discussion::all());
         $this->assertCount(0, Album::all());
+        $this->assertCount(0, Image::all());
+    }
+
+    // Req-ID: 22
+    /** @test */
+    public function it_can_delete_a_person_from_the_database_along_with_person_album_and_associated_person_images() {
+        DB::table('albums')->insert([
+            'id'    => 1
+        ]);
+
+        $movie_album = Album::first();
+
+        // Create an image
+        $movie_poster = new Image();
+        $movie_poster->name = 'Test name';
+        $movie_poster->path = '/images/testPath';
+        $movie_poster->extension = 'jpg';
+        $movie_poster->description = 'Person Image';
+        $movie_poster->save();
+
+        $newImageId = Image::first()->id;
+
+        DB::table('albums')->where('id', $movie_album->id)
+            ->update(['default' => $newImageId]);
+
+        DB::table('album_image')->insert([
+            'album_id'      => $movie_album->id,
+            'image_id'      => $newImageId
+        ]);
+
+        // Put a person into the database for testing purposes.
+        DB::table('people')->insert([
+            'first_name'        => 'Justin',
+            'middle_name'       => 'Ragnar',
+            'last_name'         => 'Odin',
+            'first_alias'       => 'Loki',
+            'middle_alias'      => 'Orpheus',
+            'last_alias'        => 'Eurydice',
+            'country_of_origin' => 'United States',
+            'date_of_birth'     => '1995-12-22',
+            'date_of_death'     => '1996-12-23',
+            'biography'         => 'This is a biography',
+            'album'             => 1
+        ]);
+
+        $person = Person::first();
+
+        // Assert that there is an image for the person in the database
+        $this->assertCount(1, Album::find($person->album)->images);
+
+        $this->visit('admin/showAllPeople')
+            ->click('delete_person')
+            ->seePageIs('admin/showAllPeople')
+            ->assertSessionHas('success', 'Successfully deleted person from database');
+
+        // Assert that there is no person, album or image in the database after person
+        // deletion
+        $this->assertCount(0, Person::all());
+        $this->assertCount(0, Album::all());
+        $this->assertCount(0, Image::all());
     }
 }
