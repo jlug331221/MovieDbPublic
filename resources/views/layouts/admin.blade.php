@@ -99,6 +99,9 @@
                     <li>
                         <a href="{{ url('admin/showAllPeople') }}"><i class="fa fa-table fa-fw"></i>Show All People</a>
                     </li>
+                    <li>
+                        <a href="{{ url('admin/showAllCharacters') }}"><i class="fa fa-table fa-fw"></i>Show All Characters</a>
+                    </li>
                 </ul>
             </div>
             <!-- /.sidebar-collapse -->
