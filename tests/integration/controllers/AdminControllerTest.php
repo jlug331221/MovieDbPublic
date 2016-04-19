@@ -1,12 +1,16 @@
 <?php
 
+use App\Album;
 use App\Character;
+use App\Discussion;
+use App\User;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\DB;
 use App\Movie;
 use App\Person;
+use App\Review;
 
 class AdminControllerTest extends TestCase
 {
@@ -205,7 +209,9 @@ class AdminControllerTest extends TestCase
             ->where('type', '!=', 'Cast')
             ->get();
 
-        $this->visit('admin/showMovie/' . $movie->id, compact($cast, $crew, $errors))
+        $this->visit('admin/showAllMovies')
+            ->click('movie_link')
+            ->seePageIs('admin/showMovie/' . $movie->id, compact($cast, $crew, $errors))
             ->see('Editing Movie: The Terminator')
             ->see('The Terminator')
             ->see('Afghanistan')
@@ -219,7 +225,12 @@ class AdminControllerTest extends TestCase
             ->see('Awesome Opossum')
             ->see('Mars')
             ->see('Mercury')
-            ->see('Director');
+            ->see('Director')
+            ->type('Terminator 2', 'title')
+            ->select('United States', 'country')
+            ->press('Update Movie')
+            ->seePageIs('/admin/showAllMovies')
+            ->assertSessionHas('success', 'Successfully updated movie in database!');
     }
 
     // Req-ID: 20
@@ -249,7 +260,9 @@ class AdminControllerTest extends TestCase
         ]);
 
         $person = Person::first();
-        $this->visit('admin/showPerson/' . $person->id, compact($errors))
+        $this->visit('admin/showAllPeople')
+            ->click('actor_name_link')
+            ->seePageIs('admin/showPerson/' . $person->id, compact($errors))
             ->see('Justin')
             ->see('Ragnar')
             ->see('Odin')
@@ -259,6 +272,92 @@ class AdminControllerTest extends TestCase
             ->see('United States')
             ->see('12/22/1995')
             ->see('12/23/1996')
-            ->see('This is a biography');
+            ->see('This is a biography')
+            ->type('Lokiiiiiiiiiii', 'first_alias')
+            ->type('I am changing the biography of Justin', 'biography')
+            ->press('Update Person')
+            ->seePageIs('admin/showAllPeople')
+            ->assertSessionHas('success', 'Successfully updated person in database!');
+    }
+
+    // Req-ID: 21
+    /** @test */
+    public function
+    it_can_properly_delete_a_movie_from_the_database_along_with_reviews_and_discussions_and_images() {
+        DB::table('albums')->insert([
+            'id'    => 1
+        ]);
+
+        // Put a film into the database for testing purposes. Obviously
+        // it is The Terminator.
+        DB::table('movies')->insert([
+            'title'             => 'The Terminator',
+            'country'           => 'Afghanistan',
+            'release_date'      => '1984-10-26',
+            'genre'             => 'Sci-Fi',
+            'parental_rating'   => 'G',
+            'runtime'           => '100',
+            'synopsis'          => 'The best terminator film ever!',
+            'album'             => 1
+        ]);
+
+        $movie = Movie::first();
+
+        // Put person into database as review and discussion creator.
+        DB::table('users')->insert([
+            'name'              => 'Basic Web User',
+            'email'             => 'WebUser@email.com',
+            'password'          => 'testtest',
+            'avatar'            => null
+        ]);
+
+        // Create two reviews for the newly created movie
+        $review = new Review();
+        $review->user_id = User::first()->id;
+        $review->movie_id = $movie->id;
+        $review->score = 80;
+        $review->rating = 50;
+        $review->title = 'This is the review title';
+        $review->body = 'Here is the body of the review';
+        $review->save();
+
+        $reviewTwo = new Review();
+        $reviewTwo->user_id = User::first()->id;
+        $reviewTwo->movie_id = $movie->id;
+        $reviewTwo->score = 60;
+        $reviewTwo->rating = 90;
+        $reviewTwo->title = 'This is the review title of review #2';
+        $reviewTwo->body = 'Here is the body of the second review';
+        $reviewTwo->save();
+
+        $discussion = new Discussion();
+        $discussion->user_id = User::first()->id;
+        $discussion->movie_id = $movie->id;
+        $discussion->title = 'Title of the discussion';
+        $discussion->body = 'Body of the discussion';
+        $discussion->save();
+
+        $movieDiscussion = DB::table('discussions')
+                            ->where('movie_id', $movie->id)
+                            ->get();
+
+        // Assert that there are two reviews for the movie
+        $this->assertCount(2, $movie->reviews);
+
+        // Assert that there is one discussion for the movie
+        $this->assertCount(1, $movieDiscussion);
+
+        $this->visit('admin/showAllMovies')
+            ->click('delete_movie')
+            ->seePageIs('admin/showAllMovies')
+            ->assertSessionHas('success', 'Successfully deleted movie and all associated reviews, discussions
+                            and album/images from database');
+
+        // Assert that there is no movie, reviews, discussions, or album/images
+        // in database after deletion
+        $this->assertCount(0, Movie::all());
+        $this->assertCount(0, Review::all());
+        $this->assertCount(0, Discussion::all());
+        $this->assertCount(0, Album::all());
     }
 }
