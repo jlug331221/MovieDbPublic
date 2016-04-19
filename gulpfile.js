@@ -14,7 +14,7 @@ var settings = require('./.env.gulp.js');
  */
 
 elixir(function(mix) {
-    mix.sass('app.scss');
+    mix.sass('app.scss')
     mix.sass('adminDashBoard.scss');
     mix.browserify(['app.js']);
 

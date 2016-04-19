@@ -33,6 +33,12 @@ class ReviewController extends Controller
             return redirect()->action('WelcomeController@display');
         }
 
+        $review = Review::where('user_id', Auth::user()->id)->where('movie_id', $movie_id)->first();
+        if(!empty($review))
+        {
+            return redirect()->action('ReviewController@display', $review->id);
+        }
+
         $movie = Movie::where('id', $movie_id)->first();
         $movie = Movie::get();
 
@@ -165,6 +171,11 @@ class ReviewController extends Controller
         return redirect()->action('ReviewController@display', $review_id);
     }
 
+    /*
+     * Handles ajax request for a vote. The voe value is stored in vote, the reviewId is stored in rId.
+     * Adds, deletes, or changes a vote based on what information is currently stored in the databse for the
+     * current user.
+     */
     public function handleVote($vote, $rId)
     {
         $review = Review::where('id', $rId)->first();
@@ -239,13 +250,8 @@ class ReviewController extends Controller
 
     }
 
-    public function testComponent()
-    {
-        $review = Review::get();
-
-        return view('reviews.componentTest')->with(['reviews' => $review]);
-    }
-
+    //Deletes the review specified by $rid from the database
+    //Also deletes any comments or votes associated with that review
     public function deleteReview($rId)
     {
         $review = Review::where('id', $rId)->first();
@@ -270,6 +276,7 @@ class ReviewController extends Controller
         }
     }
 
+    //Deletes the comment specified by cId from the database
     public function deleteComment($cId)
     {
         $comment = Comment::where('id', $cId)->first();

@@ -1,0 +1,61 @@
+Created by Clayton Johnson 4/17/2016
+
+--------------------------
+Test: Navigating to discussion/create url as a logged in user should load the discussion create page.
+Status: Passed (4/17/2016)
+
+Actions:
+    1. Log in as a user.
+    2. Navigate to ./discussions/create/1.
+Expected:
+    1. Username should appear in top menu bar.
+    2. Discussion creation page should load.
+Actual:
+    1. Username appears in top menu bar.
+    2. Discussion creation page loads.
+
+--------------------------
+Test: Using creation form should save title, user_id, movie_id, and body.
+Status: Passed (4/17/2016)
+
+Actions:
+    1. Navigate to discussion creation page.
+    2. Fill out forms and click Submit.
+
+Expected:
+    1. User should be redirected to display page.
+    2. Display page should show title, author (calculated by user_id), and body text.
+
+Actual:
+    1. User is redirected to display page.
+    2. Display page does show title, author (calculated by user_id), and body text.
+
+--------------------------
+Test: Clicking "Post a Reply" button under discussion should take user to reply creation page.
+Status: Passed (4/17/2016)
+
+Actions:
+    1. Click "Post a Reply" button.
+
+Expected:
+    1. User should be redirected to reply creation page.
+
+Actual:
+    1. User is redirected to reply creation page.
+
+--------------------------
+Test: Reply Creation
+Status: Passed (4/16/2016)
+
+Actions:
+    1. Fill out reply form.
+
+Expected:
+    1. User is redirected to display page with reply body, user_id, and movie_id displayed.
+
+Actual:
+    1. User is redirected, and sees the reply data.
+
+
+
+
