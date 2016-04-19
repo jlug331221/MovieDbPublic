@@ -216,13 +216,6 @@ class AdminController extends Controller
             ->where('album_id', $movie->album)
             ->delete();
 
-        // Need to ask John about the following lines of code. There is a
-        // function in Movie.php that I can use but I don't know how to
-        // call it because the parameter is a movie object model.
-        DB::table('movie_suffixes')
-            ->where('movie_id', $movie->id)
-            ->delete();
-
         DB::table('albums')
             ->where('id', $movie->album)
             ->delete();
