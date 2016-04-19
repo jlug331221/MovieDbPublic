@@ -323,11 +323,6 @@ class AdminController extends Controller
             ->where('album_id', $person->album)
             ->delete();
 
-        // Again, need to ask John about the following lines of code.
-        DB::table('person_suffixes')
-            ->where('person_id', $person->id)
-            ->delete();
-
         DB::table('albums')
             ->where('id', $person->album)
             ->delete();
