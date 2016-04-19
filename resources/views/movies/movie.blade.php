@@ -101,7 +101,7 @@
                 </div>
 
                 @include('images.albumPreview', ['album' => $album, 'maxImages' => 8])
-                <a href="{{ '/album/movie/' . $movie->id }}"><button type="button" class="btn PersonPage__btnRedirect">View All Pictures</button></a>
+                <a href="{{ '/album/movie/' . $movie->id }}" id="albumBtn"><button type="button" class="btn PersonPage__btnRedirect">View All Pictures</button></a>
             </div>
             <!-- /.row -->
 
