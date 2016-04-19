@@ -249,7 +249,6 @@
                                                 {{$crew->type}}
                                             @endif
                                         </td>
-                                    }
                                     </tr>
                                 @endforeach
                             @endif
