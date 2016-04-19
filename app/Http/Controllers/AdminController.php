@@ -622,7 +622,7 @@ class AdminController extends Controller
                 "Successfully added " . $alias_first . " " . $person->last_name .
                 " as " . $credit_type . " to " . $movie->title);
         else
-            return redirect()->action('AdminController@showMovie' [$mid])->with('success',
+            return redirect()->action('AdminController@showMovie', [$mid])->with('success',
                 "Successfully added " . $person->first_name . " " . $person->last_name .
                 " as " . $credit_type . " to " . $movie->title);
     }
