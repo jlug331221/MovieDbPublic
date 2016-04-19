@@ -45,7 +45,7 @@
                                         </a>
                                     </td>
                                     <td align="center">
-                                        <a href="{{ url('/admin/showCrewMemberForm/'.
+                                        <a href="{{ url('/admin/showAddCrewMemberForm/'.
                                                 $person->id). '&' . $movie->id }}">
                                             <i class="fa fa-check-square-o fa-lg"></i>
                                         </a>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Credit;
 use Auth;
 use App\Http\Requests;
 use DB;
@@ -532,11 +533,55 @@ class AdminController extends Controller
                 " as a cast member to " . $movie->title);
     }
 
-    public function showCrewMemberForm($pid, $mid) {
+
+    /**
+     * Taken to the add crew member form.
+     *
+     * @param $pid
+     * @param $mid
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function showAddCrewMemberForm($pid, $mid) {
         $movie = Movie::find($mid);
         $person = Person::find($pid);
         $credit_types = CreditType::get();
 
         return view('/admin/addCrewMemberForm', compact('movie', 'person', 'credit_types'));
+    }
+
+
+    /**
+     * Store crew member for a movie.
+     *
+     * @param $pid
+     * @param $mid
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function storeCrewMember($pid, $mid) {
+        $movie = Movie::find($mid);
+        $person = Person::find($pid);
+        $alias_first = $person->first_alias;
+
+        $credit_type = Input::get('credit_type_id');
+        $credit_type_collection = collect(DB::table('credit_types')->where('type', $credit_type)
+            ->get());
+        $credit_type = $credit_type_collection->first()->type;
+        $cT_id = $credit_type_collection->first()->id;
+
+        $credit = new Credit();
+        $credit->movie_id = $mid;
+        $credit->person_id = $pid;
+        $credit->credit_type_id = $cT_id;
+        $credit->remark = Input::get('remark');
+        $credit->save();
+
+        if($alias_first)
+            return redirect()->action('AdminController@showMovie', [$mid])->with('success',
+                "Successfully added " . $alias_first . " " . $person->last_name .
+                " as " . $credit_type . " to " . $movie->title);
+        else
+            return redirect()->action('AdminController@showMovie' [$mid])->with('success',
+                "Successfully added " . $person->first_name . " " . $person->last_name .
+                " as " . $credit_type . " to " . $movie->title);
     }
 }

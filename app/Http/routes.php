@@ -57,8 +57,8 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/admin/showAllCharactersForCastSelection/{pid}&{mid}',
                 'AdminController@showAllCharactersForCastSelection');
     Route::get('/admin/addCastMember/{pid}&{mid}&{cid}', 'AdminController@addCastMember');
-    Route::get('/admin/showCrewMemberForm/{pid}&{mid}', 'AdminController@showCrewMemberForm');
-
+    Route::get('/admin/showAddCrewMemberForm/{pid}&{mid}', 'AdminController@showAddCrewMemberForm');
+    Route::post('/admin/showAddCrewMemberForm/{pid}&{mid}', 'AdminController@storeCrewMember');
 
     Route::get('/', 'WelcomeController@display');
 
