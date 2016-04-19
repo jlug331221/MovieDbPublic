@@ -1,0 +1,116 @@
+#########
+Created by Ashley
+April 18th, 2016
+##########
+
+####################
+Req-ID: 139
+Date: Last ran test on April 19, 2016
+Status: Successful
+Test:
+    A movie page will display 'edit movie' and 'delete movie' buttons
+    when an administrator is logged in and viewing the page. It should
+    not display when a regular user is logged in.
+Actions:
+    1. View movie page while logged in as a normal user. Log out, and
+       log back in as administrator and view movie page.
+Expected:
+    1. The movie page will not display 'edit movie' and 'delete movie'
+       buttons when a normal user is logged in. When an administrator logs
+       in, the buttons appear.
+Actual:
+    1. The movie page does not display 'edit movie' and 'delete movie'
+       buttons when a normal user is logged in. When an administrator logs
+       in, the buttons are available on the page.
+
+####################
+Req-ID: 140
+Date: Last ran test on April 19, 2016
+Status: Successful
+Test:
+    The button 'delete movie' on a movie page redirects an administrator
+    to the administrator panel's delete movie page.
+Actions:
+    1. Log in as an administrator, visit a movie page, and click the
+       'delete movie' button near the top of the page.
+Expected:
+    1. The button redirects the administrator to the administrator's
+       delete movie page.
+Actual:
+    1. The button redirects the administrator to the administrator's
+       delete movie page.
+
+####################
+Req-ID: 141
+Date: Last ran test on April 19, 2016
+Status: Successful
+Test:
+    The button 'edit movie' on a movie page redirects an administrator
+    to the administrator panel's edit movie page.
+Actions:
+    1. Log in as an administrator, visit a movie page, and click the
+       'edit movie' button near the top of the page.
+Expected:
+    1. The button redirects the administrator to the administrator's
+       edit movie page.
+Actual:
+    1. The button redirects the administrator to the administrator's
+       edit movie page.
+
+####################
+Req-ID: 142
+Date: Last ran test on April 19, 2016
+Status: Successful
+Test:
+    The picture section of a movie page contains a partial view of
+    the album associated with a movie.
+Actions:
+    1. Visit the movie page for 'Twins'.
+Expected:
+    1. The movie page for 'Twins' displays the album associated with
+    'Twins', which is just the movie's poster.
+Actual:
+    1. The movie page for 'Twins' displays the album associated with
+    'Twins', which is just the movie's poster.
+
+####################
+Req-ID: 144
+Date: Last ran test on April 19, 2016
+Status: Successful
+Test:
+    The cast section of a movie page displays a table containing
+    the cast associated with the movie. The table contains the cast
+    member's picture, name, and role in the movie.
+Actions:
+    1. Visit the movie page for 'Drive'.
+Expected:
+    1. The cast section of the movie page for 'Drive' displays a
+       table containing the cast. It displays Arnold Schwarzenneger,
+       Dwayne Johnson, and Alfred Pacino. It also contains their
+       corresponding roles and pictures.
+Actual:
+    1. The cast section of the movie page for 'Drive' displays a
+       table containing the cast. It displays Arnold Schwarzenneger,
+       Dwayne Johnson, and Alfred Pacino. It also contains their
+       corresponding roles and pictures.
+
+####################
+Req-ID: 145
+Date: Last ran test on April 19, 2016
+Status: Successful
+Test:
+    The crew section of a movie page displays a table containing
+    the crew associated with the movie. The table contains the crew
+    member's picture, name, and crew title.
+Actions:
+    1. Visit the movie page for 'Drive'.
+Expected:
+    1. The crew section of the movie page for 'Drive' displays a
+       table containing the crew. It displays John Belushi, John
+       Candy, and Mark Hamill. It also contains their corresponding
+       crew titles and pictures.
+Actual:
+   1. The crew section of the movie page for 'Drive' displays a
+      table containing the crew. It displays John Belushi, John
+      Candy, and Mark Hamill. It also contains their corresponding
+      crew titles and pictures.

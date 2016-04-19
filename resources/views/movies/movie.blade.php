@@ -24,7 +24,7 @@
                         </small>
 
                         @can('edit_all_content')
-                            <a href="{{ url('/admin/showMovie/' . $movie->id) }}"><button type="button" class="btn MoviePage__btnAdmin">Edit Movie</button></a>
+                            <a id="adminButtonEdit" href="{{ url('/admin/showMovie/' . $movie->id) }}"><button id="editButton" type="button" class="btn MoviePage__btnAdmin">Edit Movie</button></a>
                             <a href="{{ url('/admin/deleteMovie/' . $movie->id) }}"><button type="button" class="btn MoviePage__btnAdmin">Delete Movie</button></a>
                         @endcan
                     </h1>
@@ -125,7 +125,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr class="clickable" data-toggle="collapse" id="row1" data-target=".row1">
+                            <a href="#" id="row1"><tr class="clickable" data-toggle="collapse" id="row1" data-target=".row1"></a>
                                 <td align ="center">
                                         @if($firstPersonCast->default === null)
                                             <img src="http://www.politicspa.com/wp-content/uploads/2013/02/Silhouette-question-mark.jpeg"

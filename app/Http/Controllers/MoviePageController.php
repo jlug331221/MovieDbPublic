@@ -1,5 +1,7 @@
 <?php
 
+//Created by Ashley
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -69,43 +71,33 @@ class MoviePageController extends Controller
                 ->get();
 
 
-            if (count($castCollection) > 1 && count($crewCollection) > 1) {
-                $newCastCollection = array_slice($castCollection, 1);
-                $newCrewCollection = array_slice($crewCollection, 1);
-                $firstPersonCast = $castCollection[0];
-                $firstPersonRole = Character::find($firstPersonCast->character_id);
-                $firstPersonCrew = $crewCollection[0];
-            }
-            elseif (count($castCollection) === 1 && count($crewCollection) === 1)
-            {
-                $firstPersonCast = $castCollection[0];
-                $firstPersonRole = Character::find($firstPersonCast->character_id);
-                $firstPersonCrew = $crewCollection[0];
-                $newCastCollection = null;
-                $newCrewCollection = null;
-            }
-            elseif (count($castCollection) === 1 && count($crewCollection) > 1) {
-
-                $newCrewCollection = array_slice($crewCollection, 1);
-                $firstPersonCast = $castCollection[0];
-                $firstPersonRole = Character::find($firstPersonCast->character_id);
-                $firstPersonCrew = $crewCollection[0];
-                $newCastCollection = null;
-            }
-            elseif (count($castCollection) > 1 && count($crewCollection) === 1) {
-
+            if(count($castCollection) > 1) {
                 $newCastCollection = array_slice($castCollection, 1);
                 $firstPersonCast = $castCollection[0];
                 $firstPersonRole = Character::find($firstPersonCast->character_id);
-                $firstPersonCrew = $crewCollection[0];
-                $newCrewCollection = null;
+            }
+            elseif(count($castCollection) === 1) {
+                $newCastCollection = null;
+                $firstPersonCast = $castCollection[0];
+                $firstPersonRole = Character::find($firstPersonCast->character_id);
             }
             else {
                 $newCastCollection = null;
                 $firstPersonCast = null;
                 $firstPersonRole = null;
-                $firstPersonCrew = null;
+            }
+
+            if(count($crewCollection) > 1) {
+                $newCrewCollection = array_slice($crewCollection, 1);
+                $firstPersonCrew = $crewCollection[0];
+            }
+            elseif(count($crewCollection) === 1) {
                 $newCrewCollection = null;
+                $firstPersonCrew = $crewCollection[0];
+            }
+            else {
+                $newCrewCollection = null;
+                $firstPersonCrew = null;
             }
 
             //Get 3 reviews for movie
@@ -122,7 +114,6 @@ class MoviePageController extends Controller
                 }
                 $review->avatar = $reviewAvatar;
             }
-
 
         }
 
