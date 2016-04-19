@@ -33,10 +33,18 @@ class WelcomeController extends Controller
 
        //$top10 = Movie::orderBy('rating', 'dsc')->get()->slice(0,10);
         $recentmovie = Movie::orderBy('created_at', 'dsc')->get()->slice(0,10);
+        $Top10movie = Movie::get();
+        foreach($Top10movie as $movie)
+        {
+            $reviewScoreAvg = Review::where('movie_id', $movie->id)->get()->avg('rating');
+            $movie->score = $reviewScoreAvg;
+        }
+
+        $OrderedTop10 = $Top10movie->sortByDesc('score')->slice(0, 10);
 
         return view('welcome')->with([
             'reviews' => $reviews,
-
+            'top10Movies' => $OrderedTop10,
             'recentmovie' => $recentmovie
         ]);
     }

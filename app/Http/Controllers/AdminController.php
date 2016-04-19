@@ -196,16 +196,49 @@ class AdminController extends Controller
     }
 
     /**
-     * Remove movie from database.
+     * Remove movie (and all associated reviews, discussions and album/images)
+     * from database.
      *
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroyMovie($id) {
         $movie = Movie::find($id);
+
+        $movieImages = Album::find($movie->album)->images;
+        if($movieImages) {
+            foreach($movieImages as $mI) {
+                $mI->delete();
+            }
+        }
+
+        DB::table('album_image')
+            ->where('album_id', $movie->album)
+            ->delete();
+
+        // Need to ask John about the following lines of code. There is a
+        // function in Movie.php that I can use but I don't know how to
+        // call it because the parameter is a movie object model.
+        DB::table('movie_suffixes')
+            ->where('movie_id', $movie->id)
+            ->delete();
+
+        DB::table('albums')
+            ->where('id', $movie->album)
+            ->delete();
+
+        DB::table('reviews')
+            ->where('movie_id', $movie->id)
+            ->delete();
+
+        DB::table('discussions')
+            ->where('movie_id', $movie->id)
+            ->delete();
+
         $movie->delete();
 
-        Session::flash('message', "Successfully deleted movie from database");
+        Session::flash('success', "Successfully deleted movie and all associated reviews, discussions
+                            and album/images from database");
         return redirect()->action('AdminController@showMovies');
     }
 
@@ -263,7 +296,7 @@ class AdminController extends Controller
         $movie->save();
         $movie->save();
 
-        Session::flash('message', 'Successfully updated movie in database!');
+        Session::flash('success', 'Successfully updated movie in database!');
         return redirect()->action('AdminController@showMovies');
     }
 
@@ -278,16 +311,37 @@ class AdminController extends Controller
     }
 
     /**
-     * Remove person from database.
+     * Remove person from database, along with associated album/images.
      *
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroyPerson($id) {
         $person = Person::find($id);
+
+        $personImages = Album::find($person->album)->images;
+        if($personImages) {
+            foreach($personImages as $pI) {
+                $pI->delete();
+            }
+        }
+
+        DB::table('album_image')
+            ->where('album_id', $person->album)
+            ->delete();
+
+        // Again, need to ask John about the following lines of code.
+        DB::table('person_suffixes')
+            ->where('person_id', $person->id)
+            ->delete();
+
+        DB::table('albums')
+            ->where('id', $person->album)
+            ->delete();
+
         $person->delete();
 
-        Session::flash('message', "Successfully deleted person from database");
+        Session::flash('success', "Successfully deleted person from database");
         return redirect()->action('AdminController@showPeople');
     }
 
@@ -354,7 +408,7 @@ class AdminController extends Controller
         $person->biography = Input::get('biography');
         $person->save();
 
-        Session::flash('message', 'Successfully updated person in database!');
+        Session::flash('success', 'Successfully updated person in database!');
         return redirect()->action('AdminController@showPeople');
     }
 

@@ -13,9 +13,13 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Top 10 movies of the month!</div>
                     <div class="panel-body Layout__panel-body">
-                        <div class="col-md-12">
-                            Top 10 movie list
-                        </div>
+                        @foreach($top10Movies as $movie)
+                            <div class = "row">
+                                <div class="col-md-12">
+                                    <a href="{{url('/movies/'.$movie->id)}}">{{$movie->title}}</a>
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
             </div>
         </div>
@@ -25,7 +29,7 @@
         <div class="col-md-5">
             <div class="panel panel-default">
                 <div class="panel-heading">Login!</div>
-                <div class="panel-body Layout__panel-body">
+                <div class="panel-body Layout__panel-body Layout__login-panel">
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
                         {!! csrf_field() !!}
 
@@ -86,7 +90,7 @@
         <!--Recently added movies-->
         <div class="col-md-6">
             <div class="panel panel-default">
-                <div class="panel-heading">Recently released movies!</div>
+                <div class="panel-heading">Recently added movies!</div>
                 <div class="panel-body Layout__panel-body">
                     @foreach($recentmovie as $movie)
                         <div class = "row">
@@ -190,16 +194,5 @@
                 </div>
             </div>
         </div> <!--End of review box-->
-
-            <!--User discussions box-->
-           <!-- <div class="col-md-6">
-                <div class="panel panel-default">
-                    <div class="panel-heading">User discussions</div>
-                    <div class="panel-body Layout__panel-body">
-                        User discussions section
-                        </div>
-                    </div>
-                </div>-->
-
 </div>
 @endsection
