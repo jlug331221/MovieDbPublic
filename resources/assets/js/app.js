@@ -95,3 +95,38 @@ $(document).ready(function(){
         document.getElementById('list_id').value = listId;
     });
 });
+
+// Set up the menu bar search suggestions.
+$('#Userpage__input').suggest({
+    searchKey: 'name',
+    identifier: 'UserpageSearch',
+    template: function(suggestion) {
+        var path;
+
+        if (suggestion.type === 'm') {
+            return `<div class="UserpageSearch__suggestion">
+                            <a href="/userpage/home/addToList/${suggestion.id}">
+                                <img src="${suggestion.img}">
+                                ${suggestion.name}
+                            </a>
+                            <p>(${suggestion.year})</p>
+                        </div>`;
+        } else {
+            var html = `<div class="UserpageSearch__suggestion">
+                                <a href="/userpage/home/addToList/${suggestion.id}">
+                                    <img src="${suggestion.img}">
+                                    ${suggestion.name}
+                                </a>`;
+            if (suggestion.yob)
+                html += `<p>Born ${suggestion.yob}</p>`;
+            if (suggestion.yod)
+                html += `<p>Died ${suggestion.yod}</p>`;
+            html += `</div>`;
+            return html;
+        }
+
+    },
+    remoteUrl: '/search/json/WILDCARD',
+    remoteWildcard: 'WILDCARD',
+    maxSuggestions: 6,
+});
