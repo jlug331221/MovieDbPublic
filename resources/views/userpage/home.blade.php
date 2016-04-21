@@ -118,37 +118,17 @@
                                             <h4 class="modal-title" id="listModal"></h4>
                                         </div>
                                         <div class="modal-body">
-                                            {{--{!! Form::open(array('action' => 'HomeController@postAddToList')) !!}--}}
-                                            {{--<div class="form-group">--}}
-                                                {{--{!! Form::text('movieid', null, ['class' => 'form-control']) !!}--}}
-                                                {{--{!! Form::text('movieid', null, ['class' => 'typeahead form-control']) !!}--}}
-                                                {{--<input type="text"--}}
-                                                       {{--class="form-control"--}}
-                                                       {{--placeholder="Search"--}}
-                                                       {{--id="Userpage__input">--}}
-                                                {{--{!! Form::hidden('listid', null, ['class' => 'form-control', 'id' => 'list_id']) !!}--}}
-                                            {{--</div>--}}
-                                            {{--<div class="form-group">--}}
-                                                    {{--{!! Form::submit('Add To List', ['class' => 'btn btn-primary form-control']) !!}--}}
-                                            {{--</div>--}}
-                                            {{--{!! Form::close() !!}--}}
-
-                                            {!! Form::open() !!}
+                                            {!! Form::open(['class' => 'navbar-form navbar-left']) !!}
                                             <div class="form-group">
-                                                {!! Form::text('movieid', null, ['class' => 'form-control']) !!}
-                                                {!! Form::text('movieid', null, ['class' => 'typeahead form-control']) !!}
+                                                <div style="display: flex">
                                                 <input type="text"
                                                        class="form-control"
                                                        placeholder="Search"
                                                        id="Userpage__input">
                                                 {!! Form::hidden('listid', null, ['class' => 'form-control', 'id' => 'list_id']) !!}
-                                            </div>
-                                            <div class="form-group">
-                                                {!! Form::submit('Add To List', ['class' => 'btn btn-primary form-control']) !!}
+                                                </div>
                                             </div>
                                             {!! Form::close() !!}
-
-
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

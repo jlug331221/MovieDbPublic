@@ -102,10 +102,11 @@ $('#Userpage__input').suggest({
     identifier: 'UserpageSearch',
     template: function(suggestion) {
         var path;
+        var lid = document.getElementById('list_id').value;
 
         if (suggestion.type === 'm') {
             return `<div class="UserpageSearch__suggestion">
-                            <a href="/userpage/home/addToList/${suggestion.id}">
+                            <a href="/userpage/home/addToList/${suggestion.id}/${lid}">
                                 <img src="${suggestion.img}">
                                 ${suggestion.name}
                             </a>

@@ -30,7 +30,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/userpage/home/deleteList/{mlid}', 'HomeController@deleteList');
     Route::get('/userpage/avatar', 'HomeController@avatar');
     Route::post('/userpage/avatar/store', 'HomeController@store');
-    Route::get('/userpage/home/addToList/{id}', 'HomeController@postAddToList');
+    Route::get('/userpage/home/addToList/{id}/{lid}', 'HomeController@postAddToList');
 
     // Admin Routes
     Route::get('/admin/adminHome', 'AdminController@index');
