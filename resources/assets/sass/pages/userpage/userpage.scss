@@ -12,6 +12,9 @@
     float: none;
 }
 
+.Userpage__listThumbnail {
+
+}
 
 #UserpageSearch__input {
     border-radius: 4px 0px 0px 4px;
@@ -36,10 +39,13 @@
 
 #UserpageSearch__content-wrapper {
     padding: 10px;
+    min-width: auto;
+    width: 100%;
 }
 
 #UserpageSearch__content {
     display: flex;
+    flex-direction: column;
     justify-content: center;
 
     p {
@@ -50,16 +56,21 @@
 
 .UserpageSearch__suggestion {
     display: flex;
-    flex-direction: column;
-    max-width: 125px;
-    font-size: 15px;
-    margin-left: 2px;
-    margin-right: 2px;
 
     img {
-        height: 175px;
+        height: 50px;
         margin-bottom: 4px;
+        margin-right: 8px;
         border: 1px solid #B1B1B1;
+    }
+}
+
+.UserpageSearch__suggestion-header {
+    display: flex;
+    flex-direction: column;
+
+    span {
+        font-size: 15px;
     }
 
     p {

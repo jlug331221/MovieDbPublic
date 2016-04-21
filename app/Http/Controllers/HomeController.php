@@ -151,7 +151,7 @@ class HomeController extends Controller
             $movielist = MovieList::where('id', '=', $movielistid)->first();
             $movie = Movie::where('id', '=', $movieid)->first();
             $movielist->insertMovieInto($movie);
-            Session::flash('message', 'Successfully added' . $movie->title .' to your list!');
+            Session::flash('message', 'Successfully added ' . $movie->title .' to your list!');
             return redirect()->action('HomeController@index');
         }
         catch (QueryException $e) {

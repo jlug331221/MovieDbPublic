@@ -105,30 +105,17 @@ $('#Userpage__input').suggest({
         var path;
         var lid = document.getElementById('list_id').value;
 
-        if (suggestion.type === 'm') {
-            return `<div class="UserpageSearch__suggestion">
-                            <a href="/userpage/home/addToList/${suggestion.id}/${lid}">
-                                <img src="${suggestion.img}">
-                                ${suggestion.name}
-                            </a>
-                            <p>(${suggestion.year})</p>
-                        </div>`;
-        } else {
-            var html = `<div class="UserpageSearch__suggestion">
-                                <a href="/userpage/home/addToList/${suggestion.id}">
-                                    <img src="${suggestion.img}">
-                                    ${suggestion.name}
-                                </a>`;
-            if (suggestion.yob)
-                html += `<p>Born ${suggestion.yob}</p>`;
-            if (suggestion.yod)
-                html += `<p>Died ${suggestion.yod}</p>`;
-            html += `</div>`;
-            return html;
-        }
+
+        return `<a class="UserpageSearch__suggestion" href="/userpage/home/addToList/${suggestion.id}/${lid}">
+                    <img src="${suggestion.img}">
+                    <div class="UserpageSearch__suggestion-header">
+                        <span>${suggestion.name}</span>
+                        <p>(${suggestion.year})</p>
+                    </div>
+                </a>`;
 
     },
     remoteUrl: '/userpage/home/movie/WILDCARD',
     remoteWildcard: 'WILDCARD',
-    maxSuggestions: 6,
+    maxSuggestions: 15,
 });

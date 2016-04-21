@@ -95,6 +95,7 @@
                                                             @foreach($movlist->movies as $movie)
                                                             <li class="list-group-item" data-movie-id="{{ $movie->id }}">
                                                                 <a href="/movies/{{ $movie->id }}">
+                                                                    <img class="Userpage__listThumbnail" src="{{ $movie->album()->first()->defaultImage()->first()->getThumbPath() }}" />
                                                                     {{$movie["title"]}}
                                                                 </a>
                                                                 <a href="{{ url('userpage/home/deleteMovieItem/'.$movie->id).'/'.$movlist->id }}">
@@ -128,13 +129,11 @@
                                         <div class="modal-body">
                                             {!! Form::open() !!}
                                             <div class="form-group">
-                                                <div style="display: flex">
                                                 <input type="text"
                                                        class="form-control"
                                                        placeholder="Search"
                                                        id="Userpage__input">
                                                 {!! Form::hidden('listid', null, ['class' => 'form-control', 'id' => 'list_id']) !!}
-                                                </div>
                                             </div>
                                             {!! Form::close() !!}
                                         </div>
