@@ -24,6 +24,12 @@
                             {{\Illuminate\Support\Facades\Session::get('message')}}
                         </div>
                     @endif
+                    @if (\Illuminate\Support\Facades\Session::has('alert'))
+                        <div class="alert-danger Userpage__messages">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            {{\Illuminate\Support\Facades\Session::get('alert')}}
+                        </div>
+                    @endif
 
                     <div class="row">
                         <div class="col-md-2 col-centered Userpage__center">
@@ -120,7 +126,7 @@
                                             <h4 class="modal-title" id="listModal"></h4>
                                         </div>
                                         <div class="modal-body">
-                                            {!! Form::open(['class' => 'navbar-form navbar-left']) !!}
+                                            {!! Form::open() !!}
                                             <div class="form-group">
                                                 <div style="display: flex">
                                                 <input type="text"

@@ -32,6 +32,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('/userpage/avatar/store', 'HomeController@store');
     Route::get('/userpage/home/addToList/{id}/{lid}', 'HomeController@postAddToList');
     Route::get('/userpage/home/deleteMovieItem/{mid}/{mlid}','HomeController@deleteMovieItem');
+    Route::get('/userpage/home/movie/{term}', 'HomeController@get_suffixMovieSearch_json');
 
     // Admin Routes
     Route::get('/admin/adminHome', 'AdminController@index');

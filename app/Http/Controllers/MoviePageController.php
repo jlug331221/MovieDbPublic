@@ -16,7 +16,8 @@ use App\Character;
 use App\Album;
 use App\CreditType;
 use App\Review;
-
+use App\Masterlist;
+use Auth;
 //Used for review avatars
 use App\Image;
 use Image as InterventionImage;
@@ -115,9 +116,12 @@ class MoviePageController extends Controller
                 $review->avatar = $reviewAvatar;
             }
 
+            //Get movielists for user
+            $masterlists = Masterlist::where('user_id', Auth::user()->id)->get();
+
         }
 
         return view('/movies/movie', compact(['movie', 'year', 'newDate', 'director', 'firstPersonCast', 'firstPersonRole', 'newCastCollection',
-                    'firstPersonCrew', 'newCrewCollection', 'album', 'maxImages', 'movieAlbum', 'reviews']));
+                    'firstPersonCrew', 'newCrewCollection', 'album', 'maxImages', 'movieAlbum', 'reviews', 'masterlists']));
     }
 }

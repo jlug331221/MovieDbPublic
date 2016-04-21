@@ -37,7 +37,8 @@ $(function () {
                             </a>
                             <p>(${suggestion.year})</p>
                         </div>`;
-            } else {
+            }
+            else {
                 var html = `<div class="MenubarSearch__suggestion">
                                 <a href="/people/${suggestion.id}">
                                     <img src="${suggestion.img}">
@@ -127,7 +128,7 @@ $('#Userpage__input').suggest({
         }
 
     },
-    remoteUrl: '/search/json/WILDCARD',
+    remoteUrl: '/userpage/home/movie/WILDCARD',
     remoteWildcard: 'WILDCARD',
     maxSuggestions: 6,
 });
