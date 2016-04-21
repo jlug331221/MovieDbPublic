@@ -88,7 +88,9 @@
                                                         <ul class="list-group" data-movielist-id="{{ $movlist->id }}">
                                                             @foreach($movlist->movies as $movie)
                                                             <li class="list-group-item" data-movie-id="{{ $movie->id }}">
-                                                                {{$movie["title"]}}
+                                                                <a href="/movies/{{ $movie->id }}">
+                                                                    {{$movie["title"]}}
+                                                                </a>
                                                                 <a href="{{ url('userpage/home/deleteList/'.$masterlist->id) }}">
                                                                     <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                                                 </a>

@@ -144,13 +144,8 @@ class HomeController extends Controller
 
     public function postAddToList($id, $lid)
     {
-        //$movieid = $request->input('suggestion.id');
         $movieid = $id;
         $movielistid = $lid;
-        //$input = Request::only(['movieid', 'listid']);
-        //$input = Request::only('listid');
-        //$movieid = $input['movieid'];
-        //$movielistid = $input['listid'];
         $movielist = MovieList::where('id', '=', $movielistid)->first();
         $movie = Movie::where('id', '=', $movieid)->first();
         $movielist->insertMovieInto($movie);
