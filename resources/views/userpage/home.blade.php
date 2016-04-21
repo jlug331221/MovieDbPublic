@@ -118,17 +118,37 @@
                                             <h4 class="modal-title" id="listModal"></h4>
                                         </div>
                                         <div class="modal-body">
-                                            {!! Form::open(array('action' => 'HomeController@postAddToList')) !!}
-                                            <div class="form-group">
+                                            {{--{!! Form::open(array('action' => 'HomeController@postAddToList')) !!}--}}
+                                            {{--<div class="form-group">--}}
                                                 {{--{!! Form::text('movieid', null, ['class' => 'form-control']) !!}--}}
+                                                {{--{!! Form::text('movieid', null, ['class' => 'typeahead form-control']) !!}--}}
+                                                {{--<input type="text"--}}
+                                                       {{--class="form-control"--}}
+                                                       {{--placeholder="Search"--}}
+                                                       {{--id="Userpage__input">--}}
+                                                {{--{!! Form::hidden('listid', null, ['class' => 'form-control', 'id' => 'list_id']) !!}--}}
+                                            {{--</div>--}}
+                                            {{--<div class="form-group">--}}
+                                                    {{--{!! Form::submit('Add To List', ['class' => 'btn btn-primary form-control']) !!}--}}
+                                            {{--</div>--}}
+                                            {{--{!! Form::close() !!}--}}
+
+                                            {!! Form::open() !!}
+                                            <div class="form-group">
+                                                {!! Form::text('movieid', null, ['class' => 'form-control']) !!}
                                                 {!! Form::text('movieid', null, ['class' => 'typeahead form-control']) !!}
-                                                {{--<input class="typeahead form-control" type="text" data-provider="typeahead" placeholder="typeahead">--}}
+                                                <input type="text"
+                                                       class="form-control"
+                                                       placeholder="Search"
+                                                       id="Userpage__input">
                                                 {!! Form::hidden('listid', null, ['class' => 'form-control', 'id' => 'list_id']) !!}
                                             </div>
                                             <div class="form-group">
-                                                    {!! Form::submit('Add To List', ['class' => 'btn btn-primary form-control']) !!}
+                                                {!! Form::submit('Add To List', ['class' => 'btn btn-primary form-control']) !!}
                                             </div>
                                             {!! Form::close() !!}
+
+
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
