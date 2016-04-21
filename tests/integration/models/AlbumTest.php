@@ -44,16 +44,16 @@ class AlbumTest extends TestCase {
 
     // REQ-ID: 62
     /** @test */
-    public function it_ignores_incorrect_types_when_adding_an_image_to_an_album()
+    public function it_throws_an_exception_when_adding_on_invalid_param()
     {
-        $image = 'image';
-        $amount = $this->album->addImage($image);
+        try {
+            $this->album->addImage('image');
+        } catch (\Exception $e) {
+            $this->assertEquals('Could not add image. Invalid parameter', $e->getMessage());
+            return;
+        }
 
-        $this->assertEquals(0, $amount);
-
-        $albumImages = $this->album->images()->get();
-
-        $this->assertEquals(0, count($albumImages));
+        $this->fail();
     }
 
     // REQ-ID: 62
@@ -124,7 +124,7 @@ class AlbumTest extends TestCase {
 
     // REQ-ID: 62
     /** @test */
-    public function it_ignores_incorrect_types_when_removing_an_image_to_an_album()
+    public function it_throws_an_exception_when_removing_on_invalid_param()
     {
         $image = factory(Image::class)->create();
         $this->album->addImage($image);
@@ -133,9 +133,14 @@ class AlbumTest extends TestCase {
 
         $this->assertEquals(1, count($albumImages));
 
-        $this->album->removeImage('1');
+        try {
+            $this->album->removeImage('image');
+        } catch (\Exception $e) {
+            $this->assertEquals('Could not remove image. Invalid parameter', $e->getMessage());
+            return;
+        }
 
-        $this->assertEquals(1, count($albumImages));
+        $this->fail();
     }
 
     // REQ-ID: 62
@@ -238,6 +243,38 @@ class AlbumTest extends TestCase {
         $this->album->changeDefault($image->id);
         $album = Album::first();
         $this->assertEquals($album->default, $image->id);
+    }
+
+    // REQ-ID: 99
+    /** @test */
+    public function it_can_set_the_default_image_to_null()
+    {
+        $this->assertNull($this->album->default);
+
+        $image = factory(Image::class)->create();
+        $this->album->addImage($image->id);
+
+        $this->album->changeDefault($image->id);
+        $album = Album::first();
+        $this->assertEquals($album->default, $image->id);
+
+        $this->album->changeDefault();
+        $album = Album::first();
+        $this->assertNull($album->default);
+    }
+
+    // REQ-ID: 99
+    /** @test */
+    public function it_throws_an_exception_when_setting_the_default_image_with_an_invalid_param()
+    {
+        try {
+            $this->album->changeDefault('image');
+        } catch (\Exception $e) {
+            $this->assertEquals('Could not change default image. Invalid parameter', $e->getMessage());
+            return;
+        }
+
+        $this->fail();
     }
 
     // REQ-ID: 99

@@ -4,6 +4,7 @@ namespace App;
 
 use App\Role;
 use Exception;
+use ImageSync;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -82,10 +83,14 @@ class User extends Authenticatable
      * @throws Exception
      */
     public function setAvatar($image = null) {
-        if (is_null($image))
+        if (is_null($image)) {
+            ImageSync::destroy($this->avatar);
             $this->avatar = null;
-        else if ($image instanceof Image)
+        }
+        else if ($image instanceof Image) {
+            ImageSync::destroy($this->avatar);
             $this->avatar = $image->id;
+        }
         else
             throw new Exception('Could not set avatar. Invalid parameter');
         return $this->save();

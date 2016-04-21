@@ -2,6 +2,8 @@
 
 namespace App;
 
+use Exception;
+use ImageSync;
 use Illuminate\Database\Eloquent\Model;
 
 class Album extends Model {
@@ -27,17 +29,27 @@ class Album extends Model {
     }
 
     /**
-     * Changes the default image for the album using an Image or an id.
+     * Changes the default image for the album using an Image or an id,
+     * or sets the default image to null if no image is provided.
      *
      * @param Image | integer $image
+     * @throws Exception
      */
-    public function changeDefault($image)
+    public function changeDefault($image = null)
     {
-        if ($image instanceof Image)
-            $image = $image->id;
+        if (is_null($image))
+            $this->default = null;
 
-        if (is_numeric($image))
-            $this->default = $image;
+        else {
+            if ($image instanceof Image)
+                $image = $image->id;
+
+            if (is_numeric($image))
+                $this->default = $image;
+
+            else
+                throw new Exception('Could not change default image. Invalid parameter');
+        }
 
         $this->save();
     }
@@ -46,6 +58,7 @@ class Album extends Model {
      * Adds an image to the album using an Image or an id.
      *
      * @param Image | integer $image
+     * @throws Exception
      */
     public function addImage($image)
     {
@@ -54,6 +67,9 @@ class Album extends Model {
 
         if (is_numeric($image))
             return $this->images()->attach($image);
+
+        else
+            throw new Exception('Could not add image. Invalid parameter');
     }
 
     /**
@@ -61,14 +77,20 @@ class Album extends Model {
      *
      * @param Image | integer $image
      * @return int
+     * @throws Exception
      */
     public function removeImage($image)
     {
         if ($image instanceof Image)
             $image = $image->id;
 
-        if (is_numeric($image))
+        if (is_numeric($image)) {
+            ImageSync::destroy($image);
             return $this->images()->detach($image);
+        }
+
+        else
+            throw new Exception('Could not remove image. Invalid parameter');
     }
 
     /**
@@ -109,6 +131,9 @@ class Album extends Model {
     public function removeAll()
     {
         $this->default = null;
-        return $this->images()->detach();
+        $images = $this->images()->get()->map(function ($image) {
+            return $image->id;
+        })->toArray();
+        return $this->removeImages($images);
     }
 }
