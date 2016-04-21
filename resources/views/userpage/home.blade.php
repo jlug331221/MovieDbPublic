@@ -91,7 +91,7 @@
                                                                 <a href="/movies/{{ $movie->id }}">
                                                                     {{$movie["title"]}}
                                                                 </a>
-                                                                <a href="{{ url('userpage/home/deleteList/'.$masterlist->id) }}">
+                                                                <a href="{{ url('userpage/home/deleteMovieItem/'.$movie->id).'/'.$movlist->id }}">
                                                                     <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                                                 </a>
                                                             </li>

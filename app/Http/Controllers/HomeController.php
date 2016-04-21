@@ -151,4 +151,17 @@ class HomeController extends Controller
         $movielist->insertMovieInto($movie);
         return redirect()->action('HomeController@index');
     }
+
+    public function deleteMovieItem($mid, $mlid)
+    {
+        $movieid = $mid;
+        $movielistid = $mlid;
+        DB::table('movie_movie_list')
+            ->where('movie_id', $mid)
+            ->where('movie_list_id', $mlid)
+            ->delete();
+        return redirect()->action('HomeController@index');
+
+
+    }
 }
