@@ -41,7 +41,8 @@
                     <input type="text"
                            class="form-control"
                            placeholder="Search"
-                           id="MenubarSearch__input">
+                           id="MenubarSearch__input"
+		           name="search">
                     <button class="btn btn-default" 
                             type="submit"
                             id="MenubarSearch__submit">
