@@ -84,7 +84,7 @@
                                                             <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                                          </a>
                                                     </button>
-                                                    <button type="button" class="btn btn-default btn-sm pull-right" data-title="{{$masterlist->title}}" data-id="{{$movlist->id}}" data-toggle="modal" data-target="#myModal">
+                                                    <button type="button" class="btn btn-default btn-sm pull-right" data-title="{{$masterlist->title}}" data-id="{{$movlist->id}}" data-toggle="modal" data-target="#myMovieModal">
                                                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                                                     </button>
                                                     </div>
@@ -95,7 +95,11 @@
                                                             @foreach($movlist->movies as $movie)
                                                             <li class="list-group-item" data-movie-id="{{ $movie->id }}">
                                                                 <a href="/movies/{{ $movie->id }}">
+                                                                    @if($movie->album()->first()->defaultImage()->first() == null)
+                                                                    <img class="Userpage__listThumbnail" src="/static/null_movie_125_175.png">
+                                                                    @elseif($movie->album()->first()->defaultImage()->first()->getThumbPath() != null)
                                                                     <img class="Userpage__listThumbnail" src="{{ $movie->album()->first()->defaultImage()->first()->getThumbPath() }}" />
+                                                                    @endif
                                                                     {{$movie["title"]}}
                                                                 </a>
                                                                 <a href="{{ url('userpage/home/deleteMovieItem/'.$movie->id).'/'.$movlist->id }}">
@@ -117,7 +121,7 @@
                             </div>
 
                             <!-- Modal -->
-                            <div class="modal fade" id="myModal" role="dialog">
+                            <div class="modal fade" id="myMovieModal" role="dialog">
                                 <div class="modal-dialog">
 
                                     <!-- Modal content-->

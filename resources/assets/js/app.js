@@ -89,7 +89,7 @@ $('#Userpage__avatar__edit').hover(function() {
 $('div.Userpage__messages').delay(4000).slideUp();
 
 $(document).ready(function(){
-    $('#myModal').on('show.bs.modal', function (e) {
+    $('#myMovieModal').on('show.bs.modal', function (e) {
         var listTitle = $(e.relatedTarget).data('title');
         $('#listModal').text(listTitle);
         var listId = $(e.relatedTarget).data('id');
