@@ -44,7 +44,23 @@
                     @endif
 
                     @if(Auth::check())
-                        <button type="button" class="btn MoviePage__btnImage">Add to List</button> <br>
+                        <div class="dropdown">
+                            <button class="btn btn-default dropdown-toggle MoviePage__btnImage" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                Add To Movie List
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu MoviePage__ddm" aria-labelledby="dropdownMenu1">
+                                @foreach($masterlists as $masterlist)
+                                    @if($masterlist->type == "M")
+                                        @foreach($masterlist->movielist as $movlist)
+                                            <a href="/userpage/home/addMovieToList/{{$movie->id}}/{{$movlist->id}}">
+                                                <li>&nbsp;<span class="glyphicon glyphicon-plus" aria-hidden="true">&nbsp;</span>{{$masterlist->title}}&nbsp;</li>
+                                            </a>
+                                        @endforeach
+                                    @endif
+                                @endforeach
+                            </ul>
+                        </div>
                     @endif
 
                 </div>  <!-- 260 * 420 -->

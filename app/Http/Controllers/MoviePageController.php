@@ -10,13 +10,13 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Movie;
+use App\Masterlist;
 use App\Person;
 use App\Credit;
 use App\Character;
 use App\Album;
 use App\CreditType;
 use App\Review;
-use App\Masterlist;
 use Auth;
 //Used for review avatars
 use App\Image;
@@ -118,6 +118,7 @@ class MoviePageController extends Controller
 
             //Get movielists for user
             $masterlists = Masterlist::where('user_id', Auth::user()->id)->get();
+
 
         }
 

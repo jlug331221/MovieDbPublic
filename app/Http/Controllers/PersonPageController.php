@@ -12,6 +12,8 @@ use App\Character;
 use App\Person;
 use App\Album;
 use App\Library\StaticData;
+use App\Masterlist;
+use Auth;
 
 
 class PersonPageController extends Controller
@@ -63,6 +65,9 @@ class PersonPageController extends Controller
             }
         }
 
-        return view('/people/person', compact(['person', 'personAlbum', 'dateOfBirth', 'dateOfDeath', 'album', 'maxImages', 'newMovieCollection', 'firstMovieStarredIn', 'firstMovieRole']));
+        //Get movielists for user
+        $masterlists = Masterlist::where('user_id', Auth::user()->id)->get();
+
+        return view('/people/person', compact(['person', 'personAlbum', 'dateOfBirth', 'dateOfDeath', 'album', 'maxImages', 'newMovieCollection', 'firstMovieStarredIn', 'firstMovieRole', 'masterlists']));
     }
 }
