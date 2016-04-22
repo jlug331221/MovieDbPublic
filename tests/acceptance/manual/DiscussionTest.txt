@@ -1,7 +1,7 @@
 Created by Clayton Johnson 4/17/2016
 
 --------------------------
-Req-ID: 140
+Req-ID: 162
 Test: Navigating to discussion/create url as a logged in user should load the discussion create page.
 Status: Passed (4/17/2016)
 
@@ -16,7 +16,7 @@ Actual:
     2. Discussion creation page loads.
 
 --------------------------
-Req-ID: 141
+Req-ID: 163
 Test: Using creation form should save title, user_id, movie_id, and body.
 Status: Passed (4/17/2016)
 
@@ -33,7 +33,7 @@ Actual:
     2. Display page does show title, author (calculated by user_id), and body text.
 
 --------------------------
-Req-ID: 139
+Req-ID: 161
 Test: Clicking "Post a Reply" button under discussion should take user to reply creation page.
 Status: Passed (4/17/2016)
 
@@ -67,7 +67,7 @@ Actual:
     3. Reply information appears under the original post, with user name of author.
 
 --------------------------
-Req-ID: 142
+Req-ID: 164
 Test: Most recent discussion should appear on home page.
 Status: Passed (4/21/2016)
 
