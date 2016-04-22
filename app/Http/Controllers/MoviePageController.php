@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Movie;
 use App\Person;
 use App\Credit;
+use App\Discussion;
 use App\Character;
 use App\Album;
 use App\CreditType;
@@ -26,6 +27,8 @@ class MoviePageController extends Controller
     {
         $movie = Movie::find($id);
         $director = Movie::find($id)->credits->where('credit_type_id', 1)->first();
+
+        $discussions = Discussion::orderBy('created_at', 'dsc')->get()->slice(0, 3);
 
         if ($movie) {
             $year = date("Y", strtotime($movie->release_date));
@@ -103,6 +106,8 @@ class MoviePageController extends Controller
         }
 
         return view('/movies/movie', compact(['movie', 'year', 'newDate', 'director', 'firstPersonCast', 'firstPersonRole', 'newCastCollection',
-                    'firstPersonCrew', 'newCrewCollection', 'album', 'maxImages', 'movieAlbum']));
+                    'firstPersonCrew', 'newCrewCollection', 'album', 'maxImages', 'movieAlbum']))->with([
+            'discussions' => $discussions
+        ]);
     }
 }

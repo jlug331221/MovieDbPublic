@@ -99,7 +99,7 @@
                                     <div class="Review__userAvatar row">
                                         <img src="{{asset($comment->avatar)}}">
                                     </div>
-                                    <div class="Review__userName row">
+                                    <div class="never row">
                                         <strong>{{$comment->user()->firstorfail()->name}}</strong>
                                     </div>            <div class="row" id="{{$comment->id}}" url="{{url('reviews')}}">
 

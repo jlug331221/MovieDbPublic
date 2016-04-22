@@ -281,9 +281,17 @@
                 <div class="col-lg-12">
                     <h3 class="page-header">Discussions</h3>
                 </div>
+                <form class="col-md-offset-1" action="{{ url('discussions/create/'.$movie->id ) }}" method="GET" role="form">
+                    {!! csrf_field() !!}
+                    @if(Auth::check())<button class="btn btn-primary">Create New Discussion</button>@endif
+                </form>
 
                 <div class="col-md-6">
-                    <p>This section is potentially for movie discussions.</p>
+                    @foreach ($discussions as $discussion)
+                        @if($discussion->movie_id == $movie->id)
+                            @include('discussions.discussionComponent')
+                        @endif
+                    @endforeach
                 </div>
             </div>
             <!-- /.row -->

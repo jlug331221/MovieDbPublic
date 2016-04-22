@@ -1,6 +1,7 @@
 Created by Clayton Johnson 4/17/2016
 
 --------------------------
+Req-ID: 140
 Test: Navigating to discussion/create url as a logged in user should load the discussion create page.
 Status: Passed (4/17/2016)
 
@@ -15,6 +16,7 @@ Actual:
     2. Discussion creation page loads.
 
 --------------------------
+Req-ID: 141
 Test: Using creation form should save title, user_id, movie_id, and body.
 Status: Passed (4/17/2016)
 
@@ -31,6 +33,7 @@ Actual:
     2. Display page does show title, author (calculated by user_id), and body text.
 
 --------------------------
+Req-ID: 139
 Test: Clicking "Post a Reply" button under discussion should take user to reply creation page.
 Status: Passed (4/17/2016)
 
@@ -44,17 +47,101 @@ Actual:
     1. User is redirected to reply creation page.
 
 --------------------------
-Test: Reply Creation
+Req-ID: 31
+Test: Reply form test; the reply form should save body and user_id to the database.
 Status: Passed (4/16/2016)
 
 Actions:
-    1. Fill out reply form.
+    1. Log in to a user account.
+    2. Navigate to display discussion page for movie with id=1: ./discussions/display/1
+    3. Click "reply". Enter reply body and submit.
 
 Expected:
-    1. User is redirected to display page with reply body, user_id, and movie_id displayed.
+    1. Username should appear in top menu.
+    2. Reply button should appear under discussion post.
+    3. User should be redirected to discussion display with reply w/ username (calculated by user_id) under the post.
 
 Actual:
-    1. User is redirected, and sees the reply data.
+    1. Username appears in top menu.
+    2. Reply button appears.
+    3. Reply information appears under the original post, with user name of author.
+
+--------------------------
+Req-ID: 142
+Test: Most recent discussion should appear on home page.
+Status: Passed (4/21/2016)
+
+Actions:
+    1. Navigate to home page.
+    2. Scroll down until you see the Recent Discussions component.
+
+Expected:
+    1. Home page loads properly.
+    2. User sees Recent Discussions component.
+
+Actual:
+    1. Home page loads.
+    2. Recent Discussion component is visible.
+
+--------------------------
+Req-ID: 29
+Test: Discussion Component should appear on movie page.
+Status: Passed (4/21/2016)
+
+Actions:
+    1. Create discussion for movie_id 12 (Lord of the Rings)
+    2. Submit discussion.
+    3. Scroll down to see discussions about specific movie.
+
+Expected:
+    1. Discussion should be saved with movie_id.
+    2. Discussion should submitted to database.
+    3. Discussion about Lord of the Rings should be displayed.
+
+Actual:
+    1. Discussion is saved with movie_id.
+    2. Discussion is submitted to database.
+    3. Discussions about Lord of the Rings are displayed.
+
+--------------------------
+Req-ID: 30
+Test: Create a new discussion by clicking "Create New Discussion" on movie page.
+Status: Passed (4/21/2016)
+
+Actions:
+    1. Go to ./movies/12. (Lord of the Rings)
+    2. Scroll down and click "Create New Discussion".
+
+Expected:
+    1. Create New Discussion button should be visible on movie page.
+    2. Button should take user to create form.
+
+Actual:
+    1. Button is visible on Lord of the Rings movie page.
+    2. Button click redirects user to creation form.
+
+--------------------------
+Req-ID: 32
+Test: Discussion Reply notifies user.
+Status:
+
+Actions:
+    1. Reply to your own discussion as a logged-in user.
+    2. Check user page for notification.
+
+Expected:
+    1. Reply should be submitted.
+    2. User page should show notification that someone has replied to your discussion.
+
+Actual:
+    1.
+
+
+
+
+
+
+
 
 
 

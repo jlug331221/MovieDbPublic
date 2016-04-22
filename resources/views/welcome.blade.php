@@ -190,5 +190,20 @@
                 </div>
             </div>
         </div>
+
+        <!--Recent discussion box-->
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Recently added discussions!</div>
+                <div class="panel-body Layout__panel-body">
+                    <div class="col-md-12">
+                        @foreach ($discussions as $discussion)
+                            @include('discussions.discussionComponent')
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>
+
 </div>
 @endsection

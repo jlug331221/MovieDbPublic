@@ -99,6 +99,7 @@ Route::group(['middleware' => 'web'], function () {
 
     //Discussion routes
     Route::get('/discussions/create/{mid}', 'DiscussionController@create');
+    Route::post('/discussions/create/{mid}', 'DiscussionController@create');
     Route::post('/discussions/submit/{mid}', 'DiscussionController@submit');
     Route::get('/discussions/display/{rid}', 'DiscussionController@display');
     Route::post('/discussions/newreply/{rid}', 'DiscussionController@newReply');

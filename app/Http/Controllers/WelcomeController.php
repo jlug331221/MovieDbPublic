@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Review;
 use App\Movie;
+use App\Discussion;
 use App\Image;
 use App\Library\StaticData;
 use Image as InterventionImage;
@@ -18,6 +19,8 @@ class WelcomeController extends Controller
     public function display()
     {
         $reviews = Review::orderBy('created_at', 'dsc')->get()->slice(0, 3);
+
+        $discussions = Discussion::orderBy('created_at', 'dsc')->get()->slice(0, 3);
 
         //add user avatars to reviews
         foreach($reviews as $review)
@@ -37,7 +40,11 @@ class WelcomeController extends Controller
         return view('welcome')->with([
             'reviews' => $reviews,
 
+            'discussions' => $discussions,
+
             'recentmovie' => $recentmovie
         ]);
+
+
     }
 }
