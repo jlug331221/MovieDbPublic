@@ -969,7 +969,7 @@ class SearchControllerTest extends TestCase {
             ->dontSee('John Wayne');
     }
 
-    // REQ-ID:
+    // REQ-ID: 155
     /** @test */
     public function it_returns_all_results_if_the_search_string_is_empty()
     {
@@ -1010,7 +1010,7 @@ class SearchControllerTest extends TestCase {
             ->see('Tom Cruise');
     }
 
-    // REQ-ID:
+    // REQ-ID: 156
     /** @test */
     public function it_shows_only_matching_movie_results_if_a_movie_title_matches()
     {
@@ -1026,7 +1026,7 @@ class SearchControllerTest extends TestCase {
             ->dontSee('People Search Results');
     }
 
-    // REQ-ID:
+    // REQ-ID: 157
     /** @test */
     public function it_shows_only_matching_people_results_if_no_movie_matches_are_found()
     {
@@ -1042,7 +1042,7 @@ class SearchControllerTest extends TestCase {
             ->dontSee('Dwayne Johnson');
     }
 
-    // REQ-ID:
+    // REQ-ID: 158
     /** @test */
     public function it_returns_all_results_if_there_are_no_movie_or_people_matches()
     {
@@ -1083,7 +1083,7 @@ class SearchControllerTest extends TestCase {
             ->see('Tom Cruise');
     }
 
-    // REQ-ID:
+    // REQ-ID: 159
     /** @test */
     public function it_matches_partial_words()
     {

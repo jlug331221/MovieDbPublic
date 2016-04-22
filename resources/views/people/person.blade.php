@@ -31,7 +31,23 @@
                              style="width: 100%; height: auto;">
                     @endif
                     @if(Auth::check())
-                        <button type="button" class="btn PersonPage__btnImage">Add to List</button> <br>
+                        <div class="dropdown">
+                            <button class="btn btn-default dropdown-toggle PersonPage__btnImage" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                Add To Person List
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu PersonPage__ddm" aria-labelledby="dropdownMenu1">
+                                @foreach($masterlists as $masterlist)
+                                    @if($masterlist->type == "P")
+                                        @foreach($masterlist->personlist as $perlist)
+                                            <a href="/userpage/home/addPersonToList/{{$person->id}}/{{$perlist->id}}">
+                                                <li>&nbsp;<span class="glyphicon glyphicon-plus" aria-hidden="true">&nbsp;</span>{{$masterlist->title}}&nbsp;</li>
+                                            </a>
+                                        @endforeach
+                                    @endif
+                                @endforeach
+                            </ul>
+                        </div>
                     @endif
                 </div>
 
