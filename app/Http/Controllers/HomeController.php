@@ -6,6 +6,7 @@ use App\Masterlist;
 use App\MovieList;
 use App\PersonList;
 use App\Movie;
+use App\Person;
 use App\Image;
 use App\User;
 use Auth;
@@ -143,7 +144,7 @@ class HomeController extends Controller
         return redirect()->action('HomeController@index');
     }
 
-    public function postAddToList($id, $lid)
+    public function postAddMovieToList($id, $lid)
     {
         try {
             $movieid = $id;
@@ -160,6 +161,23 @@ class HomeController extends Controller
         }
     }
 
+    public function postAddPersonToList($id, $lid)
+    {
+        try {
+            $peopleid = $id;
+            $personlistid = $lid;
+            $personlist = PersonList::where('id', '=', $personlistid)->first();
+            $person = Person::where('id', '=', $peopleid)->first();
+            $personlist->insertPersonInto($person);
+            Session::flash('message', 'Successfully added ' . $person->getBestName() .' to your list!');
+            return redirect()->action('HomeController@index');
+        }
+        catch (QueryException $e) {
+            Session::flash('alert', 'Error, '.$person->getBestName().' already exists in this list!');
+            return redirect()->action('HomeController@index');
+        }
+    }
+
     public function deleteMovieItem($mid, $mlid)
     {
         $movieid = $mid;
@@ -170,8 +188,18 @@ class HomeController extends Controller
             ->delete();
         Session::flash('message', 'Successfully deleted movie from your list!');
         return redirect()->action('HomeController@index');
+    }
 
-
+    public function deletePersonItem($pid, $plid)
+    {
+        $personid = $pid;
+        $personlistid = $plid;
+        DB::table('person_person_list')
+            ->where('person_id', $pid)
+            ->where('person_list_id', $plid)
+            ->delete();
+        Session::flash('message', 'Successfully deleted person from your list!');
+        return redirect()->action('HomeController@index');
     }
 
     public function get_suffixPersonSearch_json($term)

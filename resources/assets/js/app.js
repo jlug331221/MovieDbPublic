@@ -91,14 +91,23 @@ $('div.Userpage__messages').delay(4000).slideUp();
 $(document).ready(function(){
     $('#myMovieModal').on('show.bs.modal', function (e) {
         var listTitle = $(e.relatedTarget).data('title');
-        $('#listModal').text(listTitle);
+        $('#listMovieModal').text(listTitle);
+        var listId = $(e.relatedTarget).data('id');
+        document.getElementById('list_id').value = listId;
+    });
+});
+
+$(document).ready(function(){
+    $('#myPersonModal').on('show.bs.modal', function (e) {
+        var listTitle = $(e.relatedTarget).data('title');
+        $('#listPersonModal').text(listTitle);
         var listId = $(e.relatedTarget).data('id');
         document.getElementById('list_id').value = listId;
     });
 });
 
 // Set up the menu bar search suggestions.
-$('#Userpage__input').suggest({
+$('#UserpageMovie__input').suggest({
     searchKey: 'name',
     identifier: 'UserpageSearch',
     template: function(suggestion) {
@@ -106,7 +115,7 @@ $('#Userpage__input').suggest({
         var lid = document.getElementById('list_id').value;
 
 
-        return `<a class="UserpageSearch__suggestion" href="/userpage/home/addToList/${suggestion.id}/${lid}">
+        return `<a class="UserpageSearch__suggestion" href="/userpage/home/addMovieToList/${suggestion.id}/${lid}">
                     <img src="${suggestion.img}">
                     <div class="UserpageSearch__suggestion-header">
                         <span>${suggestion.name}</span>
@@ -116,6 +125,28 @@ $('#Userpage__input').suggest({
 
     },
     remoteUrl: '/userpage/home/movie/WILDCARD',
+    remoteWildcard: 'WILDCARD',
+    maxSuggestions: 15,
+});
+
+// Set up the menu bar search suggestions.
+$('#UserpagePerson__input').suggest({
+    searchKey: 'name',
+    identifier: 'UserpageSearch',
+    template: function(suggestion) {
+        var path;
+        var lid = document.getElementById('list_id').value;
+
+
+        return `<a class="UserpageSearch__suggestion" href="/userpage/home/addPersonToList/${suggestion.id}/${lid}">
+                    <img src="${suggestion.img}">
+                    <div class="UserpageSearch__suggestion-header">
+                        <span>${suggestion.name}</span>
+                    </div>
+                </a>`;
+
+    },
+    remoteUrl: '/userpage/home/person/WILDCARD',
     remoteWildcard: 'WILDCARD',
     maxSuggestions: 15,
 });
