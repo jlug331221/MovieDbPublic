@@ -25,7 +25,7 @@ Actions:
     2. Fill out forms and click Submit.
 
 Expected:
-    1. User should be redirected to display page.
+    1. User should be redirected to display page.gu
     2. Display page should show title, author (calculated by user_id), and body text.
 
 Actual:
