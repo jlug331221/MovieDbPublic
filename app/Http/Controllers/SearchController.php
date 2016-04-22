@@ -15,20 +15,44 @@ use App\Http\Controllers\Controller;
 
 class SearchController extends Controller {
 
+    /**
+     * Basic search page.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function get_basicSearch()
     {
         return view('search.searchPage');
     }
 
+    /**
+     * Handles POST requests for basic movie and people searches.
+     * Movie matches take priority.
+     *
+     * @param AdvancedMovieRequest $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function post_basicSearch(Request $request)
     {
         $queryString = $request->get('search');
-        $movies = Movie::where('title', 'LIKE', $queryString)->get();
-        $people = Person::where('first_name', 'LIKE', $queryString)->get();
-        if (count($movies) == 0)
-            $movies = Movie::all();
-        if (count($people) == 0)
+
+	if($queryString == '') {
+	    $movies = Movie::all();
             $people = Person::all();
+	    return view('search.searchPage', compact('movies', 'people'));
+        }
+        
+        $movies = Movie::where('title', 'LIKE', '%'.$queryString.'%')->get();
+        if (count($movies) != 0)
+            return view('search.searchPage', compact('movies'));
+
+        $people = Person::where('first_name', 'LIKE', '%'.$queryString.'%')->orWhere(
+                                'last_name', 'LIKE', '%'.$queryString.'%')->get();
+	if (count($people) != 0)
+            return view('search.searchPage', compact('people'));
+        
+	$movies = Movie::all();
+        $people = Person::all();
         return view('search.searchPage', compact('movies', 'people'));
     }
 
