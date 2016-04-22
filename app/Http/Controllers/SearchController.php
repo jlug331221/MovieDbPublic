@@ -47,7 +47,7 @@ class SearchController extends Controller {
             return view('search.searchPage', compact('movies'));
 
         $people = Person::where('first_name', 'LIKE', '%'.$queryString.'%')->orWhere(
-                                'last_name', 'LIKE', '%'.$queryString.'%')->get();
+	                        'last_name', 'LIKE', '%'.$queryString.'%')->get();
 	if (count($people) != 0)
             return view('search.searchPage', compact('people'));
         
