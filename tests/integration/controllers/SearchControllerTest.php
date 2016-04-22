@@ -969,6 +969,139 @@ class SearchControllerTest extends TestCase {
             ->dontSee('John Wayne');
     }
 
+    // REQ-ID:
+    /** @test */
+    public function it_returns_all_results_if_the_search_string_is_empty()
+    {
+	$this->seedMoviesTable();
+        $this->seedPeopleTable();
+
+        $this->visit('/search')
+            ->type('', 'search')
+            ->press('Submit');
+
+        $this->see('Movie Search Results')
+            ->see('Drive')
+            ->see('Twins')
+            ->see('Rocky')
+            ->see('The Hunt for Red October')
+            ->see('Antman')
+            ->see('The Terminator')
+            ->see('Terminator 2: Judgement Day')
+            ->see('Star Wars Episode IV: A New Hope')
+            ->see('Star Wars Episode V: The Empire Strikes Back')
+            ->see('Star Wars Episode VI: Return of the Jedi')
+            ->see('The Lord of the Rings: The Fellowship of the Ring')
+            ->see('The Lord of the Rings: The Two Towers')
+            ->see('The Lord of the Rings: The Return of the King')
+            ->see('The Martian')
+            ->see('The Sword in the Stone')
+            ->see('People Search Results')
+            ->see('Arnold Schwarzenneger')
+            ->see('Dwayne Johnson')
+            ->see('John Wayne')
+            ->see('Al Pacino')
+            ->see('Louis C.K.')
+            ->see('Mark Hamill')
+            ->see('John Belushi')
+            ->see('John Candy')
+            ->see('Tommy Lee Jones')
+            ->see('Michael J. Fox')
+            ->see('Tom Cruise');
+    }
+
+    // REQ-ID:
+    /** @test */
+    public function it_shows_only_matching_movie_results_if_a_movie_title_matches()
+    {
+	$this->seedMoviesTable();
+
+        $this->visit('/search')
+            ->type('The Terminator', 'search')
+            ->press('Submit');
+
+        $this->see('Movie Search Results')
+            ->see('The Terminator')
+            ->dontSee('The Lord of the Rings: The Fellowship of the Ring')
+            ->dontSee('People Search Results');
+    }
+
+    // REQ-ID:
+    /** @test */
+    public function it_shows_only_matching_people_results_if_no_movie_matches_are_found()
+    {
+	$this->seedPeopleTable();
+
+        $this->visit('/search')
+            ->type('Schwarzenneger', 'search')
+            ->press('Submit');
+
+        $this->dontSee('Movie Search Results')
+            ->see('People Search Results')
+	    ->see('Arnold Schwarzenneger')
+            ->dontSee('Dwayne Johnson');
+    }
+
+    // REQ-ID:
+    /** @test */
+    public function it_returns_all_results_if_there_are_no_movie_or_people_matches()
+    {
+	$this->seedMoviesTable();
+        $this->seedPeopleTable();
+
+        $this->visit('/search')
+            ->type('Sir-Not-Appearing-In-This-Film', 'search')
+            ->press('Submit');
+
+        $this->see('Movie Search Results')
+            ->see('Drive')
+            ->see('Twins')
+            ->see('Rocky')
+            ->see('The Hunt for Red October')
+            ->see('Antman')
+            ->see('The Terminator')
+            ->see('Terminator 2: Judgement Day')
+            ->see('Star Wars Episode IV: A New Hope')
+            ->see('Star Wars Episode V: The Empire Strikes Back')
+            ->see('Star Wars Episode VI: Return of the Jedi')
+            ->see('The Lord of the Rings: The Fellowship of the Ring')
+            ->see('The Lord of the Rings: The Two Towers')
+            ->see('The Lord of the Rings: The Return of the King')
+            ->see('The Martian')
+            ->see('The Sword in the Stone')
+            ->see('People Search Results')
+            ->see('Arnold Schwarzenneger')
+            ->see('Dwayne Johnson')
+            ->see('John Wayne')
+            ->see('Al Pacino')
+            ->see('Louis C.K.')
+            ->see('Mark Hamill')
+            ->see('John Belushi')
+            ->see('John Candy')
+            ->see('Tommy Lee Jones')
+            ->see('Michael J. Fox')
+            ->see('Tom Cruise');
+    }
+
+    // REQ-ID:
+    /** @test */
+    public function it_matches_partial_words()
+    {
+	$this->seedMoviesTable();
+	$this->seedPeopleTable();
+
+        $this->visit('/search')
+            ->type('term', 'search')
+            ->press('Submit');
+
+        $this->see('Movie Search Results')
+            ->see('The Terminator')
+            ->see('Terminator 2: Judgement Day')
+            ->dontSee('Twins')
+            ->dontSee('Rocky')
+            ->dontSee('People Search Results');
+    }
+
     private function seedMoviesTable()
     {
         App\Movie::create(['title' => 'Drive', 'country' => 'United States', 'release_date' => '1945-01-01', 'genre' => 'Action', 'parental_rating' => 'R', 'runtime' => 90, 'synopsis' => "A mysterious Hollywood stuntman and mechanic moonlights as a getaway driver and finds himself trouble when he helps out his neighbor."]);
