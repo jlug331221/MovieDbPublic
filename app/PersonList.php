@@ -20,4 +20,8 @@ class PersonList extends Model
     {
         return $this->belongsToMany('App\Person');
     }
+
+    public function insertPersonInto(Person $person) {
+        return $this->people()->save($person);
+    }
 }

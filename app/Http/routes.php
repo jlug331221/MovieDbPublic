@@ -30,9 +30,12 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/userpage/home/deleteList/{mlid}', 'HomeController@deleteList');
     Route::get('/userpage/avatar', 'HomeController@avatar');
     Route::post('/userpage/avatar/store', 'HomeController@store');
-    Route::get('/userpage/home/addToList/{id}/{lid}', 'HomeController@postAddToList');
+    Route::get('/userpage/home/addMovieToList/{id}/{lid}', 'HomeController@postAddMovieToList');
+    Route::get('/userpage/home/addPersonToList/{id}/{lid}', 'HomeController@postAddPersonToList');
     Route::get('/userpage/home/deleteMovieItem/{mid}/{mlid}','HomeController@deleteMovieItem');
+    Route::get('/userpage/home/deletePersonItem/{pid}/{plid}','HomeController@deletePersonItem');
     Route::get('/userpage/home/movie/{term}', 'HomeController@get_suffixMovieSearch_json');
+    Route::get('/userpage/home/person/{term}', 'HomeController@get_suffixPersonSearch_json');
 
     // Admin Routes
     Route::get('/admin/adminHome', 'AdminController@index');

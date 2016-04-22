@@ -68,6 +68,8 @@
 
                             <div class="tab-pane" id="movie">
                                 <div class="accordion panel-group" id="accordion2">
+                                <br>
+                                <br>
                                 @foreach($masterlists as $masterlist)
                                     @if($masterlist->type == "M")
                                         @foreach($masterlist->movielist as $movlist)
@@ -120,7 +122,7 @@
                                 </div>
                             </div>
 
-                            <!-- Modal -->
+                            <!-- Movie Modal -->
                             <div class="modal fade" id="myMovieModal" role="dialog">
                                 <div class="modal-dialog">
 
@@ -128,7 +130,7 @@
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            <h4 class="modal-title" id="listModal"></h4>
+                                            <h4 class="modal-title" id="listMovieModal"></h4>
                                         </div>
                                         <div class="modal-body">
                                             {!! Form::open() !!}
@@ -136,7 +138,7 @@
                                                 <input type="text"
                                                        class="form-control"
                                                        placeholder="Search"
-                                                       id="Userpage__input">
+                                                       id="UserpageMovie__input">
                                                 {!! Form::hidden('listid', null, ['class' => 'form-control', 'id' => 'list_id']) !!}
                                             </div>
                                             {!! Form::close() !!}
@@ -145,13 +147,39 @@
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
 
+                            <!-- Person Modal -->
+                            <div class="modal fade" id="myPersonModal" role="dialog">
+                                <div class="modal-dialog">
+
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h4 class="modal-title" id="listPersonModal"></h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            {!! Form::open() !!}
+                                            <div class="form-group">
+                                                <input type="text"
+                                                       class="form-control"
+                                                       placeholder="Search"
+                                                       id="UserpagePerson__input">
+                                                {!! Form::hidden('listid', null, ['class' => 'form-control', 'id' => 'list_id']) !!}
+                                            </div>
+                                            {!! Form::close() !!}
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
                             <div class="tab-pane" id="person">
-                                <br>
-                                <br>
+
                                 <div class="accordion2 panel-group" id="accordion3">
                                     @foreach($masterlists as $masterlist)
                                         @if($masterlist->type == "P")
@@ -169,15 +197,27 @@
                                                                         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                                                     </a>
                                                                 </button>
+                                                                <button type="button" class="btn btn-default btn-sm pull-right" data-title="{{$masterlist->title}}" data-id="{{$perlist->id}}" data-toggle="modal" data-target="#myPersonModal">
+                                                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                                                </button>
                                                             </div>
                                                         </div>
                                                         <div id="collapse{{$masterlist["id"]}}" class="accordion-body collapse" style="height: auto; ">
                                                             <div class="accordion-inner panel-body">
-                                                                <ul class="list-group">
+                                                                <ul class="list-group" data-peoplelist-id="{{ $perlist->id }}">
                                                                     @foreach($perlist->people as $person)
-                                                                    <li class="list-group-item">
-                                                                        {{$person["first_name"]}}
-                                                                        {{$person["last_name"]}}
+                                                                    <li class="list-group-item" data-person-id="{{ $person->id }}">
+                                                                        <a href="/people/{{ $person->id }}">
+                                                                            @if($person->album()->first()->defaultImage()->first() == null)
+                                                                                <img class="Userpage__listThumbnail" src="/static/null_person_125_175.png">
+                                                                            @elseif($movie->album()->first()->defaultImage()->first()->getThumbPath() != null)
+                                                                                <img class="Userpage__listThumbnail" src="{{ $person->album()->first()->defaultImage()->first()->getThumbPath() }}" />
+                                                                            @endif
+                                                                            {{$person->getBestName()}}
+                                                                        </a>
+                                                                        <a href="{{ url('userpage/home/deletePersonItem/'.$person->id).'/'.$perlist->id }}">
+                                                                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                                                                        </a>
                                                                     </li>
                                                                     </br>
                                                                     @endforeach
