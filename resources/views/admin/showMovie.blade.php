@@ -5,13 +5,13 @@
         <div class="row">
             <div class="col-lg-12">
 
-                {{--@if($errors->has())--}}
-                    {{--<div class="alert alert-danger">--}}
-                        {{--@foreach($errors->all() as $error)--}}
-                            {{--{{ $error }}<br/>--}}
-                        {{--@endforeach--}}
-                    {{--</div>--}}
-                {{--@endif--}}
+                @if (isset($errors) && $errors->any())
+                    <div class="alert alert-danger">
+                        @foreach($errors->all() as $error)
+                            {{ $error }}<br/>
+                        @endforeach
+                    </div>
+                @endif
 
                 <h1>Editing Movie: {{ $movie->title }}
                     <a href="{{ url('admin/deleteMovie/'. $movie->id) }}">
@@ -183,7 +183,7 @@
 
                 <div class="col-md-6 col-lg-6">
                     <h2>Cast |
-                        <a href="{{ url('/admin/showAllPeopleForCastSelection/' . $movie->id) }}">
+                        <a href="{{ url('/admin/showAllPeopleForCastCrewSelection/' . $movie->id) }}">
                             <i class="fa fa-plus-square-o fa-lg"></i>
                         </a>
                     </h2>
@@ -239,7 +239,7 @@
 
                 <div class="col-md-6 col-lg-6">
                     <h2>Crew |
-                        <a href="#">
+                        <a href="{{ url('/admin/showAllPeopleForCastCrewSelection/' . $movie->id) }}">
                             <i class="fa fa-plus-square-o fa-lg"></i>
                         </a>
                     </h2>

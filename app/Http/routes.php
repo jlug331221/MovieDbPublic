@@ -26,11 +26,13 @@ Route::group(['middleware' => 'web'], function () {
     Route::auth();
 
     Route::get('/userpage/home', 'HomeController@index');
-    Route::post('/userpage/home/addToList', 'HomeController@postAddToList');
     Route::post('/userpage/home/newList', 'HomeController@postList');
     Route::get('/userpage/home/deleteList/{mlid}', 'HomeController@deleteList');
     Route::get('/userpage/avatar', 'HomeController@avatar');
     Route::post('/userpage/avatar/store', 'HomeController@store');
+    Route::get('/userpage/home/addToList/{id}/{lid}', 'HomeController@postAddToList');
+    Route::get('/userpage/home/deleteMovieItem/{mid}/{mlid}','HomeController@deleteMovieItem');
+    Route::get('/userpage/home/movie/{term}', 'HomeController@get_suffixMovieSearch_json');
 
     // Admin Routes
     Route::get('/admin/adminHome', 'AdminController@index');
@@ -49,11 +51,16 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('/admin/createPerson', 'AdminController@storePerson');
     Route::get('/admin/createCharacter', 'AdminController@showCreateCharacterForm');
     Route::post('/admin/createCharacter', 'AdminController@storeCharacter');
-    Route::get('/admin/showAllPeopleForCastSelection/{mid}', 'AdminController@showAllPeopleForCastSelection');
+    Route::get('/admin/showAllCharacters', 'AdminController@showCharacters');
+    Route::get('/admin/showCharacter/{id}', 'AdminController@showCharacter');
+    Route::put('/admin/updateCharacter/{id}', 'AdminController@updateCharacter');
+    Route::get('/admin/deleteCharacter/{id}', 'AdminController@destroyCharacter');
+    Route::get('/admin/showAllPeopleForCastCrewSelection/{mid}', 'AdminController@showAllPeopleForCastCrewSelection');
     Route::get('/admin/showAllCharactersForCastSelection/{pid}&{mid}',
                 'AdminController@showAllCharactersForCastSelection');
     Route::get('/admin/addCastMember/{pid}&{mid}&{cid}', 'AdminController@addCastMember');
-
+    Route::get('/admin/showAddCrewMemberForm/{pid}&{mid}', 'AdminController@showAddCrewMemberForm');
+    Route::post('/admin/showAddCrewMemberForm/{pid}&{mid}', 'AdminController@storeCrewMember');
 
     Route::get('/', 'WelcomeController@display');
 
@@ -78,15 +85,10 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/reviews/deleteComment/{cid}', 'ReviewController@deleteComment');
 
     // Image Routes
-    Route::get('/images/create', 'ImagesController@create'); //temp
-    Route::post('/images/store', 'ImagesController@store'); //temp
-    Route::get('/images/delete/{name}', 'ImagesController@delete'); // temp
-    Route::get('/images/discard/{name}', 'ImagesController@discard'); // temp
     Route::post('/images/storeMovieImage/{mid}', 'ImagesController@storeMovieImage');
     Route::post('/images/storePersonImage/{pid}', 'ImagesController@storePersonImage');
     Route::get('/images/destroyMovieImage/movie/{mid}/image/{imgId}', 'ImagesController@destroyMovieImage');
     Route::get('/images/destroyPersonImage/person/{pid}/image/{imgId}', 'ImagesController@destroyPersonImage');
-    Route::get('/album/preview/{id}', 'ImagesController@albumPreview');
     Route::get('/album/movie/{id}', 'ImagesController@get_movieAlbum');
     Route::get('/album/person/{id}', 'ImagesController@get_personAlbum');
     Route::get('/album/json/{id}', 'ImagesController@get_album_json');

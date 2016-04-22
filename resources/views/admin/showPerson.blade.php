@@ -5,13 +5,13 @@
         <div class="row">
             <div class="col-lg-12">
 
-                {{--@if($errors->has())--}}
-                    {{--<div class="alert alert-danger">--}}
-                        {{--@foreach($errors->all() as $error)--}}
-                            {{--{{ $error }}<br/>--}}
-                        {{--@endforeach--}}
-                    {{--</div>--}}
-                {{--@endif--}}
+                @if (isset($errors) && $errors->any())
+                    <div class="alert alert-danger">
+                        @foreach($errors->all() as $error)
+                            {{ $error }}<br/>
+                        @endforeach
+                    </div>
+                @endif
 
                 <h1>Editing Person:
                     {{ $person->first_name }} {{ $person->last_name }}
@@ -126,7 +126,7 @@
                         <div class="col-md-10 col-lg-10">
                             <div class="inner-addon right-addon">
                                 <i class="fa fa-pencil"></i>
-                                {!! Form::textarea('biography', null, ['class' => 'form-control']) !!}
+                                {!! Form::text('biography', null, ['class' => 'form-control']) !!}
                             </div>
                         </div>
                     </div>

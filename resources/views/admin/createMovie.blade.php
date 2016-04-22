@@ -8,15 +8,13 @@
 
                 <hr/>
 
-                {{--@include('errors.display')--}}
-
-                {{--@if($errors->has())--}}
-                    {{--<div class="alert alert-danger">--}}
-                        {{--@foreach($errors->all() as $error)--}}
-                            {{--{{ $error }}<br/>--}}
-                        {{--@endforeach--}}
-                    {{--</div>--}}
-                {{--@endif--}}
+                @if (isset($errors) && $errors->any())
+                    <div class="alert alert-danger">
+                        @foreach($errors->all() as $error)
+                            {{ $error }}<br/>
+                        @endforeach
+                    </div>
+                @endif
 
                 {!! Form::open() !!}
                     <div class="col-lg-12 form-group">

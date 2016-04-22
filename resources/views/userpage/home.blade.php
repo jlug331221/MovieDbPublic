@@ -24,6 +24,12 @@
                             {{\Illuminate\Support\Facades\Session::get('message')}}
                         </div>
                     @endif
+                    @if (\Illuminate\Support\Facades\Session::has('alert'))
+                        <div class="alert-danger Userpage__messages">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            {{\Illuminate\Support\Facades\Session::get('alert')}}
+                        </div>
+                    @endif
 
                     <div class="row">
                         <div class="col-md-2 col-centered Userpage__center">
@@ -78,7 +84,7 @@
                                                             <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                                          </a>
                                                     </button>
-                                                    <button type="button" class="btn btn-default btn-sm pull-right" data-title="{{$masterlist->title}}" data-id="{{$movlist->id}}" data-toggle="modal" data-target="#myModal">
+                                                    <button type="button" class="btn btn-default btn-sm pull-right" data-title="{{$masterlist->title}}" data-id="{{$movlist->id}}" data-toggle="modal" data-target="#myMovieModal">
                                                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                                                     </button>
                                                     </div>
@@ -88,8 +94,15 @@
                                                         <ul class="list-group" data-movielist-id="{{ $movlist->id }}">
                                                             @foreach($movlist->movies as $movie)
                                                             <li class="list-group-item" data-movie-id="{{ $movie->id }}">
-                                                                {{$movie["title"]}}
-                                                                <a href="{{ url('userpage/home/deleteList/'.$masterlist->id) }}">
+                                                                <a href="/movies/{{ $movie->id }}">
+                                                                    @if($movie->album()->first()->defaultImage()->first() == null)
+                                                                    <img class="Userpage__listThumbnail" src="/static/null_movie_125_175.png">
+                                                                    @elseif($movie->album()->first()->defaultImage()->first()->getThumbPath() != null)
+                                                                    <img class="Userpage__listThumbnail" src="{{ $movie->album()->first()->defaultImage()->first()->getThumbPath() }}" />
+                                                                    @endif
+                                                                    {{$movie["title"]}}
+                                                                </a>
+                                                                <a href="{{ url('userpage/home/deleteMovieItem/'.$movie->id).'/'.$movlist->id }}">
                                                                     <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                                                 </a>
                                                             </li>
@@ -108,7 +121,7 @@
                             </div>
 
                             <!-- Modal -->
-                            <div class="modal fade" id="myModal" role="dialog">
+                            <div class="modal fade" id="myMovieModal" role="dialog">
                                 <div class="modal-dialog">
 
                                     <!-- Modal content-->
@@ -118,15 +131,13 @@
                                             <h4 class="modal-title" id="listModal"></h4>
                                         </div>
                                         <div class="modal-body">
-                                            {!! Form::open(array('action' => 'HomeController@postAddToList')) !!}
+                                            {!! Form::open() !!}
                                             <div class="form-group">
-                                                {{--{!! Form::text('movieid', null, ['class' => 'form-control']) !!}--}}
-                                                {!! Form::text('movieid', null, ['class' => 'typeahead form-control']) !!}
-                                                {{--<input class="typeahead form-control" type="text" data-provider="typeahead" placeholder="typeahead">--}}
+                                                <input type="text"
+                                                       class="form-control"
+                                                       placeholder="Search"
+                                                       id="Userpage__input">
                                                 {!! Form::hidden('listid', null, ['class' => 'form-control', 'id' => 'list_id']) !!}
-                                            </div>
-                                            <div class="form-group">
-                                                    {!! Form::submit('Add To List', ['class' => 'btn btn-primary form-control']) !!}
                                             </div>
                                             {!! Form::close() !!}
                                         </div>

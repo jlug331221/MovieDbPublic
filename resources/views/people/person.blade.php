@@ -25,7 +25,7 @@
 
                 <div class="col-md-4 PersonPage__Image">
                     @if($personAlbum->first() === null)
-                        {!! Html::image('http://www.politicspa.com/wp-content/uploads/2013/02/Silhouette-question-mark.jpeg', array('width' => '100%', 'height' => 'auto')) !!} <br/>
+                        {!! Html::image('http://www.politicspa.com/wp-content/uploads/2013/02/Silhouette-question-mark.jpeg', 'questionMark_person', array('width' => '100%', 'height' => 'auto')) !!} <br/>
                     @else
                         <img src="{{ url($personAlbum->first()->getPath()) }}" class="img-responsive"
                              style="width: 100%; height: auto;">
@@ -75,8 +75,8 @@
                     <h3 class="page-header">Pictures
                     </h3>
                 </div>
-                @include('images.albumPreview')
-                <a href="{{ url('/album/preview/' . $person->album) }}"><button type="button" class="btn PersonPage__btnRedirect">View All Pictures</button></a>
+                @include('images.albumPreview', ['album' => $album, 'maxImages' => 8])
+                <a href="{{ '/album/person/' . $person->id }}" id="albumBtnPerson"><button type="button" class="btn PersonPage__btnRedirect">View All Pictures</button></a>
             </div>
             <!-- /.row -->
 
@@ -163,7 +163,6 @@
 
             <!-- Fourth Row -->
             <div class="row PersonPage__Fourth">
-
                 <div class="col-lg-12">
                     <h3 class="page-header">Discussions</h3>
                 </div>

@@ -24,7 +24,7 @@
                         </small>
 
                         @can('edit_all_content')
-                            <a href="{{ url('/admin/showMovie/' . $movie->id) }}"><button type="button" class="btn MoviePage__btnAdmin">Edit Movie</button></a>
+                            <a id="adminButtonEdit" href="{{ url('/admin/showMovie/' . $movie->id) }}"><button id="editButton" type="button" class="btn MoviePage__btnAdmin">Edit Movie</button></a>
                             <a href="{{ url('/admin/deleteMovie/' . $movie->id) }}"><button type="button" class="btn MoviePage__btnAdmin">Delete Movie</button></a>
                         @endcan
                     </h1>
@@ -100,8 +100,8 @@
                     <h3 class="page-header">Pictures</h3>
                 </div>
 
-                @include('images.albumPreview')
-                <a href="{{ url('/album/preview/' . $movie->album) }}"><button type="button" class="btn PersonPage__btnRedirect">View All Pictures</button></a>
+                @include('images.albumPreview', ['album' => $album, 'maxImages' => 8])
+                <a href="{{ '/album/movie/' . $movie->id }}" id="albumBtn"><button type="button" class="btn PersonPage__btnRedirect">View All Pictures</button></a>
             </div>
             <!-- /.row -->
 
@@ -125,7 +125,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr class="clickable" data-toggle="collapse" id="row1" data-target=".row1">
+                            <a href="#" id="row1"><tr class="clickable" data-toggle="collapse" id="row1" data-target=".row1"></a>
                                 <td align ="center">
                                         @if($firstPersonCast->default === null)
                                             <img src="http://www.politicspa.com/wp-content/uploads/2013/02/Silhouette-question-mark.jpeg"
@@ -249,7 +249,6 @@
                                                 {{$crew->type}}
                                             @endif
                                         </td>
-                                    }
                                     </tr>
                                 @endforeach
                             @endif
@@ -269,8 +268,10 @@
                     <h3 class="page-header">Reviews</h3>
                 </div>
 
-                <div class="col-md-6">
-                    <p>I am reserving this section for reviews.</p>
+                <div class="col-md-12">
+                    @foreach($reviews as $review)
+                        @include('reviews.reviewComponent')
+                    @endforeach
                 </div>
             </div>
             <!-- /.row -->
@@ -286,12 +287,17 @@
                     @if(Auth::check())<button class="btn btn-primary">Create New Discussion</button>@endif
                 </form>
 
+<<<<<<< HEAD
                 <div class="col-md-6">
                     @foreach ($discussions as $discussion)
                         @if($discussion->movie_id == $movie->id)
                             @include('discussions.discussionComponent')
                         @endif
                     @endforeach
+=======
+                <div class="col-md-12">
+                    <p>I am reserving this section for reviews.</p>
+>>>>>>> 475d8a6c63e80155d412ce4851964239525e682c
                 </div>
             </div>
             <!-- /.row -->

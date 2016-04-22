@@ -32,6 +32,11 @@ class PersonPageController extends Controller
             $album = $person->album()->firstOrFail();
             $maxImages = 5;
 
+            if (!$personAlbum)
+            {
+                $personAlbum = null;
+            }
+
             $movieCollection = DB::table('movies')
                 ->join('credits', 'id', '=', 'movie_id')
                 ->join('albums', 'album', '=', 'albums.id')
@@ -47,13 +52,11 @@ class PersonPageController extends Controller
                 $firstMovieStarredIn = $movieCollection[0];
                 $firstMovieRole = Character::find($firstMovieStarredIn->character_id);
                 $newMovieCollection = null;
-            }
-            elseif (count($movieCollection) > 1) {
+            } elseif (count($movieCollection) > 1) {
                 $firstMovieStarredIn = $movieCollection[0];
                 $firstMovieRole = Character::find($firstMovieStarredIn->character_id);
                 $newMovieCollection = array_slice($movieCollection, 1);
-            }
-            else {
+            } else {
                 $firstMovieStarredIn = null;
                 $firstMovieRole = null;
                 $newMovieCollection = null;

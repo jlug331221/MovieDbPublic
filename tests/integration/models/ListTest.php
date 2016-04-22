@@ -27,7 +27,7 @@ class ListTest extends TestCase {
     {
         parent::setUp();
     }
-
+    // REQ-ID: 25
     /** @test */
     function a_newly_created_user_does_not_have_any_lists() {
         $user = factory(User::class, (1))->create();
@@ -35,7 +35,7 @@ class ListTest extends TestCase {
 
         $this->assertCount(0, $user->masterlists);
     }
-
+    // REQ-ID: 26
     /** @test */
     function an_existing_user_can_create_masterlist() {
         $user = factory(User::class, (1))->create();
@@ -49,7 +49,7 @@ class ListTest extends TestCase {
 
         $this->assertCount(1, $user->masterlists);
     }
-
+    // REQ-ID: 64
     /** @test */
     function an_existing_user_can_delete_masterlist() {
         $user = factory(User::class, (1))->create();
