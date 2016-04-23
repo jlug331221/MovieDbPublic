@@ -61,7 +61,7 @@ Actual:
        edit movie page.
 
 ####################
-Req-ID: 142
+Req-ID: 69, 142
 Test-ID: 4
 Date: Last ran test on April 19, 2016
 Status: Successful

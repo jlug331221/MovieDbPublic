@@ -27,7 +27,7 @@ class ListTest extends TestCase {
     {
         parent::setUp();
     }
-    // REQ-ID: 25
+    // REQ-ID: 167
     // Test-ID: 1
     /** @test */
     function a_newly_created_user_does_not_have_any_lists() {

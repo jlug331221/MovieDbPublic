@@ -61,7 +61,7 @@ Actual:
        edit person page.
 
 ####################
-Req-ID: 151
+Req-ID: 69, 151
 Test-ID: 4
 Date: Last ran test on April 19, 2016
 Status: Successful
