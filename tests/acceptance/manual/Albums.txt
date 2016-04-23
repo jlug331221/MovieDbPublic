@@ -71,14 +71,14 @@ Expected:
         that says 'Load More'.
     2. 24 more thumbnails are loaded into the page, and the button
         to 'Load More' is still visible.
-    2. 4 more thumbnails are loaded into the page, and the button
+    3. 4 more thumbnails are loaded into the page, and the button
         to 'Load More' is removed.
 Actual:
     1. 24 thumbnails are displayed on the page as well as a button 
         that says 'Load More'.
     2. 24 more thumbnails are loaded into the page, and the button
         to 'Load More' is still visible.
-    2. 4 more thumbnails are loaded into the page, and the button
+    3. 4 more thumbnails are loaded into the page, and the button
         to 'Load More' is removed.
 
 ####################

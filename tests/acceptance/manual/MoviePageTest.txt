@@ -3,6 +3,8 @@ Created by Ashley
 April 18th, 2016
 ##########
 
+All of the seeded data is required to run these tests.
+
 ####################
 Req-ID: 139
 Test-ID: 1

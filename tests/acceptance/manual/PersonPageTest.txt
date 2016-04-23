@@ -3,6 +3,8 @@ Created by Ashley
 April 18th, 2016
 ##########
 
+These tests are predicated on the seeded data set included with the project.
+
 ####################
 Req-ID: 148
 Test-ID: 1

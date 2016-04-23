@@ -1,5 +1,7 @@
 Created by Clayton Johnson 4/17/2016
 
+All of the seeded data is required to run these tests.
+
 --------------------------
 Req-ID: 162
 Test-ID: 1
