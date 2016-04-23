@@ -97,10 +97,11 @@
                                                             @foreach($movlist->movies as $movie)
                                                             <li class="list-group-item" data-movie-id="{{ $movie->id }}">
                                                                 <a href="/movies/{{ $movie->id }}">
-                                                                    @if($movie->album()->first()->defaultImage()->first() == null)
-                                                                    <img class="Userpage__listThumbnail" src="/static/null_movie_125_175.png">
-                                                                    @elseif($movie->album()->first()->defaultImage()->first()->getThumbPath() != null)
-                                                                    <img class="Userpage__listThumbnail" src="{{ $movie->album()->first()->defaultImage()->first()->getThumbPath() }}" />
+                                                                    <?php $thumbPath = $movie->album()->first()->defaultImage()->first(); ?>
+                                                                    @if(is_null($thumbPath))
+                                                                        <img class="Userpage__listThumbnail" src="/static/null_movie_125_175.png">
+                                                                    @else
+                                                                        <img class="Userpage__listThumbnail" src="{{ $movie->album()->first()->defaultImage()->first()->getThumbPath() }}" />
                                                                     @endif
                                                                     {{$movie["title"]}}
                                                                 </a>
@@ -208,9 +209,10 @@
                                                                     @foreach($perlist->people as $person)
                                                                     <li class="list-group-item" data-person-id="{{ $person->id }}">
                                                                         <a href="/people/{{ $person->id }}">
-                                                                            @if($person->album()->first()->defaultImage()->first() == null)
+                                                                            <?php $thumbPath = $person->album()->first()->defaultImage()->first(); ?>
+                                                                            @if(is_null($thumbPath))
                                                                                 <img class="Userpage__listThumbnail" src="/static/null_person_125_175.png">
-                                                                            @elseif($movie->album()->first()->defaultImage()->first()->getThumbPath() != null)
+                                                                            @else
                                                                                 <img class="Userpage__listThumbnail" src="{{ $person->album()->first()->defaultImage()->first()->getThumbPath() }}" />
                                                                             @endif
                                                                             {{$person->getBestName()}}
