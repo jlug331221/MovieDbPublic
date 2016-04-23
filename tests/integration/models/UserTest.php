@@ -145,7 +145,7 @@ class UserTest extends TestCase {
     }
 
     // REQ-ID: 107
-    // Test-ID:
+    // Test-ID: 8
     /** @test */
     public function it_throws_an_exception_for_invalid_parameters_when_changing_the_avatar()
     {
