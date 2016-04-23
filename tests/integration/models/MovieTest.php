@@ -9,6 +9,7 @@ class MovieTest extends TestCase {
     use DatabaseTransactions;
 
     // REQ-ID: 101
+    // Test-ID: 1
     /** @test */
     public function it_creates_an_associated_album_whenever_a_movie_is_created()
     {
@@ -28,6 +29,7 @@ class MovieTest extends TestCase {
     }
 
     // REQ-ID: 105
+    // Test-ID: 2
     /** @test */
     public function it_stores_all_of_the_alpha_numeric_suffixes_per_word_of_a_movies_title_on_creation()
     {
@@ -58,6 +60,7 @@ class MovieTest extends TestCase {
     }
 
     // REQ-ID: 105
+    // Test-ID: 3
     /** @test */
     public function it_updates_all_of_the_suffixes_of_a_movies_name_on_update()
     {
@@ -92,6 +95,7 @@ class MovieTest extends TestCase {
     }
 
     // REQ-ID: 105
+    // Test-ID: 4
     /** @test */
     public function it_deletes_all_suffixes_associated_with_a_movie_on_deletion()
     {

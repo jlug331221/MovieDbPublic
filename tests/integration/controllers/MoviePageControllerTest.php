@@ -51,8 +51,9 @@ class MoviePageControllerTest extends TestCase
 
     }
 
+    // Req-ID: 8
+    // Test-ID: 1
     /** @test */
-    /* Req. 8 */
     public function it_can_display_all_movie_information_on_the_movie_page_blade_file() {
 
         $movie = Movie::first();
@@ -245,8 +246,9 @@ class MoviePageControllerTest extends TestCase
 //        $movie = Movie::first();
 //    }
 
+    // Req-ID: 143
+    // Test-ID: 2
     /** @test */
-    /* Req. 143 */
     public function it_can_display_the_button_to_view_the_full_movie_album () {
 
         $movie = Movie::first();

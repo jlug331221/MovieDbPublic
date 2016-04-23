@@ -40,8 +40,9 @@ class PersonPageControllerTest extends TestCase
         ]);
     }
 
+    // Req-ID: 9
+    // Test-ID: 1
     /** @test */
-    /* Req. 9 */
     public function it_can_display_all_person_information_on_the_person_page_blade_file() {
 
         $person = Person::first();
@@ -59,8 +60,9 @@ class PersonPageControllerTest extends TestCase
     }
 
 
+    // Req-ID 154
+    // Test-ID: 1
     /** @test */
-    /* Req. 154 */
     public function it_can_display_the_button_to_view_the_full_person_album () {
 
         $person = Person::first();

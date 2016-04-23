@@ -18,6 +18,7 @@ class AlbumTest extends TestCase {
     }
 
     // REQ-ID: 62
+    // Test-ID: 1
     /** @test */
     public function it_can_add_an_image_to_an_album_using_an_image()
     {
@@ -31,6 +32,7 @@ class AlbumTest extends TestCase {
     }
 
     // REQ-ID: 62
+    // Test-ID: 2
     /** @test */
     public function it_can_add_an_image_to_an_album_using_an_image_id()
     {
@@ -43,6 +45,7 @@ class AlbumTest extends TestCase {
     }
 
     // REQ-ID: 62
+    // Test-ID: 3
     /** @test */
     public function it_throws_an_exception_when_adding_on_invalid_param()
     {
@@ -57,6 +60,7 @@ class AlbumTest extends TestCase {
     }
 
     // REQ-ID: 62
+    // Test-ID: 4
     /** @test */
     public function it_can_add_to_an_album_using_an_array_of_images()
     {
@@ -72,6 +76,7 @@ class AlbumTest extends TestCase {
     }
 
     // REQ-ID: 62
+    // Test-ID: 5
     /** @test */
     public function it_can_add_to_an_album_using_an_array_of_image_ids()
     {
@@ -87,6 +92,7 @@ class AlbumTest extends TestCase {
     }
 
     // REQ-ID: 62
+    // Test-ID: 6
     /** @test */
     public function it_can_remove_an_image_from_an_album_using_an_image()
     {
@@ -105,6 +111,7 @@ class AlbumTest extends TestCase {
     }
 
     // REQ-ID: 62
+    // Test-ID: 7
     /** @test */
     public function it_can_remove_an_image_from_an_album_using_an_image_id()
     {
@@ -123,6 +130,7 @@ class AlbumTest extends TestCase {
     }
 
     // REQ-ID: 62
+    // Test-ID: 8
     /** @test */
     public function it_throws_an_exception_when_removing_on_invalid_param()
     {
@@ -144,6 +152,7 @@ class AlbumTest extends TestCase {
     }
 
     // REQ-ID: 62
+    // Test-ID: 9
     /** @test */
     public function it_can_remove_from_an_album_using_an_array_of_images()
     {
@@ -167,6 +176,7 @@ class AlbumTest extends TestCase {
     }
 
     // REQ-ID: 62
+    // Test-ID: 10
     /** @test */
     public function it_can_remove_from_an_album_using_an_array_of_image_ids()
     {
@@ -190,6 +200,7 @@ class AlbumTest extends TestCase {
     }
 
     // REQ-ID: 62
+    // Test-ID: 11
     /** @test */
     public function it_can_remove_all_of_the_images_from_the_album()
     {
@@ -211,6 +222,7 @@ class AlbumTest extends TestCase {
     }
 
     // REQ-ID: 99
+    // Test-ID: 12
     /** @test */
     public function it_has_no_default_image_on_creation()
     {
@@ -218,6 +230,7 @@ class AlbumTest extends TestCase {
     }
 
     // REQ-ID: 99
+    // Test-ID: 13
     /** @test */
     public function it_can_change_the_default_image_using_an_instance_of_an_image()
     {
@@ -232,6 +245,7 @@ class AlbumTest extends TestCase {
     }
 
     // REQ-ID: 99
+    // Test-ID: 14
     /** @test */
     public function it_can_change_the_default_image_using_an_id()
     {
@@ -246,6 +260,7 @@ class AlbumTest extends TestCase {
     }
 
     // REQ-ID: 99
+    // Test-ID: 15
     /** @test */
     public function it_can_set_the_default_image_to_null()
     {
@@ -264,6 +279,7 @@ class AlbumTest extends TestCase {
     }
 
     // REQ-ID: 99
+    // Test-ID: 16
     /** @test */
     public function it_throws_an_exception_when_setting_the_default_image_with_an_invalid_param()
     {
@@ -278,6 +294,7 @@ class AlbumTest extends TestCase {
     }
 
     // REQ-ID: 99
+    // Test-ID: 17
     /** @test */
     public function it_removes_the_default_image_when_all_images_are_cleared()
     {

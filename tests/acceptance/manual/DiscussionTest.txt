@@ -2,6 +2,7 @@ Created by Clayton Johnson 4/17/2016
 
 --------------------------
 Req-ID: 162
+Test-ID: 1
 Test: Navigating to discussion/create url as a logged in user should load the discussion create page.
 Status: Passed (4/17/2016)
 
@@ -17,6 +18,7 @@ Actual:
 
 --------------------------
 Req-ID: 163
+Test-ID: 2
 Test: Using creation form should save title, user_id, movie_id, and body.
 Status: Passed (4/17/2016)
 
@@ -34,6 +36,7 @@ Actual:
 
 --------------------------
 Req-ID: 161
+Test-ID: 3
 Test: Clicking "Post a Reply" button under discussion should take user to reply creation page.
 Status: Passed (4/17/2016)
 
@@ -48,6 +51,7 @@ Actual:
 
 --------------------------
 Req-ID: 31
+Test-ID: 4
 Test: Reply form test; the reply form should save body and user_id to the database.
 Status: Passed (4/16/2016)
 
@@ -68,6 +72,7 @@ Actual:
 
 --------------------------
 Req-ID: 164
+Test-ID: 5
 Test: Most recent discussion should appear on home page.
 Status: Passed (4/21/2016)
 
@@ -85,6 +90,7 @@ Actual:
 
 --------------------------
 Req-ID: 29
+Test-ID: 6
 Test: Discussion Component should appear on movie page.
 Status: Passed (4/21/2016)
 
@@ -105,6 +111,7 @@ Actual:
 
 --------------------------
 Req-ID: 30
+Test-ID: 7
 Test: Create a new discussion by clicking "Create New Discussion" on movie page.
 Status: Passed (4/21/2016)
 
@@ -122,8 +129,9 @@ Actual:
 
 --------------------------
 Req-ID: 32
+Test-ID: 8
 Test: Discussion Reply notifies user.
-Status:
+Status: Failed
 
 Actions:
     1. Reply to your own discussion as a logged-in user.
@@ -134,7 +142,8 @@ Expected:
     2. User page should show notification that someone has replied to your discussion.
 
 Actual:
-    1.
+    1. Reply is submitted
+    2. User page does not show notification for a reply.
 
 
 

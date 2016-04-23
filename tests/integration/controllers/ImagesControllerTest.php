@@ -7,6 +7,7 @@ class ImagesControllerTest extends TestCase {
     use DatabaseTransactions;
 
     // REQ-ID: 97
+    // Test-ID: 1
     /** @test */
     public function it_can_get_album_info_as_json_in_a_specific_format()
     {
@@ -29,6 +30,7 @@ class ImagesControllerTest extends TestCase {
     }
 
     // REQ-ID: 97
+    // Test-ID: 2
     /** @test */
     public function it_returns_404_when_requesting_json_for_a_nonexistent_album()
     {
@@ -40,6 +42,7 @@ class ImagesControllerTest extends TestCase {
     }
 
     // REQ-ID: 97
+    // Test-ID: 3
     /** @test */
     public function it_returns_null_fields_for_an_album_without_any_images()
     {

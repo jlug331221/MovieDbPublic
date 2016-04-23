@@ -23,6 +23,7 @@ class AdminControllerTest extends TestCase
     }
 
     // Req-ID: 17
+    // Test-ID: 1
     /** @test */
     public function it_has_a_form_to_fill_out_movie_information_to_be_inserted_into_the_database() {
         $errors = null;
@@ -47,6 +48,7 @@ class AdminControllerTest extends TestCase
     }
 
     // Req-ID: 18
+    // Test-ID: 2
     /** @test */
     public function it_has_a_form_to_fill_out_person_information_to_be_inserted_into_the_database() {
         $errors = null;
@@ -75,6 +77,7 @@ class AdminControllerTest extends TestCase
     }
 
     // Req-ID: 18.5
+    // Test-ID: 3
     /** @test */
     public function it_has_a_form_to_fill_out_character_information_to_be_inserted_into_the_database() {
         $errors = null;
@@ -92,6 +95,7 @@ class AdminControllerTest extends TestCase
     }
 
     // Req-ID: 19
+    // Test-ID: 4
     /** @test */
     public function it_can_edit_a_movie_after_information_has_been_pulled_from_the_database() {
         $errors = null;
@@ -235,6 +239,7 @@ class AdminControllerTest extends TestCase
     }
 
     // Req-ID: 20
+    // Test-ID: 5
     /** @test */
     public function it_can_edit_a_person_after_information_has_been_pulled_from_the_database() {
         $errors = null;
@@ -282,6 +287,7 @@ class AdminControllerTest extends TestCase
     }
 
     // Req-ID: 21
+    // Test-ID: 6
     /** @test */
     public function
     it_can_properly_delete_a_movie_from_the_database_along_with_associated_reviews_and_discussions_and_album_and_images() {
@@ -388,6 +394,7 @@ class AdminControllerTest extends TestCase
     }
 
     // Req-ID: 22
+    // Test-ID: 7
     /** @test */
     public function it_can_delete_a_person_from_the_database_along_with_person_album_and_associated_person_images() {
         DB::table('albums')->insert([
