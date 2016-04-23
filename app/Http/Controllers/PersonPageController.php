@@ -65,9 +65,21 @@ class PersonPageController extends Controller
             }
         }
 
-        //Get movielists for user
-        $masterlists = Masterlist::where('user_id', Auth::user()->id)->get();
+        //Get personlists for user
+        if (Auth::check()) {
+            $masterlists = Masterlist::where('user_id', Auth::user()->id)->get();
+        }
 
-        return view('/people/person', compact(['person', 'personAlbum', 'dateOfBirth', 'dateOfDeath', 'album', 'maxImages', 'newMovieCollection', 'firstMovieStarredIn', 'firstMovieRole', 'masterlists']));
+        return view('/people/person', compact(['person',
+            'personAlbum',
+            'dateOfBirth',
+            'dateOfDeath',
+            'album',
+            'maxImages',
+            'newMovieCollection',
+            'firstMovieStarredIn',
+            'firstMovieRole',
+            'masterlists'
+        ]));
     }
 }

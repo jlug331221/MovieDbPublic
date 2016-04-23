@@ -97,22 +97,12 @@
                     <div class="panel panel-default">
                         <div class="panel-body Review__panelBody">
                             <div class="col-md-3 Review__userDisplay">
-<<<<<<< HEAD
-                                    <div class="Review__userAvatar row">
-                                        <img src="{{asset($comment->avatar)}}">
-                                    </div>
-                                    <div class="never row">
-                                        <strong>{{$comment->user()->firstorfail()->name}}</strong>
-                                    </div>            <div class="row" id="{{$comment->id}}" url="{{url('reviews')}}">
-
-=======
                                 <div class="Review__userAvatar row">
                                     <img src="{{asset($comment->avatar)}}">
                                 </div>
                                 <div class="Review__userName row">
                                     <strong>{{$comment->user()->firstorfail()->name}}</strong>
                                 </div>
->>>>>>> 475d8a6c63e80155d412ce4851964239525e682c
                                 <div class="Review__createdAt row">
                                     <div>
                                         Posted: {{$comment->created_at}}

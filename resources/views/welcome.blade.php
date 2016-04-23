@@ -193,7 +193,6 @@
                     </div>
                 </div>
             </div>
-<<<<<<< HEAD
         </div>
 
         <!--Recent discussion box-->
@@ -210,8 +209,6 @@
             </div>
         </div>
 
-=======
         </div> <!--End of review box-->
->>>>>>> 475d8a6c63e80155d412ce4851964239525e682c
 </div>
 @endsection

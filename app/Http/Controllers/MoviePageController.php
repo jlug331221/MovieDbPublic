@@ -25,8 +25,7 @@ use Image as InterventionImage;
 use ImageSync;
 use App\Library\StaticData;
 
-class MoviePageController extends Controller
-{
+class MoviePageController extends Controller {
 
     public function moviePage()
     {
@@ -36,9 +35,6 @@ class MoviePageController extends Controller
     public function showMovie($id)
     {
         $movie = Movie::find($id);
-        $director = Movie::find($id)->credits->where('credit_type_id', 1)->first();
-
-        $discussions = Discussion::orderBy('created_at', 'dsc')->get()->slice(0, 3);
 
         if ($movie) {
             $year = date("Y", strtotime($movie->release_date));
@@ -47,8 +43,11 @@ class MoviePageController extends Controller
             $album = Movie::find($id)->album()->firstOrFail();
             $maxImages = 5;
 
+            $discussions = Discussion::orderBy('created_at', 'dsc')->get()->slice(0, 3);
+            $director = Movie::find($id)->credits->where('credit_type_id', 1)->first();
+
             $creditDirector = Movie::find($id)->credits->where('credit_type_id', 1)->first();
-            if ($creditDirector){
+            if ($creditDirector) {
                 $directorID = $creditDirector->person_id;
                 $director = Person::find($directorID);
             }
@@ -75,31 +74,27 @@ class MoviePageController extends Controller
                 ->get();
 
 
-            if(count($castCollection) > 1) {
+            if (count($castCollection) > 1) {
                 $newCastCollection = array_slice($castCollection, 1);
                 $firstPersonCast = $castCollection[0];
                 $firstPersonRole = Character::find($firstPersonCast->character_id);
-            }
-            elseif(count($castCollection) === 1) {
+            } elseif (count($castCollection) === 1) {
                 $newCastCollection = null;
                 $firstPersonCast = $castCollection[0];
                 $firstPersonRole = Character::find($firstPersonCast->character_id);
-            }
-            else {
+            } else {
                 $newCastCollection = null;
                 $firstPersonCast = null;
                 $firstPersonRole = null;
             }
 
-            if(count($crewCollection) > 1) {
+            if (count($crewCollection) > 1) {
                 $newCrewCollection = array_slice($crewCollection, 1);
                 $firstPersonCrew = $crewCollection[0];
-            }
-            elseif(count($crewCollection) === 1) {
+            } elseif (count($crewCollection) === 1) {
                 $newCrewCollection = null;
                 $firstPersonCrew = $crewCollection[0];
-            }
-            else {
+            } else {
                 $newCrewCollection = null;
                 $firstPersonCrew = null;
             }
@@ -108,30 +103,38 @@ class MoviePageController extends Controller
             $reviews = Review::where('movie_id', $id)->orderBy('score', 'dsc')->get()->slice(0, 3);
 
             //Get avatars for reviews
-            foreach($reviews as $review)
-            {
+            foreach ($reviews as $review) {
                 $reviewAvatarId = $review->user()->firstOrFail()->avatar;
                 $reviewAvImage = Image::where('id', '=', $reviewAvatarId)->first();
-                $reviewAvatar = $reviewAvImage['path'].'/'.$reviewAvImage['name'].'.'.$reviewAvImage['extension'];
-                if($reviewAvatar == '/.'){
+                $reviewAvatar = $reviewAvImage['path'] . '/' . $reviewAvImage['name'] . '.' . $reviewAvImage['extension'];
+                if ($reviewAvatar == '/.') {
                     $reviewAvatar = StaticData::defaultAvatar();
                 }
                 $review->avatar = $reviewAvatar;
             }
 
             //Get movielists for user
-            $masterlists = Masterlist::where('user_id', Auth::user()->id)->get();
-
-
+            $masterlists = null;
+            if (Auth::check()) {
+                $masterlists = Masterlist::where('user_id', Auth::user()->id)->get();
+            }
         }
 
-        return view('/movies/movie', compact(['movie', 'year', 'newDate', 'director', 'firstPersonCast', 'firstPersonRole', 'newCastCollection',
-<<<<<<< HEAD
-                    'firstPersonCrew', 'newCrewCollection', 'album', 'maxImages', 'movieAlbum']))->with([
-            'discussions' => $discussions
-        ]);
-=======
-                    'firstPersonCrew', 'newCrewCollection', 'album', 'maxImages', 'movieAlbum', 'reviews', 'masterlists']));
->>>>>>> 475d8a6c63e80155d412ce4851964239525e682c
+        return view('/movies/movie', compact(['movie',
+            'year',
+            'newDate',
+            'director',
+            'firstPersonCast',
+            'firstPersonRole',
+            'newCastCollection',
+            'firstPersonCrew',
+            'newCrewCollection',
+            'album',
+            'maxImages',
+            'movieAlbum',
+            'discussions',
+            'reviews',
+            'masterlists'
+        ]));
     }
 }

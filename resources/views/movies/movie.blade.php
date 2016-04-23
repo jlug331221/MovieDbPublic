@@ -1,4 +1,3 @@
-<!-- Ashley created file on $(DATE) -->
 
 @extends('layouts.app')
 
@@ -303,18 +302,12 @@
                     @if(Auth::check())<button class="btn btn-primary">Create New Discussion</button>@endif
                 </form>
 
-<<<<<<< HEAD
                 <div class="col-md-6">
                     @foreach ($discussions as $discussion)
                         @if($discussion->movie_id == $movie->id)
                             @include('discussions.discussionComponent')
                         @endif
                     @endforeach
-=======
-                <div class="col-md-12">
-                    <p>I am reserving this section for reviews.</p>
->>>>>>> 475d8a6c63e80155d412ce4851964239525e682c
-                </div>
             </div>
             <!-- /.row -->
         @else

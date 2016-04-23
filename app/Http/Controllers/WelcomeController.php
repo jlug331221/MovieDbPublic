@@ -47,13 +47,8 @@ class WelcomeController extends Controller
 
         return view('welcome')->with([
             'reviews' => $reviews,
-<<<<<<< HEAD
-
             'discussions' => $discussions,
-
-=======
             'top10Movies' => $OrderedTop10,
->>>>>>> 475d8a6c63e80155d412ce4851964239525e682c
             'recentmovie' => $recentmovie
         ]);
 
