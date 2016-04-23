@@ -460,13 +460,4 @@ class AdminControllerTest extends TestCase {
         $this->assertCount(0, Album::all());
         $this->assertCount(0, Image::all());
     }
-
-    // Req-ID: 16
-    // Test-ID: 8
-    /** @test */
-    public function it_has_an_admin_home_page()
-    {
-        $this->visit('admin/adminHome')
-            ->see('Welcome Admin User');
-    }
 }
