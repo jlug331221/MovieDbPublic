@@ -61,7 +61,7 @@ class PersonPageControllerTest extends TestCase
 
 
     // Req-ID 154
-    // Test-ID: 1
+    // Test-ID: 2
     /** @test */
     public function it_can_display_the_button_to_view_the_full_person_album () {
 
