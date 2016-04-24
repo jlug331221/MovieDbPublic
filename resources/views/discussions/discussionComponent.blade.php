@@ -7,7 +7,7 @@
             <div class="row">
                 <!--Title-->
                 <div class="ReviewComponent__review-title col-md-7">
-                    {{$discussions->title}}
+                    {{$discussion->title}}
                 </div>
             </div>
         </div>
@@ -16,13 +16,10 @@
         <div class="panel-body ReviewComponent__panel-body">
             <!--User Information Section-->
             <div class="col-md-2 ReviewComponent__user-information">
-                <!-- avatar-->
-                <div class="row ReviewComponent__user-avatar">
-                    <img src="{{asset('static/large-mysql.png')}}">
-                </div>
+
                 <!--Username-->
                 <div class="row">
-                    <span class="ReviewComponent__user-name">{{$discussions->user()->firstOrFail()->name}}</span>
+                    <span class="ReviewComponent__user-name">{{$discussion->user()->firstOrFail()->name}}</span>
                 </div>
                 <!--created at-->
             </div>
@@ -31,14 +28,14 @@
             <div class="col-md-10 ReviewComponent__review-body" >
                 <!-- Discussion Body-->
                 <div class="row ReviewComponent__review-body-holder">
-                    {{$discussions->body}}
+                    {{$discussion->body}}
                 </div>
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-md-4">
-            <a href="{{url('discussions/display')."/".$discussions->id}}">See Full Discussion</a>
+            <a href="{{url('discussions/display')."/".$discussion->id}}">See Full Discussion</a>
         </div>
     </div>
 </div>

@@ -6,7 +6,8 @@ The specific seed files required for these tests are:
     PeopleTableSeeder.php
 
 ####################
-Req-ID: 35
+Req-ID: 4, 35
+Test-ID: 1
 Date: Last ran test on April 17, 2016
 Status: Successful
 Test: 
@@ -20,7 +21,8 @@ Actual:
     1. Redirect to the search page with a list of all movie results.
 
 ####################
-Req-ID: 36
+Req-ID: 4, 36
+Test-ID: 2
 Date: Last ran test on April 17, 2016
 Status: Successful
 Test: 

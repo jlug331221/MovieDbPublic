@@ -4,18 +4,19 @@
 <div>
     <div class = "container">
         <h1>
-            <a>{{$discussion->title}}</a>
+            {{$discussion->title}}
         </h1>
         <div class = "rightTop">
-            by <a>{{Auth::user()->name}}</a>
+            <p>by {{Auth::user()->name}}</p>
+            <p>Created at: {{$discussion->created_at}}</p>
             <hr/>
         </div>
     </div>
 
     <div class = "container">
-        <div class = "leftBoard">
+        <div class = "discussionBody">
             <p>
-                <a>{{$discussion->body}}</a>
+                {{$discussion->body}}
             </p>
         </div>
         <hr/>
@@ -28,13 +29,15 @@
     </div>
     <hr/>
     <div class="container">
-        <h1>Replies</h1>
+        <h1>Replies to {{$discussion->title}}</h1>
     </div>
     @foreach ($replies as $reply)
         <div class =  "container">
-            <a>{{$reply->discussion_id}}</a>
-            <a>{{$reply->user_id}}</a>
-            <a>{{$reply->body}}</a>
+            <p>by: {{$reply->user()->firstorfail()->name}}</p>
+            <p>Posted: {{$reply->created_at}}</p>
+            <div id = "replyBody">
+                <p>{{$reply->body}}</p>
+            </div>
             <hr/>
         </div>
     @endforeach

@@ -10,6 +10,7 @@ class ImageSyncTest extends TestCase {
     use DatabaseTransactions;
 
     // REQ-ID: 55
+    // Test-ID: 1
     /** @test */
     public function it_can_create_a_record_and_corresponding_file()
     {
@@ -32,6 +33,7 @@ class ImageSyncTest extends TestCase {
     }
 
     // REQ-ID: 60
+    // Test-ID: 2
     /** @test */
     public function it_can_delete_a_record_and_corresponding_file()
     {
@@ -49,6 +51,7 @@ class ImageSyncTest extends TestCase {
     }
 
     // REQ-ID: 59
+    // Test-ID: 3
     /** @test */
     public function it_throws_an_exception_for_non_file_types_during_creation()
     {
@@ -65,6 +68,7 @@ class ImageSyncTest extends TestCase {
     }
 
     // REQ-ID: 57, 59
+    // Test-ID: 4
     /** @test */
     public function it_throws_an_exception_for_invalid_file_extensions_during_creation()
     {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Credit;
 use Auth;
 use App\Http\Requests;
 use DB;
@@ -195,16 +196,42 @@ class AdminController extends Controller
     }
 
     /**
-     * Remove movie from database.
+     * Remove movie (and all associated reviews, discussions and album/images)
+     * from database.
      *
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroyMovie($id) {
         $movie = Movie::find($id);
+
+        $movieImages = Album::find($movie->album)->images;
+        if($movieImages) {
+            foreach($movieImages as $mI) {
+                $mI->delete();
+            }
+        }
+
+        DB::table('album_image')
+            ->where('album_id', $movie->album)
+            ->delete();
+
+        DB::table('albums')
+            ->where('id', $movie->album)
+            ->delete();
+
+        DB::table('reviews')
+            ->where('movie_id', $movie->id)
+            ->delete();
+
+        DB::table('discussions')
+            ->where('movie_id', $movie->id)
+            ->delete();
+
         $movie->delete();
 
-        Session::flash('message', "Successfully deleted movie from database");
+        Session::flash('success', "Successfully deleted movie and all associated reviews, discussions
+                            and album/images from database");
         return redirect()->action('AdminController@showMovies');
     }
 
@@ -262,7 +289,7 @@ class AdminController extends Controller
         $movie->save();
         $movie->save();
 
-        Session::flash('message', 'Successfully updated movie in database!');
+        Session::flash('success', 'Successfully updated movie in database!');
         return redirect()->action('AdminController@showMovies');
     }
 
@@ -277,16 +304,32 @@ class AdminController extends Controller
     }
 
     /**
-     * Remove person from database.
+     * Remove person from database, along with associated album/images.
      *
      * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroyPerson($id) {
         $person = Person::find($id);
+
+        $personImages = Album::find($person->album)->images;
+        if($personImages) {
+            foreach($personImages as $pI) {
+                $pI->delete();
+            }
+        }
+
+        DB::table('album_image')
+            ->where('album_id', $person->album)
+            ->delete();
+
+        DB::table('albums')
+            ->where('id', $person->album)
+            ->delete();
+
         $person->delete();
 
-        Session::flash('message', "Successfully deleted person from database");
+        Session::flash('success', "Successfully deleted person from database");
         return redirect()->action('AdminController@showPeople');
     }
 
@@ -353,7 +396,7 @@ class AdminController extends Controller
         $person->biography = Input::get('biography');
         $person->save();
 
-        Session::flash('message', 'Successfully updated person in database!');
+        Session::flash('success', 'Successfully updated person in database!');
         return redirect()->action('AdminController@showPeople');
     }
 
@@ -392,6 +435,65 @@ class AdminController extends Controller
 
 
     /**
+     * Show all characters in the database.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function showCharacters() {
+        $characters = Character::get();
+        return view('admin/showAllCharacters', compact('characters'));
+    }
+
+
+    /**
+     * Show specific character for editing.
+     *
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function showCharacter($id) {
+        $character = Character::find($id);
+        return view('admin/showCharacter', compact('character'));
+    }
+
+    /**
+     * Update character in database.
+     *
+     * @param $id
+     * @return $this|\Illuminate\Http\RedirectResponse
+     */
+    public function updateCharacter($id) {
+        $validator = \Validator::make(Input::all(), $this->characterValidationRules);
+
+        if($validator->fails()) {
+            return redirect()->back()->withErrors($validator->errors())->withInput();
+        }
+
+        $character = Character::find($id);
+        $character->character_name = Input::get('character_name');
+        $character->biography = Input::get('biography');
+        $character->save();
+
+        return redirect()->action('AdminController@showCharacters')->with('success',
+            "Successfully updated character in database!");
+    }
+
+
+    /**
+     * Remove character from database.
+     *
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroyCharacter($id) {
+        $character = Character::find($id);
+        $character->delete();
+
+        return redirect()->action('AdminController@showCharacters')->with('success',
+            "Successfully deleted character from database!");
+    }
+
+    /**
      * Create and store a character in database.
      *
      * @return $this|\Illuminate\Http\RedirectResponse
@@ -420,10 +522,10 @@ class AdminController extends Controller
      * @param $mid
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function showAllPeopleForCastSelection($mid) {
+    public function showAllPeopleForCastCrewSelection($mid) {
         $movie = Movie::find($mid);
         $people = Person::get();
-        return view('/admin/showAllPeopleForCastSelection', compact('movie', 'people'));
+        return view('/admin/showAllPeopleForCastCrewSelection', compact('movie', 'people'));
     }
 
 
@@ -471,5 +573,57 @@ class AdminController extends Controller
         return redirect()->action('AdminController@showMovie', [$mid])->with('success',
             "Successfully added " . $person->first_name . " " . $person->last_name .
                 " as a cast member to " . $movie->title);
+    }
+
+
+    /**
+     * Taken to the add crew member form.
+     *
+     * @param $pid
+     * @param $mid
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function showAddCrewMemberForm($pid, $mid) {
+        $movie = Movie::find($mid);
+        $person = Person::find($pid);
+        $credit_types = CreditType::get();
+
+        return view('/admin/addCrewMemberForm', compact('movie', 'person', 'credit_types'));
+    }
+
+
+    /**
+     * Store crew member for a movie.
+     *
+     * @param $pid
+     * @param $mid
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function storeCrewMember($pid, $mid) {
+        $movie = Movie::find($mid);
+        $person = Person::find($pid);
+        $alias_first = $person->first_alias;
+
+        $credit_type = Input::get('credit_type_id');
+        $credit_type_collection = collect(DB::table('credit_types')->where('type', $credit_type)
+            ->get());
+        $credit_type = $credit_type_collection->first()->type;
+        $cT_id = $credit_type_collection->first()->id;
+
+        $credit = new Credit();
+        $credit->movie_id = $mid;
+        $credit->person_id = $pid;
+        $credit->credit_type_id = $cT_id;
+        $credit->remark = Input::get('remark');
+        $credit->save();
+
+        if($alias_first)
+            return redirect()->action('AdminController@showMovie', [$mid])->with('success',
+                "Successfully added " . $alias_first . " " . $person->last_name .
+                " as " . $credit_type . " to " . $movie->title);
+        else
+            return redirect()->action('AdminController@showMovie', [$mid])->with('success',
+                "Successfully added " . $person->first_name . " " . $person->last_name .
+                " as " . $credit_type . " to " . $movie->title);
     }
 }

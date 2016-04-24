@@ -12,6 +12,8 @@ use App\Character;
 use App\Person;
 use App\Album;
 use App\Library\StaticData;
+use App\Masterlist;
+use Auth;
 
 
 class PersonPageController extends Controller
@@ -32,6 +34,11 @@ class PersonPageController extends Controller
             $album = $person->album()->firstOrFail();
             $maxImages = 5;
 
+            if (!$personAlbum)
+            {
+                $personAlbum = null;
+            }
+
             $movieCollection = DB::table('movies')
                 ->join('credits', 'id', '=', 'movie_id')
                 ->join('albums', 'album', '=', 'albums.id')
@@ -47,19 +54,32 @@ class PersonPageController extends Controller
                 $firstMovieStarredIn = $movieCollection[0];
                 $firstMovieRole = Character::find($firstMovieStarredIn->character_id);
                 $newMovieCollection = null;
-            }
-            elseif (count($movieCollection) > 1) {
+            } elseif (count($movieCollection) > 1) {
                 $firstMovieStarredIn = $movieCollection[0];
                 $firstMovieRole = Character::find($firstMovieStarredIn->character_id);
                 $newMovieCollection = array_slice($movieCollection, 1);
-            }
-            else {
+            } else {
                 $firstMovieStarredIn = null;
                 $firstMovieRole = null;
                 $newMovieCollection = null;
             }
         }
 
-        return view('/people/person', compact(['person', 'personAlbum', 'dateOfBirth', 'dateOfDeath', 'album', 'maxImages', 'newMovieCollection', 'firstMovieStarredIn', 'firstMovieRole']));
+        //Get personlists for user
+        if (Auth::check()) {
+            $masterlists = Masterlist::where('user_id', Auth::user()->id)->get();
+        }
+
+        return view('/people/person', compact(['person',
+            'personAlbum',
+            'dateOfBirth',
+            'dateOfDeath',
+            'album',
+            'maxImages',
+            'newMovieCollection',
+            'firstMovieStarredIn',
+            'firstMovieRole',
+            'masterlists'
+        ]));
     }
 }

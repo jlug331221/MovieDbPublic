@@ -1,5 +1,7 @@
 <?php
 
+//Created by Ashley
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -8,21 +10,22 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Movie;
+use App\Masterlist;
 use App\Person;
 use App\Credit;
+use App\Discussion;
 use App\Character;
 use App\Album;
 use App\CreditType;
 use App\Review;
-
+use Auth;
 //Used for review avatars
 use App\Image;
 use Image as InterventionImage;
 use ImageSync;
 use App\Library\StaticData;
 
-class MoviePageController extends Controller
-{
+class MoviePageController extends Controller {
 
     public function moviePage()
     {
@@ -32,7 +35,6 @@ class MoviePageController extends Controller
     public function showMovie($id)
     {
         $movie = Movie::find($id);
-        $director = Movie::find($id)->credits->where('credit_type_id', 1)->first();
 
         if ($movie) {
             $year = date("Y", strtotime($movie->release_date));
@@ -41,8 +43,11 @@ class MoviePageController extends Controller
             $album = Movie::find($id)->album()->firstOrFail();
             $maxImages = 5;
 
+            $discussions = Discussion::orderBy('created_at', 'dsc')->get()->slice(0, 3);
+            $director = Movie::find($id)->credits->where('credit_type_id', 1)->first();
+
             $creditDirector = Movie::find($id)->credits->where('credit_type_id', 1)->first();
-            if ($creditDirector){
+            if ($creditDirector) {
                 $directorID = $creditDirector->person_id;
                 $director = Person::find($directorID);
             }
@@ -69,64 +74,67 @@ class MoviePageController extends Controller
                 ->get();
 
 
-            if (count($castCollection) > 1 && count($crewCollection) > 1) {
-                $newCastCollection = array_slice($castCollection, 1);
-                $newCrewCollection = array_slice($crewCollection, 1);
-                $firstPersonCast = $castCollection[0];
-                $firstPersonRole = Character::find($firstPersonCast->character_id);
-                $firstPersonCrew = $crewCollection[0];
-            }
-            elseif (count($castCollection) === 1 && count($crewCollection) === 1)
-            {
-                $firstPersonCast = $castCollection[0];
-                $firstPersonRole = Character::find($firstPersonCast->character_id);
-                $firstPersonCrew = $crewCollection[0];
-                $newCastCollection = null;
-                $newCrewCollection = null;
-            }
-            elseif (count($castCollection) === 1 && count($crewCollection) > 1) {
-
-                $newCrewCollection = array_slice($crewCollection, 1);
-                $firstPersonCast = $castCollection[0];
-                $firstPersonRole = Character::find($firstPersonCast->character_id);
-                $firstPersonCrew = $crewCollection[0];
-                $newCastCollection = null;
-            }
-            elseif (count($castCollection) > 1 && count($crewCollection) === 1) {
-
+            if (count($castCollection) > 1) {
                 $newCastCollection = array_slice($castCollection, 1);
                 $firstPersonCast = $castCollection[0];
                 $firstPersonRole = Character::find($firstPersonCast->character_id);
-                $firstPersonCrew = $crewCollection[0];
-                $newCrewCollection = null;
-            }
-            else {
+            } elseif (count($castCollection) === 1) {
+                $newCastCollection = null;
+                $firstPersonCast = $castCollection[0];
+                $firstPersonRole = Character::find($firstPersonCast->character_id);
+            } else {
                 $newCastCollection = null;
                 $firstPersonCast = null;
                 $firstPersonRole = null;
-                $firstPersonCrew = null;
+            }
+
+            if (count($crewCollection) > 1) {
+                $newCrewCollection = array_slice($crewCollection, 1);
+                $firstPersonCrew = $crewCollection[0];
+            } elseif (count($crewCollection) === 1) {
                 $newCrewCollection = null;
+                $firstPersonCrew = $crewCollection[0];
+            } else {
+                $newCrewCollection = null;
+                $firstPersonCrew = null;
             }
 
             //Get 3 reviews for movie
             $reviews = Review::where('movie_id', $id)->orderBy('score', 'dsc')->get()->slice(0, 3);
 
             //Get avatars for reviews
-            foreach($reviews as $review)
-            {
+            foreach ($reviews as $review) {
                 $reviewAvatarId = $review->user()->firstOrFail()->avatar;
                 $reviewAvImage = Image::where('id', '=', $reviewAvatarId)->first();
-                $reviewAvatar = $reviewAvImage['path'].'/'.$reviewAvImage['name'].'.'.$reviewAvImage['extension'];
-                if($reviewAvatar == '/.'){
+                $reviewAvatar = $reviewAvImage['path'] . '/' . $reviewAvImage['name'] . '.' . $reviewAvImage['extension'];
+                if ($reviewAvatar == '/.') {
                     $reviewAvatar = StaticData::defaultAvatar();
                 }
                 $review->avatar = $reviewAvatar;
             }
 
-
+            //Get movielists for user
+            $masterlists = null;
+            if (Auth::check()) {
+                $masterlists = Masterlist::where('user_id', Auth::user()->id)->get();
+            }
         }
 
-        return view('/movies/movie', compact(['movie', 'year', 'newDate', 'director', 'firstPersonCast', 'firstPersonRole', 'newCastCollection',
-                    'firstPersonCrew', 'newCrewCollection', 'album', 'maxImages', 'movieAlbum', 'reviews']));
+        return view('/movies/movie', compact(['movie',
+            'year',
+            'newDate',
+            'director',
+            'firstPersonCast',
+            'firstPersonRole',
+            'newCastCollection',
+            'firstPersonCrew',
+            'newCrewCollection',
+            'album',
+            'maxImages',
+            'movieAlbum',
+            'discussions',
+            'reviews',
+            'masterlists'
+        ]));
     }
 }

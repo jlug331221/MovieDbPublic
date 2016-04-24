@@ -126,7 +126,7 @@
                         <div class="col-md-10 col-lg-10">
                             <div class="inner-addon right-addon">
                                 <i class="fa fa-pencil"></i>
-                                {!! Form::textarea('biography', null, ['class' => 'form-control']) !!}
+                                {!! Form::text('biography', null, ['class' => 'form-control']) !!}
                             </div>
                         </div>
                     </div>

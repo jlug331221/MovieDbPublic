@@ -8,6 +8,7 @@ class ImageTest extends TestCase {
     use DatabaseTransactions;
 
     // REQ-ID: 58
+    // Test-ID: 1
     /** @test */
     public function it_can_return_the_name_of_the_file()
     {
@@ -21,6 +22,7 @@ class ImageTest extends TestCase {
     }
 
     // REQ-ID: 56, 58
+    // Test-ID: 2
     /** @test */
     public function it_can_return_the_path_of_the_image_from_the_public_directory()
     {
@@ -33,6 +35,7 @@ class ImageTest extends TestCase {
     }
 
     // REQ-ID: 56, 98
+    // Test-ID: 3
     /** @test */
     public function it_can_return_the_path_of_the_image_thumb_from_the_public_directory()
     {
@@ -45,6 +48,7 @@ class ImageTest extends TestCase {
     }
 
     // REQ-ID: 56, 58
+    // Test-ID: 4
     /** @test */
     public function it_can_return_the_absolute_path_of_an_image()
     {
@@ -57,6 +61,7 @@ class ImageTest extends TestCase {
     }
 
     // REQ-ID: 56, 98
+    // Test-ID: 5
     /** @test */
     public function it_can_return_the_absolute_path_of_an_image_thumb()
     {
@@ -69,6 +74,7 @@ class ImageTest extends TestCase {
     }
 
     // REQ-ID: 57
+    // Test-ID: 6
     /** @test */
     public function it_can_verify_valid_file_extensions()
     {
@@ -80,6 +86,8 @@ class ImageTest extends TestCase {
     }
 
     // REQ-ID: 57
+    // Test-ID: 7
+    /** @test */
     public function it_can_reject_invalid_file_extensions()
     {
         $validExtensions = Image::getValidExtensions();

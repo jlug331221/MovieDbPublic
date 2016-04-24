@@ -1,0 +1,105 @@
+# Created by Timothy Haynes on April 19, 2016
+
+Some of these tests are predicated on the seeded data set included with the project.
+The specific seed files required for these tests are:
+    MoviesTableSeeder.php
+    PeopleTableSeeder.php
+
+####################
+Req-ID: 33, 168
+Test-ID: 1
+Date: Last ran test on April 19, 2016
+Status: Successful
+Test:
+   Log in to the website directly from the landing page.
+
+Actions:
+    1. Fill in the username box.
+    2. Fill in the password box.
+    3. Click Log in button.
+Expected:
+    1. Redirect to the user page.
+Actual:
+    1. Redirect to the user page.
+
+####################
+Req-ID: 33, 171
+Test-ID: 2
+Date: Last ran test on April 19, 2016
+Status: Successful
+Test:
+   Register an account for the website directly from the landing page.
+
+Actions:
+    1. Fill in the Name box.
+    2. Fill in the Email Address box.
+    3. Fill in the Password box.
+    4. Fill in the Confirm Password box
+    5. Click the Register box.
+Expected:
+    1. Redirect to the user page, with an account registered with the site.
+Actual:
+    1. Redirect to the user page, with an account registered with the site.
+
+####################
+Req-ID: 33, 173
+Test-ID: 3
+Date: Last ran test on April 19, 2016
+Status: Successful
+Test:
+    Clicking a movie name in the top 10 movies of the month list redirects to the chosen movie's page.
+
+Actions:
+    1. Click a movie name in the top 10 movies of the month list.
+Expected:
+    1. Redirect to the chosen movie page.
+Actual:
+    1. Redirect to the chosen movie page.
+
+####################
+Req-ID: 33, 175
+Test-ID: 4
+Date: Last ran test on April 19, 2016
+Status: Successful
+Test:
+    Clicking a movie name in the recently added list redirects to the chosen movie's page.
+
+Actions:
+    1. Click a movie name in the recently added list.
+Expected:
+    1. Redirect to the chosen movie page.
+Actual:
+    1. Redirect to the chosen movie page.
+
+####################
+Req-ID: 33, 177
+Test-ID: 5
+Date: Last ran test on April 19, 2016
+Status: Successful
+Test:
+    Clicking "see full review" on the reviews section of the landing page redirects to that review's page.
+
+Actions:
+    1. Click "see full review" link underneath a given review.
+Expected:
+    1. Redirect to the chosen review's page.
+Actual:
+    1. Redirect to the chosen review's page.
+
+####################
+Req-ID: 33, 178
+Test-ID: 6
+Date: Last ran test on April 19, 2016
+Status: Successful
+Test:
+    Clicking a movie name in the top 10 movies of the month list redirects to the chosen movie's page.
+
+Actions:
+    1. Fill in the username box.
+    2. Fill in the password box.
+    3. Click Log in button.
+    4. Click the PDDB button to go back to the home page.
+Expected:
+    1. Log in and register boxes are not displayed on the page.
+Actual:
+    1. Log in and register boxes are not displayed on the page.

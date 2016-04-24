@@ -7,6 +7,7 @@ the project. The specific seed files required for these tests are:
 
 ####################
 Req-ID: 73
+Test-ID: 1
 Date: Last ran test on April 13, 2016
 Status: Successful
 Test: 
@@ -35,6 +36,7 @@ Actual:
 
 ####################
 Req-ID: 73
+Test-ID: 2
 Date: Last ran test on April 13, 2016
 Status: Successful
 Test: 
@@ -52,6 +54,7 @@ Actual:
 
 ####################
 Req-ID: 73
+Test-ID: 3
 Date: Last ran test on April 13, 2016
 Status: Successful
 Test: 
@@ -68,18 +71,19 @@ Expected:
         that says 'Load More'.
     2. 24 more thumbnails are loaded into the page, and the button
         to 'Load More' is still visible.
-    2. 4 more thumbnails are loaded into the page, and the button
+    3. 4 more thumbnails are loaded into the page, and the button
         to 'Load More' is removed.
 Actual:
     1. 24 thumbnails are displayed on the page as well as a button 
         that says 'Load More'.
     2. 24 more thumbnails are loaded into the page, and the button
         to 'Load More' is still visible.
-    2. 4 more thumbnails are loaded into the page, and the button
+    3. 4 more thumbnails are loaded into the page, and the button
         to 'Load More' is removed.
 
 ####################
 Req-ID: 73
+Test-ID: 4
 Date: Last ran test on April 13, 2016
 Status: Successful
 Test: 
@@ -95,6 +99,7 @@ Actual:
 
 ####################
 Req-ID: 70
+Test-ID: 5
 Date: Last ran test on April 13, 2016
 Status: Successful
 Test: 

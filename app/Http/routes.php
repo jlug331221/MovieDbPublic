@@ -26,11 +26,16 @@ Route::group(['middleware' => 'web'], function () {
     Route::auth();
 
     Route::get('/userpage/home', 'HomeController@index');
-    Route::post('/userpage/home/addToList', 'HomeController@postAddToList');
     Route::post('/userpage/home/newList', 'HomeController@postList');
     Route::get('/userpage/home/deleteList/{mlid}', 'HomeController@deleteList');
     Route::get('/userpage/avatar', 'HomeController@avatar');
     Route::post('/userpage/avatar/store', 'HomeController@store');
+    Route::get('/userpage/home/addMovieToList/{id}/{lid}', 'HomeController@postAddMovieToList');
+    Route::get('/userpage/home/addPersonToList/{id}/{lid}', 'HomeController@postAddPersonToList');
+    Route::get('/userpage/home/deleteMovieItem/{mid}/{mlid}','HomeController@deleteMovieItem');
+    Route::get('/userpage/home/deletePersonItem/{pid}/{plid}','HomeController@deletePersonItem');
+    Route::get('/userpage/home/movie/{term}', 'HomeController@get_suffixMovieSearch_json');
+    Route::get('/userpage/home/person/{term}', 'HomeController@get_suffixPersonSearch_json');
 
     // Admin Routes
     Route::get('/admin/adminHome', 'AdminController@index');
@@ -49,11 +54,16 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('/admin/createPerson', 'AdminController@storePerson');
     Route::get('/admin/createCharacter', 'AdminController@showCreateCharacterForm');
     Route::post('/admin/createCharacter', 'AdminController@storeCharacter');
-    Route::get('/admin/showAllPeopleForCastSelection/{mid}', 'AdminController@showAllPeopleForCastSelection');
+    Route::get('/admin/showAllCharacters', 'AdminController@showCharacters');
+    Route::get('/admin/showCharacter/{id}', 'AdminController@showCharacter');
+    Route::put('/admin/updateCharacter/{id}', 'AdminController@updateCharacter');
+    Route::get('/admin/deleteCharacter/{id}', 'AdminController@destroyCharacter');
+    Route::get('/admin/showAllPeopleForCastCrewSelection/{mid}', 'AdminController@showAllPeopleForCastCrewSelection');
     Route::get('/admin/showAllCharactersForCastSelection/{pid}&{mid}',
                 'AdminController@showAllCharactersForCastSelection');
     Route::get('/admin/addCastMember/{pid}&{mid}&{cid}', 'AdminController@addCastMember');
-
+    Route::get('/admin/showAddCrewMemberForm/{pid}&{mid}', 'AdminController@showAddCrewMemberForm');
+    Route::post('/admin/showAddCrewMemberForm/{pid}&{mid}', 'AdminController@storeCrewMember');
 
     Route::get('/', 'WelcomeController@display');
 
@@ -94,6 +104,7 @@ Route::group(['middleware' => 'web'], function () {
 
     //Discussion routes
     Route::get('/discussions/create/{mid}', 'DiscussionController@create');
+    Route::post('/discussions/create/{mid}', 'DiscussionController@create');
     Route::post('/discussions/submit/{mid}', 'DiscussionController@submit');
     Route::get('/discussions/display/{rid}', 'DiscussionController@display');
     Route::post('/discussions/newreply/{rid}', 'DiscussionController@newReply');

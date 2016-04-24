@@ -1,0 +1,29 @@
+# Created by John on April 23, 2016
+
+These tests are predicated on using the seeded data set included with
+the project. The specific seed files required for these tests are:
+    PermissionRoleTableSeeder.php
+    PermissionsTableSeeder.php
+    RolesTableSeeder.php
+    RoleUserTableSeeder.php
+    UsersTableSeeder.php
+
+####################
+Req-ID: 16
+Test-ID: 1
+Date: Last ran test on April 23, 2016
+Status: Successful
+Test:
+    There exists an administrator home page.
+Actions:
+    1. Log in as an administrator with the credentials 'admin@email.com'
+        and 'testtest'.
+    2. Browse to '/admin/adminHome'.
+Expected:
+    1. Redirected to admin user's home page.
+    2. Redirected to '/admin/adminHome' succesfully and see
+        'Welcome Admin User'.
+Actual:
+    1. Log in as an administrator with the credentials 'admin@email.com'
+        and 'testtest'.
+    2. Browse to '/admin/adminHome'.

@@ -1,0 +1,102 @@
+#########
+Created by Ashley
+April 18th, 2016
+##########
+
+These tests are predicated on the seeded data set included with the project.
+
+####################
+Req-ID: 148
+Test-ID: 1
+Date: Last ran test on April 19, 2016
+Status: Successful
+Test:
+    A person page will display 'edit person' and 'delete person' buttons
+    when an administrator is logged in and viewing the page. It should
+    not display when a regular user is logged in.
+Actions:
+    1. View person page while logged in as a normal user. Log out, and
+       log back in as administrator and view person page.
+Expected:
+    1. The person page will not display 'edit person' and 'delete person'
+       buttons when a normal user is logged in. When an administrator logs
+       in, the buttons appear.
+Actual:
+    1. The person page does not display 'edit person' and 'delete person'
+       buttons when a normal user is logged in. When an administrator logs
+       in, the buttons are available on the page.
+
+####################
+Req-ID: 149
+Test-ID: 2
+Date: Last ran test on April 19, 2016
+Status: Successful
+Test:
+    The button 'delete person' on a person page redirects an administrator
+    to the administrator panel's delete person page.
+Actions:
+    1. Log in as an administrator, visit a person page, and click the
+       'delete person' button near the top of the page.
+Expected:
+    1. The button redirects the administrator to the administrator's
+       delete person page.
+Actual:
+    1. The button redirects the administrator to the administrator's
+       delete person page.
+
+####################
+Req-ID: 150
+Test-ID: 3
+Date: Last ran test on April 19, 2016
+Status: Successful
+Test:
+    The button 'edit person' on a person page redirects an administrator
+    to the administrator panel's edit person page.
+Actions:
+    1. Log in as an administrator, visit a person page, and click the
+       'edit person' button near the top of the page.
+Expected:
+    1. The button redirects the administrator to the administrator's
+       edit person page.
+Actual:
+    1. The button redirects the administrator to the administrator's
+       edit person page.
+
+####################
+Req-ID: 69, 151
+Test-ID: 4
+Date: Last ran test on April 19, 2016
+Status: Successful
+Test:
+    The picture section of a person page contains a partial view of
+    the album associated with a person.
+Actions:
+    1. Visit the person page for 'Arnold Schwarzenneger'.
+Expected:
+    1. The person page for 'Arnold Schwarzenneger' displays the album
+       associated with Arnold, which are three different pictures of him.
+Actual:
+    1. The person page for 'Arnold Schwarzenneger' displays the album
+       associated with Arnold, which are three different pictures of him.
+
+####################
+Req-ID: 152
+Test-ID: 5
+Date: Last ran test on April 19, 2016
+Status: Successful
+Test:
+    The filmography section of a person page displays a table containing
+    each movie the person is associated with, their role in the movie,
+    and the movie poster for the movie.
+Actions:
+    1. Visit the person page for 'Arnold Schwarzenneger'.
+Expected:
+    1. The person page for 'Arnold Schwarzenneger' displays Arnold's
+       filmography in a table. The table contains the movie 'Drive',
+       Drive's movie poster, and Arnold's role in the movie. (Even
+       though he wasn't in Drive, just a test).
+Actual:
+    1. The person page for 'Arnold Schwarzenneger' displays Arnold's
+       filmography in a table. The table contains the movie 'Drive',
+       Drive's movie poster, and Arnold's role in the movie. (Even
+       though he wasn't in Drive, just a test).

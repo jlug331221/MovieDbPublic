@@ -1,4 +1,3 @@
-<!-- Ashley created file on $(DATE) -->
 
 @extends('layouts.app')
 
@@ -24,7 +23,7 @@
                         </small>
 
                         @can('edit_all_content')
-                            <a href="{{ url('/admin/showMovie/' . $movie->id) }}"><button type="button" class="btn MoviePage__btnAdmin">Edit Movie</button></a>
+                            <a id="adminButtonEdit" href="{{ url('/admin/showMovie/' . $movie->id) }}"><button id="editButton" type="button" class="btn MoviePage__btnAdmin">Edit Movie</button></a>
                             <a href="{{ url('/admin/deleteMovie/' . $movie->id) }}"><button type="button" class="btn MoviePage__btnAdmin">Delete Movie</button></a>
                         @endcan
                     </h1>
@@ -44,7 +43,23 @@
                     @endif
 
                     @if(Auth::check())
-                        <button type="button" class="btn MoviePage__btnImage">Add to List</button> <br>
+                        <div class="dropdown">
+                            <button class="btn btn-default dropdown-toggle MoviePage__btnImage" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                Add To Movie List
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu MoviePage__ddm" aria-labelledby="dropdownMenu1">
+                                @foreach($masterlists as $masterlist)
+                                    @if($masterlist->type == "M")
+                                        @foreach($masterlist->movielist as $movlist)
+                                            <a href="/userpage/home/addMovieToList/{{$movie->id}}/{{$movlist->id}}">
+                                                <li>&nbsp;<span class="glyphicon glyphicon-plus" aria-hidden="true">&nbsp;</span>{{$masterlist->title}}&nbsp;</li>
+                                            </a>
+                                        @endforeach
+                                    @endif
+                                @endforeach
+                            </ul>
+                        </div>
                     @endif
 
                 </div>  <!-- 260 * 420 -->
@@ -101,7 +116,7 @@
                 </div>
 
                 @include('images.albumPreview', ['album' => $album, 'maxImages' => 8])
-                <a href="{{ '/album/movie/' . $movie->id }}"><button type="button" class="btn PersonPage__btnRedirect">View All Pictures</button></a>
+                <a href="{{ '/album/movie/' . $movie->id }}" id="albumBtn"><button type="button" class="btn PersonPage__btnRedirect">View All Pictures</button></a>
             </div>
             <!-- /.row -->
 
@@ -125,7 +140,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr class="clickable" data-toggle="collapse" id="row1" data-target=".row1">
+                            <a href="#" id="row1"><tr class="clickable" data-toggle="collapse" id="row1" data-target=".row1"></a>
                                 <td align ="center">
                                         @if($firstPersonCast->default === null)
                                             <img src="http://www.politicspa.com/wp-content/uploads/2013/02/Silhouette-question-mark.jpeg"
@@ -249,7 +264,6 @@
                                                 {{$crew->type}}
                                             @endif
                                         </td>
-                                    }
                                     </tr>
                                 @endforeach
                             @endif
@@ -283,10 +297,17 @@
                 <div class="col-lg-12">
                     <h3 class="page-header">Discussions</h3>
                 </div>
+                <form class="col-md-offset-1" action="{{ url('discussions/create/'.$movie->id ) }}" method="GET" role="form">
+                    {!! csrf_field() !!}
+                    @if(Auth::check())<button class="btn btn-primary">Create New Discussion</button>@endif
+                </form>
 
-                <div class="col-md-12">
-                    <p>I am reserving this section for reviews.</p>
-                </div>
+                <div class="col-md-6">
+                    @foreach ($discussions as $discussion)
+                        @if($discussion->movie_id == $movie->id)
+                            @include('discussions.discussionComponent')
+                        @endif
+                    @endforeach
             </div>
             <!-- /.row -->
         @else
