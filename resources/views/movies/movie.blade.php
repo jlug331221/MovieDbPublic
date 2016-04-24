@@ -266,7 +266,7 @@
             <div class="row MoviePage__Fifth">
 
                 <div class="col-lg-12">
-                    <h3 class="page-header">Reviews</h3>
+                    <h3 class="page-header">Reviews <a class="MoviePage__create-review-link" href="{{url('reviews/create').'/'.$movie->id}}">Add Review</a></h3>
                 </div>
 
                 <div class="col-md-12">
