@@ -87,3 +87,31 @@
 .MoviePage__ddm {
   min-width:350px;
 }
+
+.MoviePage__create-review-link
+{
+  font-size: 20px;
+  display: block;
+  text-align:right;
+}
+
+.MoviePage__review-title-container
+{
+  border-bottom: 1px solid #EEE;
+  margin-bottom: 18px;
+}
+
+.MoviePage__review-title
+{
+  display:inline;
+}
+
+.MoviePage__review-title-wrapper
+{
+  margin-bottom:7px;
+}
+
+.MoviePage__add-review-link
+{
+  margin-bottom:2px;
+}
