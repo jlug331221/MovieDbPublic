@@ -66,10 +66,8 @@
                                 {!! Form::close() !!}
                             </div>
 
-                            <div class="tab-pane" id="movie">
+                            <div class="tab-pane Userpage__tabs" id="movie">
                                 <div class="accordion panel-group" id="accordion2">
-                                <br>
-                                <br>
                                 @foreach($masterlists as $masterlist)
                                     @if($masterlist->type == "M")
                                         @foreach($masterlist->movielist as $movlist)
@@ -179,8 +177,7 @@
                                 </div>
                             </div>
 
-                            <div class="tab-pane" id="person">
-
+                            <div class="tab-pane Userpage__tabs" id="person">
                                 <div class="accordion2 panel-group" id="accordion3">
                                     @foreach($masterlists as $masterlist)
                                         @if($masterlist->type == "P")
